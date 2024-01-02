@@ -10,9 +10,13 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
-        name: "Vite PWA Project",
-        short_name: "Vite PWA Project",
+        name: "Yanabada",
+        short_name: "Yanabada",
         theme_color: "#ffffff",
+        background_color: "#ffffff",
+        display: "standalone",
+        start_url: "/",
+        orientation: "portrait",
         icons: [
           {
             src: "pwa-64x64.png",
