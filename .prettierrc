@@ -11,7 +11,21 @@
   "jsxBracketSameLine": false,
   "arrowParens": "always",
   "endOfLine": "auto",
-  "importOrder": [""],
+  "importOrder": [
+    "^@apis/(.)$",
+    "^@assets/(.)$",
+    "^@components/(.)$",
+    "^@constants/(.)$",
+    "^@hooks/(.)$",
+    "^@pages/(.)$",
+    "^@stores/(.)$",
+    "^@styles/(.*)$",
+    "^@/types/(.)$",
+    "^@tests/(.)$",
+    "^themes/(.)$",
+    "^@utils/(.)$",
+    "^[./]"
+  ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
