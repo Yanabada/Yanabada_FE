@@ -39,6 +39,7 @@ const globalStyles = css`
   }
   body {
     line-height: 1;
+    background: black;
   }
   ol,
   ul {
