@@ -1,4 +1,5 @@
 import { ComponentProps, ReactNode } from "react";
+import { IoCheckmark } from "react-icons/io5";
 import * as S from "./styles";
 
 type Picked = "onChange" | "placeholder" | "value" | "type";
@@ -25,7 +26,8 @@ const TextInput = ({
       <S.InputWrapper>
         <S.Input required className={`${errorMessage ? "error" : ""}`} {...props} />
         {variant === "smooth" && <S.Label className="move">{label}</S.Label>}
-        {isSuccess && <S.RightElement>{rightElement}</S.RightElement>}
+        {rightElement && <S.RightElement>{rightElement}</S.RightElement>}
+        {isSuccess && <S.RightElement>{IoCheckmark}</S.RightElement>}
       </S.InputWrapper>
       {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
     </>
