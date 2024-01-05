@@ -12,6 +12,16 @@ const ButtonLayout = css`
   border-radius: 5px;
 `;
 
+// FIXME: 모듈화
+const BoldTextLayout = css`
+  /* [Button1] 버튼진하게 */
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px; /* 140% */
+`;
+
 export const CardSectionWrapper = styled.div`
   display: flex;
   width: 332px;
@@ -88,27 +98,15 @@ export const BottomLeftButton = styled.button`
 `;
 
 export const BottomLeftButtonText = styled.p`
+  ${BoldTextLayout}
   color: ${({ theme }) => theme.colors.blue[400]};
   text-align: center;
-
-  /* [Button1] 버튼진하게 */
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px; /* 140% */
 `;
 
 export const BottomRightButtonText = styled.p`
+  ${BoldTextLayout}
   color: #fff;
   text-align: center;
-
-  /* [Button1] 버튼진하게 */
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px; /* 140% */
 `;
 
 export const BottomRightButton = styled.button`
