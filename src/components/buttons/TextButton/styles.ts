@@ -18,7 +18,7 @@ export const TextButton = styled.button`
 
   &:hover {
     background: ${({ theme }) => theme.colors.blue[50]};
-    color: ${({ theme }) => theme.colors.blue[400]}
+    color: ${({ theme }) => theme.colors.blue[400]};
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
