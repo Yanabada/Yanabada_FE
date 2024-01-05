@@ -1,4 +1,16 @@
 import styled from "@emotion/styled";
+import { css } from "@emotion/react";
+
+const ButtonLayout = css`
+  display: flex;
+  height: 40px;
+  padding-right: 9px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex: 1 0 0;
+  border-radius: 5px;
+`;
 
 export const CardSectionWrapper = styled.div`
   display: flex;
@@ -71,14 +83,7 @@ export const BottomSectionWrapper = styled.div`
 `;
 
 export const BottomLeftButton = styled.button`
-  display: flex;
-  height: 40px;
-  padding-right: 9px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  flex: 1 0 0;
-  border-radius: 5px;
+  ${ButtonLayout}
   background: ${({ theme }) => theme.colors.blue[50]};
 `;
 
@@ -107,13 +112,6 @@ export const BottomRightButtonText = styled.p`
 `;
 
 export const BottomRightButton = styled.button`
-  display: flex;
-  height: 40px;
-  padding-right: 9px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  flex: 1 0 0;
-  border-radius: 5px;
+  ${ButtonLayout}
   background: ${({ theme }) => theme.colors.blue[200]};
 `;

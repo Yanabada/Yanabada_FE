@@ -14,8 +14,8 @@ const CardSectionButton = () => {
               display="flex"
               width="22px"
               height="22px"
-              justifyContent="center"
-              alignItems="center"
+              justify-content="center"
+              align-items="center"
               color="#616161"
             />
           </S.RightSectionWrapper>
