@@ -50,7 +50,7 @@ export const Label = styled.label`
   }
 `;
 
-export const RightElement = styled.div`
+export const RightElement = styled.button`
   position: absolute;
 
   right: 0;
