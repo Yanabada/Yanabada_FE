@@ -2,19 +2,19 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@": [""],
-      "@apis/": ["apis/"],
-      "@assets/": ["assets/"],
-      "@stores/": ["stores/"],
-      "@pages/": ["pages/"],
-      "@hooks/": ["hooks/"],
-      "@styles/": ["styles/"],
-      "@utils/": ["utils/"],
-      "@themes/": ["themes/"],
-      "@components/": ["components/"],
-      "@/types/": ["types/"],
-      "@tests/": ["tests/"],
-      "@constants/": ["constants/"]
+      "@*": ["*"],
+      "@apis/*": ["apis/*"],
+      "@assets/*": ["assets/*"],
+      "@stores/*": ["stores/*"],
+      "@pages/*": ["pages/*"],
+      "@hooks/*": ["hooks/*"],
+      "@styles/*": ["styles/*"],
+      "@utils/*": ["utils/*"],
+      "@themes/*": ["themes/*"],
+      "@components/*": ["components/*"],
+      "@/types/*": ["types/*"],
+      "@tests/*": ["tests/*"],
+      "@constants/*": ["constants/*"]
     },
     "target": "ES2020",
     "useDefineForClassFields": true,
@@ -36,6 +36,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src","custom.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
