@@ -10,11 +10,20 @@ interface InputProps extends Pick<ComponentProps<"input">, Picked> {
   errorMessage?: string;
   isSuccess?: boolean;
   rightElement?: ReactNode;
+  onRightElementClick?: VoidFunction;
 }
 
 const TextInput = forwardRef<HTMLInputElement, InputProps>(
   (
-    { variant = "move", errorMessage, isSuccess = false, label, rightElement = null, ...props },
+    {
+      variant = "move",
+      errorMessage,
+      isSuccess = false,
+      label,
+      rightElement = null,
+      onRightElementClick,
+      ...props
+    },
     ref
   ) => {
     return (
@@ -23,7 +32,11 @@ const TextInput = forwardRef<HTMLInputElement, InputProps>(
         <S.InputWrapper>
           <S.Input ref={ref} required className={`${errorMessage ? "error" : ""}`} {...props} />
           {variant === "move" && <S.Label className="move">{label}</S.Label>}
-          {rightElement && <S.RightElement>{rightElement}</S.RightElement>}
+          {rightElement && (
+            <S.RightElement {...(onRightElementClick && { onClick: onRightElementClick })}>
+              {rightElement}
+            </S.RightElement>
+          )}
           {isSuccess && <S.RightElement>{IoCheckmark}</S.RightElement>}
         </S.InputWrapper>
         {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
