@@ -13,6 +13,7 @@ registerLocale("ko", ko);
 const CustomDatePicker = () => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
+  const today = new Date();
 
   const onChange = (dates: DateRange) => {
     const [start, end] = dates;
@@ -64,6 +65,7 @@ const CustomDatePicker = () => {
       dateFormat="yyyy.MM.dd"
       locale="ko"
       renderCustomHeader={renderCustomHeader}
+      minDate={today}
     />
   );
 };
