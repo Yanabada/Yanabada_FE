@@ -1,10 +1,39 @@
+import Chat from "@pages/chat";
+import MyPage from "@pages/myPage";
 import NavBar from "components/navBar";
-import { createBrowserRouter } from "react-router-dom";
+import { Outlet, createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <NavBar />
+    element: (
+      <div>
+        <Outlet />
+        <NavBar />
+      </div>
+    ),
+    children: [
+      {
+        index: true
+        // element: <Home />
+      },
+      {
+        path: "/search"
+        // element: <Search />
+      },
+      {
+        path: "/sell"
+        // element: <Sell />
+      },
+      {
+        path: "/chat",
+        element: <Chat />
+      },
+      {
+        path: "/myPage",
+        element: <MyPage />
+      }
+    ]
   }
 ]);
 
