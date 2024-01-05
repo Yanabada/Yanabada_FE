@@ -18,7 +18,6 @@ export const Input = styled.input`
   color: ${(props) => props.theme.colors.gray[900]};
   background-color: transparent;
 
-  font-family: "Pretendard";
   font-size: 1rem;
 
   &:focus + label.move,
