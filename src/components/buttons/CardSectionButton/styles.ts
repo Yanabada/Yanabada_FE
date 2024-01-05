@@ -32,6 +32,16 @@ export const MainTextLayout = css`
   line-height: 21px; /* 150% */
 `;
 
+// FIXME: 모듈화
+export const ButtonListLayout = css`
+  /* [Subtitle6] 버튼리스트 */
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 137.5% */
+`;
+
 export const CardSectionWrapper = styled.div`
   display: flex;
   width: 332px;
@@ -65,15 +75,9 @@ export const ListButton = styled.button`
 `;
 
 export const ListButtonText = styled.p`
+  ${ButtonListLayout}
   color: var(--M3-black, #000);
   text-align: center;
-
-  /* [Subtitle6] 버튼리스트 */
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 22px; /* 137.5% */
 `;
 
 export const RightSectionWrapper = styled.div`
