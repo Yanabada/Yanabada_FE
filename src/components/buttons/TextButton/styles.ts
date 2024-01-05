@@ -8,7 +8,7 @@ export const TextButton = styled.button`
   gap: 10px;
   flex-shrink: 0;
   border-radius: 5px;
-  color:  ${({ theme }) => theme.colors.blue[400]}
+  color: ${({ theme }) => theme.colors.blue[400]};
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -17,7 +17,7 @@ export const TextButton = styled.button`
   padding: 0px 10px;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.blue[50]}
+    background: ${({ theme }) => theme.colors.blue[50]};
     color: ${({ theme }) => theme.colors.blue[400]}
     font-size: 14px;
     font-style: normal;
