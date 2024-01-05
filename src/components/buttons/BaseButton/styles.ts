@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-
 interface BaseButtonProps {
   width?: string;
 }

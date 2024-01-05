@@ -23,7 +23,6 @@ const index = ({ type, children, ...props }: BaseButtonProps) => {
     case "light":
       return (
         <S.LightColoredButton {...props}>
-          {" "}
           <IoIosSearch size="18px" color="#0751C3" />
           {children}
         </S.LightColoredButton>
