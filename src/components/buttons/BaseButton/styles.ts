@@ -1,9 +1,12 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
+interface BaseButtonProps {
+  width?: string;
+}
+
 const ButtonLayout = css`
   display: flex;
-  width: 332px;
   height: 40px;
   padding-right: 9px;
   justify-content: center;
@@ -35,9 +38,10 @@ const DisabledButtonLayout = css`
   cursor: not-allowed;
 `;
 
-export const LightColoredButton = styled.button`
+export const LightColoredButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
   ${BoldTextLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.blue[50]};
 
@@ -45,9 +49,10 @@ export const LightColoredButton = styled.button`
   text-align: center;
 `;
 
-export const IconButton = styled.button`
+export const IconButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
   ${BoldTextLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.blue[200]};
 
@@ -55,9 +60,10 @@ export const IconButton = styled.button`
   text-align: center;
 `;
 
-export const DefaultButton = styled.button`
+export const DefaultButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
   ${BoldTextLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.blue[200]};
 
@@ -65,9 +71,10 @@ export const DefaultButton = styled.button`
   text-align: center;
 `;
 
-export const TransparentButton = styled.button`
+export const TransparentButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
   ${NormalTextLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[500]};
 
@@ -75,9 +82,10 @@ export const TransparentButton = styled.button`
   text-align: center;
 `;
 
-export const GrayColoredButton = styled.button`
+export const GrayColoredButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
   ${NormalTextLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.gray[100]};
 
@@ -85,9 +93,10 @@ export const GrayColoredButton = styled.button`
   text-align: center;
 `;
 
-export const KakaoButton = styled.button`
+export const KakaoButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
   ${NormalTextLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: #fee502;
 
@@ -95,9 +104,10 @@ export const KakaoButton = styled.button`
   text-align: center;
 `;
 
-export const NaverButton = styled.button`
+export const NaverButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
   ${NormalTextLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: #03c73c;
 
@@ -105,9 +115,10 @@ export const NaverButton = styled.button`
   text-align: center;
 `;
 
-export const DisabledLightColoredButton = styled.button`
+export const DisabledLightColoredButton = styled.button<BaseButtonProps>`
   ${DisabledButtonLayout}
   ${BoldTextLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.gray[100]};
 
@@ -115,9 +126,10 @@ export const DisabledLightColoredButton = styled.button`
   text-align: center;
 `;
 
-export const DisabledDefaultButton = styled.button`
+export const DisabledDefaultButton = styled.button<BaseButtonProps>`
   ${DisabledButtonLayout}
   ${BoldTextLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.gray[500]};
 
@@ -125,9 +137,10 @@ export const DisabledDefaultButton = styled.button`
   text-align: center;
 `;
 
-export const DisabledIconButton = styled.button`
+export const DisabledIconButton = styled.button<BaseButtonProps>`
   ${DisabledButtonLayout}
   ${BoldTextLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.gray[500]};
 
