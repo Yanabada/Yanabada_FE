@@ -7,7 +7,7 @@ export const CardSectionWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   border-radius: 5px;
-  border: 1px solid var(--Stroke_Gray, #e6e6e6);
+  border: 1px solid ${({ theme }) => theme.colors.gray[300]};
   background: #fff;
 
   /* 은은한쉐도우 */
@@ -51,7 +51,7 @@ export const RightSectionWrapper = styled.div`
 `;
 
 export const RightSectionText = styled.p`
-  color: var(--DullGray, #9c9c9c);
+  color: ${({ theme }) => theme.colors.gray[600]};
   text-align: right;
 
   /* [body2]본문 */
@@ -79,11 +79,11 @@ export const BottomLeftButton = styled.button`
   gap: 8px;
   flex: 1 0 0;
   border-radius: 5px;
-  background: var(--LightBlue, #e6eef9);
+  background: ${({ theme }) => theme.colors.blue[50]};
 `;
 
 export const BottomLeftButtonText = styled.p`
-  color: var(--ConfirmBlue, #0751c3);
+  color: ${({ theme }) => theme.colors.blue[400]};
   text-align: center;
 
   /* [Button1] 버튼진하게 */
@@ -115,5 +115,5 @@ export const BottomRightButton = styled.button`
   gap: 8px;
   flex: 1 0 0;
   border-radius: 5px;
-  background: var(--Yanabada-Blue, #38a3eb);
+  background: ${({ theme }) => theme.colors.blue[200]};
 `;

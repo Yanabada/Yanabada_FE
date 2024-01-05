@@ -8,7 +8,7 @@ export const TextButton = styled.button`
   gap: 10px;
   flex-shrink: 0;
   border-radius: 5px;
-  color: var(--ConfirmBlue, #0751c3);
+  color:  ${({ theme }) => theme.colors.blue[400]}
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -17,8 +17,8 @@ export const TextButton = styled.button`
   padding: 0px 10px;
 
   &:hover {
-    background: var(--LightBlue, #e6eef9);
-    color: var(--ConfirmBlue, #0751c3);
+    background: ${({ theme }) => theme.colors.blue[50]}
+    color: ${({ theme }) => theme.colors.blue[400]}
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
