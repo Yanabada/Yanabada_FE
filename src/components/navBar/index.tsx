@@ -7,23 +7,18 @@ import NavChat from "@assets/icons/nav_Chat.svg?react";
 import NavMy from "@assets/icons/nav_My.svg?react";
 import NumberBadge from "@components/numberBadge";
 import * as S from "./styles";
+import AlertCountStore from "@stores/AlertCountStore";
 
-interface NavBarProps {
-  chatCount?: number;
-  myPageCount?: number;
-}
-
-const NavBar = ({ chatCount, myPageCount }: NavBarProps) => {
+const NavBar = () => {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState<string>("/");
+  const { chatCount, myPageCount, setChatCount, setMyPageCount } = AlertCountStore();
 
   const handleButtonClick = (route: string) => {
     navigate(route);
     setActiveButton(route);
   };
 
-  chatCount = 3;
-  myPageCount = 10;
   return (
     <div>
       <S.BottomNavWrapper>
@@ -51,7 +46,10 @@ const NavBar = ({ chatCount, myPageCount }: NavBarProps) => {
         </S.BottomNavButton>
 
         <S.BottomNavButton
-          onClick={() => handleButtonClick("/chat")}
+          onClick={() => {
+            handleButtonClick("/chat");
+            setChatCount(0);
+          }}
           className={activeButton === "/chat" ? "active" : ""}
         >
           <NavChat />
@@ -60,7 +58,10 @@ const NavBar = ({ chatCount, myPageCount }: NavBarProps) => {
         </S.BottomNavButton>
 
         <S.BottomNavButton
-          onClick={() => handleButtonClick("/myPage")}
+          onClick={() => {
+            handleButtonClick("/myPage");
+            setMyPageCount(0);
+          }}
           className={activeButton === "/myPage" ? "active" : ""}
         >
           <NavMy />
