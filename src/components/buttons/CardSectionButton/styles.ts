@@ -22,6 +22,16 @@ const BoldTextLayout = css`
   line-height: 21px; /* 140% */
 `;
 
+// FIXME: 모듈화
+export const MainTextLayout = css`
+  /* [body2]본문 */
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px; /* 150% */
+`;
+
 export const CardSectionWrapper = styled.div`
   display: flex;
   width: 332px;
@@ -73,15 +83,9 @@ export const RightSectionWrapper = styled.div`
 `;
 
 export const RightSectionText = styled.p`
+  ${MainTextLayout}
   color: ${({ theme }) => theme.colors.gray[600]};
   text-align: right;
-
-  /* [body2]본문 */
-  font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 21px; /* 150% */
 `;
 
 export const BottomSectionWrapper = styled.div`

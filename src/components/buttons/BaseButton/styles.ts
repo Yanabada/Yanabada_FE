@@ -15,6 +15,7 @@ const ButtonLayout = css`
   flex-shrink: 0;
 `;
 
+// FIXME: 모듈화
 const BoldTextLayout = css`
   /* [Button1] 버튼진하게 */
   font-family: Pretendard;
@@ -24,7 +25,8 @@ const BoldTextLayout = css`
   line-height: 21px; /* 140% */
 `;
 
-const NormalTextLayout = css`
+// FIXME: 모듈화
+export const NormalTextLayout = css`
   /* [Button2] 일반버튼 */
   font-family: Pretendard;
   font-size: 15px;
