@@ -1,61 +1,74 @@
-import navChat from "../../assets/icons/nav_Chat.svg";
-import navAll from "../../assets/icons/nav_All.svg";
-// import { ReactComponent as NavHome } from "../../assets/icons/nav_Home.svg";
-// import NavHome from "../../assets/icons/nav_Home.svg?react";
-import navHome from "../../assets/icons/nav_Home.svg";
-import navProduct from "../../assets/icons/nav_Product.svg";
-import navMy from "../../assets/icons/nav_My.svg";
-import { BottomNavButton, BottomNavWrapper } from "./styles";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import NavHome from "@assets/icons/nav_Home.svg?react";
+import NavAll from "@assets/icons/nav_All.svg?react";
+import NavProduct from "@assets/icons/nav_Product.svg?react";
+import NavChat from "@assets/icons/nav_Chat.svg?react";
+import NavMy from "@assets/icons/nav_My.svg?react";
+import NumberBadge from "@components/numberBadge";
+import * as S from "./styles";
 
-const NavBar = () => {
+interface NavBarProps {
+  chatCount?: number;
+  myPageCount?: number;
+}
+
+const NavBar = ({ chatCount, myPageCount }: NavBarProps) => {
   const navigate = useNavigate();
+  const [activeButton, setActiveButton] = useState<string>("/");
 
+  const handleButtonClick = (route: string) => {
+    navigate(route);
+    setActiveButton(route);
+  };
+
+  chatCount = 3;
+  myPageCount = 10;
   return (
-    <BottomNavWrapper>
-      <BottomNavButton
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        {/* <NavHome /> */}
-        {/* <object data={navHome} style={{ fill: "#fff" }} /> */}
-        <img src={navHome} style={{ fill: "red" }} />홈
-      </BottomNavButton>
-      <BottomNavButton
-        onClick={() => {
-          navigate("/search");
-        }}
-      >
-        {/* <NavAll /> */}
-        <img src={navAll} />
-        상품리스트
-      </BottomNavButton>
-      <BottomNavButton
-        onClick={() => {
-          navigate("/sell");
-        }}
-      >
-        <img src={navProduct} />
-        등록
-      </BottomNavButton>
-      <BottomNavButton
-        onClick={() => {
-          navigate("/chat");
-        }}
-      >
-        <img src={navChat} />
-        채팅
-      </BottomNavButton>
-      <BottomNavButton
-        onClick={() => {
-          navigate("/mypage");
-        }}
-      >
-        <img src={navMy} />
-        마이
-      </BottomNavButton>
-    </BottomNavWrapper>
+    <div>
+      <S.BottomNavWrapper>
+        <S.BottomNavButton
+          onClick={() => handleButtonClick("/")}
+          className={activeButton === "/" ? "active" : ""}
+        >
+          <NavHome />홈
+        </S.BottomNavButton>
+
+        <S.BottomNavButton
+          onClick={() => handleButtonClick("/search")}
+          className={activeButton === "/search" ? "active" : ""}
+        >
+          <NavAll />
+          상품리스트
+        </S.BottomNavButton>
+
+        <S.BottomNavButton
+          onClick={() => handleButtonClick("/sell")}
+          className={activeButton === "/sell" ? "active" : ""}
+        >
+          <NavProduct />
+          등록
+        </S.BottomNavButton>
+
+        <S.BottomNavButton
+          onClick={() => handleButtonClick("/chat")}
+          className={activeButton === "/chat" ? "active" : ""}
+        >
+          <NavChat />
+          {chatCount ? <NumberBadge number={chatCount} /> : undefined}
+          채팅
+        </S.BottomNavButton>
+
+        <S.BottomNavButton
+          onClick={() => handleButtonClick("/myPage")}
+          className={activeButton === "/myPage" ? "active" : ""}
+        >
+          <NavMy />
+          {myPageCount ? <NumberBadge number={myPageCount} /> : undefined}
+          마이
+        </S.BottomNavButton>
+      </S.BottomNavWrapper>
+    </div>
   );
 };
 

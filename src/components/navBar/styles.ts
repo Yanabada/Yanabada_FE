@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const BottomNavWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.blue[100]};
+  background-color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,6 +13,13 @@ export const BottomNavWrapper = styled.div`
   right: 0;
   text-align: center;
   user-select: none;
+  color: ${({ theme }) => theme.colors.gray[600]};
+  & .active {
+    color: ${({ theme }) => theme.colors.blue[200]};
+    > svg {
+      fill: ${({ theme }) => theme.colors.blue[200]};
+    }
+  }
 `;
 
 export const BottomNavButton = styled.div`
@@ -22,7 +29,4 @@ export const BottomNavButton = styled.div`
   align-items: center;
   font-size: 12px;
   gap: 5px;
-  > svg {
-    fill: red;
-  }
 `;
