@@ -1,19 +1,24 @@
 import styled from "@emotion/styled";
 
 export const BottomNavWrapper = styled.div`
-  background-color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
+
   width: 100%;
   height: 56px;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  text-align: center;
+
   user-select: none;
+
+  background-color: #fff;
   color: ${({ theme }) => theme.colors.gray[600]};
+  box-shadow: ${({ theme }) => theme.shadows[2]};
+
   & .active {
     color: ${({ theme }) => theme.colors.blue[200]};
     > svg {
