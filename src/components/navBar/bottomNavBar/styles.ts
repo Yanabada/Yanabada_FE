@@ -12,6 +12,8 @@ export const BottomNavWrapper = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  max-width: 780px;
+  margin: 0 auto;
 
   user-select: none;
 
