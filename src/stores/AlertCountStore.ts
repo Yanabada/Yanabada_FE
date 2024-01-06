@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
-type AlertCountState = {
+interface AlertCountState {
   chatCount: number;
   myPageCount: number;
   setChatCount: (chat: number) => void;
   setMyPageCount: (myPage: number) => void;
-};
+}
 
 const AlertCountStore = create<AlertCountState>((set) => ({
   // FIXME - 추후 채팅 & 판매구매 알림 구현 후 기본값 수정

@@ -1,6 +1,6 @@
+import BottomNavBar from "@components/navBar/bottomNavBar";
 import Chat from "@pages/chat";
 import MyPage from "@pages/myPage";
-import NavBar from "components/navBar";
 import { Outlet, createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -9,7 +9,7 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Outlet />
-        <NavBar />
+        <BottomNavBar />
       </div>
     ),
     children: [
