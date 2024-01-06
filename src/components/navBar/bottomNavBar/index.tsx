@@ -9,7 +9,7 @@ import NumberBadge from "@components/numberBadge";
 import * as S from "./styles";
 import AlertCountStore from "@stores/AlertCountStore";
 
-const NavBar = () => {
+const BottomNavBar = () => {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState<string>("/");
   const { chatCount, myPageCount, setChatCount, setMyPageCount } = AlertCountStore();
@@ -73,4 +73,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default BottomNavBar;
