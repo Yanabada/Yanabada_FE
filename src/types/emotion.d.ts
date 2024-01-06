@@ -35,5 +35,9 @@ declare module "@emotion/react" {
         900: string;
       };
     };
+    shadows: {
+      1: string;
+      2: string;
+    };
   }
 }
