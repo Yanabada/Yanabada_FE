@@ -33,12 +33,17 @@ const NavButton = ({ path }: NavButtonProps) => {
   };
 
   const handleButtonClick = () => {
-    navigate(path);
+    const currentPath = window.location.pathname;
     if (path === "/chat") {
       setChatCount(0);
     } else if (path === "/myPage") {
       setMyPageCount(0);
     }
+
+    if (path === currentPath) {
+      return;
+    }
+    navigate(path);
   };
 
   return (
