@@ -1,29 +1,36 @@
-import * as R from "@components/card/RowCard/styles";
 import styled from "@emotion/styled";
+import * as Card from "../card.styles";
 
-export const Wrapper = styled(R.Wrapper)``;
+export const Wrapper = styled(Card.Wrapper)``;
 
-export const Container = styled(R.Container)`
+export const Container = styled(Card.Container)`
   width: 18rem;
   height: 7.25rem;
 `;
 
-export const ImageContainer = styled(R.ImageContainer)``;
+export const ImageContainer = styled(Card.ImageContainer)``;
 
-export const Image = styled(R.Image)``;
-
-export const InformationContainer = styled.div`
-  padding: 0.5rem;
+export const Image = styled(Card.Image)`
+  width: 6.25rem;
+  height: 100%;
 `;
 
-export const ProductContainer = styled.div``;
+export const InformationContainer = styled(Card.InformationContainer)`
+  padding: 0 0.5rem;
+`;
 
-export const ProductName = styled(R.ProductName)``;
+export const ProductContainer = styled(Card.ProductContainer)``;
 
-export const RoomName = styled(R.RoomName)``;
+export const ProductName = styled(Card.ProductName)`
+  margin-top: 0.1rem;
+`;
 
-export const Period = styled(R.Period)``;
+export const RoomName = styled(Card.RoomName)``;
 
-export const TimerContainer = styled(R.TimerContainer)``;
+export const Period = styled(Card.Period)``;
 
-export const TimerText = styled(R.TimerText)``;
+export const TimerContainer = styled(Card.TimerContainer)`
+  justify-content: flex-end;
+`;
+
+export const TimerText = styled(Card.TimerText)``;
