@@ -32,9 +32,6 @@ export const TextWrapper = styled(UpperNavCenter)`
 
 export const LeftIconWrapper = styled(UpperNavCenter)`
   left: 14px;
-  > div {
-    transform: translate(65%, -30px);
-  }
 `;
 
 export const RightIconWrapper = styled(UpperNavCenter)`
