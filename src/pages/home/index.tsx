@@ -1,5 +1,13 @@
+import Header from "./components/Header";
+import SearchInput from "./components/SearchInput";
+
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <>
+      <Header />
+      <SearchInput />
+    </>
+  );
 };
 
 export default Home;
