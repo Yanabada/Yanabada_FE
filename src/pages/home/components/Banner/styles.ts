@@ -1,29 +1,36 @@
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 
 export const Carousel = styled.div`
-  background-color: blue;
+  position: relative;
+  height: 104px;
+`;
 
-  padding-inline-start: calc(1rem + 26px);
+export const CarouselItem = styled(motion.div)`
+  position: absolute;
+
+  width: 100%;
+  height: 104px;
 
   overflow: hidden;
 `;
 
-export const CarouselInner = styled.ul`
-  display: flex;
-  gap: 1rem;
-`;
-
-export const CarouselItem = styled.li`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 276px;
-  height: 104px;
-`;
-
-export const Image = styled.img`
-  min-width: 100%;
+export const Image = styled(motion.img)`
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+`;
+
+export const ImageIndex = styled.span`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 3px 5px;
+
+  border-top-left-radius: 5px;
+
+  font-size: 14px;
+
+  background-color: #fff;
+  opacity: 0.7;
 `;
