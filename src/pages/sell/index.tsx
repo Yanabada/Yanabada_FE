@@ -1,4 +1,4 @@
-import Calendar from "@components/calendar/index";
+import Calendar from "@components/calendar";
 import { startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
 
 const Sell = () => {
