@@ -17,7 +17,7 @@ module.exports = {
   rules: {
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }], // React 컴포넌트는 오직 컴포넌트만 내보내야 합니다.
 
-    indent: ["error", 2], // 들여쓰기 스타일 설정 (2칸 들여쓰기)
+    indent: ["error", 2, { SwitchCase: 1 }], // 들여쓰기 스타일 설정 (2칸 들여쓰기)
 
     "@typescript-eslint/no-unused-vars": [
       "error",
