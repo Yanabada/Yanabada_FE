@@ -1,73 +1,79 @@
 import * as S from "./styles";
 import images from "./images";
-import { useEffect, useRef, useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { wrap } from "popmotion";
 
-const BANNER_WIDTH = 276;
-const MARGIN = 16;
+const variants = {
+  enter: (direction: number) => {
+    return {
+      x: direction > 0 ? 500 : -500,
+      opacity: 0
+    };
+  },
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1
+  },
+  exit: (direction: number) => {
+    return {
+      x: direction < 0 ? 500 : -500,
+      opacity: 0
+    };
+  }
+};
+
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+  return Math.abs(offset) * velocity;
+};
 
 const Banner = () => {
-  const [cardIndex, setCardIndex] = useState(1);
-  const [cardList, setCardList] = useState<Array<string>>([]);
+  const [[page, direction], setPage] = useState([0, 0]);
 
-  const ref = useRef<HTMLUListElement>(null);
+  const imageIndex = wrap(0, images.length, page);
 
-  useEffect(() => {
-    const duplicatedFirstCard = images[0];
-    const duplicatedLastCard = images[images.length - 1];
-    const newCardList = [duplicatedLastCard, ...images, duplicatedFirstCard];
-    setCardList(newCardList);
-  }, []);
-
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.style.transform = `translateX(-${cardIndex * (BANNER_WIDTH + MARGIN)}px)`;
-    }
-    console.log(cardIndex);
-  }, [cardIndex]);
-
-  const moveToNthSlide = (index: number) => {
-    setTimeout(() => {
-      setCardIndex(index);
-      if (ref.current) {
-        ref.current.style.transition = "";
-      }
-    }, 300);
-  };
-
-  const handleSwipe = (direction: number) => {
-    const newIndex = cardIndex + direction;
-
-    if (newIndex >= cardList.length - 1) {
-      moveToNthSlide(1);
-    } else if (newIndex === 0) {
-      moveToNthSlide(cardList.length - 2);
-    }
-
-    setCardIndex(newIndex);
-
-    if (ref.current) {
-      ref.current.style.transition = "transform 0.3s ease";
-    }
+  const paginate = (newDirection: number) => {
+    setPage([page + newDirection, newDirection]);
   };
 
   return (
-    <>
-      <S.Carousel>
-        <S.CarouselInner ref={ref}>
-          {cardList.map((image, index) => (
-            <S.CarouselItem key={index}>
-              <S.Image src={image} />
-            </S.CarouselItem>
-          ))}
-        </S.CarouselInner>
-      </S.Carousel>
-      <div className="next" onClick={() => handleSwipe(1)}>
-        {"►"}
-      </div>
-      <div className="prev" onClick={() => handleSwipe(-1)}>
-        {"◀︎"}
-      </div>
-    </>
+    <S.Carousel>
+      <AnimatePresence initial={false} custom={direction}>
+        <S.CarouselItem>
+          <S.Image
+            src={images[imageIndex]}
+            key={page}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            custom={direction}
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30 },
+              opacity: { duration: 0.2 }
+            }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={1}
+            onDragEnd={(e, { offset, velocity }) => {
+              const swipe = swipePower(offset.x, velocity.x);
+
+              if (swipe < -swipeConfidenceThreshold) {
+                paginate(1);
+              } else if (swipe > swipeConfidenceThreshold) {
+                paginate(-1);
+              }
+            }}
+          />
+        </S.CarouselItem>
+      </AnimatePresence>
+
+      <S.ImageIndex>
+        {imageIndex + 1} / {images.length}
+      </S.ImageIndex>
+    </S.Carousel>
   );
 };
 
