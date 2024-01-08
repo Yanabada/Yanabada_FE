@@ -50,6 +50,9 @@ const globalStyles = css`
     background: transparent;
     cursor: pointer;
   }
+  input {
+    font-family: "Pretendard";
+  }
 
   @font-face {
     font-family: "Pretendard-Regular";
