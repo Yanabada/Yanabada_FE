@@ -9,26 +9,22 @@ import { IoChevronBack } from "react-icons/io5";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
 
-registerLocale("ko", ko);
+interface calendarProp {
+  excludeDates?: Date[];
+  renderDayContents?: (dayOfMonth: number, date?: Date | undefined) => React.ReactNode;
+}
 
-const Calendar = () => {
+const Calendar = ({ excludeDates, renderDayContents }: calendarProp) => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const today = new Date();
+
+  registerLocale("ko", ko);
 
   const onChangeDate = (dates: [Date, Date]) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
-  };
-
-  const addDayClass = (date: Date) => {
-    if (date.getDay() === 0) {
-      return "red-text";
-    } else if (date.getDay() === 6) {
-      return "blue-text";
-    }
-    return "";
   };
 
   const renderCustomHeader = ({
@@ -58,18 +54,31 @@ const Calendar = () => {
     );
   };
 
+  const addDayClass = (date: Date) => {
+    if (date.getDay() === 0) {
+      return "red-text";
+    } else if (date.getDay() === 6) {
+      return "blue-text";
+    }
+    return "";
+  };
+
   return (
-    <DatePicker
-      onChange={onChangeDate}
-      startDate={startDate}
-      endDate={endDate}
-      minDate={today}
-      selectsRange
-      dayClassName={addDayClass}
-      dateFormat="yyyy.MM.dd"
-      locale="ko"
-      renderCustomHeader={renderCustomHeader}
-    />
+    <>
+      <DatePicker
+        onChange={onChangeDate}
+        startDate={startDate}
+        endDate={endDate}
+        minDate={today}
+        selectsRange
+        dayClassName={addDayClass}
+        locale="ko"
+        renderCustomHeader={renderCustomHeader}
+        renderDayContents={renderDayContents}
+        excludeDates={excludeDates}
+        inline
+      />
+    </>
   );
 };
 
