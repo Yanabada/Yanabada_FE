@@ -35,7 +35,6 @@ export const DateChangeButton = styled.button`
 
 export const LeftSection = styled.div`
   display: flex;
-  /* padding-right: 87px; */
   align-items: flex-start;
   gap: 8px;
   flex: 1 0;

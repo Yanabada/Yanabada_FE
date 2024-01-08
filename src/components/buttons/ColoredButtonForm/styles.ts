@@ -27,9 +27,8 @@ export const ColoredButton = styled.button`
 `;
 
 export const ColoredText = styled.span`
-  color: var(--ConfirmBlue, #0751c3);
+  color: ${({ theme }) => theme.colors.blue[400]};
   text-align: center;
-  font-family: Roboto;
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -38,8 +37,7 @@ export const ColoredText = styled.span`
 `;
 
 export const NormalText = styled.p`
-  color: var(--DarkGray, #616161);
-  font-family: Roboto;
+  color: ${({ theme }) => theme.colors.gray[700]};
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
