@@ -27,6 +27,10 @@ const theme = {
       800: "#3C3C3C", // navigationBlack
       900: "#1A1A1A" // textBlack
     }
+  },
+  shadows: {
+    1: "0px 1px 7px 0px rgba(0, 0, 0, 0.25)", // 은은한 쉐도우 & 위로 올라가는 쉐도우
+    2: "0px 3px 9.2px 0px rgba(0, 0, 0, 0.1)" // 하단 네비
   }
 };
 
