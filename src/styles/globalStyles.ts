@@ -39,6 +39,7 @@ const globalStyles = css`
   }
   body {
     line-height: 1;
+    background: black;
   }
   ol,
   ul {
@@ -48,6 +49,9 @@ const globalStyles = css`
     border: 0;
     background: transparent;
     cursor: pointer;
+  }
+  input {
+    font-family: "Pretendard";
   }
 
   @font-face {

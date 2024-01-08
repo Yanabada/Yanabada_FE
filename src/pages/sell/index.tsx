@@ -1,5 +1,5 @@
 import { startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
-import Calendar from "components/Calendar";
+import Calendar from "components/calendar";
 
 const Sell = () => {
   const currentMonth = new Date(2024, 0);
