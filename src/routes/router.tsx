@@ -1,9 +1,39 @@
-import { createBrowserRouter } from "react-router-dom";
+import BottomNavBar from "@components/navBar/bottomNavBar";
+import Chat from "@pages/chat";
+import MyPage from "@pages/myPage";
+import { Outlet, createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <h1>Hello World</h1>
+    element: (
+      <div>
+        <Outlet />
+        <BottomNavBar />
+      </div>
+    ),
+    children: [
+      {
+        index: true
+        // element: <Home />
+      },
+      {
+        path: "/search"
+        // element: <Search />
+      },
+      {
+        path: "/sell"
+        // element: <Sell />
+      },
+      {
+        path: "/chat",
+        element: <Chat />
+      },
+      {
+        path: "/myPage",
+        element: <MyPage />
+      }
+    ]
   }
 ]);
 
