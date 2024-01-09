@@ -1,3 +1,4 @@
+import Home from "@pages/home";
 import BottomNavBar from "@components/navBar/bottomNavBar";
 import Chat from "@pages/chat";
 import MyPage from "@pages/myPage";
@@ -15,8 +16,8 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        index: true
-        // element: <Home />
+        index: true,
+        element: <Home />
       },
       {
         path: "/search"
