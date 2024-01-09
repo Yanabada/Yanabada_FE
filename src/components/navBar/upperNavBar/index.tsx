@@ -8,13 +8,17 @@ interface UpperNavProp {
   text: string;
   type: "back" | "close";
   rightElement?: ReactNode;
+  setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
+  className?: string;
 }
 
 const UpperNavBar = ({
   hasBorder = true,
   text,
   type = "back",
-  rightElement = null
+  rightElement = null,
+  setIsVisible,
+  ...props
 }: UpperNavProp) => {
   const navigate = useNavigate();
 
@@ -36,7 +40,7 @@ const UpperNavBar = ({
         navigate(-1);
         break;
       case "close":
-        // FIXME - 닫기 동작 넣기
+        setIsVisible && setIsVisible(false);
         break;
       default:
         break;
@@ -44,10 +48,10 @@ const UpperNavBar = ({
   };
 
   return (
-    <S.UpperNavWrapper className={hasBorder ? "hasBorder" : ""}>
+    <S.UpperNavWrapper className={hasBorder ? "hasBorder" : ""} {...props}>
       <S.LeftIconWrapper onClick={handleClick}>{icon}</S.LeftIconWrapper>
       <S.TextWrapper>{text}</S.TextWrapper>
-      <S.RightIconWrapper>{rightElement}</S.RightIconWrapper>
+      {rightElement && <S.RightIconWrapper>{rightElement}</S.RightIconWrapper>}
     </S.UpperNavWrapper>
   );
 };
