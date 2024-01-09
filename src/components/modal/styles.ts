@@ -42,14 +42,10 @@ export const ButtonsWrapper = styled.div`
 `;
 
 export const TitleText = styled.div`
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 25px;
+  ${({ theme }) => theme.text.subtitle4}
 `;
 
 export const ContentText = styled.div`
   color: ${({ theme }) => theme.colors.gray[600]};
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 21px;
+  ${({ theme }) => theme.text.button2}
 `;

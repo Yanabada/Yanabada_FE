@@ -32,9 +32,7 @@ const UpperNavCenter = styled.div`
 `;
 
 export const TextWrapper = styled(UpperNavCenter)`
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 25px;
+  ${({ theme }) => theme.text.subtitle2}
   position: static;
 `;
 
