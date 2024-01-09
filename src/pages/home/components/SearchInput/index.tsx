@@ -5,7 +5,6 @@ const SearchInput = () => {
   const [searchInput, setSearchInput] = useState("");
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
     setSearchInput(event.target.value);
   };
   return (
