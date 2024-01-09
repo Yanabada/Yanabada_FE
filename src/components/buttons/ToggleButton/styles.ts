@@ -1,25 +1,4 @@
 import styled from "@emotion/styled";
-import { css } from "@emotion/react";
-
-// FIXME: 모듈화
-export const NormalTextLayout = css`
-  /* [Button2] 일반버튼 */
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 21px; /* 140% */
-`;
-
-// FIXME: 모듈화
-const BoldTextLayout = css`
-  /* [Button1] 버튼진하게 */
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px; /* 140% */
-`;
 
 export const ToggleButton = styled.button`
   display: flex;
@@ -34,14 +13,14 @@ export const ToggleButton = styled.button`
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[500]};
 
-  ${NormalTextLayout}
+  ${({ theme }) => theme.text.button2};
   text-align: center;
 
   &:hover {
     border: 1px solid ${({ theme }) => theme.colors.blue[200]};
     background: ${({ theme }) => theme.colors.gray[200]};
 
-    ${BoldTextLayout}
+    ${({ theme }) => theme.text.button1};
   }
 `;
 

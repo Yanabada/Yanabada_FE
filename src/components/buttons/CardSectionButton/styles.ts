@@ -12,36 +12,6 @@ const ButtonLayout = css`
   border-radius: 5px;
 `;
 
-// FIXME: 모듈화
-const BoldTextLayout = css`
-  /* [Button1] 버튼진하게 */
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px; /* 140% */
-`;
-
-// FIXME: 모듈화
-export const MainTextLayout = css`
-  /* [body2]본문 */
-  font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 21px; /* 150% */
-`;
-
-// FIXME: 모듈화
-export const ButtonListLayout = css`
-  /* [Subtitle6] 버튼리스트 */
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 22px; /* 137.5% */
-`;
-
 export const CardSectionWrapper = styled.div`
   display: flex;
   width: 332px;
@@ -75,7 +45,7 @@ export const ListButton = styled.button`
 `;
 
 export const ListButtonText = styled.p`
-  ${ButtonListLayout}
+  ${({ theme }) => theme.text.subtitle6};
   color: var(--M3-black, #000);
   text-align: center;
 `;
@@ -87,7 +57,7 @@ export const RightSectionWrapper = styled.div`
 `;
 
 export const RightSectionText = styled.p`
-  ${MainTextLayout}
+  ${({ theme }) => theme.text.body2};
   color: ${({ theme }) => theme.colors.gray[600]};
   text-align: right;
 `;
@@ -106,13 +76,13 @@ export const BottomLeftButton = styled.button`
 `;
 
 export const BottomLeftButtonText = styled.p`
-  ${BoldTextLayout}
+  ${({ theme }) => theme.text.button1};
   color: ${({ theme }) => theme.colors.blue[400]};
   text-align: center;
 `;
 
 export const BottomRightButtonText = styled.p`
-  ${BoldTextLayout}
+  ${({ theme }) => theme.text.button1};
   color: #fff;
   text-align: center;
 `;
