@@ -4,8 +4,7 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import { AnimatePresence } from "framer-motion";
 import { ReactNode } from "react";
 
-interface bottomSheetProp {
-  title?: string;
+interface bottomSheetProp extends Pick<React.HTMLAttributes<HTMLButtonElement>, "title"> {
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   children: ReactNode;

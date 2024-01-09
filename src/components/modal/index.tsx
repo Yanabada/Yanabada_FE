@@ -3,9 +3,8 @@ import * as S from "./styles";
 import BaseButton from "@components/buttons/BaseButton";
 import ModalPortal from "./ModalPortal";
 import { AnimatePresence } from "framer-motion";
-interface modalProp {
-  title: string;
-  content?: string;
+
+interface modalProp extends Pick<React.HTMLAttributes<HTMLButtonElement>, "title" | "content"> {
   leftBtnText?: string;
   rightBtnText?: string;
   isVisible: boolean;
