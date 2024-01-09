@@ -13,4 +13,5 @@
   background-color: #fff;
   display: flex;
   flex-direction: column;
+  padding: 56px 0 0 0; /* 헤더 높이 */
 }
