@@ -1,45 +1,29 @@
-import Calendar from "@components/calendar";
-import { startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
+import UpperNavBar from "@components/navBar/upperNavBar";
+import * as S from "./styles/styles";
 
 const Sell = () => {
-  const currentMonth = new Date(2024, 0);
-  const nextYear = new Date(currentMonth);
-  nextYear.setFullYear(currentMonth.getFullYear() + 1);
-  const today = new Date();
-
-  const seletedDates = eachDayOfInterval({
-    start: startOfMonth(currentMonth),
-    end: endOfMonth(currentMonth)
-  });
-
-  const excludeDates = seletedDates
-    .filter((date) => date.getDate() < 7 || date.getDate() > 11)
-    .concat(
-      eachDayOfInterval({
-        start: startOfMonth(new Date(currentMonth.getFullYear(), 1)),
-        end: endOfMonth(nextYear)
-      })
-    );
-
-  const renderDayContents = (dayOfMonth: number, date?: Date | null | undefined) => {
-    const isExcluded =
-      date instanceof Date &&
-      excludeDates.some((excludedDate) => excludedDate.getTime() === date.getTime());
-
-    const isBeforeToday = date instanceof Date && date < today;
-
-    return (
-      <div>
-        {dayOfMonth}
-        {!(isBeforeToday || isExcluded) && <span className="include-text">100,000</span>}
-        {(isBeforeToday || isExcluded) && <span className="exclude-text">0</span>}
-      </div>
-    );
-  };
-
   return (
     <>
-      <Calendar excludeDates={excludeDates} renderDayContents={renderDayContents} />
+      <UpperNavBar text="양도하기" type="back" />
+      <S.ProductListWrap>
+        <S.NoticeTitle>
+          판매할 숙소의 예약 내역을 선택하세요 <span>(필수)*</span>
+        </S.NoticeTitle>
+        <S.ListWrap>
+          <S.ListCard>카드</S.ListCard>
+          <button>상품 등록하기</button>
+        </S.ListWrap>
+        {/* <S.NoListWrap>
+          <img src="/src/assets/noitems-logo.png" />
+          <p className="tit">양도 가능한 상품이 없어요.</p>
+          <p className="desc">
+            야나바다에서는 야놀자에서 구매하신 숙소 중<br />
+            무료 취소가 불가능한 상품만
+            <br />
+            양도 거래가 가능합니다.
+          </p>
+        </S.NoListWrap> */}
+      </S.ProductListWrap>
     </>
   );
 };
