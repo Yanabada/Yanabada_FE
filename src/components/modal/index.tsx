@@ -1,7 +1,8 @@
 import React from "react";
 import * as S from "./styles";
 import BaseButton from "@components/buttons/BaseButton";
-
+import ModalPortal from "./ModalPortal";
+import { AnimatePresence } from "framer-motion";
 interface modalProp {
   title: string;
   content?: string;
@@ -24,15 +25,19 @@ const Modal = ({
   rightAction
 }: modalProp) => {
   return (
-    <>
+    <AnimatePresence>
       {isVisible && (
-        <>
+        <ModalPortal>
           <S.ModalBg
             onClick={() => {
               setIsVisible(false);
             }}
           />
-          <S.ModalWrapper>
+          <S.ModalWrapper
+            initial={{ y: "-70%", x: "-50%", opacity: 0 }}
+            animate={{ y: "-50%", opacity: 1 }}
+            exit={{ y: "0%", opacity: 0 }}
+          >
             <S.TitleText>{title}</S.TitleText>
             <S.ContentText> {content}</S.ContentText>
 
@@ -49,9 +54,9 @@ const Modal = ({
               )}
             </S.ButtonsWrapper>
           </S.ModalWrapper>
-        </>
+        </ModalPortal>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 

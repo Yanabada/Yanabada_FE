@@ -1,15 +1,17 @@
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 
 export const ModalBg = styled.div`
   position: absolute;
-  z-index: 1000;
+  z-index: 900;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 `;
-export const ModalWrapper = styled.div`
+
+export const ModalWrapper = styled(motion.div)`
   position: absolute;
   z-index: 1001;
   left: 50%;
