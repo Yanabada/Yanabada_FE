@@ -31,6 +31,76 @@ const theme = {
   shadows: {
     1: "0px 1px 7px 0px rgba(0, 0, 0, 0.25)", // 은은한 쉐도우 & 위로 올라가는 쉐도우
     2: "0px 3px 9.2px 0px rgba(0, 0, 0, 0.1)" // 하단 네비
+  },
+  text: {
+    subtitle2: {
+      fontSize: "20px",
+      fontWeight: 600,
+      lineHeight: "25px"
+    },
+    subtitle3: {
+      fontSize: "18px",
+      fontWeight: 500,
+      lineHeight: "25px"
+    },
+    subtitle4: {
+      fontSize: "17px",
+      fontWeight: 600,
+      lineHeight: "25px"
+    },
+    subtitle5: {
+      fontSize: "16px",
+      fontWeight: 500,
+      lineHeight: "23px"
+    },
+    subtitle6: {
+      fontSize: "16px",
+      fontWeight: 400,
+      lineHeight: "22px"
+    },
+    button1: {
+      fontSize: "15px",
+      fontWeight: 600,
+      lineHeight: "21px"
+    },
+    button2: {
+      fontSize: "15px",
+      fontWeight: 400,
+      lineHeight: "21px"
+    },
+    body1: {
+      fontSize: "14px",
+      fontWeight: 500,
+      lineHeight: "21px"
+    },
+    body2: {
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "21px"
+    },
+    body3: {
+      fontSize: "13px",
+      fontWeight: 400,
+      lineHeight: "21px",
+      letterSpacing: "-0.13px"
+    },
+    caption1: {
+      fontSize: "12px",
+      fontWeight: 400,
+      lineHeight: "21px",
+      letterSpacing: "-0.24px"
+    },
+    caption2: {
+      fontSize: "12px",
+      fontWeight: 400,
+      lineHeight: "21px",
+      letterSpacing: "-0.48px"
+    },
+    overline: {
+      fontSize: "11px",
+      fontWeight: 500,
+      lineHeight: "15px"
+    }
   }
 };
 
