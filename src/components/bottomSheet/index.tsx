@@ -30,7 +30,7 @@ const BottomSheet = ({ title, isVisible, setIsVisible, children }: bottomSheetPr
               <UpperNavBar
                 hasBorder={false}
                 type="close"
-                text={title}
+                title={title}
                 className="bottomSheet"
                 setIsVisible={setIsVisible}
               />
