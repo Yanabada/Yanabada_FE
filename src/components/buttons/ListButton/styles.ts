@@ -1,15 +1,4 @@
 import styled from "@emotion/styled";
-import { css } from "@emotion/react";
-
-// FIXME: 모듈화
-export const ButtonListLayout = css`
-  /* [Subtitle6] 버튼리스트 */
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 22px; /* 137.5% */
-`;
 
 export const ListButtonWrapper = styled.div`
   display: flex;
@@ -31,7 +20,7 @@ export const LeftSection = styled.div`
 `;
 
 export const Text = styled.p`
-  ${ButtonListLayout}
+  ${({ theme }) => theme.text.subtitle6};
   color: #000;
   text-align: center;
 `;

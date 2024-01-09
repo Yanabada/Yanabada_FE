@@ -14,26 +14,6 @@ const ButtonLayout = css`
   flex-shrink: 0;
 `;
 
-// FIXME: 모듈화
-const BoldTextLayout = css`
-  /* [Button1] 버튼진하게 */
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px; /* 140% */
-`;
-
-// FIXME: 모듈화
-export const NormalTextLayout = css`
-  /* [Button2] 일반버튼 */
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 21px; /* 140% */
-`;
-
 const DisabledButtonLayout = css`
   ${ButtonLayout}
   cursor: not-allowed;
@@ -41,7 +21,7 @@ const DisabledButtonLayout = css`
 
 export const LightColoredButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
-  ${BoldTextLayout}
+  ${({ theme }) => theme.text.button1};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.blue[50]};
@@ -52,7 +32,7 @@ export const LightColoredButton = styled.button<BaseButtonProps>`
 
 export const IconButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
-  ${BoldTextLayout}
+  ${({ theme }) => theme.text.button1};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.blue[200]};
@@ -63,7 +43,7 @@ export const IconButton = styled.button<BaseButtonProps>`
 
 export const DefaultButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
-  ${BoldTextLayout}
+  ${({ theme }) => theme.text.button1};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.blue[200]};
@@ -74,7 +54,7 @@ export const DefaultButton = styled.button<BaseButtonProps>`
 
 export const TransparentButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
-  ${NormalTextLayout}
+  ${({ theme }) => theme.text.button2};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[500]};
@@ -85,7 +65,7 @@ export const TransparentButton = styled.button<BaseButtonProps>`
 
 export const GrayColoredButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
-  ${NormalTextLayout}
+  ${({ theme }) => theme.text.button2};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.gray[100]};
@@ -96,7 +76,7 @@ export const GrayColoredButton = styled.button<BaseButtonProps>`
 
 export const KakaoButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
-  ${NormalTextLayout}
+  ${({ theme }) => theme.text.button2};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: #fee502;
@@ -107,7 +87,7 @@ export const KakaoButton = styled.button<BaseButtonProps>`
 
 export const NaverButton = styled.button<BaseButtonProps>`
   ${ButtonLayout}
-  ${NormalTextLayout}
+  ${({ theme }) => theme.text.button2};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: #03c73c;
@@ -118,7 +98,7 @@ export const NaverButton = styled.button<BaseButtonProps>`
 
 export const DisabledLightColoredButton = styled.button<BaseButtonProps>`
   ${DisabledButtonLayout}
-  ${BoldTextLayout}
+  ${({ theme }) => theme.text.button1};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.gray[100]};
@@ -129,7 +109,7 @@ export const DisabledLightColoredButton = styled.button<BaseButtonProps>`
 
 export const DisabledDefaultButton = styled.button<BaseButtonProps>`
   ${DisabledButtonLayout}
-  ${BoldTextLayout}
+  ${({ theme }) => theme.text.button1};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.gray[500]};
@@ -140,7 +120,7 @@ export const DisabledDefaultButton = styled.button<BaseButtonProps>`
 
 export const DisabledIconButton = styled.button<BaseButtonProps>`
   ${DisabledButtonLayout}
-  ${BoldTextLayout}
+  ${({ theme }) => theme.text.button1};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.gray[500]};
