@@ -10,8 +10,8 @@ export const Container = styled.div`
 `;
 
 export const Text = styled.p`
-  font-size: 14px;
-  font-weight: 400;
+  font-size: ${({ theme }) => theme.text.body2.fontSize};
+  font-weight: ${({ theme }) => theme.text.body2.fontWeight};
   line-height: 150%;
 
   color: ${({ theme }) => theme.colors.gray[600]};
@@ -30,8 +30,8 @@ export const Tag = styled.button`
 
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
 
-  font-size: 12px;
-  font-weight: 400;
+  font-size: ${({ theme }) => theme.text.caption1.fontSize};
+  font-weight: ${({ theme }) => theme.text.caption1.fontSize};
   line-height: 130%;
 
   color: ${({ theme }) => theme.colors.gray[600]};
