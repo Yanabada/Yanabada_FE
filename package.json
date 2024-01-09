@@ -50,6 +50,7 @@
     "husky": "^8.0.3",
     "kakao.maps.d.ts": "^0.1.39",
     "lint-staged": "^15.2.0",
+    "msw": "^2.0.13",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vite-plugin-svgr": "^4.2.0"
