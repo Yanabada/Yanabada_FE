@@ -9,6 +9,7 @@ interface UpperNavProp
   type: "back" | "close";
   rightElement?: ReactNode;
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
+  shape?: "fill" | "";
 }
 
 const UpperNavBar = ({
@@ -17,6 +18,7 @@ const UpperNavBar = ({
   type = "back",
   rightElement = null,
   setIsVisible,
+  shape = "",
   ...props
 }: UpperNavProp) => {
   const navigate = useNavigate();
@@ -47,7 +49,7 @@ const UpperNavBar = ({
   };
 
   return (
-    <S.UpperNavWrapper className={hasBorder ? "hasBorder" : ""} {...props}>
+    <S.UpperNavWrapper className={hasBorder ? `${hasBorder} ${shape}` : `${shape}`} {...props}>
       <S.LeftIconWrapper onClick={handleClick}>{icon}</S.LeftIconWrapper>
       <S.TextWrapper>{title}</S.TextWrapper>
       {rightElement && <S.RightIconWrapper>{rightElement}</S.RightIconWrapper>}
