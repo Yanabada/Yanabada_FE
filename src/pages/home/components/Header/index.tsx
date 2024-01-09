@@ -12,7 +12,9 @@ const Header = () => {
           <NumberBadge number={99} />
           <FaRegBell className="bell" />
         </S.BellContainer>
-        <LogoIcon />
+        <S.LogoContainer>
+          <LogoIcon />
+        </S.LogoContainer>
         <S.GotoContainer>
           <S.GotoText>야놀자 바로가기</S.GotoText>
           <YanoljaIcon />

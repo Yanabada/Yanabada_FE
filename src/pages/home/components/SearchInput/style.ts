@@ -42,7 +42,7 @@ export const Input = styled.input`
   border-radius: 200px;
   border: 1px solid #fff;
   background: rgba(255, 255, 255, 0.4);
-  box-shadow: 0px 3.852px 17.142px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ theme }) => theme.shadows[2]};
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray[700]};
@@ -79,9 +79,9 @@ export const UserInputIcon = styled(FaRegUser)`
 export const ProductNumberText = styled.p`
   text-align: center;
   color: #fff;
-  font-size: 0.9375rem;
-  font-weight: 400;
-  line-height: 1.3125rem;
+  font-size: ${({ theme }) => theme.text.button2.fontSize};
+  font-weight: ${({ theme }) => theme.text.button2.fontWeight};
+  line-height: ${({ theme }) => theme.text.button2.lineHeight};
 `;
 
 export const SearchButton = styled(motion.button)`
@@ -90,7 +90,7 @@ export const SearchButton = styled(motion.button)`
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[100]};
   background: #fff;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  line-height: 1.3125rem;
+  font-size: ${({ theme }) => theme.text.button1.fontSize};
+  font-weight: ${({ theme }) => theme.text.button1.fontWeight};
+  line-height: ${({ theme }) => theme.text.button1.lineHeight};
 `;
