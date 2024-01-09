@@ -20,6 +20,9 @@ export const UpperNavWrapper = styled.div`
     position: static;
     border-radius: 10px 10px 0 0;
   }
+  &.fill {
+    background-color: #fff;
+  }
 `;
 
 const UpperNavCenter = styled.div`
