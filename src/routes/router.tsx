@@ -2,6 +2,7 @@ import Home from "@pages/home";
 import BottomNavBar from "@components/navBar/bottomNavBar";
 import Chat from "@pages/chat";
 import MyPage from "@pages/myPage";
+import Sell from "@pages/sell";
 import { Outlet, createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -23,8 +24,8 @@ const router = createBrowserRouter([
         // element: <Search />
       },
       {
-        path: "/sell"
-        // element: <Sell />
+        path: "/sell",
+        element: <Sell />
       },
       {
         path: "/chat",
