@@ -32,18 +32,13 @@ export const NoticeWrapper = styled.div`
 
 export const NoticeTitle = styled.div`
   color: ${({ theme }) => theme.colors.blue[200]};
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 21px;
+  ${({ theme }) => theme.text.body2}
 `;
 export const TextWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 21px;
+  ${({ theme }) => theme.text.body2}
 `;
 
 export const IconBox = styled.div`
