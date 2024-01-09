@@ -16,6 +16,10 @@ export const UpperNavWrapper = styled.div`
   &.hasBorder {
     border-bottom: 1px solid ${(props) => props.theme.colors.gray[100]};
   }
+  &.bottomSheet {
+    position: static;
+    border-radius: 10px 10px 0 0;
+  }
 `;
 
 const UpperNavCenter = styled.div`
@@ -28,6 +32,7 @@ export const TextWrapper = styled(UpperNavCenter)`
   font-weight: 600;
   font-size: 20px;
   line-height: 25px;
+  position: static;
 `;
 
 export const LeftIconWrapper = styled(UpperNavCenter)`
