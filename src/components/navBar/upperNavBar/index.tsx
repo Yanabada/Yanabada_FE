@@ -3,18 +3,17 @@ import { IoChevronBackSharp, IoCloseSharp } from "react-icons/io5";
 import { useNavigate } from "react-router";
 import { ReactNode } from "react";
 
-interface UpperNavProp {
+interface UpperNavProp
+  extends Pick<React.HTMLAttributes<HTMLButtonElement>, "className" | "title"> {
   hasBorder?: boolean;
-  text: string;
   type: "back" | "close";
   rightElement?: ReactNode;
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
-  className?: string;
 }
 
 const UpperNavBar = ({
   hasBorder = true,
-  text,
+  title,
   type = "back",
   rightElement = null,
   setIsVisible,
@@ -50,7 +49,7 @@ const UpperNavBar = ({
   return (
     <S.UpperNavWrapper className={hasBorder ? "hasBorder" : ""} {...props}>
       <S.LeftIconWrapper onClick={handleClick}>{icon}</S.LeftIconWrapper>
-      <S.TextWrapper>{text}</S.TextWrapper>
+      <S.TextWrapper>{title}</S.TextWrapper>
       {rightElement && <S.RightIconWrapper>{rightElement}</S.RightIconWrapper>}
     </S.UpperNavWrapper>
   );
