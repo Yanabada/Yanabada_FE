@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
+import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
 import CautionIcon from "@assets/icons/CautionIcon.svg?react";
 import QuestionIcon from "@assets/icons/QuestionIcon.svg?react";
 
