@@ -7,9 +7,10 @@ export const Carousel = styled.div`
 `;
 
 export const CarouselItem = styled(motion.div)`
-  position: absolute;
+  position: relative;
+  margin: 0 auto;
 
-  width: 100%;
+  width: 276px;
   height: 104px;
 
   overflow: hidden;
