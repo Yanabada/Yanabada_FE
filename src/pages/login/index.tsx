@@ -4,7 +4,7 @@ import YanoljaIcon from "@assets/icons/logo_yanolja_gray.svg?react";
 import { GrClose } from "react-icons/gr";
 import { IoChevronForwardSharp } from "react-icons/io5";
 import BaseButton from "@components/buttons/BaseButton";
-import * as S from "./styles/loginStyle";
+import * as S from "./styles/login.styles";
 import { useNavigate } from "react-router";
 
 const Login = () => {
