@@ -3,18 +3,23 @@ import { IoChevronBackSharp, IoCloseSharp } from "react-icons/io5";
 import { useNavigate } from "react-router";
 import { ReactNode } from "react";
 
-interface UpperNavProp {
+interface UpperNavProp
+  extends Pick<React.HTMLAttributes<HTMLButtonElement>, "className" | "title"> {
   hasBorder?: boolean;
-  text: string;
   type: "back" | "close";
   rightElement?: ReactNode;
+  setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
+  shape?: "fill" | "";
 }
 
 const UpperNavBar = ({
   hasBorder = true,
-  text,
+  title,
   type = "back",
-  rightElement = null
+  rightElement = null,
+  setIsVisible,
+  shape = "",
+  ...props
 }: UpperNavProp) => {
   const navigate = useNavigate();
 
@@ -36,7 +41,7 @@ const UpperNavBar = ({
         navigate(-1);
         break;
       case "close":
-        // FIXME - 닫기 동작 넣기
+        setIsVisible && setIsVisible(false);
         break;
       default:
         break;
@@ -44,10 +49,10 @@ const UpperNavBar = ({
   };
 
   return (
-    <S.UpperNavWrapper className={hasBorder ? "hasBorder" : ""}>
+    <S.UpperNavWrapper className={hasBorder ? `${hasBorder} ${shape}` : `${shape}`} {...props}>
       <S.LeftIconWrapper onClick={handleClick}>{icon}</S.LeftIconWrapper>
-      <S.TextWrapper>{text}</S.TextWrapper>
-      <S.RightIconWrapper>{rightElement}</S.RightIconWrapper>
+      <S.TextWrapper>{title}</S.TextWrapper>
+      {rightElement && <S.RightIconWrapper>{rightElement}</S.RightIconWrapper>}
     </S.UpperNavWrapper>
   );
 };
