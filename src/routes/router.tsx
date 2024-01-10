@@ -6,6 +6,7 @@ import Sell from "@pages/sell";
 import Products from "@pages/products";
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import Login from "@pages/login";
+import EmailLogin from "@pages/login/EmailLogin";
 import Search from "@pages/search";
 
 const router = createBrowserRouter([
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />
+      },
+      {
+        path: "/emailLogin",
+        element: <EmailLogin />
       }
     ]
   }
