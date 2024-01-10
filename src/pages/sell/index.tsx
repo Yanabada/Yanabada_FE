@@ -3,7 +3,7 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 const Sell = () => {
   return (
     <>
-      <UpperNavBar text="양도하기" type="back" />
+      <UpperNavBar title="양도하기" type="back" />
     </>
   );
 };

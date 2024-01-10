@@ -46,6 +46,7 @@ const globalStyles = css`
     list-style: none;
   }
   button {
+    font-family: "Pretendard";
     border: 0;
     background: transparent;
     cursor: pointer;
