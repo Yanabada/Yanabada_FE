@@ -38,7 +38,7 @@ export const Badge = styled.div`
   gap: 2px;
 
   border-radius: 39px;
-  background: var(--AlertOrange, #ff7456);
+  background: ${({ theme }) => theme.colors.orange[200]};
 `;
 
 export const BadgeText = styled.p`
