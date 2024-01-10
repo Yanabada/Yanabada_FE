@@ -33,9 +33,12 @@ export const NoticeWrapper = styled.div`
 export const NoticeTitle = styled.div`
   color: ${({ theme }) => theme.colors.blue[200]};
   ${({ theme }) => theme.text.body2}
-  &.question {
+  &.orange {
     color: ${({ theme }) => theme.colors.orange[200]};
   }
+  /* &.question {
+    color: ${({ theme }) => theme.colors.orange[200]};
+  } */
 `;
 export const TextWrapper = styled.div`
   width: 100%;
