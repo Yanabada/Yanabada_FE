@@ -24,7 +24,7 @@ export const BtnWrapper = styled.div`
   gap: 9px;
 `;
 
-export const EmailLogin = styled.button`
+export const BtnFlex = styled.button`
   display: flex;
   gap: 5px;
   justify-content: center;
@@ -40,4 +40,24 @@ export const EmailLogin = styled.button`
       transform: translateX(5px);
     }
   }
+`;
+
+export const EmailLoginContainer = styled.div`
+  padding: 32px 14px 0;
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin: 0 0 36px;
+`;
+
+export const BtnFlexContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 24px 0 0;
+  gap: 15px;
+  color: ${({ theme }) => theme.colors.gray[300]};
 `;
