@@ -20,6 +20,9 @@ export const UpperNavWrapper = styled.div`
     position: static;
     border-radius: 10px 10px 0 0;
   }
+  &.fill {
+    background-color: #fff;
+  }
 `;
 
 const UpperNavCenter = styled.div`
@@ -29,9 +32,7 @@ const UpperNavCenter = styled.div`
 `;
 
 export const TextWrapper = styled(UpperNavCenter)`
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 25px;
+  ${({ theme }) => theme.text.subtitle2}
   position: static;
 `;
 
