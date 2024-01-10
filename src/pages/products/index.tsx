@@ -18,7 +18,7 @@ interface Bounds {
   smallY: number;
 }
 
-const Search = () => {
+const Products = () => {
   const [state, setState] = useState<StateType>({
     center: {
       lat: 33.450701,
@@ -134,4 +134,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default Products;
