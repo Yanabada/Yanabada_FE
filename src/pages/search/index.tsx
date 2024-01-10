@@ -1,5 +1,8 @@
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import Input from "./components/Input";
+import SearchTab from "./components/Input";
+import SearchIcon from "@assets/icons/search_Search.svg?react";
+import CalendarIcon from "@assets/icons/search_Calendar.svg?react";
+import PersonIcon from "@assets/icons/search_Person.svg?react";
 import { useEffect, useRef, useState } from "react";
 
 interface StateType {
@@ -71,9 +74,49 @@ const Search = () => {
     setBounds({ smallX: sX, smallY: sY, bigX: bX, bigY: bY });
   };
 
+  const [openTab, setOpenTab] = useState("keyword");
+
   return (
     <div>
-      <Input />
+      <SearchTab
+        isOpen={openTab === "keyword"}
+        setIsOpen={() => setOpenTab("keyword")}
+        icon={<SearchIcon />}
+        leftPlaceholder="키워드"
+        rightPlaceholder="전체 지역"
+      >
+        <p>dd</p>
+        <p>dd</p>
+        <p>dd</p>
+        <p>dd</p>
+        <p>dd</p>
+      </SearchTab>
+      <SearchTab
+        isOpen={openTab === "calendar"}
+        setIsOpen={() => setOpenTab("calendar")}
+        icon={<CalendarIcon />}
+        leftPlaceholder="일정"
+        rightPlaceholder="전체 기간"
+      >
+        <p>dd</p>
+        <p>dd</p>
+        <p>dd</p>
+        <p>dd</p>
+        <p>dd</p>
+      </SearchTab>
+      <SearchTab
+        isOpen={openTab === "person"}
+        setIsOpen={() => setOpenTab("person")}
+        icon={<PersonIcon />}
+        leftPlaceholder="인원"
+        rightPlaceholder="성인 2명"
+      >
+        <p>dd</p>
+        <p>dd</p>
+        <p>dd</p>
+        <p>dd</p>
+        <p>dd</p>
+      </SearchTab>
       <Map
         center={state.center}
         style={{
