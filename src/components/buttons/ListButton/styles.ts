@@ -1,8 +1,12 @@
 import styled from "@emotion/styled";
 
-export const ListButtonWrapper = styled.div`
+interface ListButtonProps {
+  width?: string;
+}
+
+export const ListButtonWrapper = styled.div<ListButtonProps>`
   display: flex;
-  width: 331px;
+  width: ${({ width }) => width || "100%"};
   height: 50px;
   padding: 10px 0px;
   justify-content: space-between;
@@ -23,4 +27,26 @@ export const Text = styled.p`
   ${({ theme }) => theme.text.subtitle6};
   color: #000;
   text-align: center;
+`;
+
+export const Badge = styled.div`
+  display: inline-flex;
+  min-width: 16px;
+  padding: 0px 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+
+  border-radius: 39px;
+  background: var(--AlertOrange, #ff7456);
+`;
+
+export const BadgeText = styled.p`
+  color: #fff;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%; /* 15.6px */
 `;
