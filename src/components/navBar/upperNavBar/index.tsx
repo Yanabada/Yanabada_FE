@@ -10,6 +10,7 @@ interface UpperNavProp
   rightElement?: ReactNode;
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
   shape?: "fill" | "";
+  color?: string;
 }
 
 const UpperNavBar = ({
@@ -19,6 +20,7 @@ const UpperNavBar = ({
   rightElement = null,
   setIsVisible,
   shape = "",
+  color,
   ...props
 }: UpperNavProp) => {
   const navigate = useNavigate();
@@ -51,7 +53,9 @@ const UpperNavBar = ({
   return (
     <S.UpperNavWrapper className={hasBorder ? `${hasBorder} ${shape}` : `${shape}`} {...props}>
       <S.LeftIconWrapper onClick={handleClick}>{icon}</S.LeftIconWrapper>
-      <S.TextWrapper>{title}</S.TextWrapper>
+      <S.TextWrapper color={color} {...props} {...props}>
+        {title}
+      </S.TextWrapper>
       {rightElement && <S.RightIconWrapper>{rightElement}</S.RightIconWrapper>}
     </S.UpperNavWrapper>
   );
