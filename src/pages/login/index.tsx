@@ -5,11 +5,14 @@ import { GrClose } from "react-icons/gr";
 import { IoChevronForwardSharp } from "react-icons/io5";
 import BaseButton from "@components/buttons/BaseButton";
 import * as S from "./styles/loginStyle";
+import { useNavigate } from "react-router";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   return (
     <S.LoginContainer>
-      <UpperNavBar title="로그인" type="back" />
+      <UpperNavBar title="로그인" type="back" shape="fill" />
       <S.LogoWrapper>
         <YanabanaIcon />
         <GrClose style={{ color: "#E6E6E6" }} />
@@ -22,10 +25,10 @@ const Login = () => {
           네이버로 시작하기
         </BaseButton>
       </S.BtnWrapper>
-      <S.EmailLogin>
+      <S.BtnFlex onClick={() => navigate("/emailLogin")}>
         이메일로 시작하기
         <IoChevronForwardSharp style={{ color: "#616161" }} />
-      </S.EmailLogin>
+      </S.BtnFlex>
     </S.LoginContainer>
   );
 };
