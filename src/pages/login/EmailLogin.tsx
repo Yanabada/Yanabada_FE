@@ -2,7 +2,7 @@ import TextInput from "@components/input/TextInput";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import BaseButton from "@components/buttons/BaseButton";
 import { IoChevronForwardSharp } from "react-icons/io5";
-import * as S from "./styles/loginStyle";
+import * as S from "./styles/login.styles";
 import { useState } from "react";
 
 const EmailLogin = () => {
