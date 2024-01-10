@@ -1,27 +1,53 @@
 import styled from "@emotion/styled";
 
-export const Wrapper = styled.div`
+interface SubtitleProps {
+  color: string;
+}
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  padding: 9px 16px;
+
+  border: 1.5px solid #fff;
+  border-radius: 20px;
+  box-shadow: 0px 3.852px 17.142px 0px rgba(0, 0, 0, 0.1);
+
+  transition: all 0.2s ease;
+`;
+
+export const Wrapper = styled.button`
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+`;
 
-  padding: 9px 12px;
+export const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-  border: 1.5px solid #fff;
-  border-radius: 208.017px;
-  box-shadow: 0px 3.852px 17.142px 0px rgba(0, 0, 0, 0.1);
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+  }
 `;
 
 export const SearchIcon = styled;
 
-export const Input = styled.input`
+export const Subtitle = styled.h2<SubtitleProps>`
   width: 100%;
 
-  padding-left: 10px;
+  padding-block: 10px;
 
   border: none;
   outline: none;
 
-  font-size: 14px;
-  line-height: 150%;
+  ${({ theme }) => theme.text.subtitle6};
+  color: ${({ color }) => color};
 `;
