@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky install",
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/vite.svg"
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/cat.png"
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --fix"
@@ -20,6 +20,7 @@
     "@tanstack/react-query": "^5.14.6",
     "@tanstack/react-query-devtools": "^5.14.7",
     "axios": "^1.6.2",
+    "popmotion": "^11.0.5",
     "date-fns": "^3.0.6",
     "framer-motion": "^10.16.16",
     "react": "^18.2.0",
@@ -40,6 +41,7 @@
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
+    "@vite-pwa/assets-generator": "^0.2.2",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
