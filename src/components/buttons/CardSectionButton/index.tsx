@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
-import YanoljaIcon from "@assets/icons/yanoljaIcon.svg?react";
+import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
 interface CardSectionProps {
   // FIXME: `type` 이라고 naming시 에러 발생
   types: "abledPay" | "disabledPay" | "abledPoint" | "disabledPoint";
