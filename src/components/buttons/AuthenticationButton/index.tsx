@@ -5,7 +5,7 @@ interface AuthenticationButtonProps
   type: "light" | "default" | "abled" | "disabled";
 }
 
-const index = ({ type, children, ...props }: AuthenticationButtonProps) => {
+const AuthenticationButton = ({ type, children, ...props }: AuthenticationButtonProps) => {
   switch (type) {
     case "light":
       return <S.LightAuthenticationButton {...props}>{children}</S.LightAuthenticationButton>;
@@ -20,4 +20,4 @@ const index = ({ type, children, ...props }: AuthenticationButtonProps) => {
   }
 };
 
-export default index;
+export default AuthenticationButton;

@@ -5,7 +5,7 @@ interface ToggleButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonEl
   type: "icon" | "default";
 }
 
-const index = ({ type, children, ...props }: ToggleButtonProps) => {
+const ToggleButton = ({ type, children, ...props }: ToggleButtonProps) => {
   switch (type) {
     case "icon":
       return (
@@ -29,4 +29,4 @@ const index = ({ type, children, ...props }: ToggleButtonProps) => {
   }
 };
 
-export default index;
+export default ToggleButton;
