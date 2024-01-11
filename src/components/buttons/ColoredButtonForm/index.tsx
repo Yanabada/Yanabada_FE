@@ -1,13 +1,14 @@
 import * as S from "./styles";
 
-interface ColoredButtonFormProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
+interface ColoredButtonFormProps {
+  children: React.ReactNode;
   isTextExist?: boolean;
+  width?: string;
 }
 
-const index = ({ isTextExist = false, children }: ColoredButtonFormProps) => {
+const ColoredButtonForm = ({ isTextExist = false, width, children }: ColoredButtonFormProps) => {
   return (
-    <S.ColoredButtonWrapper>
+    <S.ColoredButtonWrapper width={width}>
       {isTextExist && (
         <>
           <S.NormalText>
@@ -20,4 +21,4 @@ const index = ({ isTextExist = false, children }: ColoredButtonFormProps) => {
   );
 };
 
-export default index;
+export default ColoredButtonForm;

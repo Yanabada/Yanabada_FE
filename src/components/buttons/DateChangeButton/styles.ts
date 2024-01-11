@@ -1,29 +1,12 @@
 import styled from "@emotion/styled";
-import { css } from "@emotion/react";
 
-// FIXME: 모듈화
-export const NormalTextLayout = css`
-  /* [Button2] 일반버튼 */
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 21px; /* 140% */
-`;
+interface DateChangeButtonProps {
+  width?: string;
+}
 
-// FIXME: 모듈화
-export const MainTextLayout = css`
-  /* [body2]본문 */
-  font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 21px; /* 150% */
-`;
-
-export const DateChangeButton = styled.button`
+export const DateChangeButton = styled.button<DateChangeButtonProps>`
   display: flex;
-  width: 332px;
+  width: ${({ width }) => width || "332px"};
   padding: 12px 8px;
   justify-content: space-between;
   align-items: center;
@@ -41,13 +24,13 @@ export const LeftSection = styled.div`
 `;
 
 export const Label = styled.p`
-  ${NormalTextLayout}
+  ${({ theme }) => theme.text.button2};
   color: ${({ theme }) => theme.colors.gray[900]};
   text-align: center;
 `;
 
 export const DescriptionLabel = styled.p`
-  ${MainTextLayout}
+  ${({ theme }) => theme.text.body2};
   color: ${({ theme }) => theme.colors.gray[600]};
 `;
 
