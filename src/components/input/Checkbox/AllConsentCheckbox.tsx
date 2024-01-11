@@ -2,7 +2,11 @@ import { ChangeEvent, useState } from "react";
 import * as S from "./allConsentCheckbox.style";
 import CheckIcon from "@assets/icons/checkbox_Check.svg?react";
 
-const AllConsentCheckbox = () => {
+export interface AllConsentCheckboxProps {
+  content?: string;
+}
+
+const AllConsentCheckbox = ({ content }: AllConsentCheckboxProps) => {
   const [checked, setChecked] = useState(false);
 
   const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +22,13 @@ const AllConsentCheckbox = () => {
         </S.Icon>
       </S.IconWrapper>
       <S.Label htmlFor="agreement">
-        전체 동의 <span>(선택 포함)</span>
+        {content ? (
+          <p className="content">{content}</p>
+        ) : (
+          <p>
+            전체 동의 <span>(선택 포함)</span>
+          </p>
+        )}
       </S.Label>
     </S.Wrapper>
   );
