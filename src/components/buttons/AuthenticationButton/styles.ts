@@ -1,9 +1,12 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
+interface AuthenticationButtonProps {
+  width?: string;
+}
+
 const ButtonLayout = css`
   display: flex;
-  width: 332px;
   height: 28px;
   justify-content: center;
   align-items: center;
@@ -11,31 +14,35 @@ const ButtonLayout = css`
   flex-shrink: 0;
 `;
 
-export const LightAuthenticationButton = styled.button`
+export const LightAuthenticationButton = styled.button<AuthenticationButtonProps>`
   ${ButtonLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
 
   color: ${({ theme }) => theme.colors.gray[700]};
 `;
 
-export const DefaultAuthenticationButton = styled.button`
+export const DefaultAuthenticationButton = styled.button<AuthenticationButtonProps>`
   ${ButtonLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[500]};
 
   color: ${({ theme }) => theme.colors.gray[700]};
 `;
 
-export const AbledAuthenticationButton = styled.button`
+export const AbledAuthenticationButton = styled.button<AuthenticationButtonProps>`
   ${ButtonLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   border: 1px ${({ theme }) => theme.colors.gray[700]};
   background: ${({ theme }) => theme.colors.gray[200]};
 `;
 
-export const DisAbledAuthenticationButton = styled.button`
+export const DisAbledAuthenticationButton = styled.button<AuthenticationButtonProps>`
   ${ButtonLayout}
+  width: ${({ width }) => width || "332px"};
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.blue[200]};
 
