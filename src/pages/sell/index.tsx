@@ -13,6 +13,7 @@ const Sell = () => {
           <S.ListCard>카드</S.ListCard>
           <button>상품 등록하기</button>
         </S.ListWrap>
+        {/* 상품이 없는 경우 */}
         {/* <S.NoListWrap>
           <img src="/src/assets/noitems-logo.png" />
           <p className="tit">양도 가능한 상품이 없어요.</p>
