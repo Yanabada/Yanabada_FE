@@ -11,7 +11,8 @@ export const UpperNavWrapper = styled.div`
 
   text-align: center;
 
-  background-color: transparent;
+  background-color: #fff;
+  z-index: 999;
 
   &.hasBorder {
     border-bottom: 1px solid ${(props) => props.theme.colors.gray[100]};
