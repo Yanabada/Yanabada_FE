@@ -95,6 +95,8 @@ const CardSectionButton = ({ types, width }: CardSectionProps) => {
           </S.ListButtonWrapper>
         </S.CardSectionWrapper>
       );
+    default:
+      return null;
   }
 };
 
