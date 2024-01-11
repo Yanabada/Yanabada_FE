@@ -5,7 +5,7 @@ interface ColoredButtonFormProps
   isTextExist?: boolean;
 }
 
-const index = ({ isTextExist = false, children }: ColoredButtonFormProps) => {
+const ColoredButtonForm = ({ isTextExist = false, children }: ColoredButtonFormProps) => {
   return (
     <S.ColoredButtonWrapper>
       {isTextExist && (
@@ -20,4 +20,4 @@ const index = ({ isTextExist = false, children }: ColoredButtonFormProps) => {
   );
 };
 
-export default index;
+export default ColoredButtonForm;

@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import { FaRegCalendarAlt } from "react-icons/fa";
 
-const index = () => {
+const DateChangeButton = () => {
   return (
     <S.DateChangeButton>
       <S.LeftSection>
@@ -15,4 +15,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default DateChangeButton;

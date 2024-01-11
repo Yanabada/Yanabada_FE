@@ -8,7 +8,7 @@ interface ListButtonProps {
   alertCount?: number;
 }
 
-const index = ({ width, alertCount, children }: ListButtonProps) => {
+const ListButton = ({ width, alertCount, children }: ListButtonProps) => {
   console.log(alertCount);
 
   return (
@@ -27,4 +27,4 @@ const index = ({ width, alertCount, children }: ListButtonProps) => {
   );
 };
 
-export default index;
+export default ListButton;
