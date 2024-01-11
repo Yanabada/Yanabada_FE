@@ -118,7 +118,7 @@ const Products = () => {
         <p>dd</p>
         <p>dd</p>
       </SearchTab>
-      <BottomActions isActive={false} />
+      <BottomActions />
       <Map
         center={state.center}
         style={{

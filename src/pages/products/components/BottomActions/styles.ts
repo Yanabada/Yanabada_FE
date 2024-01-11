@@ -6,6 +6,8 @@ export const ResetButton = styled.button`
   align-items: center;
   gap: 0.5rem;
 
+  width: 50%;
+
   div {
     display: flex;
     justify-content: center;

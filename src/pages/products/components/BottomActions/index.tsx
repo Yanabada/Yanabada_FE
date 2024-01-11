@@ -4,16 +4,20 @@ import * as S from "./styles";
 import { FlexCenter } from "@styles/base";
 import { useState } from "react";
 import Modal from "@components/modal";
+import { useLocation, useNavigate } from "react-router-dom";
 
-interface BottomActionsProps {
-  isActive: boolean;
-}
-
-const BottomActions = ({ isActive = false }: BottomActionsProps) => {
+const BottomActions = () => {
   const [isResetModalOpen, setResetModalOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const params = new URLSearchParams(location.search);
+  const keyword = params.get("keyword");
+  const isActive = !!keyword;
 
   const handleReset = () => {
-    // url params 초기화
+    setResetModalOpen(false);
+    navigate(location.pathname);
   };
 
   return (
@@ -35,11 +39,11 @@ const BottomActions = ({ isActive = false }: BottomActionsProps) => {
         setIsVisible={setResetModalOpen}
       />
       {isActive ? (
-        <BaseButton type="icon" width="auto">
+        <BaseButton type="icon" width="50%">
           검색하기
         </BaseButton>
       ) : (
-        <BaseButton type="disabled-icon" width="auto">
+        <BaseButton type="disabled-icon" width="50%">
           검색하기
         </BaseButton>
       )}
