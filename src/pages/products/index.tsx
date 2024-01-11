@@ -4,6 +4,7 @@ import SearchIcon from "@assets/icons/search_Search.svg?react";
 import CalendarIcon from "@assets/icons/search_Calendar.svg?react";
 import PersonIcon from "@assets/icons/search_Person.svg?react";
 import { useEffect, useRef, useState } from "react";
+import BottomActions from "./components/BottomActions";
 
 interface StateType {
   center: { lat: number; lng: number };
@@ -117,6 +118,7 @@ const Products = () => {
         <p>dd</p>
         <p>dd</p>
       </SearchTab>
+      <BottomActions isActive={false} />
       <Map
         center={state.center}
         style={{
