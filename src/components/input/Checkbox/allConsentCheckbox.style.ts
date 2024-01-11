@@ -1,13 +1,14 @@
 import styled from "@emotion/styled";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ transparent?: boolean }>`
   display: flex;
   align-items: center;
 
   padding: 12px 8px;
 
   border-radius: 5px;
-  background-color: ${({ theme }) => theme.colors.gray[100]};
+  background-color: ${({ theme, transparent }) =>
+    transparent ? "transparent" : theme.colors.gray[100]};
 
   span {
     font-size: 14px;
@@ -33,10 +34,6 @@ export const Label = styled.label`
   font-weight: ${({ theme }) => theme.text.button1.fontWeight};
 
   cursor: pointer;
-
-  .content {
-    opacity: 0.5;
-  }
 `;
 
 export const IconWrapper = styled.div`

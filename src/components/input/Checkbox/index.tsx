@@ -7,12 +7,12 @@ type CheckboxProps =
   | (AllConsentCheckboxProps & { variant: "all" })
   | (IndividualConsentCheckboxProps & { variant: "individual" });
 
-const Checkbox = ({ variant = "all", content, ...individualProps }: CheckboxProps) => {
+const Checkbox = ({ variant, ...props }: CheckboxProps) => {
   switch (variant) {
     case "all":
-      return <AllConsentCheckbox content={content} />;
+      return <AllConsentCheckbox {...(props as AllConsentCheckboxProps)} />;
     case "individual":
-      return <IndividualConsentCheckbox {...(individualProps as IndividualConsentCheckboxProps)} />;
+      return <IndividualConsentCheckbox {...(props as IndividualConsentCheckboxProps)} />;
     default:
       return <AllConsentCheckbox />;
   }
