@@ -2,6 +2,11 @@ import styled from "@emotion/styled";
 
 interface ImageButtonProps {
   imageURL: string;
+  width?: string;
+}
+
+interface TextWrapperProps {
+  width?: string;
 }
 
 export const ImageButtonWrapper = styled.button<ImageButtonProps>`
@@ -9,8 +14,8 @@ export const ImageButtonWrapper = styled.button<ImageButtonProps>`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  width: 106px;
-  height: 106px;
+  width: ${({ width }) => width || "106px"};
+  height: ${({ width }) => width || "106px"};
   flex-shrink: 0;
   background-color: lightgray;
   background-image: url(${({ imageURL }) => imageURL});
@@ -20,14 +25,14 @@ export const ImageButtonWrapper = styled.button<ImageButtonProps>`
   border-radius: 25px;
 `;
 
-export const ImageButtonTextWrapper = styled.div`
+export const ImageButtonTextWrapper = styled.div<TextWrapperProps>`
   position: absolute;
   bottom: 0;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  width: 102px;
-  height: 62px;
+  width: ${({ width }) => `calc(${width} - 4px)` || "102px"};
+  height: ${({ width }) => `calc(${width} - 44px)` || "62px"};
   flex-shrink: 0;
 
   background: linear-gradient(0deg, #1a1a1a 0%, rgba(26, 26, 26, 0) 79.27%);
@@ -41,6 +46,7 @@ export const ImageButtonText = styled.p`
 
   color: #fff;
   text-align: center;
+  margin-bottom: 7%;
 
   /* 위로올라가는쉐도우 */
   text-shadow: ${({ theme }) => theme.shadows[1]};

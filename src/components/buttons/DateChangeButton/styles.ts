@@ -1,8 +1,12 @@
 import styled from "@emotion/styled";
 
-export const DateChangeButton = styled.button`
+interface DateChangeButtonProps {
+  width?: string;
+}
+
+export const DateChangeButton = styled.button<DateChangeButtonProps>`
   display: flex;
-  width: 332px;
+  width: ${({ width }) => width || "332px"};
   padding: 12px 8px;
   justify-content: space-between;
   align-items: center;

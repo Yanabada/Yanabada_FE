@@ -1,9 +1,13 @@
 import * as S from "./styles";
 import { FaRegCalendarAlt } from "react-icons/fa";
 
-const DateChangeButton = () => {
+interface DateChangeButtonProps {
+  width?: string;
+}
+
+const DateChangeButton = ({ width }: DateChangeButtonProps) => {
   return (
-    <S.DateChangeButton>
+    <S.DateChangeButton width={width}>
       <S.LeftSection>
         <FaRegCalendarAlt size="18px" />
         {/* FIXME: 나중에 date 변수로 받아와서 넣어주기 */}
