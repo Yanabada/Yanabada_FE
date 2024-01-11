@@ -50,6 +50,8 @@ const globalStyles = css`
     border: 0;
     background: transparent;
     cursor: pointer;
+    padding: 0;
+    margin: 0;
   }
   input {
     font-family: "Pretendard";
