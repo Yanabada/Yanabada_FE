@@ -35,6 +35,15 @@ export const Flex = styled.div`
     justify-content: center;
     width: 18px;
     height: 18px;
+
+    &.active svg > path,
+    &.active svg > circle {
+      stroke: ${({ theme }) => theme.colors.blue[200]};
+    }
+
+    &.active.arrow {
+      transform: rotate(180deg);
+    }
   }
 `;
 
