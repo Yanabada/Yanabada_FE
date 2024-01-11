@@ -1,6 +1,12 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
+interface CardSectionProps {
+  // FIXME: `type` 이라고 naming시 에러 발생
+  types: "abledPay" | "disabledPay" | "abledPoint" | "disabledPoint";
+  width?: string;
+}
+
 const ButtonLayout = css`
   display: flex;
   height: 40px;
@@ -12,45 +18,17 @@ const ButtonLayout = css`
   border-radius: 5px;
 `;
 
-// FIXME: 모듈화
-const BoldTextLayout = css`
-  /* [Button1] 버튼진하게 */
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px; /* 140% */
-`;
-
-// FIXME: 모듈화
-export const MainTextLayout = css`
-  /* [body2]본문 */
-  font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 21px; /* 150% */
-`;
-
-// FIXME: 모듈화
-export const ButtonListLayout = css`
-  /* [Subtitle6] 버튼리스트 */
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 22px; /* 137.5% */
-`;
-
-export const CardSectionWrapper = styled.div`
+export const CardSectionWrapper = styled.div<CardSectionProps>`
   display: flex;
-  width: 332px;
-  padding: 6px 0px 16px 0px;
+  width: ${({ width }) => width || "100%"};
+  padding: ${({ types }) =>
+    types === "abledPay" || types === "disabledPay" ? "0px 0px 16px 0px" : "0"};
   flex-direction: column;
   align-items: flex-start;
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
   background: #fff;
+  margin-bottom: 14px;
 
   /* 은은한쉐도우 */
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.03);
@@ -74,8 +52,14 @@ export const ListButton = styled.button`
   backdrop-filter: blur(10px);
 `;
 
+export const ListButtonTextWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
 export const ListButtonText = styled.p`
-  ${ButtonListLayout}
+  ${({ theme }) => theme.text.subtitle6};
   color: var(--M3-black, #000);
   text-align: center;
 `;
@@ -87,7 +71,7 @@ export const RightSectionWrapper = styled.div`
 `;
 
 export const RightSectionText = styled.p`
-  ${MainTextLayout}
+  ${({ theme }) => theme.text.body2};
   color: ${({ theme }) => theme.colors.gray[600]};
   text-align: right;
 `;
@@ -100,24 +84,27 @@ export const BottomSectionWrapper = styled.div`
   align-self: stretch;
 `;
 
-export const BottomLeftButton = styled.button`
+export const BottomLeftButton = styled.button<CardSectionProps>`
   ${ButtonLayout}
-  background: ${({ theme }) => theme.colors.blue[50]};
+  background: ${({ theme, types }) =>
+    types === "abledPay" ? theme.colors.orange[100] : theme.colors.gray[100]};
 `;
 
-export const BottomLeftButtonText = styled.p`
-  ${BoldTextLayout}
-  color: ${({ theme }) => theme.colors.blue[400]};
+export const BottomLeftButtonText = styled.p<CardSectionProps>`
+  ${({ theme }) => theme.text.button1};
+  color: ${({ theme, types }) =>
+    types === "abledPay" ? theme.colors.pink[100] : theme.colors.gray[600]};
   text-align: center;
+`;
+
+export const BottomRightButton = styled.button<CardSectionProps>`
+  ${ButtonLayout}
+  background: ${({ theme, types }) =>
+    types === "abledPay" ? theme.colors.pink[100] : theme.colors.gray[500]};
 `;
 
 export const BottomRightButtonText = styled.p`
-  ${BoldTextLayout}
+  ${({ theme }) => theme.text.button1};
   color: #fff;
   text-align: center;
-`;
-
-export const BottomRightButton = styled.button`
-  ${ButtonLayout}
-  background: ${({ theme }) => theme.colors.blue[200]};
 `;

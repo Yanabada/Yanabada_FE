@@ -1,7 +1,11 @@
 import * as S from "./styles";
 
-const TextButton = () => {
-  return <S.TextButton>전체보기</S.TextButton>;
+interface TextButtonProps {
+  children?: React.ReactNode;
+}
+
+const TextButton = ({ children }: TextButtonProps) => {
+  return <S.TextButton>{children}</S.TextButton>;
 };
 
 export default TextButton;
