@@ -18,7 +18,7 @@ export const AbledDefaultChipWrapper = styled.button`
 `;
 
 export const AbledChipText = styled.p`
-  ${({ theme }) => theme.colors.blue[400]};
+  color: ${({ theme }) => theme.colors.blue[400]};
 
   /* [Button2] 칩 버튼 */
   ${({ theme }) => theme.text.button2}
