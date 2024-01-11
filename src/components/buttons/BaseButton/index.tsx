@@ -18,7 +18,7 @@ interface BaseButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElem
   width?: string;
 }
 
-const index = ({ type, children, ...props }: BaseButtonProps) => {
+const BaseButton = ({ type, children, ...props }: BaseButtonProps) => {
   switch (type) {
     case "light":
       return (
@@ -75,4 +75,4 @@ const index = ({ type, children, ...props }: BaseButtonProps) => {
   }
 };
 
-export default index;
+export default BaseButton;

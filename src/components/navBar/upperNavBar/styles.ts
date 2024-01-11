@@ -33,6 +33,7 @@ const UpperNavCenter = styled.div`
 
 export const TextWrapper = styled(UpperNavCenter)`
   ${({ theme }) => theme.text.subtitle2}
+  ${({ color }) => (color ? `color: ${color};` : "color: #000000;")}
   position: static;
 `;
 

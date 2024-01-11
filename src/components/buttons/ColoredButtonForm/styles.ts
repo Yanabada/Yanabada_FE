@@ -1,7 +1,12 @@
 import styled from "@emotion/styled";
 
-export const ColoredButtonWrapper = styled.div`
-  display: inline-flex;
+interface ColoredButtonFormProps {
+  width?: string;
+}
+
+export const ColoredButtonWrapper = styled.div<ColoredButtonFormProps>`
+  display: flex;
+  width: ${({ width }) => width || "332px"};
   padding: 16px 14px;
   flex-direction: column;
   align-items: center;
@@ -13,9 +18,9 @@ export const ColoredButtonWrapper = styled.div`
   box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.25);
 `;
 
-export const ColoredButton = styled.button`
+export const ColoredButton = styled.button<ColoredButtonFormProps>`
   display: flex;
-  width: 332px;
+  width: 100%;
   height: 40px;
   justify-content: center;
   align-items: center;
