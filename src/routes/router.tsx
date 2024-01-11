@@ -4,6 +4,7 @@ import Chat from "@pages/chat";
 import MyPage from "@pages/myPage";
 import Sell from "@pages/sell";
 import { Outlet, createBrowserRouter } from "react-router-dom";
+import Search from "@pages/search";
 
 const router = createBrowserRouter([
   {
@@ -20,8 +21,8 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/search"
-        // element: <Search />
+        path: "/search",
+        element: <Search />
       },
       {
         path: "/sell",
