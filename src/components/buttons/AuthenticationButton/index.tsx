@@ -3,6 +3,7 @@ import * as S from "./styles";
 interface AuthenticationButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
   type: "light" | "default" | "abled" | "disabled";
+  width?: string;
 }
 
 const AuthenticationButton = ({ type, children, ...props }: AuthenticationButtonProps) => {

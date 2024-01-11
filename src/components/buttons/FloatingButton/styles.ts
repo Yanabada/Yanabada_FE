@@ -1,9 +1,12 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
+interface FloatingButtonProps {
+  width?: string;
+}
+
 const ButtonLayout = css`
   display: flex;
-  width: 360px;
   height: 48px;
   justify-content: center;
   align-items: center;
@@ -25,15 +28,19 @@ const DisabledButtonLayout = css`
   cursor: not-allowed;
 `;
 
-export const AbledFloatingButton = styled.button`
+export const AbledFloatingButton = styled.button<FloatingButtonProps>`
   ${ButtonLayout}
+  width: ${({ width }) => width || "360px"};
+
   ${({ theme }) => theme.text.button1};
 
   background: ${({ theme }) => theme.colors.blue[200]};
 `;
 
-export const DisabledFloatingButton = styled.button`
+export const DisabledFloatingButton = styled.button<FloatingButtonProps>`
   ${DisabledButtonLayout}
+  width: ${({ width }) => width || "360px"};
+
   ${({ theme }) => theme.text.button1};
 
   background: ${({ theme }) => theme.colors.gray[500]};

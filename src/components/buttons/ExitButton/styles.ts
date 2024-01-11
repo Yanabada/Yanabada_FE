@@ -1,8 +1,12 @@
 import styled from "@emotion/styled";
 
-export const ExitButtonWrapper = styled.div`
+interface ExitButtonProps {
+  width?: string;
+}
+
+export const ExitButtonWrapper = styled.div<ExitButtonProps>`
   display: flex;
-  width: 360px;
+  width: ${({ width }) => width || "360px"};
   padding: 16px 0px;
   flex-direction: column;
   align-items: center;
@@ -15,10 +19,9 @@ export const ExitButtonWrapper = styled.div`
 `;
 
 export const DetailText = styled.p`
-  width: 332px;
-
   color: ${({ theme }) => theme.colors.gray[700]};
   text-align: center;
+
   font-family: Roboto;
   font-size: 13px;
   font-style: normal;
@@ -26,9 +29,9 @@ export const DetailText = styled.p`
   line-height: 140%; /* 18.2px */
 `;
 
-export const ExitButton = styled.button`
+export const ExitButton = styled.button<ExitButtonProps>`
   display: flex;
-  width: 332px;
+  width: 92%;
   height: 40px;
   padding-right: 9px;
   justify-content: center;

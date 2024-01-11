@@ -1,8 +1,12 @@
 import styled from "@emotion/styled";
 
-export const ToggleButton = styled.button`
+interface ToggleButtonProps {
+  width?: string;
+}
+
+export const ToggleButton = styled.button<ToggleButtonProps>`
   display: flex;
-  width: 158px;
+  width: ${({ width }) => width || "158px"};
   height: 40px;
   padding-right: 9px;
   justify-content: center;

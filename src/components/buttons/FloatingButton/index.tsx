@@ -4,19 +4,20 @@ import { IoIosSearch } from "react-icons/io";
 interface FloatingButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
   children: React.ReactNode;
   type: "abled" | "disabled";
+  width?: string;
 }
 
-const FloatingButton = ({ type, children }: FloatingButtonProps) => {
+const FloatingButton = ({ type, children, ...props }: FloatingButtonProps) => {
   switch (type) {
     case "abled":
       return (
-        <S.AbledFloatingButton>
+        <S.AbledFloatingButton {...props}>
           {children} <IoIosSearch size="18px" color="#ffffff" />
         </S.AbledFloatingButton>
       );
     case "disabled":
       return (
-        <S.DisabledFloatingButton>
+        <S.DisabledFloatingButton {...props}>
           {children} <IoIosSearch size="18px" color="#ffffff" />
         </S.DisabledFloatingButton>
       );
