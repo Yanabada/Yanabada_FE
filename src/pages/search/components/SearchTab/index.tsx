@@ -31,14 +31,19 @@ const SearchTab = ({
     <S.Container>
       <S.Wrapper onClick={handleClick}>
         <S.Flex>
-          <div>{icon}</div>
+          <div className={`${isOpen ? "active" : ""}`}>{icon}</div>
           <S.Subtitle color={theme.colors.gray[700]}>{leftPlaceholder}</S.Subtitle>
         </S.Flex>
         <S.Flex>
           <S.Subtitle color={theme.colors.gray[600]}>{rightPlaceholder}</S.Subtitle>
-          <div>
+          <motion.div
+            initial={{ rotate: 0 }}
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ stiffness: 0 }}
+            className={`${isOpen ? "active" : ""}`}
+          >
             <ArrowDown />
-          </div>
+          </motion.div>
         </S.Flex>
       </S.Wrapper>
 
