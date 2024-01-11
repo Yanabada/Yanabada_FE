@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
+import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
 
 interface ToggleButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
   type: "icon" | "default";
