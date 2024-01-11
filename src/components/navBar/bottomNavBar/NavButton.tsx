@@ -21,7 +21,7 @@ const NavButton = ({ path }: NavButtonProps) => {
 
   const tapList = new Map([
     ["/", { label: "홈", component: <NavHome /> }],
-    ["/search", { label: "상품리스트", component: <NavAll /> }],
+    ["/products", { label: "상품리스트", component: <NavAll /> }],
     ["/sell", { label: "등록", component: <NavProduct /> }],
     ["/chat", { label: "채팅", component: <NavChat />, showBadge: true }],
     ["/myPage", { label: "마이", component: <NavMy />, showBadge: true }]
