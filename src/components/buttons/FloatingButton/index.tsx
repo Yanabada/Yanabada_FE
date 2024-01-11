@@ -21,6 +21,8 @@ const FloatingButton = ({ type, children, ...props }: FloatingButtonProps) => {
           {children} <IoIosSearch size="18px" color="#ffffff" />
         </S.DisabledFloatingButton>
       );
+    default:
+      return null;
   }
 };
 
