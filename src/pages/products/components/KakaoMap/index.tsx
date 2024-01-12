@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { CustomOverlayMap, Map } from "react-kakao-maps-sdk";
-import AirplaneIcon from "@assets/icons/airPlane.svg?react";
+import AirplaneIcon from "@assets/icons/airplane.svg?react";
 import MyPositionIcon from "@assets/icons/myPosition.svg?react";
 import * as S from "./styles";
 import { ProductsMarkers } from "./ProductsMarkers";
