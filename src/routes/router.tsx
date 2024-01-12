@@ -2,6 +2,7 @@ import Home from "@pages/home";
 import BottomNavBar from "@components/navBar/bottomNavBar";
 import Chat from "@pages/chat";
 import MyPage from "@pages/myPage";
+import Points from "@pages/myPage/points";
 import Sell from "@pages/sell";
 import Products from "@pages/products";
 import { Outlet, createBrowserRouter } from "react-router-dom";
@@ -36,7 +37,21 @@ const router = createBrowserRouter([
       },
       {
         path: "/myPage",
-        element: <MyPage />
+        element: (
+          <>
+            <Outlet />
+          </>
+        ),
+        children: [
+          {
+            index: true,
+            element: <MyPage />
+          },
+          {
+            path: "points",
+            element: <Points />
+          }
+        ]
       }
     ]
   }

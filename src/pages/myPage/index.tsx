@@ -10,12 +10,12 @@ const MyPage = () => {
   const [isLoginned] = useState(true);
 
   return isLoginned ? (
-    <div>
+    <>
       <UpperNavBar title="MY 야나바다" type="back" />
       <S.MyPageContainer>
         <S.LoginButtonWrapper>
           <S.LoginButton>
-            {/* FIXME: 추후 유저 ID 변수값으로 대체 예정 */}
+            {/* FIXME: 추후 변수값으로 대체 예정 */}
             USER123456 <ArrowForwardIcon />
           </S.LoginButton>
         </S.LoginButtonWrapper>
@@ -35,9 +35,9 @@ const MyPage = () => {
         <ListButton width="332px">이용약관</ListButton>
         <ListButton width="332px">로그아웃</ListButton>
       </S.MyPageContainer>
-    </div>
+    </>
   ) : (
-    <div>
+    <>
       <UpperNavBar title="MY 야나바다" type="back" />
       <S.MyPageContainer>
         <S.LoginButtonWrapper>
@@ -53,7 +53,7 @@ const MyPage = () => {
         <ListButton width="332px">이용가이드</ListButton>
         <ListButton width="332px">이용약관</ListButton>
       </S.MyPageContainer>
-    </div>
+    </>
   );
 };
 

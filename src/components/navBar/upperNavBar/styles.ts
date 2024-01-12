@@ -44,7 +44,4 @@ export const LeftIconWrapper = styled(UpperNavCenter)`
 
 export const RightIconWrapper = styled(UpperNavCenter)`
   right: 14px;
-
-  display: flex;
-  gap: 14px;
 `;
