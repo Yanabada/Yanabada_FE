@@ -60,9 +60,9 @@ export const DetailBox = styled.div`
     }
     &__personal {
       border-bottom: 1px solid #ddd;
-      padding-bottom: 16px;
-      margin-bottom: 16px;
-      &:last-child {
+      padding-bottom: 34px;
+      margin-bottom: 34px;
+      &:last-of-type {
         border-bottom: none;
       }
       .inner {
@@ -90,6 +90,7 @@ export const DetailBox = styled.div`
       }
       .fee {
         ${({ theme }) => theme.text.caption2};
+        color: ${({ theme }) => theme.colors.orange[200]};
       }
     }
   }

@@ -13,7 +13,7 @@ export const DateChangeButton = styled.button<DateChangeButtonProps>`
 
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
-  background: 1px solid ${({ theme }) => theme.colors.gray[100]};
+  background-color: ${({ theme }) => theme.colors.gray[200]};
 `;
 
 export const LeftSection = styled.div`
@@ -30,11 +30,12 @@ export const Label = styled.p`
 `;
 
 export const DescriptionLabel = styled.p`
-  ${({ theme }) => theme.text.body2};
-  color: ${({ theme }) => theme.colors.gray[600]};
+  ${({ theme }) => theme.text.button2};
 `;
 
 export const RightButton = styled.button`
+  color: #0751c3;
+
   display: flex;
   justify-content: center;
   align-items: center;
