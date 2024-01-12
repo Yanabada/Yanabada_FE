@@ -6,7 +6,7 @@ const BottomNavBar = () => {
     <div>
       <S.BottomNavWrapper>
         <NavButton path="/" />
-        <NavButton path="/search" />
+        <NavButton path="/products" />
         <NavButton path="/sell" />
         <NavButton path="/chat" />
         <NavButton path="/myPage" />
