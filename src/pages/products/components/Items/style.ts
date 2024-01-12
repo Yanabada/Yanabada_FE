@@ -8,7 +8,6 @@ export const Container = styled.div`
   gap: 1rem;
   margin-bottom: 3rem;
   padding: 0.4rem;
-  background-color: #fff;
 `;
 
 export const ItemContainer = styled.div`
@@ -16,9 +15,11 @@ export const ItemContainer = styled.div`
   width: 100%;
   height: 12.5rem;
 
-  gap: 0.8rem;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
   border-radius: 4px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
+  background-color: #fff;
 
   overflow: hidden;
 `;
@@ -157,19 +158,16 @@ export const TimerText = styled.p`
   font-weight: 600;
   line-height: 1.5rem;
   letter-spacing: -0.015rem;
-  margin-top: 0.15rem;
 `;
 
-export const NegoContainer = styled.div`
-  margin-top: 0.15rem;
+export const NegoText = styled.p<{ canNegotiate: boolean }>`
+  color: ${({ theme, canNegotiate }) =>
+    canNegotiate ? theme.colors.blue[200] : theme.colors.gray[600]};
+  ${({ theme }) => theme.text.overline};
+
   padding: 0.1875rem 0.3125rem;
   border-radius: 24px;
   border: 1px solid ${({ theme }) => theme.colors.blue[100]};
-`;
-
-export const NegoText = styled.p`
-  color: ${({ theme }) => theme.colors.blue[200]};
-  ${({ theme }) => theme.text.overline};
 `;
 
 export const PriceContainer = styled.div`
