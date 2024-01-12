@@ -1,4 +1,4 @@
-import { useGuest } from "@pages/search/store/guestStore";
+import { useGuest } from "@pages/search/stores/guestStore";
 import * as S from "./guestCounter.style";
 import SearchNotice from "./SearchNotice";
 import MinusIcon from "@assets/icons/minus.svg?react";
