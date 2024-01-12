@@ -16,6 +16,14 @@ export const ColoredButtonWrapper = styled.div<ColoredButtonFormProps>`
 
   /* 위로올라가는쉐도우 */
   box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.25);
+  &.isBottom {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    max-width: 780px;
+  }
 `;
 
 export const ColoredButton = styled.button<ColoredButtonFormProps>`
