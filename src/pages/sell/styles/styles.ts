@@ -4,11 +4,16 @@ export const ProductListWrap = styled.div`
   position: relative;
 
   height: calc(100vh - 112px);
-  padding: 14px;
+  padding: 17px 14px;
+
+  background-color: ${({ theme }) => theme.colors.gray[200]};
 `;
 
 export const NoticeTitle = styled.p`
   ${({ theme }) => theme.text.subtitle5};
+
+  margin-bottom: 8px;
+
   span {
     ${({ theme }) => theme.text.body2};
     color: ${({ theme }) => theme.colors.pink[200]};
@@ -23,7 +28,7 @@ export const NoListWrap = styled.div`
   align-items: center;
   justify-content: center;
 
-  height: 100%;
+  height: calc(100% - 56px);
   .no-list {
     &__tit {
       ${({ theme }) => theme.text.subtitle5};
@@ -41,11 +46,18 @@ export const NoListWrap = styled.div`
 `;
 
 export const ListWrap = styled.div`
-  /* background-color: blue; */
+  padding: 11px 0;
 `;
 
 export const ListCard = styled.div`
+  position: relative;
+
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
+  border-radius: 5px;
+
+  box-shadow: ${({ theme }) => theme.shadows[3]};
+
+  margin-bottom: 16px;
 
   .list-card {
     &__title {
@@ -95,9 +107,10 @@ export const ListCard = styled.div`
       }
       .inner {
         display: flex;
+        align-items: flex-start;
         gap: 12px;
 
-        margin-bottom: 10px;
+        margin-bottom: 18px;
       }
       .img-bx {
         width: 64px;
@@ -105,6 +118,8 @@ export const ListCard = styled.div`
         display: block;
         position: relative;
         overflow: hidden;
+
+        border-radius: 5px;
 
         img {
           display: block;
@@ -129,6 +144,8 @@ export const ListCard = styled.div`
         .tit {
           ${({ theme }) => theme.text.body1};
           color: ${({ theme }) => theme.colors.gray[900]};
+
+          margin-bottom: 2px;
         }
         .date {
           ${({ theme }) => theme.text.body3};
@@ -144,14 +161,20 @@ export const ListCard = styled.div`
 `;
 
 export const ListButton = styled.button`
+  ${({ theme }) => theme.text.button1};
+  color: white;
+
   width: 100%;
   height: 48px;
-
-  color: white;
+  line-height: 48px;
 
   position: absolute;
   bottom: 0;
   left: 0;
-  line-height: 48px;
+
   background-color: ${({ theme }) => theme.colors.blue[200]};
+
+  svg {
+    padding-top: 3px;
+  }
 `;
