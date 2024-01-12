@@ -2,21 +2,12 @@ import styled from "@emotion/styled";
 import { FaUser } from "react-icons/fa6";
 import { RiTimerLine } from "react-icons/ri";
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 3rem;
-  padding: 0.4rem;
-`;
-
 export const ItemContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 12.5rem;
 
   gap: 0.5rem;
-  padding-bottom: 1rem;
+  padding: 0.5rem;
   border-radius: 4px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
   background-color: #fff;
@@ -167,12 +158,16 @@ export const NegoText = styled.p<{ canNegotiate: boolean }>`
 
   padding: 0.1875rem 0.3125rem;
   border-radius: 24px;
-  border: 1px solid ${({ theme }) => theme.colors.blue[100]};
+  border: 1px solid
+    ${({ theme, canNegotiate }) => (canNegotiate ? theme.colors.blue[100] : theme.colors.gray[500])};
+  background-color: ${({ theme, canNegotiate }) =>
+    canNegotiate ? "#fff" : theme.colors.gray[100]};
 `;
 
 export const PriceContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 10.5rem;
 
   .sellingPrice {
