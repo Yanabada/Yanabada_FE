@@ -5,5 +5,14 @@ export const InformText = styled.p`
   color: ${({ theme }) => theme.colors.gray[600]};
 `;
 export const ImportantText = styled.span`
-  background-color: red;
+  font-weight: 700;
+  font-size: 12px;
+`;
+
+export const ButtonContainer = styled.div`
+  margin: 18px 0 16px;
+`;
+
+export const InputContainer = styled.div`
+  margin: 32px 0 16px;
 `;
