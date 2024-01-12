@@ -3,12 +3,17 @@ import { useState } from "react";
 import NoItemIcon from "@assets/icons/noItemIcon.svg?react";
 import { Link } from "react-router-dom";
 
-const PointsMiddleTabList = () => {
+// FIXME: 모듈화
+interface PointsMiddleTabProps {
+  width?: string;
+}
+
+const PointsMiddleTabList = ({ width }: PointsMiddleTabProps) => {
   const [isPointExist] = useState(true);
 
   return (
     <>
-      <S.PointsMiddleContainer>
+      <S.PointsMiddleContainer width={width}>
         <S.MiddleWrapper>
           <Link to="/mypage/points/list">
             <>
@@ -26,7 +31,7 @@ const PointsMiddleTabList = () => {
         </S.MiddleWrapper>
       </S.PointsMiddleContainer>
 
-      <S.SectionDescriptionWrapper>
+      <S.SectionDescriptionWrapper width={width}>
         <S.ListMessageWrapper>
           <S.MessageText>최근 1년간 적립/사용/소멸된 포인트 내역을 확인하세요.</S.MessageText>
         </S.ListMessageWrapper>
@@ -34,7 +39,7 @@ const PointsMiddleTabList = () => {
 
       {isPointExist ? (
         <S.PointsBottomContainer>
-          <S.PointList>
+          <S.PointList width={width}>
             <S.PointListRow>
               <S.PlusReason>이러한 이유로 포인트를 적립했습니다</S.PlusReason>
               <S.PlusPoint>+5,000</S.PlusPoint>
@@ -46,7 +51,7 @@ const PointsMiddleTabList = () => {
             </S.PointListRow>
           </S.PointList>
 
-          <S.PointList>
+          <S.PointList width={width}>
             <S.PointListRow>
               <S.MinusReason>이러한 이유로 포인트를 사용했습니다</S.MinusReason>
               <S.MinusPoint>-5,000</S.MinusPoint>
@@ -57,7 +62,7 @@ const PointsMiddleTabList = () => {
             </S.PointListRow>
           </S.PointList>
 
-          <S.PointList>
+          <S.PointList width={width}>
             <S.PointListRow>
               <S.PlusReason>이러한 이유로 포인트를 적립했습니다</S.PlusReason>
               <S.PlusPoint>+5,000</S.PlusPoint>
@@ -69,7 +74,7 @@ const PointsMiddleTabList = () => {
             </S.PointListRow>
           </S.PointList>
 
-          <S.PointList>
+          <S.PointList width={width}>
             <S.PointListRow>
               <S.MinusReason>이러한 이유로 포인트를 사용했습니다</S.MinusReason>
               <S.MinusPoint>-5,000</S.MinusPoint>
@@ -80,7 +85,7 @@ const PointsMiddleTabList = () => {
             </S.PointListRow>
           </S.PointList>
 
-          <S.PointList>
+          <S.PointList width={width}>
             <S.PointListRow>
               <S.MinusReason>이러한 이유로 포인트를 사용했습니다</S.MinusReason>
               <S.MinusPoint>-5,000</S.MinusPoint>
@@ -91,7 +96,7 @@ const PointsMiddleTabList = () => {
             </S.PointListRow>
           </S.PointList>
 
-          <S.PointList>
+          <S.PointList width={width}>
             <S.PointListRow>
               <S.PlusReason>이러한 이유로 포인트를 적립했습니다</S.PlusReason>
               <S.PlusPoint>+5,000</S.PlusPoint>
@@ -103,7 +108,7 @@ const PointsMiddleTabList = () => {
             </S.PointListRow>
           </S.PointList>
 
-          <S.PointList>
+          <S.PointList width={width}>
             <S.PointListRow>
               <S.PlusReason>이러한 이유로 포인트를 적립했습니다</S.PlusReason>
               <S.PlusPoint>+5,000</S.PlusPoint>

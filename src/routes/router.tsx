@@ -54,7 +54,7 @@ const router = createBrowserRouter([
             element: (
               <>
                 <Points />
-                <PointsMiddleTabList />
+                <PointsMiddleTabList width="100%" />
               </>
             )
           },
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
             element: (
               <>
                 <Points />
-                <PointsMiddleTabDisappear />
+                <PointsMiddleTabDisappear width="100%" />
               </>
             )
           }

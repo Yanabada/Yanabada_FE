@@ -1,11 +1,17 @@
 import styled from "@emotion/styled";
 
-export const SectionDescriptionWrapper = styled.div`
+// FIXME: 모듈화
+interface PointsMiddleTabProps {
+  width?: string;
+}
+
+export const SectionDescriptionWrapper = styled.div<PointsMiddleTabProps>`
   display: flex;
-  width: 360px;
+  width: ${({ width }) => width || "360px"};
   height: 48px;
   padding: 0px 14px;
   align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 
   background: ${({ theme }) => theme.colors.gray[200]};
@@ -37,9 +43,9 @@ export const PointsBottomContainer = styled.div`
   overflow: auto;
 `;
 
-export const PointList = styled.div`
+export const PointList = styled.div<PointsMiddleTabProps>`
   display: flex;
-  width: 331px;
+  width: ${({ width }) => `calc(${width} - 29px)` || "331px"};
   padding: 12px 0px;
   flex-direction: column;
   align-items: flex-start;
@@ -133,9 +139,9 @@ export const NoItemText = styled.p`
   ${({ theme }) => theme.text.body2}
 `;
 
-export const PointsMiddleContainer = styled.div`
+export const PointsMiddleContainer = styled.div<PointsMiddleTabProps>`
   display: flex;
-  width: 365px;
+  width: ${({ width }) => width || "360px"};
   justify-content: space-between;
   align-items: flex-start;
 

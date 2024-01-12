@@ -5,7 +5,11 @@ import NoItemIcon from "@assets/icons/noItemIcon.svg?react";
 import { ToggleMenu, ToggleMenuItem } from "@pages/products/components/Order/ToggleMenu";
 import type { MotionProps, Variants } from "framer-motion";
 
-const PointsMiddleTabDisappear = () => {
+interface PointsMiddleTabProps {
+  width?: string;
+}
+
+const PointsMiddleTabDisappear = ({ width }: PointsMiddleTabProps) => {
   const [isDisappearPointExist] = useState(false);
   const [open, setOpen] = useState(false);
   const [orderName, setOrderName] = useState("15일");
@@ -45,7 +49,7 @@ const PointsMiddleTabDisappear = () => {
 
   return (
     <>
-      <S.PointsMiddleContainer>
+      <S.PointsMiddleContainer width={width}>
         <S.MiddleWrapper>
           <Link to="/mypage/points/list">
             <>
@@ -63,7 +67,7 @@ const PointsMiddleTabDisappear = () => {
         </S.MiddleWrapper>
       </S.PointsMiddleContainer>
 
-      <S.SectionDescriptionWrapper>
+      <S.SectionDescriptionWrapper width={width}>
         <ToggleMenu
           label={orderName}
           open={open}
@@ -73,7 +77,7 @@ const PointsMiddleTabDisappear = () => {
           exit="closed"
           variants={menu}
           justifyContent="flex-start"
-          width="64px"
+          width="auto"
         >
           {orderList.map((order) => (
             <ToggleMenuItem key={order.id} {...item} onClick={() => setOrderName(order.name)}>
@@ -95,7 +99,7 @@ const PointsMiddleTabDisappear = () => {
 
       {isDisappearPointExist ? (
         <S.PointsBottomContainer>
-          <S.PointList>
+          <S.PointList width={width}>
             <S.PointListRow>
               <S.PlusReason>야놀자 웰컴포인트</S.PlusReason>
               <S.PlusPoint>+500</S.PlusPoint>
