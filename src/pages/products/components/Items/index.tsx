@@ -8,7 +8,7 @@ type ProductCardProps = Partial<
   Omit<Product, "latitude" | "longitude"> & { fullContent?: boolean }
 >;
 
-// FIXME: false -> true 로 변경
+// FIXME: 기본값 수정
 const ProductCard = ({ canNegotiate = false, fullContent = false }: ProductCardProps) => {
   return (
     <>
@@ -43,19 +43,22 @@ const ProductCard = ({ canNegotiate = false, fullContent = false }: ProductCardP
                 <S.TimerIcon />
                 <S.TimerText>3일 15시간 23분</S.TimerText>
               </S.TimerContainer>
-
               <S.NegoText canNegotiate={canNegotiate}>
                 {canNegotiate ? "가격제안가능" : "가격제안불가"}
               </S.NegoText>
             </S.TimerNegoContainer>
-            <S.PriceContainer>
-              <S.PriceText>원가</S.PriceText>
-              <S.Price>2,000,000원</S.Price>
-            </S.PriceContainer>
-            <S.PriceContainer>
-              <S.PriceText>구매가</S.PriceText>
-              <S.Price>2,000,000원</S.Price>
-            </S.PriceContainer>
+            {fullContent && (
+              <S.PriceContainer>
+                <S.PriceText>원가</S.PriceText>
+                <S.Price>2,000,000원</S.Price>
+              </S.PriceContainer>
+            )}
+            {fullContent && (
+              <S.PriceContainer>
+                <S.PriceText>실구매가</S.PriceText>
+                <S.Price>2,000,000원</S.Price>
+              </S.PriceContainer>
+            )}
             <S.PriceContainer>
               <S.PriceText>판매가</S.PriceText>
               <S.Price className="sellingPrice">1,264,000원</S.Price>
