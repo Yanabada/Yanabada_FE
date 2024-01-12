@@ -3,6 +3,8 @@ import BottomNavBar from "@components/navBar/bottomNavBar";
 import Chat from "@pages/chat";
 import MyPage from "@pages/myPage";
 import Points from "@pages/myPage/points";
+import PointsMiddleTabList from "@pages/myPage/components/PointsMiddleTabList";
+import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDisappear";
 import Sell from "@pages/sell";
 import Products from "@pages/products";
 import { Outlet, createBrowserRouter } from "react-router-dom";
@@ -36,7 +38,7 @@ const router = createBrowserRouter([
         element: <Chat />
       },
       {
-        path: "/myPage",
+        path: "/mypage",
         element: (
           <>
             <Outlet />
@@ -48,8 +50,22 @@ const router = createBrowserRouter([
             element: <MyPage />
           },
           {
-            path: "points",
-            element: <Points />
+            path: "points/list",
+            element: (
+              <>
+                <Points />
+                <PointsMiddleTabList />
+              </>
+            )
+          },
+          {
+            path: "points/disappear",
+            element: (
+              <>
+                <Points />
+                <PointsMiddleTabDisappear />
+              </>
+            )
           }
         ]
       }
