@@ -6,8 +6,6 @@ import PlusIcon from "@assets/icons/plus.svg?react";
 
 const GuestCounter = () => {
   const { adult, child, increaseAdult, decreaseAdult, increaseChild, decreaseChild } = useGuest();
-  const isChildZero = child === 0;
-  const isAdultZero = adult === 0;
 
   return (
     <S.Container>
@@ -15,7 +13,7 @@ const GuestCounter = () => {
       <S.Wrapper>
         <span>성인</span>
         <S.Wrapper>
-          <S.IconWrapper className={`${isAdultZero ? "" : "active"}`} onClick={decreaseAdult}>
+          <S.IconWrapper className={`${adult === 0 ? "" : "active"}`} onClick={decreaseAdult}>
             <MinusIcon />
           </S.IconWrapper>
           <span>{adult}</span>
@@ -28,8 +26,7 @@ const GuestCounter = () => {
       <S.Wrapper>
         <span>아동</span>
         <S.Wrapper>
-          {/* TODO: 인원수에 따른 클래스명 변경 */}
-          <S.IconWrapper className={`${isChildZero ? "" : "active"}`} onClick={decreaseChild}>
+          <S.IconWrapper className={`${child === 0 ? "" : "active"}`} onClick={decreaseChild}>
             <MinusIcon />
           </S.IconWrapper>
           <span>{child}</span>
