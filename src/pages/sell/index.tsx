@@ -4,7 +4,7 @@ import * as S from "./styles/styles";
 const Sell = () => {
   return (
     <>
-      <UpperNavBar text="양도하기" type="back" />
+      <UpperNavBar title="양도하기" type="back" />
       <S.ProductListWrap>
         <S.NoticeTitle>
           판매할 숙소의 예약 내역을 선택하세요 <span>(필수)*</span>
