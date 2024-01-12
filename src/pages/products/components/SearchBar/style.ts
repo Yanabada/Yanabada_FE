@@ -22,6 +22,7 @@ export const Input = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.gray[100]};
   background: rgba(255, 255, 255, 0.4);
   box-shadow: ${({ theme }) => theme.shadows[3]};
+  cursor: pointer;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray[600]};
