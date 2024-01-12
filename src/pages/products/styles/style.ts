@@ -12,3 +12,12 @@ export const Container = styled.div`
 export const SecondContainer = styled.div`
   margin-top: 5.5rem;
 `;
+
+export const ProductCardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0.5rem 4.5rem 0.5rem;
+
+  background-color: #fff;
+`;
