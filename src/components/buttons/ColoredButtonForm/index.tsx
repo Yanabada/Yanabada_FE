@@ -4,11 +4,17 @@ interface ColoredButtonFormProps {
   children: React.ReactNode;
   isTextExist?: boolean;
   width?: string;
+  isBottom?: boolean;
 }
 
-const ColoredButtonForm = ({ isTextExist = false, width, children }: ColoredButtonFormProps) => {
+const ColoredButtonForm = ({
+  isTextExist = false,
+  width,
+  children,
+  isBottom
+}: ColoredButtonFormProps) => {
   return (
-    <S.ColoredButtonWrapper width={width}>
+    <S.ColoredButtonWrapper width={width} className={isBottom ? "isBottom" : ""}>
       {isTextExist && (
         <>
           <S.NormalText>
