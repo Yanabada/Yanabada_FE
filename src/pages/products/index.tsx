@@ -1,10 +1,11 @@
 import UpperNavBar from "@components/navBar/upperNavBar";
 import SearchBar from "./components/SearchBar";
-import CategoryTab from "./components/CategoryTab";
 import OptionTab from "./components/OptionTap";
 import Order from "./components/Order";
 import ProductCard from "./components/Items";
 import * as S from "./styles/style";
+import KakaoMap from "./components/KakaoMap";
+import CategoryTab from "./components/CategoryTab";
 
 const Products = () => {
   return (
@@ -14,6 +15,9 @@ const Products = () => {
         <SearchBar />
         <CategoryTab />
       </S.Container>
+      <S.MapContainer>
+        <KakaoMap />
+      </S.MapContainer>
       <S.SecondContainer>
         <OptionTab />
         <Order />

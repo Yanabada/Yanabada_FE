@@ -13,11 +13,16 @@ export const SecondContainer = styled.div`
   margin-top: 5.5rem;
 `;
 
+export const MapContainer = styled.div`
+  position: relative;
+  margin-top: 3rem;
+`;
+
 export const ProductCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 1rem 0.5rem 4.5rem 0.5rem;
+  padding-block: 1rem 4.5rem;
 
   background-color: #fff;
 `;
