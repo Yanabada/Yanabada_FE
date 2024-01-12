@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 import SearchTab from "./components/SearchTab";
 import BottomActions from "./components/BottomActions";
+import GuestCounter from "./components/SearchTab/GuestCounter";
 
 interface StateType {
   center: { lat: number; lng: number };
@@ -113,11 +114,7 @@ const Search = () => {
         leftPlaceholder="인원"
         rightPlaceholder="성인 2명"
       >
-        <p>dd</p>
-        <p>dd</p>
-        <p>dd</p>
-        <p>dd</p>
-        <p>dd</p>
+        <GuestCounter />
       </SearchTab>
       <BottomActions />
       <Map
