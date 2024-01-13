@@ -1,15 +1,14 @@
-import UpperNavBar from "@components/navBar/upperNavBar";
-import SignInFirst from "./SignInFirst";
-import Notice from "@components/notice";
+import { AnimatePresence } from "framer-motion";
+import * as S from "./styles/styles";
+import { Outlet } from "react-router-dom";
 
 const SignIn = () => {
-  const count = 1;
   return (
-    <>
-      <UpperNavBar type="back" title={`회원가입(${count}/4)`} />
-      <SignInFirst />
-      <Notice type="yanolja" content="야놀자 포인트를 야나바다에서 사용하실 수 있어요!" />
-    </>
+    <AnimatePresence>
+      <S.SignInContainer>
+        <Outlet />
+      </S.SignInContainer>
+    </AnimatePresence>
   );
 };
 
