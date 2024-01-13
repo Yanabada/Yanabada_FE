@@ -9,7 +9,7 @@ interface PointsMiddleTabProps {
 }
 
 const PointsMiddleTabList = ({ width }: PointsMiddleTabProps) => {
-  const [isPointExist] = useState(true);
+  const [isPointExist] = useState(false);
 
   return (
     <>
