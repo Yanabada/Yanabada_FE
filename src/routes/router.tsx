@@ -9,6 +9,9 @@ import Login from "@pages/login";
 import EmailLogin from "@pages/login/EmailLogin";
 import SignIn from "@pages/signIn";
 import Search from "@pages/search";
+import SignInFirst from "@pages/signIn/components/signInFirst/SignInFirst";
+import SignInSecond from "@pages/signIn/components/signInSecond/SignInSecond";
+import SignInThird from "@pages/signIn/components/signInThird/SignInThird";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +19,6 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Outlet />
-        <BottomNavBar />
       </div>
     ),
     children: [
@@ -35,7 +37,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/chat",
-        element: <Chat />
+        element: (
+          <>
+            <Chat />
+            <BottomNavBar />
+          </>
+        )
       },
       {
         path: "/myPage",
@@ -43,15 +50,35 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />
+        element: <Outlet />,
+        children: [
+          {
+            index: true,
+            element: <Login />
+          },
+          {
+            path: "email",
+            element: <EmailLogin />
+          }
+        ]
       },
       {
-        path: "/emailLogin",
-        element: <EmailLogin />
-      },
-      {
-        path: "/signIn",
-        element: <SignIn />
+        path: "/signin",
+        element: <SignIn />,
+        children: [
+          {
+            index: true,
+            element: <SignInFirst />
+          },
+          {
+            path: "1",
+            element: <SignInSecond />
+          },
+          {
+            path: "2",
+            element: <SignInThird />
+          }
+        ]
       }
     ]
   }

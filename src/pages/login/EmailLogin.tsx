@@ -5,16 +5,12 @@ import { IoChevronForwardSharp } from "react-icons/io5";
 import * as S from "./styles/emailLogin.styles";
 import * as C from "./styles/login.styles";
 import { useState } from "react";
-import BottomSheet from "@components/bottomSheet";
-import { useNavigate } from "react-router-dom";
+import SignInBottomSheet from "./components/signInBottomSheet/SignInBottomSheet";
 
 const EmailLogin = () => {
-  const navigate = useNavigate();
-
   const [emailChecked] = useState(true);
   const [psChecked] = useState(true);
   const [sheetVisible, setSheetVisible] = useState(false);
-  const [isRequiredChecked] = useState(false);
 
   return (
     <S.EmailLoginContainer>
@@ -48,22 +44,7 @@ const EmailLogin = () => {
           <IoChevronForwardSharp />
         </C.BtnFlex>
       </S.BtnFlexContainer>
-      <BottomSheet title="약관 동의" isVisible={sheetVisible} setIsVisible={setSheetVisible}>
-        <S.AgreementContainer>
-          체크박스들
-          <BaseButton
-            type={isRequiredChecked ? "default" : "disabled-default"}
-            width="100%"
-            onClick={() => {
-              if (isRequiredChecked) {
-                navigate("/signIn");
-              }
-            }}
-          >
-            동의하고 계속하기
-          </BaseButton>
-        </S.AgreementContainer>
-      </BottomSheet>
+      <SignInBottomSheet sheetVisible={sheetVisible} setSheetVisible={setSheetVisible} />
     </S.EmailLoginContainer>
   );
 };

@@ -3,8 +3,10 @@ import Notice from "@components/notice";
 import * as S from "./signInThird.styles";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import { useState } from "react";
+import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
+import UpperNavBar from "@components/navBar/upperNavBar";
 
-const SignInSecond = () => {
+const SignInThird = () => {
   // TODO - 유효성 검사
   const [isValid] = useState(false);
   const [isMultiple] = useState(false);
@@ -21,6 +23,8 @@ const SignInSecond = () => {
 
   return (
     <>
+      <UpperNavBar type="back" title={`회원가입(3/4)`} />
+
       <TextInput variant="move" label="닉네임" errorMessage={errMsg()} />
       <S.NoticeContainer>
         <Notice
@@ -32,8 +36,12 @@ const SignInSecond = () => {
       <AuthenticationButton type={isValid ? "disabled" : "default"} width="100%">
         중복 확인
       </AuthenticationButton>
+
+      <ColoredButtonForm isBottom={true} width="100%">
+        다음
+      </ColoredButtonForm>
     </>
   );
 };
 
-export default SignInSecond;
+export default SignInThird;

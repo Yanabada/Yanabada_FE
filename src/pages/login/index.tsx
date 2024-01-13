@@ -25,7 +25,7 @@ const Login = () => {
           네이버로 시작하기
         </BaseButton>
       </S.BtnWrapper>
-      <S.BtnFlex onClick={() => navigate("/emailLogin")}>
+      <S.BtnFlex onClick={() => navigate("/login/email")}>
         이메일로 시작하기
         <IoChevronForwardSharp style={{ color: "#616161" }} />
       </S.BtnFlex>

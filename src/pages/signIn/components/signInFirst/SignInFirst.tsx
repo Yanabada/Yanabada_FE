@@ -3,6 +3,9 @@ import TextInput from "@components/input/TextInput";
 import Notice from "@components/notice";
 import * as S from "./signInFirst.styles";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
+import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
+import { Link } from "react-router-dom";
+import UpperNavBar from "@components/navBar/upperNavBar";
 
 const SignInFirst = () => {
   const [emailInput, setEmailInput] = useState("");
@@ -28,6 +31,8 @@ const SignInFirst = () => {
 
   return (
     <>
+      <UpperNavBar type="back" title={`회원가입(1/4)`} />
+
       <TextInput
         value={emailInput}
         onChange={(e) => {
@@ -75,6 +80,11 @@ const SignInFirst = () => {
         인증번호는 <S.ImportantText>입력한 이메일 주소</S.ImportantText>로 발송됩니다. 수신하지
         못했다면 스팸함 또는 해당 이메일 서비스의 설정을 확인해주세요.
       </S.InformText>
+      <Link to="/signin/1">
+        <ColoredButtonForm isBottom={true} width="100%">
+          다음
+        </ColoredButtonForm>
+      </Link>
     </>
   );
 };
