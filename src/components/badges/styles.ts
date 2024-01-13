@@ -5,7 +5,7 @@ interface BadgeProps {
 }
 
 export const BadgeWrapper = styled.div<BadgeProps>`
-  display: flex;
+  display: inline-flex;
   padding: 1px 8px;
   justify-content: center;
   align-items: center;

@@ -5,7 +5,7 @@ interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   badgeType: "sale" | "approval" | "completed" | "reserved" | "canceled";
 }
 
-const index = ({ badgeType, children }: BadgeProps) => {
+const Badges = ({ badgeType, children }: BadgeProps) => {
   switch (badgeType) {
     case "sale":
       return (
@@ -40,4 +40,4 @@ const index = ({ badgeType, children }: BadgeProps) => {
   }
 };
 
-export default index;
+export default Badges;
