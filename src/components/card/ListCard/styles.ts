@@ -3,6 +3,15 @@ import styled from "@emotion/styled";
 interface ListCardProps {
   width?: string;
   imageURL?: string;
+  cardType?:
+    | "approval_saleEnd"
+    | "approval_sale"
+    | "approval_wait"
+    | "saleEnd"
+    | "sale"
+    | "saleCanceled"
+    | "purchased"
+    | "purchasedCanceled";
 }
 
 export const ListCardContainer = styled.div<ListCardProps>`
@@ -108,8 +117,11 @@ export const Timer = styled.div`
   gap: 2px;
 `;
 
-export const AccomodationName = styled.p`
-  color: ${({ theme }) => theme.colors.gray[600]};
+export const TimerText = styled.p<ListCardProps>`
+  color: ${({ cardType }) =>
+    (cardType === "approval_saleEnd" && "#9C9C9C") ||
+    (cardType === "approval_sale" && "#38A3EB") ||
+    (cardType === "sale" && "#38A3EB")};
   font-family: Pretendard;
   font-size: 12px;
   font-style: normal;
