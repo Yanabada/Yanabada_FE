@@ -19,7 +19,3 @@ export const BtnFlexContainer = styled.div`
   gap: 15px;
   color: ${({ theme }) => theme.colors.gray[300]};
 `;
-
-export const AgreementContainer = styled.div`
-  padding: 0.875rem 0.875rem 1.38rem;
-`;
