@@ -10,7 +10,7 @@ interface PointsMiddleTabProps {
 }
 
 const PointsMiddleTabDisappear = ({ width }: PointsMiddleTabProps) => {
-  const [isDisappearPointExist] = useState(false);
+  const [isDisappearPointExist] = useState(true);
   const [open, setOpen] = useState(false);
   const [orderName, setOrderName] = useState("15일");
 
