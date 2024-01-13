@@ -1,7 +1,7 @@
 import * as S from "../../styles/pointsMiddleTab.styles";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import NoItemIcon from "@assets/icons/noItemIcon.svg?react";
+import NoPointIcon from "@assets/icons/noPointIcon.svg?react";
 import { ToggleMenu, ToggleMenuItem } from "@pages/products/components/Order/ToggleMenu";
 import type { MotionProps, Variants } from "framer-motion";
 
@@ -114,7 +114,7 @@ const PointsMiddleTabDisappear = ({ width }: PointsMiddleTabProps) => {
       ) : (
         <S.PointsBottomContainer>
           <S.NoItemWrapper>
-            <NoItemIcon />
+            <NoPointIcon />
             <S.NoItemText>선택하신 기간 내, 소멸 예정 포인트가 없습니다.</S.NoItemText>
           </S.NoItemWrapper>
         </S.PointsBottomContainer>
