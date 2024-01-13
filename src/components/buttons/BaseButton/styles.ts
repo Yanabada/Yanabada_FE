@@ -8,7 +8,6 @@ interface BaseButtonProps {
 const ButtonLayout = css`
   display: flex;
   height: 40px;
-  padding-right: 9px;
   justify-content: center;
   align-items: center;
   gap: 8px;
