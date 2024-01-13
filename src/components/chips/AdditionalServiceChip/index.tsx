@@ -1,12 +1,12 @@
 import * as S from "./styles";
 
-interface AdditionalServiceChipProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
-  type: "abled" | "disabled";
+interface AdditionalServiceChipProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  buttonType: "abled" | "disabled";
 }
 
-const AdditionalServiceChip = ({ type, children }: AdditionalServiceChipProps) => {
-  switch (type) {
+const AdditionalServiceChip = ({ buttonType, children }: AdditionalServiceChipProps) => {
+  switch (buttonType) {
     case "abled":
       return (
         <S.AbledChipWrapper>

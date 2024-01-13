@@ -3,8 +3,9 @@ import { IoIosSearch } from "react-icons/io";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { SiNaver } from "react-icons/si";
 
-interface BaseButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
-  type:
+interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  buttonType:
     | "light"
     | "icon"
     | "default"
@@ -18,8 +19,8 @@ interface BaseButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElem
   width?: string;
 }
 
-const BaseButton = ({ type, children, ...props }: BaseButtonProps) => {
-  switch (type) {
+const BaseButton = ({ buttonType, children, ...props }: BaseButtonProps) => {
+  switch (buttonType) {
     case "light":
       return (
         <S.LightColoredButton {...props}>
