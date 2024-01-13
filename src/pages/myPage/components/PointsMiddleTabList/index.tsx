@@ -1,6 +1,6 @@
 import * as S from "../../styles/pointsMiddleTab.styles";
 import { useState } from "react";
-import NoItemIcon from "@assets/icons/noItemIcon.svg?react";
+import NoPointIcon from "@assets/icons/noPointIcon.svg?react";
 import { Link } from "react-router-dom";
 
 // FIXME: 모듈화
@@ -123,7 +123,7 @@ const PointsMiddleTabList = ({ width }: PointsMiddleTabProps) => {
       ) : (
         <S.PointsBottomContainer>
           <S.NoItemWrapper>
-            <NoItemIcon />
+            <NoPointIcon />
             <S.NoItemText>최근 1년간 기록된 포인트 내역이 없습니다.</S.NoItemText>
           </S.NoItemWrapper>
         </S.PointsBottomContainer>
