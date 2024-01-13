@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
-interface CardSectionProps {
-  // FIXME: `type` 이라고 naming시 에러 발생
-  types: "abledPay" | "disabledPay" | "abledPoint" | "disabledPoint";
+interface CardSectionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  buttonType: "abledPay" | "disabledPay" | "abledPoint" | "disabledPoint";
   width?: string;
 }
 
@@ -21,8 +20,8 @@ const ButtonLayout = css`
 export const CardSectionWrapper = styled.div<CardSectionProps>`
   display: flex;
   width: ${({ width }) => width || "100%"};
-  padding: ${({ types }) =>
-    types === "abledPay" || types === "disabledPay" ? "0px 0px 16px 0px" : "0"};
+  padding: ${({ buttonType }) =>
+    buttonType === "abledPay" || buttonType === "disabledPay" ? "0px 0px 16px 0px" : "0"};
   flex-direction: column;
   align-items: flex-start;
   border-radius: 5px;
@@ -86,21 +85,21 @@ export const BottomSectionWrapper = styled.div`
 
 export const BottomLeftButton = styled.button<CardSectionProps>`
   ${ButtonLayout}
-  background: ${({ theme, types }) =>
-    types === "abledPay" ? theme.colors.orange[100] : theme.colors.gray[100]};
+  background: ${({ theme, buttonType }) =>
+    buttonType === "abledPay" ? theme.colors.orange[100] : theme.colors.gray[100]};
 `;
 
 export const BottomLeftButtonText = styled.p<CardSectionProps>`
   ${({ theme }) => theme.text.button1};
-  color: ${({ theme, types }) =>
-    types === "abledPay" ? theme.colors.pink[100] : theme.colors.gray[600]};
+  color: ${({ theme, buttonType }) =>
+    buttonType === "abledPay" ? theme.colors.pink[100] : theme.colors.gray[600]};
   text-align: center;
 `;
 
 export const BottomRightButton = styled.button<CardSectionProps>`
   ${ButtonLayout}
-  background: ${({ theme, types }) =>
-    types === "abledPay" ? theme.colors.pink[100] : theme.colors.gray[500]};
+  background: ${({ theme, buttonType }) =>
+    buttonType === "abledPay" ? theme.colors.pink[100] : theme.colors.gray[500]};
 `;
 
 export const BottomRightButtonText = styled.p`
