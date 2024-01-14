@@ -1,10 +1,15 @@
 import styled from "@emotion/styled";
 import { FaUser } from "react-icons/fa6";
 import { RiTimerLine } from "react-icons/ri";
+import { motion } from "framer-motion";
 
-export const ItemContainer = styled.div`
+interface CardProps {
+  canNegotiate?: boolean;
+  fullContent?: boolean;
+}
+
+export const ItemContainer = styled(motion.div)<CardProps>`
   display: flex;
-  width: 100%;
 
   gap: 0.5rem;
   padding: 0.5rem;
@@ -13,6 +18,14 @@ export const ItemContainer = styled.div`
   background-color: #fff;
 
   overflow: hidden;
+
+  &.map {
+    left: 50%;
+    position: absolute;
+    z-index: 1001;
+
+    bottom: 2rem;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -151,7 +164,7 @@ export const TimerText = styled.p`
   letter-spacing: -0.015rem;
 `;
 
-export const NegoText = styled.p<{ canNegotiate: boolean }>`
+export const NegoText = styled.p<CardProps>`
   color: ${({ theme, canNegotiate }) =>
     canNegotiate ? theme.colors.blue[200] : theme.colors.gray[600]};
   ${({ theme }) => theme.text.overline};
