@@ -1,26 +1,31 @@
 import styled from "@emotion/styled";
 import { FaUser } from "react-icons/fa6";
 import { RiTimerLine } from "react-icons/ri";
+import { motion } from "framer-motion";
 
-export const Container = styled.div`
+interface CardProps {
+  canNegotiate?: boolean;
+  fullContent?: boolean;
+}
+
+export const ItemContainer = styled(motion.div)<CardProps>`
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 3rem;
-  padding: 0.4rem;
-  background-color: #fff;
-`;
 
-export const ItemContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 12.5rem;
-
-  gap: 0.8rem;
+  gap: 0.5rem;
+  padding: 0.5rem;
   border-radius: 4px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
+  background-color: #fff;
 
   overflow: hidden;
+
+  &.map {
+    left: 50%;
+    position: absolute;
+    z-index: 1001;
+
+    bottom: 2rem;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -157,24 +162,25 @@ export const TimerText = styled.p`
   font-weight: 600;
   line-height: 1.5rem;
   letter-spacing: -0.015rem;
-  margin-top: 0.15rem;
 `;
 
-export const NegoContainer = styled.div`
-  margin-top: 0.15rem;
+export const NegoText = styled.p<CardProps>`
+  color: ${({ theme, canNegotiate }) =>
+    canNegotiate ? theme.colors.blue[200] : theme.colors.gray[600]};
+  ${({ theme }) => theme.text.overline};
+
   padding: 0.1875rem 0.3125rem;
   border-radius: 24px;
-  border: 1px solid ${({ theme }) => theme.colors.blue[100]};
-`;
-
-export const NegoText = styled.p`
-  color: ${({ theme }) => theme.colors.blue[200]};
-  ${({ theme }) => theme.text.overline};
+  border: 1px solid
+    ${({ theme, canNegotiate }) => (canNegotiate ? theme.colors.blue[100] : theme.colors.gray[500])};
+  background-color: ${({ theme, canNegotiate }) =>
+    canNegotiate ? "#fff" : theme.colors.gray[100]};
 `;
 
 export const PriceContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 10.5rem;
 
   .sellingPrice {
