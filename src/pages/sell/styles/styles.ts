@@ -33,6 +33,7 @@ export const NoListWrap = styled.div`
   justify-content: center;
 
   height: calc(100% - 56px);
+
   .no-list {
     &__tit {
       ${({ theme }) => theme.text.subtitle5};
@@ -57,7 +58,6 @@ export const ListCard = styled(motion.div)`
   position: relative;
 
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
-
   box-shadow: ${({ theme }) => theme.shadows[3]};
 
   margin-bottom: 16px;
@@ -68,7 +68,9 @@ export const ListCard = styled(motion.div)`
 
       position: relative;
       padding: 16px;
+
       border-bottom: 1px solid ${({ theme }) => theme.colors.gray[300]};
+
       [type="radio"] {
         position: absolute;
         right: 14px;
@@ -102,6 +104,7 @@ export const ListCard = styled(motion.div)`
     }
     &__body {
       padding: 16px;
+
       .title {
         ${({ theme }) => theme.text.overline};
         color: ${({ theme }) => theme.colors.gray[600]};
@@ -137,12 +140,14 @@ export const ListCard = styled(motion.div)`
           max-height: none;
           transform: translate(-50%, -50%) scale(0.1);
         }
+
         &:after {
           content: "";
           display: block;
           padding-bottom: 100%;
         }
       }
+
       .txt-bx {
         .tit {
           ${({ theme }) => theme.text.body1};
@@ -150,10 +155,12 @@ export const ListCard = styled(motion.div)`
 
           margin-bottom: 2px;
         }
+
         .date {
           ${({ theme }) => theme.text.body3};
           color: ${({ theme }) => theme.colors.gray[700]};
         }
+
         .time {
           ${({ theme }) => theme.text.body2};
           color: ${({ theme }) => theme.colors.gray[600]};

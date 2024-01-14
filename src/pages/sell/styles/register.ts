@@ -7,8 +7,9 @@ export const RegisterWrap = styled.div`
 `;
 
 export const RegisterInner = styled.div`
-  padding: 32px 14px;
   background-color: #fff;
+
+  padding: 32px 14px;
 `;
 
 export const RegisterTitle = styled.p`
@@ -21,6 +22,7 @@ export const RegisterSubTitle = styled.p`
   ${({ theme }) => theme.text.subtitle5};
 
   margin-bottom: 11px;
+
   span {
     color: ${(props) => props.theme.colors.pink[200]};
   }
@@ -33,14 +35,30 @@ export const RegisterDes = styled.p`
   margin-bottom: 12px;
 `;
 
+export const RegisterComment = styled.textarea`
+  color: ${(props) => props.theme.colors.gray[600]};
+  width: 100%;
+  min-height: 112px;
+
+  padding: 8px;
+
+  background-color: ${(props) => props.theme.colors.gray[200]};
+
+  border: 1px solid #ddd;
+  border-radius: 5px;
+`;
+
 export const SelectWrap = styled.div`
   display: flex;
+
   margin-left: -4px;
   margin-right: -4px;
-  > div {
-    flex: 1 0 50%;
-    padding: 0 4px;
-  }
+`;
+
+export const ButtonInner = styled.div`
+  flex: 1 0 50%;
+
+  padding: 0 4px;
 `;
 
 export const RefundText = styled.div`
@@ -61,23 +79,11 @@ export const RefundText = styled.div`
   }
   .price {
     ${({ theme }) => theme.text.button2};
+
     span {
       font-weight: bold;
     }
   }
-`;
-
-export const RegisterComment = styled.textarea`
-  width: 100%;
-  min-height: 112px;
-
-  padding: 8px;
-
-  background-color: ${(props) => props.theme.colors.gray[200]};
-  color: ${(props) => props.theme.colors.gray[600]};
-
-  border: 1px solid #ddd;
-  border-radius: 5px;
 `;
 
 export const CalendarInner = styled.div`
@@ -92,6 +98,7 @@ export const CalcInner = styled.div`
   display: flex;
   .calc-box {
     flex: 1 0 50%;
+
     padding: 10px 20px;
 
     &__left {
@@ -109,6 +116,7 @@ export const CalcInner = styled.div`
 
     &.no-text {
       color: ${(props) => props.theme.colors.gray[600]};
+      text-align: center;
 
       width: 100%;
       height: 100%;
@@ -116,13 +124,13 @@ export const CalcInner = styled.div`
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      text-align: center;
     }
   }
 
   .discount {
     ${({ theme }) => theme.text.body2};
     color: ${(props) => props.theme.colors.gray[600]};
+
     span {
       text-decoration: line-through;
     }
@@ -133,6 +141,7 @@ export const CalcInner = styled.div`
 
     display: flex;
     gap: 5px;
+
     .percentage {
       &.text-blue {
         color: ${(props) => props.theme.colors.blue[200]};
@@ -140,8 +149,6 @@ export const CalcInner = styled.div`
       &.text-orange {
         color: ${(props) => props.theme.colors.orange[200]};
       }
-    }
-    .price {
     }
   }
 `;
@@ -168,8 +175,24 @@ export const PriceTableData = styled.div`
   }
 `;
 
+export const PriceInput = styled.input`
+  font-size: 1rem;
+  color: ${(props) => props.theme.colors.gray[900]};
+
+  width: 100%;
+
+  border: none;
+  border-bottom: 1px solid ${(props) => props.theme.colors.gray[100]};
+  outline: none;
+
+  padding-block: 0.5rem;
+
+  background-color: transparent;
+`;
+
 export const CalcButton = styled.button`
   color: ${({ theme }) => theme.colors.gray[700]};
+
   background-color: ${({ theme }) => theme.colors.gray[100]};
 
   border-radius: 30px;
@@ -188,21 +211,6 @@ export const ButtonWrap = styled.div`
   margin-top: 12px;
 `;
 
-export const PriceInput = styled.input`
-  font-size: 1rem;
-  color: ${(props) => props.theme.colors.gray[900]};
-
-  width: 100%;
-
-  border: none;
-  border-bottom: 1px solid ${(props) => props.theme.colors.gray[100]};
-  outline: none;
-
-  padding-block: 0.5rem;
-
-  background-color: transparent;
-`;
-
 export const ErrorMessage = styled.p`
   ${({ theme }) => theme.text.body2};
   color: ${(props) => props.theme.colors.pink[200]};
@@ -219,9 +227,13 @@ export const ConfirmWrap = styled.div`
   box-shadow: rgba(0, 0, 0, 0.1) 0px -1px 2px 0px;
 
   text-align: center;
+
   .des {
     color: ${(props) => props.theme.colors.gray[700]};
+    line-height: 1.2;
+
     margin-bottom: 12px;
+
     a {
       color: #0751c3;
       text-decoration: underline;

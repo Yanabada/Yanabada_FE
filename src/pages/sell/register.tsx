@@ -1,32 +1,36 @@
-import UpperNavBar from "@components/navBar/upperNavBar";
 import * as S from "./styles/register";
-import { DetailBlank } from "./styles/detail";
+import * as CS from "./styles/detail";
+
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { eachDayOfInterval, endOfMonth, startOfMonth } from "date-fns";
+
+import UpperNavBar from "@components/navBar/upperNavBar";
 import PriceArea from "@components/priceArea";
 import Notice from "@components/notice";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
-import YanoljaIcon from "assets/icons/yanolja_Icon.svg?react";
 import DateChangeButton from "@components/buttons/DateChangeButton";
 import Checkbox from "@components/input/Checkbox";
-import { Link } from "react-router-dom";
 import BaseButton from "@components/buttons/BaseButton";
 import BottomSheet from "@components/bottomSheet";
-import { useState } from "react";
 import Calendar from "@components/calendar";
-import { eachDayOfInterval, endOfMonth, startOfMonth } from "date-fns";
+
+import YanoljaIcon from "assets/icons/yanolja_Icon.svg?react";
 
 const SellRegister = () => {
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+
   const originalPrice = 1200000;
   const purchasePrice = 1200000;
   const cancelFee = 600000;
-  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
 
   const productData = {
     code: "240107f84892a35ed5",
     image: "http://via.placeholder.com/300x300",
     accommodationName: "춘천세종호텔",
     roomName: "스탠다드 룸",
-    checkInDate: "2024-01-15",
-    checkOutDate: "2024-01-18",
+    checkInDate: "2024-01-16",
+    checkOutDate: "2024-01-19",
     policyNumber: 2
   };
 
@@ -92,7 +96,7 @@ const SellRegister = () => {
             productData={productData}
           />
         </S.RegisterInner>
-        <DetailBlank />
+        <CS.DetailBlank />
         <S.RegisterInner>
           <S.RegisterTitle>판매 옵션</S.RegisterTitle>
           <S.RegisterSubTitle>
@@ -100,16 +104,16 @@ const SellRegister = () => {
           </S.RegisterSubTitle>
           <S.RegisterDes>네고 불가능 선택 시 구매자는 채팅을 신청할 수 없습니다.</S.RegisterDes>
           <S.SelectWrap>
-            <div>
+            <S.ButtonInner>
               <AuthenticationButton type="disabled" width="100%">
                 예
               </AuthenticationButton>
-            </div>
-            <div>
+            </S.ButtonInner>
+            <S.ButtonInner>
               <AuthenticationButton type="default" width="100%">
                 아니오
               </AuthenticationButton>
-            </div>
+            </S.ButtonInner>
           </S.SelectWrap>
         </S.RegisterInner>
         <S.RegisterInner>
@@ -176,20 +180,19 @@ const SellRegister = () => {
             판매 중단 후 야놀자에서 자동 예약 취소 할게요 <span>*</span>
           </S.RegisterSubTitle>
           <S.SelectWrap>
-            <div>
+            <S.ButtonInner>
               <AuthenticationButton type="disabled" width="100%">
                 예
               </AuthenticationButton>
-            </div>
-            <div>
+            </S.ButtonInner>
+            <S.ButtonInner>
               <AuthenticationButton type="default" width="100%">
                 아니오
               </AuthenticationButton>
-            </div>
+            </S.ButtonInner>
           </S.SelectWrap>
           <S.RefundText>
             <p className="text">
-              {" "}
               <YanoljaIcon />
               야놀자에서 취소 시 환불금
             </p>
@@ -198,12 +201,12 @@ const SellRegister = () => {
             </p>
           </S.RefundText>
         </S.RegisterInner>
-        <DetailBlank />
+        <CS.DetailBlank />
         <S.RegisterInner>
           <S.RegisterTitle>판매자 한마디</S.RegisterTitle>
           <S.RegisterComment placeholder="안전한 거래를 위해 개인정보를 작성하지 않도록 주의해주세요." />
         </S.RegisterInner>
-        <DetailBlank />
+        <CS.DetailBlank />
         <S.RegisterInner>
           <Checkbox variant="all" content="필수 약관 전체 동의" />
           <Checkbox
