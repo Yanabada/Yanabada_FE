@@ -33,7 +33,7 @@ const SignInThird = () => {
           title="닉네임은 한글과 영문만을 사용하여 3글자 이상, 10글자 이하여야 합니다."
         />
       </S.NoticeContainer>
-      <AuthenticationButton type={isValid ? "disabled" : "default"} width="100%">
+      <AuthenticationButton buttonType={isValid ? "disabled" : "default"} width="100%">
         중복 확인
       </AuthenticationButton>
 

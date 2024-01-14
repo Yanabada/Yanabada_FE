@@ -71,7 +71,7 @@ const SignInBottomSheet = ({ sheetVisible, setSheetVisible }: BottomSheetProps) 
         />
         <S.SheetBtnWrapper>
           <BaseButton
-            type={isAllChecked || isChecked1 ? "default" : "disabled-default"}
+            buttonType={isAllChecked || isChecked1 ? "default" : "disabled-default"}
             width="100%"
             onClick={() => {
               if (isAllChecked) {

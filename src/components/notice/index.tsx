@@ -1,6 +1,6 @@
 import * as S from "./styles";
 import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
-import CautionIcon from "@assets/icons/CautionIcon.svg?react";
+import CautionIcon from "@assets/icons/caution_Icon.svg?react";
 import QuestionIcon from "@assets/icons/QuestionIcon.svg?react";
 import InfoIcon from "@assets/icons/infoIcon.svg?react";
 
