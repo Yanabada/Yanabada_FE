@@ -9,7 +9,7 @@ interface PointsMiddleTabProps {
 }
 
 const PointsMiddleTabList = ({ width }: PointsMiddleTabProps) => {
-  const [isPointExist] = useState(false);
+  const [isPointExist] = useState(true);
 
   return (
     <>
@@ -91,6 +91,30 @@ const PointsMiddleTabList = ({ width }: PointsMiddleTabProps) => {
               <S.MinusPoint>-5,000</S.MinusPoint>
             </S.PointListRow>
             <S.PointListRow>
+              <S.Date>2020-12-28</S.Date>
+              <S.DueDate>~2024-12-31 까지</S.DueDate>
+            </S.PointListRow>
+          </S.PointList>
+
+          <S.PointList width={width}>
+            <S.PointListRow>
+              <S.PlusReason>이러한 이유로 포인트를 적립했습니다</S.PlusReason>
+              <S.PlusPoint>+5,000</S.PlusPoint>
+            </S.PointListRow>
+            <S.PointListRow>
+              <S.EventName>이러한 이벤트</S.EventName>
+              <S.Date>2020-12-28</S.Date>
+              <S.DueDate>~2024-12-31 까지</S.DueDate>
+            </S.PointListRow>
+          </S.PointList>
+
+          <S.PointList width={width}>
+            <S.PointListRow>
+              <S.PlusReason>이러한 이유로 포인트를 적립했습니다</S.PlusReason>
+              <S.PlusPoint>+5,000</S.PlusPoint>
+            </S.PointListRow>
+            <S.PointListRow>
+              <S.EventName>이러한 이벤트</S.EventName>
               <S.Date>2020-12-28</S.Date>
               <S.DueDate>~2024-12-31 까지</S.DueDate>
             </S.PointListRow>
