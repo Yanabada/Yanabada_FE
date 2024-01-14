@@ -3,12 +3,14 @@ import { IoIosSearch } from "react-icons/io";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { SiNaver } from "react-icons/si";
 
-interface BaseButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
-  type:
+interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  buttonType:
     | "light"
     | "icon"
     | "default"
     | "transparent"
+    | "transparent-red"
     | "gray"
     | "kakao"
     | "naver"
@@ -18,8 +20,8 @@ interface BaseButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElem
   width?: string;
 }
 
-const BaseButton = ({ type, children, ...props }: BaseButtonProps) => {
-  switch (type) {
+const BaseButton = ({ buttonType, children, ...props }: BaseButtonProps) => {
+  switch (buttonType) {
     case "light":
       return (
         <S.LightColoredButton {...props}>
@@ -37,7 +39,17 @@ const BaseButton = ({ type, children, ...props }: BaseButtonProps) => {
     case "default":
       return <S.DefaultButton {...props}>{children}</S.DefaultButton>;
     case "transparent":
-      return <S.TransparentButton {...props}>{children}</S.TransparentButton>;
+      return (
+        <S.TransparentButton buttonType={buttonType} {...props}>
+          {children}
+        </S.TransparentButton>
+      );
+    case "transparent-red":
+      return (
+        <S.TransparentButton buttonType={buttonType} {...props}>
+          {children}
+        </S.TransparentButton>
+      );
     case "gray":
       return <S.GrayColoredButton {...props}>{children}</S.GrayColoredButton>;
     case "kakao":

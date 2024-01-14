@@ -1,13 +1,13 @@
 import * as S from "./styles";
 
-interface AuthenticationButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
-  type: "light" | "default" | "abled" | "disabled";
+interface AuthenticationButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  buttonType: "light" | "default" | "abled" | "disabled";
   width?: string;
 }
 
-const AuthenticationButton = ({ type, children, ...props }: AuthenticationButtonProps) => {
-  switch (type) {
+const AuthenticationButton = ({ buttonType, children, ...props }: AuthenticationButtonProps) => {
+  switch (buttonType) {
     case "light":
       return <S.LightAuthenticationButton {...props}>{children}</S.LightAuthenticationButton>;
     case "default":

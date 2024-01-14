@@ -24,8 +24,8 @@ const MyPage = ({ width }: MyPageProps) => {
           </S.LoginButton>
         </S.LoginButtonWrapper>
 
-        <CardSectionButton types="abledPay" width={width} />
-        <CardSectionButton types="abledPoint" width={width} />
+        <CardSectionButton buttonType="abledPay" width={width} />
+        <CardSectionButton buttonType="abledPoint" width={width} />
 
         {/* FIXME: 추후 알람 개수에 따라 alert 개수 변경 */}
         <ListButton width={width} alertCount={1}>
@@ -50,8 +50,8 @@ const MyPage = ({ width }: MyPageProps) => {
           </S.LoginButton>
         </S.LoginButtonWrapper>
 
-        <CardSectionButton types="disabledPay" width="332px" />
-        <CardSectionButton types="disabledPoint" width="332px" />
+        <CardSectionButton buttonType="disabledPay" width="332px" />
+        <CardSectionButton buttonType="disabledPoint" width="332px" />
 
         <ListButton width={width}>야나바다 고객센터</ListButton>
         <ListButton width={width}>이용가이드</ListButton>

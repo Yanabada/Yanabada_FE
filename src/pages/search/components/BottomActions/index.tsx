@@ -39,11 +39,11 @@ const BottomActions = () => {
         setIsVisible={setResetModalOpen}
       />
       {isActive ? (
-        <BaseButton type="icon" width="50%">
+        <BaseButton buttonType="icon" width="50%">
           검색하기
         </BaseButton>
       ) : (
-        <BaseButton type="disabled-icon" width="50%">
+        <BaseButton buttonType="disabled-icon" width="50%">
           검색하기
         </BaseButton>
       )}
