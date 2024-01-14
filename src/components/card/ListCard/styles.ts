@@ -125,7 +125,6 @@ export const TimerText = styled.p<ListCardProps>`
     (cardType === "approval_saleEnd" && "#9C9C9C") ||
     (cardType === "approval_sale" && "#38A3EB") ||
     (cardType === "sale" && "#38A3EB")};
-  font-family: Pretendard;
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -133,7 +132,7 @@ export const TimerText = styled.p<ListCardProps>`
   letter-spacing: -0.24px;
 `;
 
-export const AccomodationInfo = styled.div`
+export const AccommodationInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

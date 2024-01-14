@@ -5,6 +5,7 @@ interface TransactionStatementProps {
   width?: string;
   color?: string;
   imageURL?: string;
+  isBorder?: boolean;
 }
 
 export const InfoWrapper = styled.div<TransactionStatementProps>`
@@ -36,12 +37,15 @@ export const TopLabel = styled.p`
   ${({ theme }) => theme.text.subtitle3}
 `;
 
-export const SeperationForm = styled.div`
+export const SeperationForm = styled.div<TransactionStatementProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
   align-self: stretch;
+
+  border-bottom: ${({ isBorder }) => isBorder && "1px dashed #CCCCCC"};
+  padding-bottom: ${({ isBorder }) => isBorder && "12px"};
 `;
 
 export const FormTextWrapper = styled.div`
@@ -88,6 +92,9 @@ export const MiddleWrapper = styled.div<TransactionStatementProps>`
   justify-content: center;
   align-items: flex-start;
   gap: 8px;
+
+  border-bottom: ${({ isBorder }) => isBorder && "1px dashed #CCCCCC"};
+  padding-bottom: 12px;
 `;
 
 export const MiddleBottomWrapper = styled.div`
