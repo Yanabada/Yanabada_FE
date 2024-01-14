@@ -30,7 +30,7 @@ const globalStyles = css`
   form,
   label,
   table {
-    font-family: "Pretendard";
+    font-family: "Pretendard-Regular";
     margin: 0;
     padding: 0;
     border: 0;
@@ -46,7 +46,7 @@ const globalStyles = css`
     list-style: none;
   }
   button {
-    font-family: "Pretendard";
+    font-family: "Pretendard-Regular";
     border: 0;
     background: transparent;
     cursor: pointer;
@@ -54,7 +54,7 @@ const globalStyles = css`
     margin: 0;
   }
   input {
-    font-family: "Pretendard";
+    font-family: "Pretendard-Regular";
   }
 
   @font-face {
