@@ -114,7 +114,7 @@ const router = createBrowserRouter([
             path: "salesHistory",
             element: (
               <>
-                <SalesHistory />
+                <SalesHistory width="100%" />
               </>
             )
           }
