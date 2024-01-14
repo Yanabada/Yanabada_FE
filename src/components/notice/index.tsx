@@ -1,10 +1,17 @@
 import * as S from "./styles";
-import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
-import QuestionIcon from "@assets/icons/question_Icon.svg?react";
-import CautionIcon from "@assets/icons/caution_Icon.svg?react";
+import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
+import CautionIcon from "@assets/icons/CautionIcon.svg?react";
+import QuestionIcon from "@assets/icons/QuestionIcon.svg?react";
+import InfoIcon from "@assets/icons/infoIcon.svg?react";
 
 interface YanoljaProps {
   type: "yanolja";
+  content: string;
+  shape?: "lineFill";
+}
+
+interface InfoProps {
+  type: "info";
   content: string;
   shape?: "lineFill";
 }
@@ -24,7 +31,7 @@ interface DefaultProps {
   shape?: "line" | "fill" | "lineFill";
 }
 
-type NoticeProps = YanoljaProps | DefaultProps | QuestionProps;
+type NoticeProps = YanoljaProps | DefaultProps | QuestionProps | InfoProps;
 
 const Notice = (props: NoticeProps) => {
   let icon;
@@ -33,6 +40,13 @@ const Notice = (props: NoticeProps) => {
       return (
         <S.NoticeWrapper className={props.shape ? `${props.shape} yanolja` : "yanolja"}>
           <YanoljaIcon />
+          <S.TextWrapper>{props.content}</S.TextWrapper>
+        </S.NoticeWrapper>
+      );
+    case "info":
+      return (
+        <S.NoticeWrapper className={props.shape ? `${props.shape} yanolja` : "yanolja"}>
+          <InfoIcon />
           <S.TextWrapper>{props.content}</S.TextWrapper>
         </S.NoticeWrapper>
       );

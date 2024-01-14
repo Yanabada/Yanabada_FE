@@ -37,7 +37,7 @@ const SalesHistory = ({ width }: PointsMiddleTabProps) => {
           </S.MiddleTextWrapper>
         </S.MiddleWrapper>
       </S.PointsMiddleContainer>
-      <S.ListCardWrapper>
+      <S.ListCardWrapper width={width}>
         <ListCard
           cardType="sale"
           width={width}

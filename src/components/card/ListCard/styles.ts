@@ -92,12 +92,15 @@ export const AccomodationCard = styled.div<ListCardProps>`
 export const ImageWrapper = styled.div<ListCardProps>`
   width: 72px;
   height: 72px;
+  border-radius: 5px;
 
+  /* FIXME: 레이아웃 모듈화(ListCard) */
   align-self: stretch;
 
   background-color: lightgray;
   background-image: url(${({ imageURL }) => imageURL});
   background-size: cover;
+  /*************************/
 `;
 
 export const TextArea = styled.div`

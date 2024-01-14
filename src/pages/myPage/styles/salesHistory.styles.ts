@@ -57,8 +57,9 @@ export const MiddleRightText = styled.p`
 
 /******************************/
 
-export const ListCardWrapper = styled.div`
-  width: 360px;
+// FIXME: 모듈화
+export const ListCardWrapper = styled.div<PointsMiddleTabProps>`
+  width: ${({ width }) => width || "360px"};
   height: 850px;
   display: flex;
   padding: 20px 14px;
