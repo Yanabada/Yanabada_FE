@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import NoPointIcon from "@assets/icons/noPointIcon.svg?react";
 import { ToggleMenu, ToggleMenuItem } from "@pages/products/components/Order/ToggleMenu";
-import { menu, item } from "@animations/dropdown";
+import { menu, item } from "@animations/dropDown";
 
 interface PointsMiddleTabProps {
   width?: string;
