@@ -1,11 +1,13 @@
-import UpperNavBar from "@components/navBar/upperNavBar";
 import * as S from "./styles/styles";
+
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { FaChevronRight } from "react-icons/fa6";
+
+import UpperNavBar from "@components/navBar/upperNavBar";
 import Notice from "@components/notice";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
-import { useState } from "react";
-import { motion } from "framer-motion";
 
 const Sell = () => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
@@ -27,141 +29,6 @@ const Sell = () => {
           shape="lineDark"
         />
         <S.ListWrap>
-          <S.ListCard
-            initial={{
-              border: "1px solid #ddd"
-            }}
-            animate={{
-              borderImage: selectedCard
-                ? "linear-gradient(90deg, rgba(58,200,244,1) 0%, rgba(94,155,243,1) 100%) 1"
-                : "none",
-              borderWidth: selectedCard ? "3px" : "1px"
-            }}
-            transition={{ duration: 0.3, delay: 0.2 }}
-          >
-            <label htmlFor="radioButton1">
-              <div className="list-card">
-                <p className="list-card__title">
-                  파라스파라 서울 더 그레이트 현대 런던
-                  <input
-                    type="radio"
-                    id="radioButton1"
-                    name="ProductList"
-                    onChange={() => handleRadioChange(1)}
-                    checked={selectedCard === 1}
-                  />
-                </p>
-                <div className="list-card__body">
-                  <p className="title">숙소 예약 번호 20231219186542325</p>
-                  <div className="inner">
-                    <div className="img-bx">
-                      <img src="https://via.placeholder.com/100x100" alt="썸네일" />
-                    </div>
-                    <div className="txt-bx">
-                      <p className="tit">Forest Tower Deluxe King</p>
-                      <p className="date">2024.01.08 (화) - 2023.01.11 (목)</p>
-                      <p className="time">체크인 14:00 | 체크아웃 11:00</p>
-                    </div>
-                  </div>
-                  <Link to="/sell/detail">
-                    <AuthenticationButton type="disabled" width="100%">
-                      상세보기
-                    </AuthenticationButton>
-                  </Link>
-                </div>
-              </div>
-            </label>
-          </S.ListCard>
-          <S.ListCard
-            initial={{
-              border: "1px solid #ddd"
-            }}
-            animate={{
-              borderImage: selectedCard
-                ? "linear-gradient(90deg, rgba(58,200,244,1) 0%, rgba(94,155,243,1) 100%) 1"
-                : "none",
-              borderWidth: selectedCard ? "3px" : "1px"
-            }}
-            transition={{ duration: 0.3, delay: 0.2 }}
-          >
-            <label htmlFor="radioButton1">
-              <div className="list-card">
-                <p className="list-card__title">
-                  파라스파라 서울 더 그레이트 현대 런던
-                  <input
-                    type="radio"
-                    id="radioButton1"
-                    name="ProductList"
-                    onChange={() => handleRadioChange(1)}
-                    checked={selectedCard === 1}
-                  />
-                </p>
-                <div className="list-card__body">
-                  <p className="title">숙소 예약 번호 20231219186542325</p>
-                  <div className="inner">
-                    <div className="img-bx">
-                      <img src="https://via.placeholder.com/100x100" alt="썸네일" />
-                    </div>
-                    <div className="txt-bx">
-                      <p className="tit">Forest Tower Deluxe King</p>
-                      <p className="date">2024.01.08 (화) - 2023.01.11 (목)</p>
-                      <p className="time">체크인 14:00 | 체크아웃 11:00</p>
-                    </div>
-                  </div>
-                  <Link to="/sell/detail">
-                    <AuthenticationButton type="disabled" width="100%">
-                      상세보기
-                    </AuthenticationButton>
-                  </Link>
-                </div>
-              </div>
-            </label>
-          </S.ListCard>
-          <S.ListCard
-            initial={{
-              border: "1px solid #ddd"
-            }}
-            animate={{
-              borderImage: selectedCard
-                ? "linear-gradient(90deg, rgba(58,200,244,1) 0%, rgba(94,155,243,1) 100%) 1"
-                : "none",
-              borderWidth: selectedCard ? "3px" : "1px"
-            }}
-            transition={{ duration: 0.3, delay: 0.2 }}
-          >
-            <label htmlFor="radioButton1">
-              <div className="list-card">
-                <p className="list-card__title">
-                  파라스파라 서울 더 그레이트 현대 런던
-                  <input
-                    type="radio"
-                    id="radioButton1"
-                    name="ProductList"
-                    onChange={() => handleRadioChange(1)}
-                    checked={selectedCard === 1}
-                  />
-                </p>
-                <div className="list-card__body">
-                  <p className="title">숙소 예약 번호 20231219186542325</p>
-                  <div className="inner">
-                    <div className="img-bx">
-                      <img src="https://via.placeholder.com/100x100" alt="썸네일" />
-                    </div>
-                    <div className="txt-bx">
-                      <p className="tit">Forest Tower Deluxe King</p>
-                      <p className="date">2024.01.08 (화) - 2023.01.11 (목)</p>
-                      <p className="time">체크인 14:00 | 체크아웃 11:00</p>
-                    </div>
-                  </div>
-                  <Link to="/sell/detail">
-                    <AuthenticationButton type="disabled" width="100%">
-                      상세보기
-                    </AuthenticationButton>
-                  </Link>
-                </div>
-              </div>
-            </label>
-          </S.ListCard>
           <S.ListCard
             initial={{
               border: "1px solid #ddd"

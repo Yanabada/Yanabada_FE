@@ -1,6 +1,8 @@
-import UpperNavBar from "@components/navBar/upperNavBar";
-import { IoPersonOutline } from "react-icons/io5";
 import * as S from "./styles/detail";
+
+import { IoPersonOutline } from "react-icons/io5";
+
+import UpperNavBar from "@components/navBar/upperNavBar";
 
 const Sell = () => {
   return (
