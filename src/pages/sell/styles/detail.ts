@@ -7,8 +7,10 @@ export const DetailInfoWrap = styled.div`
 
 export const DetailBox = styled.div`
   background-color: white;
-  padding: 14px;
+  padding: 32px 14px;
   .title {
+    ${({ theme }) => theme.text.subtitle5};
+
     margin-bottom: 16px;
   }
   .info-box {
@@ -43,18 +45,27 @@ export const DetailBox = styled.div`
       .txt-bx {
         .number {
           ${({ theme }) => theme.text.overline};
+          color: ${({ theme }) => theme.colors.gray[600]};
+
+          margin-bottom: 6px;
         }
         .tit {
           ${({ theme }) => theme.text.button1};
+          color: ${({ theme }) => theme.colors.gray[900]};
         }
         .room {
           ${({ theme }) => theme.text.caption1};
+          color: ${({ theme }) => theme.colors.gray[700]};
         }
         .date {
           ${({ theme }) => theme.text.body3};
+          color: ${({ theme }) => theme.colors.gray[700]};
         }
         .time {
           ${({ theme }) => theme.text.body2};
+          color: ${({ theme }) => theme.colors.gray[600]};
+
+          margin-top: -3px;
         }
       }
     }
@@ -68,7 +79,10 @@ export const DetailBox = styled.div`
       .inner {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+
         margin-bottom: 16px;
+
         &:last-child {
           margin-bottom: 0;
         }
@@ -77,20 +91,41 @@ export const DetailBox = styled.div`
         }
         .value {
           color: ${({ theme }) => theme.colors.gray[700]};
+
+          span {
+            ${({ theme }) => theme.text.subtitle4};
+            color: ${({ theme }) => theme.colors.gray[900]};
+          }
         }
       }
     }
     &__right {
+      margin-top: 16px;
+
       text-align: right;
       .option {
         ${({ theme }) => theme.text.caption1};
+        color: ${({ theme }) => theme.colors.gray[700]};
+        > svg {
+          color: ${({ theme }) => theme.colors.gray[600]};
+        }
       }
       .price {
         ${({ theme }) => theme.text.subtitle4};
+
+        margin-top: 5px;
+
+        span {
+          ${({ theme }) => theme.text.caption1};
+          color: ${({ theme }) => theme.colors.gray[600]};
+        }
       }
       .fee {
         ${({ theme }) => theme.text.caption2};
         color: ${({ theme }) => theme.colors.orange[200]};
+
+        margin-top: 5px;
+        line-height: 1.2;
       }
     }
   }

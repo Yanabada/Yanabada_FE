@@ -1,10 +1,14 @@
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 
 export const ProductListWrap = styled.div`
   position: relative;
 
   height: calc(100vh - 112px);
   padding: 17px 14px;
+  padding-bottom: 40px;
+
+  overflow-y: scroll;
 
   background-color: ${({ theme }) => theme.colors.gray[200]};
 `;
@@ -49,11 +53,10 @@ export const ListWrap = styled.div`
   padding: 11px 0;
 `;
 
-export const ListCard = styled.div`
+export const ListCard = styled(motion.div)`
   position: relative;
 
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
-  border-radius: 5px;
 
   box-shadow: ${({ theme }) => theme.shadows[3]};
 
@@ -167,10 +170,6 @@ export const ListButton = styled.button`
   width: 100%;
   height: 48px;
   line-height: 48px;
-
-  position: absolute;
-  bottom: 0;
-  left: 0;
 
   background-color: ${({ theme }) => theme.colors.blue[200]};
 

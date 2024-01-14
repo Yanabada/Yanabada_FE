@@ -66,7 +66,7 @@ const SellRegister = () => {
     return (
       <div>
         {dayOfMonth}
-        {!(isBeforeToday || isExcluded) && <span className="include-text">100,000</span>}
+        {!(isBeforeToday || isExcluded) && <span className="include-text">90,000</span>}
         {(isBeforeToday || isExcluded) && <span className="exclude-text">0</span>}
       </div>
     );
@@ -83,6 +83,8 @@ const SellRegister = () => {
             content="야나바다에서는 야놀자에서 인증된 숙소 매물만을 거래할 수 있습니다."
             shape="lineFill"
           />
+          <S.SmallSpace />
+          <S.SmallSpace />
           <PriceArea
             originalPrice={originalPrice}
             purchasePrice={purchasePrice}
@@ -191,7 +193,9 @@ const SellRegister = () => {
               <YanoljaIcon />
               야놀자에서 취소 시 환불금
             </p>
-            <p className="price">700,000원</p>
+            <p className="price">
+              <span>700,000</span>원
+            </p>
           </S.RefundText>
         </S.RegisterInner>
         <DetailBlank />

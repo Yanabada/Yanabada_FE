@@ -7,7 +7,7 @@ export const RegisterWrap = styled.div`
 `;
 
 export const RegisterInner = styled.div`
-  padding: 14px;
+  padding: 32px 14px;
   background-color: #fff;
 `;
 
@@ -61,6 +61,9 @@ export const RefundText = styled.div`
   }
   .price {
     ${({ theme }) => theme.text.button2};
+    span {
+      font-weight: bold;
+    }
   }
 `;
 
