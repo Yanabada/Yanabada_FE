@@ -8,7 +8,13 @@ import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDi
 import Sell from "@pages/sell";
 import Products from "@pages/products";
 import { Outlet, createBrowserRouter } from "react-router-dom";
+import Login from "@pages/login";
+import EmailLogin from "@pages/login/EmailLogin";
+import SignIn from "@pages/signIn";
 import Search from "@pages/search";
+import SignInFirst from "@pages/signIn/components/signInFirst/SignInFirst";
+import SignInSecond from "@pages/signIn/components/signInSecond/SignInSecond";
+import SignInThird from "@pages/signIn/components/signInThird/SignInThird";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +22,6 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Outlet />
-        <BottomNavBar />
       </div>
     ),
     children: [
@@ -35,7 +40,44 @@ const router = createBrowserRouter([
       },
       {
         path: "/chat",
-        element: <Chat />
+        element: (
+          <>
+            <Chat />
+            <BottomNavBar />
+          </>
+        )
+      },
+      {
+        path: "/login",
+        element: <Outlet />,
+        children: [
+          {
+            index: true,
+            element: <Login />
+          },
+          {
+            path: "email",
+            element: <EmailLogin />
+          }
+        ]
+      },
+      {
+        path: "/signin",
+        element: <SignIn />,
+        children: [
+          {
+            index: true,
+            element: <SignInFirst />
+          },
+          {
+            path: "1",
+            element: <SignInSecond />
+          },
+          {
+            path: "2",
+            element: <SignInThird />
+          }
+        ]
       },
       {
         path: "/mypage",
