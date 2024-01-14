@@ -1,34 +1,40 @@
+import { Dispatch, SetStateAction, useRef, useState } from "react";
+import * as S from "./styles";
 import { CustomOverlayMap, useMap } from "react-kakao-maps-sdk";
+import { Product } from "@pages/products/types";
 
-export const ProductsMarkers = () => {
+interface ProductMarkersProps {
+  products: Product[];
+  setSelectedProductId: Dispatch<SetStateAction<number>>;
+}
+
+// FIXME: utils로 이동
+const getPriceWithComma = (price: number) => {
+  return price.toLocaleString("en-US");
+};
+
+export const ProductsMarkers = ({ products, setSelectedProductId }: ProductMarkersProps) => {
+  const [selectedId, setSelectedId] = useState<number>(1);
   const map = useMap();
 
-  const positions = [
-    {
-      price: "10,000",
-      latlng: { lat: 33.450705, lng: 126.570677 }
-    },
-    {
-      price: "20,000",
-      latlng: { lat: 33.450936, lng: 126.569477 }
-    },
-    {
-      price: "300,000",
-      latlng: { lat: 33.450879, lng: 126.56994 }
-    },
-    {
-      price: "1,000,000",
-      latlng: { lat: 33.451393, lng: 126.570738 }
-    }
-  ];
+  const overlayRef = useRef<kakao.maps.CustomOverlay>(null);
+  overlayRef.current?.setZIndex(1);
 
-  return positions.map((position) => (
-    <CustomOverlayMap key={`${position.price}-${position.latlng}`} position={position.latlng}>
-      <div
-        onClick={() => map.panTo(new kakao.maps.LatLng(position.latlng.lat, position.latlng.lng))}
+  const handleSelect = (product: Product) => {
+    const { latitude, longitude } = product;
+    setSelectedId(product.id);
+    setSelectedProductId(product.id);
+    map.panTo(new kakao.maps.LatLng(latitude, longitude));
+  };
+
+  return products.map((product) => (
+    <CustomOverlayMap key={product.id} position={{ lat: product.latitude, lng: product.longitude }}>
+      <S.Pin
+        data-selected={selectedId === product.id ? "true" : "false"}
+        onClick={() => handleSelect(product)}
       >
-        {position.price}
-      </div>
+        {getPriceWithComma(product.price)}
+      </S.Pin>
     </CustomOverlayMap>
   ));
 };
