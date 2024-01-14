@@ -30,8 +30,7 @@ const Sell = () => {
               <IoPersonOutline /> 기준 2명 / 최대 2명
             </p>
             <p className="price">
-              <span>구매가</span>
-              264,000원
+              <span>구매가</span>&nbsp; 264,000원
             </p>
             <p className="fee">
               취소수수료 20%
@@ -72,7 +71,9 @@ const Sell = () => {
             </div>
             <div className="inner">
               <p className="name">총 결제금액</p>
-              <p className="value">1,200,000원</p>
+              <p className="value">
+                <span>1,200,000원</span>
+              </p>
             </div>
             <div className="inner">
               <p className="name">결제 수단</p>

@@ -7,7 +7,7 @@ export const PriceTitle = styled.p`
   margin-bottom: 16px;
 
   span {
-    color: ${({ theme }) => theme.colors.gray[900]};
+    color: ${({ theme }) => theme.colors.pink[200]};
   }
 `;
 
@@ -144,6 +144,10 @@ export const PriceInput = styled.input`
 
   background-color: transparent;
   padding-bottom: 6px;
+
+  &::placeholder {
+    color: ${(props) => props.theme.colors.gray[500]};
+  }
 `;
 
 export const ErrorMessage = styled.p`
@@ -193,4 +197,8 @@ export const CalcButton = styled.button`
 export const PolicyInner = styled.div`
   text-align: left;
   padding: 16px;
+`;
+
+export const PriceSpace = styled.div`
+  height: 16px;
 `;

@@ -167,6 +167,7 @@ const PriceArea = ({ originalPrice, purchasePrice, cancelFee, productData }: Pri
           )}
         </S.PriceTable>
       </S.PriceInner>
+      <S.PriceSpace />
       <S.PriceInner>
         <S.PriceTitle>
           판매가격 <span>*</span>

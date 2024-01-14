@@ -4,7 +4,7 @@ interface DateChangeButtonProps {
   width?: string;
 }
 
-export const DateChangeButton = styled.button<DateChangeButtonProps>`
+export const DateChangeButton = styled.div<DateChangeButtonProps>`
   display: flex;
   width: ${({ width }) => width || "332px"};
   padding: 12px 8px;
