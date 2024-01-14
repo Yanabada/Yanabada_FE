@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 1rem 0.75rem 1rem;
 `;
 
 export const InputLabel = styled.label`
