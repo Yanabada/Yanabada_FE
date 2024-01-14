@@ -4,7 +4,7 @@ import Badges from "@components/badges";
 // import TimerIcon from "@assets/icons/timerIcon.svg?react";
 import BaseButton from "@components/buttons/BaseButton";
 import { MdOutlineTimer } from "react-icons/md";
-import YanoljaIcon from "@assets/icons/yanolja_icon.svg?react";
+import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
 
 interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string;
