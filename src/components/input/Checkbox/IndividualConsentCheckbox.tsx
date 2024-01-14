@@ -28,20 +28,22 @@ const IndividualConsentCheckbox = ({
       <div className="icon">
         <CheckIcon />
       </div>
-      <S.ContnetWrapper>
-        <S.Title>{title}</S.Title>
-        <S.Content>{content}</S.Content>
-      </S.ContnetWrapper>
-      {hasMoreContent && (
-        <button
-          onClick={() => {
-            onLoadMoreContent;
-            console.log("clicked");
-          }}
-        >
-          <RightArrow />
-        </button>
-      )}
+      <S.ContentBtnWrapper>
+        <S.ContentWrapper>
+          <S.Title>{title}</S.Title>
+          <S.Content>{content}</S.Content>
+        </S.ContentWrapper>
+        {hasMoreContent && (
+          <button
+            onClick={() => {
+              onLoadMoreContent;
+              console.log("clicked");
+            }}
+          >
+            <RightArrow />
+          </button>
+        )}
+      </S.ContentBtnWrapper>
     </S.Label>
   );
 };
