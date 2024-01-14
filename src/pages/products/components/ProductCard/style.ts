@@ -182,6 +182,18 @@ export const NoNegoContainer = styled(NegoContainer)`
   background-color: ${({ theme }) => theme.colors.gray[100]};
 `;
 
+export const NegoText = styled.p<CardProps>`
+  color: ${({ theme, canNegotiate }) =>
+    canNegotiate ? theme.colors.blue[200] : theme.colors.gray[600]};
+  ${({ theme }) => theme.text.overline};
+  padding: 0.1875rem 0.3125rem;
+  border-radius: 24px;
+  border: 1px solid
+    ${({ theme, canNegotiate }) => (canNegotiate ? theme.colors.blue[100] : theme.colors.gray[500])};
+  background-color: ${({ theme, canNegotiate }) =>
+    canNegotiate ? "#fff" : theme.colors.gray[100]};
+`;
+
 export const PriceContainer = styled.div`
   display: flex;
   justify-content: space-between;
