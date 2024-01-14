@@ -12,6 +12,7 @@ import BaseButton from "@components/buttons/BaseButton";
 import BottomSheet from "@components/bottomSheet";
 import { useState } from "react";
 import Calendar from "@components/calendar";
+import { eachDayOfInterval, endOfMonth, startOfMonth } from "date-fns";
 
 const SellRegister = () => {
   const originalPrice = 1200000;
@@ -30,9 +31,45 @@ const SellRegister = () => {
   };
 
   const bottomSheetProps = {
-    title: "취소 규정",
+    title: "판매기한 선택",
     isVisible: bottomSheetVisible,
     setIsVisible: setBottomSheetVisible
+  };
+
+  // calendar 영역
+  const currentMonth = new Date(2024, 0);
+  const nextYear = new Date(currentMonth);
+  nextYear.setFullYear(currentMonth.getFullYear() + 1);
+  const today = new Date();
+
+  const seletedDates = eachDayOfInterval({
+    start: startOfMonth(currentMonth),
+    end: endOfMonth(currentMonth)
+  });
+
+  const excludeDates = seletedDates
+    .filter((date) => date.getDate() < 16 || date.getDate() > 19)
+    .concat(
+      eachDayOfInterval({
+        start: startOfMonth(new Date(currentMonth.getFullYear(), 1)),
+        end: endOfMonth(nextYear)
+      })
+    );
+
+  const renderDayContents = (dayOfMonth: number, date?: Date | null | undefined) => {
+    const isExcluded =
+      date instanceof Date &&
+      excludeDates.some((excludedDate) => excludedDate.getTime() === date.getTime());
+
+    const isBeforeToday = date instanceof Date && date < today;
+
+    return (
+      <div>
+        {dayOfMonth}
+        {!(isBeforeToday || isExcluded) && <span className="include-text">100,000</span>}
+        {(isBeforeToday || isExcluded) && <span className="exclude-text">0</span>}
+      </div>
+    );
   };
 
   return (
@@ -86,20 +123,50 @@ const SellRegister = () => {
             onClick={() => setBottomSheetVisible(true)}
           />
           <BottomSheet {...bottomSheetProps}>
-            <Notice
-              type="default"
-              title="판매 종료일을 선택해주세요"
-              content="날짜별 판매 종료 시 환불받을 수 있는 금액이에요
+            <S.CalendarInner>
+              <Notice
+                type="default"
+                title="판매 종료일을 선택해주세요"
+                content="날짜별 판매 종료 시 환불받을 수 있는 금액이에요
                 오늘(1월 3일)부터 입실일까지 판매할 수 있어요."
-              shape="line"
-            />
-            <Calendar />
-            <p>받을 수 있는 금액</p>
-            <div>
-              <div>양도 판매 성공시</div>
-              <div>1월 8일 판매 종료시</div>
-            </div>
-            <BaseButton type="default">확인</BaseButton>
+                shape="line"
+              />
+              <S.SmallSpace />
+              <Calendar excludeDates={excludeDates} renderDayContents={renderDayContents} />
+              <S.SmallSpace />
+              <S.RegisterSubTitle>받을 수 있는 금액</S.RegisterSubTitle>
+              <S.CalcInner>
+                <div className="calc-box calc-box__left">
+                  <p className="tit">양도 판매 성공 시</p>
+                  <p className="discount">
+                    <span>1,029,000</span>원
+                  </p>
+                  <p className="inner">
+                    <span className="percentage text-blue">90%</span>
+                    <span className="price">926,1000원</span>
+                  </p>
+                  {/* startDate 입력 전 */}
+                  {/* <p className="tit no-text">
+                    판매 가격이
+                    <br /> 설정되지 않았어요
+                  </p> */}
+                </div>
+                <div className="calc-box calc-box__right">
+                  <p className="tit">1월 8일 판매 종료시</p>
+                  <p className="discount">
+                    <span>1,029,000</span>원
+                  </p>
+                  <p className="inner">
+                    <span className="percentage text-orange">7%</span>
+                    <span className="price">100,000원</span>
+                  </p>
+                </div>
+              </S.CalcInner>
+              <S.SmallSpace />
+              <BaseButton type="default" width="100%">
+                확인
+              </BaseButton>
+            </S.CalendarInner>
           </BottomSheet>
         </S.RegisterInner>
         <S.RegisterInner>
