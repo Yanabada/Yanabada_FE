@@ -1,23 +1,25 @@
 import * as S from "./individualConsentCheckbox.style";
 import CheckIcon from "@assets/icons/checkbox_Check.svg?react";
 import RightArrow from "@assets/icons/checkbox_rightArrow.svg?react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 
 export interface IndividualConsentCheckboxProps {
   title: string;
   content: string;
   hasMoreContent?: boolean;
   onLoadMoreContent?: VoidFunction;
+  checked: boolean;
+  setChecked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const IndividualConsentCheckbox = ({
   title,
   content,
   hasMoreContent = false,
-  onLoadMoreContent
+  onLoadMoreContent,
+  checked,
+  setChecked
 }: IndividualConsentCheckboxProps) => {
-  const [checked, setChecked] = useState(false);
-
   const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
   };
