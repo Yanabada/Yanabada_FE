@@ -20,7 +20,7 @@ interface DefaultProps {
   type: "default";
   title: string;
   content?: string;
-  color: "blue" | "orange";
+  color?: "blue" | "orange";
   shape?: "line" | "fill" | "lineFill";
 }
 
