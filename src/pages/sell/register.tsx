@@ -19,6 +19,10 @@ import YanoljaIcon from "assets/icons/yanolja_Icon.svg?react";
 
 const SellRegister = () => {
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const [allCheck, setAllCheck] = useState(false);
+  const [check1, setCheck1] = useState(false);
+  const [check2, setCheck2] = useState(false);
+  const [check3, setCheck3] = useState(false);
 
   const originalPrice = 1200000;
   const purchasePrice = 1200000;
@@ -208,23 +212,35 @@ const SellRegister = () => {
         </S.RegisterInner>
         <CS.DetailBlank />
         <S.RegisterInner>
-          <Checkbox variant="all" content="필수 약관 전체 동의" />
+          <Checkbox
+            variant="all"
+            content="필수 약관 전체 동의"
+            setChecked={setAllCheck}
+            checked={allCheck}
+            setList={[setCheck1, setCheck2, setCheck3]}
+          />
           <Checkbox
             variant="individual"
             title=""
             content="아나바다에 등록한 상품을 다른 곳에서 이중판매 한 경우 발생한 불이익에 대해 자사는 책임지지 않음을 동의합니다. (필수)"
+            setChecked={setCheck1}
+            checked={check1}
           />
           <Checkbox
             variant="individual"
             title=""
             content="개인정보 수집 및 이용 (필수)"
             hasMoreContent
+            setChecked={setCheck2}
+            checked={check2}
           />
           <Checkbox
             variant="individual"
             title=""
             content="개인정보 제 3자 제공 (필수)"
             hasMoreContent
+            setChecked={setCheck3}
+            checked={check3}
           />
         </S.RegisterInner>
         <S.RegisterInner>
