@@ -2,7 +2,7 @@ import * as S from "./style";
 import { useState } from "react";
 import type { MotionProps, Variants } from "framer-motion";
 import { ToggleMenu, ToggleMenuItem } from "./ToggleMenu";
-import Checkbox from "@components/input/Checkbox";
+// import Checkbox from "@components/input/Checkbox";
 
 const menu = {
   closed: {
@@ -44,14 +44,14 @@ const Order = () => {
 
   return (
     <S.OrderContainer>
-      <Checkbox
+      {/* <Checkbox
         variant="all"
         content="판매 완료 상품 가리기"
         transparent={true}
         fontSize="0.9375rem"
         fontWeight="400"
         color="#9C9C9C"
-      ></Checkbox>
+      ></Checkbox> */}
       <ToggleMenu
         label={orderName}
         open={open}
