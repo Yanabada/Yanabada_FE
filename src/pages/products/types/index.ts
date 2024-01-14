@@ -1,15 +1,16 @@
 export interface Product {
   id: number;
-  salesPercentage: number;
   image: string;
   accommodationName: string;
   roomName: string;
+  address: string;
   checkIn: Date;
   checkOut: Date;
-  saleEnd: Date;
   min: number;
   max: number;
+  saleEnd: Date;
   rating: number;
+  salesPercentage: number;
   canNegotiate: boolean;
   price: number;
   sellingPrice: number;

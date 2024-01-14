@@ -16,6 +16,9 @@ export const SecondContainer = styled.div`
 export const MapContainer = styled.div`
   position: relative;
   margin-top: 3rem;
+  height: calc(100vh - 56px - 48px);
+
+  overflow: hidden;
 `;
 
 export const ProductCardWrapper = styled.div`
