@@ -56,3 +56,14 @@ export const MiddleRightText = styled.p`
 `;
 
 /******************************/
+
+export const ListCardWrapper = styled.div`
+  width: 360px;
+  height: 850px;
+  display: flex;
+  padding: 20px 14px;
+  gap: 20px;
+  flex-direction: column;
+
+  background: ${({ theme }) => theme.colors.gray[200]};
+`;
