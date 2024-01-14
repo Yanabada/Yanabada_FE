@@ -2,7 +2,7 @@ import * as S from "./style";
 import { useState } from "react";
 import { ToggleMenu, ToggleMenuItem } from "./ToggleMenu";
 import Checkbox from "@components/input/Checkbox";
-import { menu, item } from "@animations/dropdown";
+import { menu, item } from "@animations/dropDown";
 
 const orderList = [
   { id: "RECENT", name: "최신순" },
