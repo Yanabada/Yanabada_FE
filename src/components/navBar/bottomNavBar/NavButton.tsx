@@ -24,7 +24,7 @@ const NavButton = ({ path }: NavButtonProps) => {
     ["/products", { label: "상품리스트", component: <NavAll /> }],
     ["/sell", { label: "등록", component: <NavProduct /> }],
     ["/chat", { label: "채팅", component: <NavChat />, showBadge: true }],
-    ["/myPage", { label: "마이", component: <NavMy />, showBadge: true }]
+    ["/mypage", { label: "마이", component: <NavMy />, showBadge: true }]
   ]);
   const { label, component, showBadge } = tapList.get(path) || {
     label: "",
