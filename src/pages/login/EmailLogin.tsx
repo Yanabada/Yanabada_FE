@@ -30,7 +30,10 @@ const EmailLogin = () => {
         />
       </S.InputWrapper>
 
-      <BaseButton type={emailChecked && psChecked ? "default" : "disabled-default"} width="100%">
+      <BaseButton
+        buttonType={emailChecked && psChecked ? "default" : "disabled-default"}
+        width="100%"
+      >
         로그인
       </BaseButton>
       <S.BtnFlexContainer>

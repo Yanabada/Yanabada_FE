@@ -20,8 +20,8 @@ const Login = () => {
       </S.LogoWrapper>
       야나바다는 야놀자 계정으로 이용하실 수 있습니다.
       <S.BtnWrapper>
-        <BaseButton type="kakao">카카오로 시작하기</BaseButton>
-        <BaseButton type="naver" style={{ color: "#fff" }}>
+        <BaseButton buttonType="kakao">카카오로 시작하기</BaseButton>
+        <BaseButton buttonType="naver" style={{ color: "#fff" }}>
           네이버로 시작하기
         </BaseButton>
       </S.BtnWrapper>
