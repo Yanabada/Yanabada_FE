@@ -1,5 +1,4 @@
 import * as S from "./styles";
-import DottedLineIcon from "@assets/icons/dottedLineIcon.svg?react";
 
 interface PayInfoProps {
   divType: "payInfo" | "transactionInfo";
@@ -19,14 +18,13 @@ const Info = ({ divType, width, imageURL }: PayInfoProps) => {
             <S.FormLeftText color="gray">야놀자 구매가</S.FormLeftText>
             <S.FormRightPrice color="black">1,200,000원</S.FormRightPrice>
           </S.SeperationForm>
-          <S.SeperationForm>
+          <S.SeperationForm isBorder={true}>
             <S.FormTextWrapper>
               <S.FormLeftText color="gray">양도할인가</S.FormLeftText>
               <S.FormLeftText color="blue">(50% 할인)</S.FormLeftText>
             </S.FormTextWrapper>
             <S.FormRightPrice color="gray">-600,000원</S.FormRightPrice>
           </S.SeperationForm>
-          <DottedLineIcon />
           <S.SeperationForm>
             <S.FormLeftTextBold>야나바다 판매가</S.FormLeftTextBold>
             <S.FormRightPrice color="blue">600,000원</S.FormRightPrice>
@@ -43,7 +41,7 @@ const Info = ({ divType, width, imageURL }: PayInfoProps) => {
           <S.TopWrapper>
             <S.TopLabel>거래 정보</S.TopLabel>
           </S.TopWrapper>
-          <S.MiddleWrapper>
+          <S.MiddleWrapper isBorder={true}>
             <S.FormLeftText color="gray">상품명</S.FormLeftText>
             <S.MiddleBottomWrapper>
               <S.ImageWrapper imageURL={imageURL} />
@@ -53,7 +51,6 @@ const Info = ({ divType, width, imageURL }: PayInfoProps) => {
               </S.MiddleBottomRightWrapper>
             </S.MiddleBottomWrapper>
           </S.MiddleWrapper>
-          <DottedLineIcon />
           <S.SeperationForm>
             <S.FormLeftText>주문번호</S.FormLeftText>
             <S.FormRightText>00000000</S.FormRightText>

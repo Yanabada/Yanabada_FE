@@ -18,9 +18,25 @@ interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
     | "saleCanceled"
     | "purchased"
     | "purchasedCanceled";
+  accommodationName: string;
+  buyerInfo?: string;
+  saleDate?: string;
+  timerText?: string;
+  roomName: string;
+  price: string;
 }
 
-const ListCard = ({ width, cardType, imageURL }: ListCardProps) => {
+const ListCard = ({
+  width,
+  imageURL,
+  cardType,
+  accommodationName,
+  buyerInfo,
+  saleDate,
+  timerText,
+  roomName,
+  price
+}: ListCardProps) => {
   const getTimerIconColor = (cardType: ListCardProps["cardType"]) => {
     switch (cardType) {
       case "approval_saleEnd":
@@ -57,12 +73,12 @@ const ListCard = ({ width, cardType, imageURL }: ListCardProps) => {
       <S.TopWrapper>
         <Badges badgeType={badgeType}>승인요청</Badges>
         <S.TopRightWrapper>
-          <S.TopRightText>파라스파라 서울 더 그레이트 현대...</S.TopRightText>
+          <S.TopRightText>{accommodationName}</S.TopRightText>
         </S.TopRightWrapper>
       </S.TopWrapper>
       <S.PaymentInfoWrapper>
-        <S.BuyerInfo>물건구매자닉네임 | 야놀자페이 결제</S.BuyerInfo>
-        <S.SaleDate>2024.01.06(토) 00:00</S.SaleDate>
+        <S.BuyerInfo>{buyerInfo}</S.BuyerInfo>
+        <S.SaleDate>{saleDate}</S.SaleDate>
       </S.PaymentInfoWrapper>
       <S.AccomodationCard>
         <S.ImageWrapper imageURL={imageURL} />
@@ -73,17 +89,17 @@ const ListCard = ({ width, cardType, imageURL }: ListCardProps) => {
               cardType === "sale") && (
               <>
                 <MdOutlineTimer style={{ fill: getTimerIconColor(cardType) }} />
-                <S.TimerText cardType={cardType}>판매 종료</S.TimerText>
+                <S.TimerText cardType={cardType}>{timerText}</S.TimerText>
               </>
             )}
           </S.Timer>
-          <S.AccomodationInfo>
-            <S.RoomName>Forest Tower Deluxe King</S.RoomName>
+          <S.AccommodationInfo>
+            <S.RoomName>{roomName}</S.RoomName>
             <S.PriceInfo>
               <S.DiscountRate>판매가</S.DiscountRate>
-              <S.Price>800,000원</S.Price>
+              <S.Price>{price}</S.Price>
             </S.PriceInfo>
-          </S.AccomodationInfo>
+          </S.AccommodationInfo>
         </S.TextArea>
       </S.AccomodationCard>
       <S.ButtonWrapper>
