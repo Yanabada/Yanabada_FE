@@ -6,6 +6,7 @@ import Points from "@pages/myPage/points";
 import PointsMiddleTabList from "@pages/myPage/components/PointsMiddleTabList";
 import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDisappear";
 import SalesHistory from "@pages/myPage/salesHistory";
+import PurchaseHistory from "@pages/myPage/purchaseHistory";
 import TransactionStatement from "@pages/myPage/transactionStatement";
 import Sell from "@pages/sell";
 import Products from "@pages/products";
@@ -123,10 +124,34 @@ const router = createBrowserRouter([
             )
           },
           {
-            path: "transactionStatement",
+            path: "transactionStatement/sale",
             element: (
               <>
-                <TransactionStatement width="100%" />
+                <TransactionStatement width="100%" from="sale" />
+              </>
+            )
+          },
+          {
+            path: "transactionStatement/purchase",
+            element: (
+              <>
+                <TransactionStatement width="100%" from="purchase" />
+              </>
+            )
+          },
+          {
+            path: "transactionStatement/cancel",
+            element: (
+              <>
+                <TransactionStatement width="100%" from="cancel" />
+              </>
+            )
+          },
+          {
+            path: "purchaseHistory",
+            element: (
+              <>
+                <PurchaseHistory width="100%" />
               </>
             )
           }

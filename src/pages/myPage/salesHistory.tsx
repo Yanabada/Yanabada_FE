@@ -1,13 +1,13 @@
-import * as S from "./styles/salesHistory.styles";
+import * as S from "./styles/history.styles";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import ListCard from "@components/card/ListCard";
 
 // FIXME: 모듈화
-interface PointsMiddleTabProps {
+interface SalesHistoryProps {
   width?: string;
 }
 
-const SalesHistory = ({ width }: PointsMiddleTabProps) => {
+const SalesHistory = ({ width }: SalesHistoryProps) => {
   return (
     <>
       <UpperNavBar title="판매내역" type="back" />
