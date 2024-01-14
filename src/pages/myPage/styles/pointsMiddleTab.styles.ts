@@ -39,8 +39,9 @@ export const PointsBottomContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  overflow: auto;
+  justify-content: flex-start;
+  height: 536px;
+  overflow: scroll;
 `;
 
 export const PointList = styled.div<PointsMiddleTabProps>`
