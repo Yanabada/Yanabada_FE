@@ -1,5 +1,4 @@
 import * as S from "./styles/salesHistory.styles";
-import { Link } from "react-router-dom";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import ListCard from "@components/card/ListCard";
 
