@@ -7,6 +7,7 @@ import PointsMiddleTabList from "@pages/myPage/components/PointsMiddleTabList";
 import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDisappear";
 import Sell from "@pages/sell";
 import Products from "@pages/products";
+// import ProductDetail from "@pages/productDetail";
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import Login from "@pages/login";
 import EmailLogin from "@pages/login/EmailLogin";
@@ -35,8 +36,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Products />
+        element: (
+          <>
+            <Products />
+            <BottomNavBar />
+          </>
+        )
       },
+      // {
+      //   path: "/products/:id",
+      //   element: <ProductDetail />
+      // },
       {
         path: "/sell",
         element: <Sell />
