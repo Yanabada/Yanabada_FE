@@ -15,9 +15,6 @@ interface PriceAreaProps {
   originalPrice: number;
   purchasePrice: number;
   cancelFee: number;
-}
-
-interface MergedProps extends PriceAreaProps {
   productData: {
     code: string;
     image: string;
@@ -29,7 +26,7 @@ interface MergedProps extends PriceAreaProps {
   };
 }
 
-const PriceArea = ({ originalPrice, purchasePrice, cancelFee, productData }: MergedProps) => {
+const PriceArea = ({ originalPrice, purchasePrice, cancelFee, productData }: PriceAreaProps) => {
   const [price, setPrice] = useState(0);
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   const CURRENCY_SIGN = "￦";
@@ -71,9 +68,6 @@ const PriceArea = ({ originalPrice, purchasePrice, cancelFee, productData }: Mer
       );
     }
   };
-
-  const errorMessage = getErrorMessage();
-  const salesMessage = getSalesMessage();
 
   const handleCalculation = (amount: number) => {
     const calculatedPrice = price - amount;
@@ -132,14 +126,14 @@ const PriceArea = ({ originalPrice, purchasePrice, cancelFee, productData }: Mer
               <span>{numberFormat(purchasePrice)}</span>원
             </p>
           </S.PriceTableData>
-          {(productData.policyNumber === 3 && (
+          {productData.policyNumber === 3 ? (
             <S.PriceTableData>
               <p className="tit">취소 수수료</p>
               <p className="price">
                 <span>취소불가</span>
               </p>
             </S.PriceTableData>
-          )) || (
+          ) : (
             <S.PriceTableData className="highlight">
               <p className="tit">
                 취소 수수료
@@ -153,7 +147,7 @@ const PriceArea = ({ originalPrice, purchasePrice, cancelFee, productData }: Mer
               <BottomSheet {...bottomSheetProps}>
                 <S.PolicyInner>
                   <Notice
-                    type="question"
+                    type="default"
                     title={checkDayOfFee({
                       originalPrice,
                       policyNumber: productData.policyNumber,
@@ -184,9 +178,9 @@ const PriceArea = ({ originalPrice, purchasePrice, cancelFee, productData }: Mer
             onChange={handlePriceChange}
             placeholder={`${CURRENCY_SIGN} 판매 가격을 입력해주세요`}
           />
-          {salesMessage}
+          {getSalesMessage()}
         </S.MessageWrap>
-        {errorMessage}
+        {getErrorMessage()}
         <S.ButtonWrap>
           {amountData.map(renderCalButton)}
           <S.CalcButton onClick={() => handleResetPrice()}>

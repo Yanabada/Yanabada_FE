@@ -50,6 +50,14 @@ export const RefundText = styled.div`
   margin-top: 12px;
   .text {
     ${({ theme }) => theme.text.body2};
+
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    > svg {
+      margin-bottom: 2px;
+    }
   }
   .price {
     ${({ theme }) => theme.text.button2};
@@ -67,6 +75,72 @@ export const RegisterComment = styled.textarea`
 
   border: 1px solid #ddd;
   border-radius: 5px;
+`;
+
+export const CalendarInner = styled.div`
+  padding: 14px;
+`;
+
+export const CalcInner = styled.div`
+  border-top: 1px solid #ddd;
+
+  padding-top: 8px;
+
+  display: flex;
+  .calc-box {
+    flex: 1 0 50%;
+    padding: 10px 20px;
+
+    &__left {
+      background-color: #e6eef9;
+      border-radius: 70px 0px 0px 70px;
+    }
+    &__right {
+      background-color: #f2f2f2;
+      border-radius: 0px 70px 70px 0px;
+    }
+  }
+
+  .tit {
+    ${({ theme }) => theme.text.body2};
+
+    &.no-text {
+      color: ${(props) => props.theme.colors.gray[600]};
+
+      width: 100%;
+      height: 100%;
+
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  .discount {
+    ${({ theme }) => theme.text.body2};
+    color: ${(props) => props.theme.colors.gray[600]};
+    span {
+      text-decoration: line-through;
+    }
+  }
+
+  .inner {
+    ${({ theme }) => theme.text.subtitle4};
+
+    display: flex;
+    gap: 5px;
+    .percentage {
+      &.text-blue {
+        color: ${(props) => props.theme.colors.blue[200]};
+      }
+      &.text-orange {
+        color: ${(props) => props.theme.colors.orange[200]};
+      }
+    }
+    .price {
+    }
+  }
 `;
 
 export const PriceTable = styled.div`
@@ -150,4 +224,8 @@ export const ConfirmWrap = styled.div`
       text-decoration: underline;
     }
   }
+`;
+
+export const SmallSpace = styled.div`
+  height: 16px;
 `;
