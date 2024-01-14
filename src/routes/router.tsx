@@ -47,7 +47,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <MyPage />
+            element: <MyPage width="100%" />
           },
           {
             path: "points/list",
