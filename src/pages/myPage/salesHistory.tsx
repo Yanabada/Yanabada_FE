@@ -18,7 +18,7 @@ const SalesHistory = ({ width }: PointsMiddleTabProps) => {
         </S.MiddleWrapper>
         <S.MiddleWrapper>
           <S.MiddleTextWrapper>
-            <S.MiddleRightText>승인예정</S.MiddleRightText>
+            <S.MiddleRightText>승인요청</S.MiddleRightText>
           </S.MiddleTextWrapper>
         </S.MiddleWrapper>
         <S.MiddleWrapper>

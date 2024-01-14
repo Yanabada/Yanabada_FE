@@ -5,6 +5,7 @@ import MyPage from "@pages/myPage";
 import Points from "@pages/myPage/points";
 import PointsMiddleTabList from "@pages/myPage/components/PointsMiddleTabList";
 import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDisappear";
+import SalesHistory from "@pages/myPage/salesHistory";
 import Sell from "@pages/sell";
 import Products from "@pages/products";
 import { Outlet, createBrowserRouter } from "react-router-dom";
@@ -106,6 +107,14 @@ const router = createBrowserRouter([
               <>
                 <Points />
                 <PointsMiddleTabDisappear width="100%" />
+              </>
+            )
+          },
+          {
+            path: "salesHistory",
+            element: (
+              <>
+                <SalesHistory />
               </>
             )
           }
