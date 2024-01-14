@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 
 interface BaseButtonProps {
   width?: string;
+  buttonType?: string;
 }
 
 const ButtonLayout = css`
@@ -59,7 +60,8 @@ export const TransparentButton = styled.button<BaseButtonProps>`
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[500]};
 
-  color: ${({ theme }) => theme.colors.gray[700]};
+  color: ${({ buttonType }) =>
+    (buttonType === "transparent" && "#616161") || (buttonType === "transparent-red" && "#E01F3E")};
   text-align: center;
 `;
 
