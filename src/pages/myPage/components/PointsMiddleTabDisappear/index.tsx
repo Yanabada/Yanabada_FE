@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import NoPointIcon from "@assets/icons/noPointIcon.svg?react";
 import { ToggleMenu, ToggleMenuItem } from "@pages/products/components/Order/ToggleMenu";
-import type { MotionProps, Variants } from "framer-motion";
+import { menu, item } from "@animations/dropdown";
 
 interface PointsMiddleTabProps {
   width?: string;
@@ -13,32 +13,6 @@ const PointsMiddleTabDisappear = ({ width }: PointsMiddleTabProps) => {
   const [isDisappearPointExist] = useState(true);
   const [open, setOpen] = useState(false);
   const [orderName, setOrderName] = useState("15일");
-
-  const menu = {
-    closed: {
-      scale: 0,
-      transition: {
-        delay: 0.15
-      }
-    },
-    open: {
-      scale: 1,
-      transition: {
-        type: "spring",
-        duration: 0.4,
-        delayChildren: 0.2,
-        staggerChildren: 0.05
-      }
-    }
-  } satisfies Variants;
-
-  const item = {
-    variants: {
-      closed: { x: -16, opacity: 0 },
-      open: { x: 0, opacity: 1 }
-    },
-    transition: { opacity: { duration: 0.2 } }
-  } satisfies MotionProps;
 
   const orderList = [
     { id: "15", name: "15일" },
