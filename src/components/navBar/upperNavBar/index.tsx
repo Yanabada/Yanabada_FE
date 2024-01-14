@@ -11,6 +11,7 @@ interface UpperNavProp
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
   shape?: "fill" | "";
   color?: string;
+  customBack?: () => void;
 }
 
 const UpperNavBar = ({
@@ -20,6 +21,7 @@ const UpperNavBar = ({
   rightElement = null,
   setIsVisible,
   shape = "",
+  customBack,
   ...props
 }: UpperNavProp) => {
   const navigate = useNavigate();
@@ -40,6 +42,7 @@ const UpperNavBar = ({
     switch (type) {
       case "back":
         navigate(-1);
+        customBack && customBack();
         break;
       case "close":
         setIsVisible && setIsVisible(false);

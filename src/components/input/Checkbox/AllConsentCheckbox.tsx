@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import * as S from "./allConsentCheckbox.style";
 import CheckIcon from "@assets/icons/checkbox_Check.svg?react";
 
@@ -9,17 +9,26 @@ export interface AllConsentCheckboxProps {
   fontSize?: string;
   fontWeight?: string;
   color?: string;
+  checked: boolean;
+  setChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  setList: React.Dispatch<React.SetStateAction<boolean>>[];
 }
 
 const AllConsentCheckbox = ({
   content,
   transparent = false,
+  checked,
+  setChecked,
+  setList,
   ...props
 }: AllConsentCheckboxProps) => {
-  const [checked, setChecked] = useState(false);
-
   const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
+    if (setList) {
+      setList.map((item) => {
+        item(e.target.checked);
+      });
+    }
   };
 
   return (

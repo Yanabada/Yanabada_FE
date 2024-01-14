@@ -1,34 +1,8 @@
 import * as S from "./style";
 import { useState } from "react";
-import type { MotionProps, Variants } from "framer-motion";
 import { ToggleMenu, ToggleMenuItem } from "./ToggleMenu";
-import Checkbox from "@components/input/Checkbox";
-
-const menu = {
-  closed: {
-    scale: 0,
-    transition: {
-      delay: 0.15
-    }
-  },
-  open: {
-    scale: 1,
-    transition: {
-      type: "spring",
-      duration: 0.4,
-      delayChildren: 0.2,
-      staggerChildren: 0.05
-    }
-  }
-} satisfies Variants;
-
-const item = {
-  variants: {
-    closed: { x: -16, opacity: 0 },
-    open: { x: 0, opacity: 1 }
-  },
-  transition: { opacity: { duration: 0.2 } }
-} satisfies MotionProps;
+// import Checkbox from "@components/input/Checkbox";
+import { menu, item } from "@animations/dropDown";
 
 const orderList = [
   { id: "RECENT", name: "최신순" },
@@ -44,14 +18,14 @@ const Order = () => {
 
   return (
     <S.OrderContainer>
-      <Checkbox
+      {/* <Checkbox
         variant="all"
         content="판매 완료 상품 가리기"
         transparent={true}
         fontSize="0.9375rem"
         fontWeight="400"
         color="#9C9C9C"
-      ></Checkbox>
+      ></Checkbox> */}
       <ToggleMenu
         label={orderName}
         open={open}

@@ -1,7 +1,7 @@
 import * as S from "./styles";
-import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
-import CautionIcon from "@assets/icons/CautionIcon.svg?react";
-import QuestionIcon from "@assets/icons/QuestionIcon.svg?react";
+import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
+import QuestionIcon from "@assets/icons/question_Icon.svg?react";
+import CautionIcon from "@assets/icons/caution_Icon.svg?react";
 
 interface YanoljaProps {
   type: "yanolja";
@@ -20,12 +20,14 @@ interface DefaultProps {
   type: "default";
   title: string;
   content?: string;
+  color?: "blue" | "orange";
   shape?: "line" | "fill" | "lineFill";
 }
 
 type NoticeProps = YanoljaProps | DefaultProps | QuestionProps;
 
 const Notice = (props: NoticeProps) => {
+  let icon;
   switch (props.type) {
     case "yanolja":
       return (
@@ -45,13 +47,16 @@ const Notice = (props: NoticeProps) => {
         </S.NoticeWrapper>
       );
     default:
+      if (props.color === "blue") {
+        icon = <QuestionIcon />;
+      } else if (props.color === "orange") {
+        icon = <CautionIcon />;
+      }
       return (
         <S.NoticeWrapper className={props.shape ? props.shape : ""}>
-          <S.IconBox>
-            <CautionIcon />
-          </S.IconBox>
+          <S.IconBox>{icon}</S.IconBox>
           <S.TextWrapper>
-            <S.NoticeTitle>{props.title}</S.NoticeTitle>
+            <S.NoticeTitle className={props.color ? props.color : ""}>{props.title}</S.NoticeTitle>
             <S.TextWrapper>{props.content}</S.TextWrapper>
           </S.TextWrapper>
         </S.NoticeWrapper>

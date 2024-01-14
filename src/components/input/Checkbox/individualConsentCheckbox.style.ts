@@ -14,7 +14,7 @@ export const Label = styled.label`
 
   .icon {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
     width: 20px;
@@ -44,7 +44,13 @@ export const Input = styled.input`
   }
 `;
 
-export const ContnetWrapper = styled.div`
+export const ContentBtnWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;

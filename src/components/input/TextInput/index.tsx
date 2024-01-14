@@ -37,7 +37,11 @@ const TextInput = forwardRef<HTMLInputElement, InputProps>(
               {rightElement}
             </S.RightElement>
           )}
-          {isSuccess && <S.RightElement>{IoCheckmark}</S.RightElement>}
+          {isSuccess && (
+            <S.RightElement>
+              <IoCheckmark />
+            </S.RightElement>
+          )}
         </S.InputWrapper>
         {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
       </>
