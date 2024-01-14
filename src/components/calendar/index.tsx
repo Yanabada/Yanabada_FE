@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 
 import DatePicker, { registerLocale, ReactDatePickerCustomHeaderProps } from "react-datepicker";
 import ko from "date-fns/locale/ko";
@@ -8,6 +8,7 @@ import { IoChevronBack } from "react-icons/io5";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
+import CalendarStore from "@stores/CalendarStore";
 
 interface calendarProp {
   excludeDates?: Date[];
@@ -15,16 +16,17 @@ interface calendarProp {
 }
 
 const Calendar = ({ excludeDates, renderDayContents }: calendarProp) => {
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
+  // const [startDate, setStartDate] = useState<Date>();
+  // const [endDate, setEndDate] = useState<Date>();
+  const { searchStartDate, searchEndDate, setSearchStartDate, setSearchEndDate } = CalendarStore();
   const today = new Date();
 
   registerLocale("ko", ko);
 
   const onChangeDate = (dates: [Date, Date]) => {
     const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
+    setSearchStartDate(start);
+    setSearchEndDate(end);
   };
 
   const renderCustomHeader = ({
@@ -67,8 +69,8 @@ const Calendar = ({ excludeDates, renderDayContents }: calendarProp) => {
     <>
       <DatePicker
         onChange={onChangeDate}
-        startDate={startDate}
-        endDate={endDate}
+        startDate={searchStartDate}
+        endDate={searchEndDate}
         minDate={today}
         selectsRange
         dayClassName={addDayClass}
