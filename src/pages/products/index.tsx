@@ -8,6 +8,7 @@ import KakaoMap from "./components/KakaoMap";
 import CategoryTab from "./components/CategoryTab";
 import GoToMapButton from "./components/ToMapButton";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const [isMapOpen, setMapOpen] = useState(false);
@@ -16,7 +17,9 @@ const Products = () => {
     <>
       <UpperNavBar title="상품 리스트" type="back" />
       <S.Container>
-        <SearchBar />
+        <Link to="/search">
+          <SearchBar />
+        </Link>
         {!isMapOpen && <CategoryTab />}
       </S.Container>
       {isMapOpen && (

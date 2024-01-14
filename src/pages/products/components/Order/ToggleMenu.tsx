@@ -13,10 +13,25 @@ export interface MenuProps extends Ariakit.MenuButtonProps {
   variants?: MotionProps["variants"];
   initial?: MotionProps["initial"];
   exit?: MotionProps["exit"];
+  justifyContent?: string;
+  width?: string;
 }
 
 const ToggleMenu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
-  { open, setOpen, label, children, animate, transition, variants, initial, exit, ...props },
+  {
+    open,
+    setOpen,
+    label,
+    children,
+    animate,
+    transition,
+    variants,
+    initial,
+    exit,
+    justifyContent = "flex-end",
+    width = "6rem",
+    ...props
+  },
   ref
 ) {
   const menu = Ariakit.useMenuStore({ open, setOpen });
@@ -25,10 +40,10 @@ const ToggleMenu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   const menuStyle = {
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: justifyContent,
     gap: "0.15rem",
     alignItems: "center",
-    width: "6rem"
+    width: width
   };
 
   const listStyle: MotionStyle = {
