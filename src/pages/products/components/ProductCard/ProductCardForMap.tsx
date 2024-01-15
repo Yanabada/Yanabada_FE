@@ -1,6 +1,6 @@
 import * as S from "./style";
 import MapIcon from "assets/map.svg?react";
-import { Product } from "@pages/products/types";
+import { ProductType } from "@pages/products/types/productsType";
 import { AnimatePresence, useAnimationControls } from "framer-motion";
 
 import ArrowDown from "@assets/icons/search_arrowDown.svg?react";
