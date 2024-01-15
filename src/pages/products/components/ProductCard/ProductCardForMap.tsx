@@ -1,10 +1,10 @@
 import * as S from "./style";
 import MapIcon from "assets/map.svg?react";
-import { Product } from "@pages/products/types";
+import { ProductType } from "@pages/products/types/productsType";
 import { AnimatePresence } from "framer-motion";
 
 interface ProductCardProps {
-  selectedProduct: Product;
+  selectedProduct: ProductType;
 }
 
 const variants = {
