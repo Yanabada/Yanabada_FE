@@ -2,17 +2,15 @@ import * as S from "./styles";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
 import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
-interface CardSectionProps {
-  // FIXME: `type` 이라고 naming시 에러 발생
-  types: "abledPay" | "disabledPay" | "abledPoint" | "disabledPoint";
+interface CardSectionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  buttonType: "abledPay" | "disabledPay" | "abledPoint" | "disabledPoint";
   width?: string;
 }
-
-const CardSectionButton = ({ types, width }: CardSectionProps) => {
-  switch (types) {
+const CardSectionButton = ({ buttonType, width }: CardSectionProps) => {
+  switch (buttonType) {
     case "abledPay":
       return (
-        <S.CardSectionWrapper types={types} width={width}>
+        <S.CardSectionWrapper buttonType={buttonType} width={width}>
           <S.ListButtonWrapper>
             <S.ListButton>
               <S.ListButtonTextWrapper>
@@ -27,11 +25,11 @@ const CardSectionButton = ({ types, width }: CardSectionProps) => {
             </S.ListButton>
           </S.ListButtonWrapper>
           <S.BottomSectionWrapper>
-            <S.BottomLeftButton types={types}>
+            <S.BottomLeftButton buttonType={buttonType}>
               <IoIosSearch size="18px" color="#DE2E5F" />
-              <S.BottomLeftButtonText types={types}>출금하기</S.BottomLeftButtonText>
+              <S.BottomLeftButtonText buttonType={buttonType}>출금하기</S.BottomLeftButtonText>
             </S.BottomLeftButton>
-            <S.BottomRightButton types={types}>
+            <S.BottomRightButton buttonType={buttonType}>
               <IoIosSearch size="18px" color="#FFFFFF" />
               <S.BottomRightButtonText>충전하기</S.BottomRightButtonText>
             </S.BottomRightButton>
@@ -40,7 +38,7 @@ const CardSectionButton = ({ types, width }: CardSectionProps) => {
       );
     case "disabledPay":
       return (
-        <S.CardSectionWrapper types={types} width={width}>
+        <S.CardSectionWrapper buttonType={buttonType} width={width}>
           <S.ListButtonWrapper>
             <S.ListButton>
               <S.ListButtonText>야놀자 페이</S.ListButtonText>
@@ -52,11 +50,11 @@ const CardSectionButton = ({ types, width }: CardSectionProps) => {
             </S.ListButton>
           </S.ListButtonWrapper>
           <S.BottomSectionWrapper>
-            <S.BottomLeftButton types={types}>
+            <S.BottomLeftButton buttonType={buttonType}>
               <IoIosSearch size="18px" color="#9C9C9C" />
-              <S.BottomLeftButtonText types={types}>출금하기</S.BottomLeftButtonText>
+              <S.BottomLeftButtonText buttonType={buttonType}>출금하기</S.BottomLeftButtonText>
             </S.BottomLeftButton>
-            <S.BottomRightButton types={types}>
+            <S.BottomRightButton buttonType={buttonType}>
               <IoIosSearch size="18px" color="#FFFFFF" />
               <S.BottomRightButtonText>충전하기</S.BottomRightButtonText>
             </S.BottomRightButton>
@@ -65,7 +63,7 @@ const CardSectionButton = ({ types, width }: CardSectionProps) => {
       );
     case "abledPoint":
       return (
-        <S.CardSectionWrapper types={types} width={width}>
+        <S.CardSectionWrapper buttonType={buttonType} width={width}>
           <S.ListButtonWrapper>
             <S.ListButton>
               <S.ListButtonTextWrapper>
@@ -83,7 +81,7 @@ const CardSectionButton = ({ types, width }: CardSectionProps) => {
       );
     case "disabledPoint":
       return (
-        <S.CardSectionWrapper types={types} width={width}>
+        <S.CardSectionWrapper buttonType={buttonType} width={width}>
           <S.ListButtonWrapper>
             <S.ListButton>
               <S.ListButtonText>야놀자 포인트</S.ListButtonText>

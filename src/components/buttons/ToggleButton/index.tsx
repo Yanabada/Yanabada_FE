@@ -1,13 +1,14 @@
 import * as S from "./styles";
 import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
 
-interface ToggleButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
-  type: "icon" | "default";
+interface ToggleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  buttonType: "icon" | "default";
   width?: string;
 }
 
-const ToggleButton = ({ type, children, ...props }: ToggleButtonProps) => {
-  switch (type) {
+const ToggleButton = ({ buttonType, children, ...props }: ToggleButtonProps) => {
+  switch (buttonType) {
     case "icon":
       return (
         <S.ToggleButton {...props}>

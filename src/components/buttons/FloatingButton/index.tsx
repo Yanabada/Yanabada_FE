@@ -1,14 +1,14 @@
 import * as S from "./styles";
 import { IoIosSearch } from "react-icons/io";
 
-interface FloatingButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
+interface FloatingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  type: "abled" | "disabled";
+  buttonType: "abled" | "disabled";
   width?: string;
 }
 
-const FloatingButton = ({ type, children, ...props }: FloatingButtonProps) => {
-  switch (type) {
+const FloatingButton = ({ buttonType, children, ...props }: FloatingButtonProps) => {
+  switch (buttonType) {
     case "abled":
       return (
         <S.AbledFloatingButton {...props}>

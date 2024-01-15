@@ -1,11 +1,12 @@
 import * as S from "./styles";
 
-interface InfoChipProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
-  type: "gray" | "outline" | "footer";
+interface InfoChipProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  buttonType: "gray" | "outline" | "footer";
 }
 
-const InfoChip = ({ type, children }: InfoChipProps) => {
-  switch (type) {
+const InfoChip = ({ buttonType, children }: InfoChipProps) => {
+  switch (buttonType) {
     case "gray":
       return (
         <S.GrayInfoChipWrapper>
