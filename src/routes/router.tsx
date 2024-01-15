@@ -25,6 +25,7 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Outlet />
+        <BottomNavBar />
       </div>
     ),
     children: [
@@ -33,15 +34,10 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/search",
-        element: <Search />
-      },
-      {
         path: "/products",
         element: (
           <>
             <Products />
-            <BottomNavBar />
           </>
         )
       },
@@ -58,7 +54,6 @@ const router = createBrowserRouter([
         element: (
           <>
             <Chat />
-            <BottomNavBar />
           </>
         )
       },
@@ -143,6 +138,10 @@ const router = createBrowserRouter([
         ]
       }
     ]
+  },
+  {
+    path: "/search",
+    element: <Search />
   }
 ]);
 
