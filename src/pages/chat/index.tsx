@@ -1,10 +1,15 @@
 import UpperNavBar from "@components/navBar/upperNavBar";
+import NoChatList from "./components/noChatList";
+import * as S from "./styles/styles";
 
 const Chat = () => {
   return (
-    <div>
+    <>
       <UpperNavBar title="채팅" type="back" />
-    </div>
+      <S.ChatContainer>
+        <NoChatList type="noLogin" />
+      </S.ChatContainer>
+    </>
   );
 };
 

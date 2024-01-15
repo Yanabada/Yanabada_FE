@@ -1,13 +1,5 @@
 import styled from "@emotion/styled";
 
-export const ChatContainer = styled.div`
-  height: 100%;
-  /* display: flex;
-  align-items: center; */
-
-  background-color: ${({ theme }) => theme.colors.gray[200]};
-`;
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;

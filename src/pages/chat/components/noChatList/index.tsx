@@ -48,20 +48,12 @@ const NoChatList = ({ type }: NoChatListProps) => {
 
   const data = typeList.get(type);
 
-  // switch (type) {
-  //   case "noLogin":
-  //     return <div>NoChatList</div>;
-  //   case "noChat":
-  //     return <div>NoChatList</div>;
-  // }
   return (
-    <S.ChatContainer>
-      <S.Container>
-        {data?.icon}
-        <S.Title>{data?.text}</S.Title>
-        {data?.content}
-      </S.Container>
-    </S.ChatContainer>
+    <S.Container>
+      {data?.icon}
+      <S.Title>{data?.text}</S.Title>
+      {data?.content}
+    </S.Container>
   );
 };
 
