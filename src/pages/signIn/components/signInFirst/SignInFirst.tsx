@@ -50,7 +50,7 @@ const SignInFirst = () => {
       />
       <S.ButtonContainer>
         <AuthenticationButton
-          type={isSuccess ? "disabled" : "default"}
+          buttonType={isSuccess ? "disabled" : "default"}
           width="100%"
           onClick={handleAuthenticationBtnClick}
         >

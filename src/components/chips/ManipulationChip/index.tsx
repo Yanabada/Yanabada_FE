@@ -1,13 +1,13 @@
 import * as S from "./styles";
 import { IoIosSearch } from "react-icons/io";
 
-interface ManipulationChipProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
-  type: "abledDefault" | "abledIcon" | "disabledDefault" | "disabledIcon";
+interface ManipulationChipProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  buttonType: "abledDefault" | "abledIcon" | "disabledDefault" | "disabledIcon";
 }
 
-const ManipulationChip = ({ type, children }: ManipulationChipProps) => {
-  switch (type) {
+const ManipulationChip = ({ buttonType, children }: ManipulationChipProps) => {
+  switch (buttonType) {
     case "abledDefault":
       return (
         <S.AbledDefaultChipWrapper>
