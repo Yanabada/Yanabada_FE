@@ -8,16 +8,20 @@ interface CardProps {
   fullContent?: boolean;
 }
 
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.4rem;
+  background-color: #fff;
+`;
+
 export const ItemContainer = styled(motion.div)<CardProps>`
   display: flex;
-
   gap: 0.5rem;
   padding: 0.5rem;
-  border-radius: 4px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
   background-color: #fff;
-
-  overflow: hidden;
 
   &.map {
     left: 50%;
@@ -31,6 +35,8 @@ export const ItemContainer = styled(motion.div)<CardProps>`
 export const ImageContainer = styled.div`
   display: flex;
   position: relative;
+  border-radius: 0.25rem 0 0 0.25rem;
+  overflow: hidden;
 `;
 
 export const Image = styled.img`
@@ -60,8 +66,8 @@ export const DiscountRate = styled.div`
 export const LocationContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0 0.3rem;
+  gap: 0.05rem;
+  padding: 0 0.2rem;
   width: 100%;
   height: 1.125rem;
   background-color: rgba(0, 0, 0, 0.4);
@@ -70,11 +76,8 @@ export const LocationContainer = styled.div`
 `;
 
 export const Location = styled.p`
-  margin-top: 0.125rem;
   color: #fff;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  line-height: 0.9375rem;
+  ${({ theme }) => theme.text.overline};
 `;
 
 export const InformationContainer = styled.div`
@@ -164,11 +167,25 @@ export const TimerText = styled.p`
   letter-spacing: -0.015rem;
 `;
 
+export const NegoContainer = styled.div`
+  margin-top: 0.15rem;
+  padding: 0.1875rem 0.3125rem;
+  border: 1px solid ${({ theme }) => theme.colors.blue[100]};
+  border-radius: 24px;
+  ${({ theme }) => theme.text.overline};
+  color: ${({ theme }) => theme.colors.blue[200]};
+`;
+
+export const NoNegoContainer = styled(NegoContainer)`
+  color: ${({ theme }) => theme.colors.gray[600]};
+  border: 1px solid ${({ theme }) => theme.colors.gray[500]};
+  background-color: ${({ theme }) => theme.colors.gray[100]};
+`;
+
 export const NegoText = styled.p<CardProps>`
   color: ${({ theme, canNegotiate }) =>
     canNegotiate ? theme.colors.blue[200] : theme.colors.gray[600]};
   ${({ theme }) => theme.text.overline};
-
   padding: 0.1875rem 0.3125rem;
   border-radius: 24px;
   border: 1px solid

@@ -10,6 +10,7 @@ import PurchaseHistory from "@pages/myPage/purchaseHistory";
 import TransactionStatement from "@pages/myPage/transactionStatement";
 import Sell from "@pages/sell";
 import Products from "@pages/products";
+// import ProductDetail from "@pages/productDetail";
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import Login from "@pages/login";
 import EmailLogin from "@pages/login/EmailLogin";
@@ -23,9 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <div>
+      <>
         <Outlet />
-      </div>
+        <BottomNavBar />
+      </>
     ),
     children: [
       {
@@ -33,13 +35,17 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/search",
-        element: <Search />
-      },
-      {
         path: "/products",
-        element: <Products />
+        element: (
+          <>
+            <Products />
+          </>
+        )
       },
+      // {
+      //   path: "/products/:id",
+      //   element: <ProductDetail />
+      // },
       {
         path: "/sell",
         element: <Sell />
@@ -49,7 +55,6 @@ const router = createBrowserRouter([
         element: (
           <>
             <Chat />
-            <BottomNavBar />
           </>
         )
       },
@@ -138,6 +143,10 @@ const router = createBrowserRouter([
         ]
       }
     ]
+  },
+  {
+    path: "/search",
+    element: <Search />
   }
 ]);
 

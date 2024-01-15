@@ -5,7 +5,7 @@ import MyPositionIcon from "@assets/icons/myPosition.svg?react";
 import * as S from "./styles";
 import { ProductsMarkers } from "./ProductsMarkers";
 import ProductCardForMap from "../ProductCard/ProductCardForMap";
-import { Product } from "@pages/products/types";
+import { ProductType } from "@pages/products/types/productsType";
 
 interface PositionState {
   center: {
@@ -16,7 +16,7 @@ interface PositionState {
   isLoading: boolean;
 }
 
-const products: Product[] = [
+const products: ProductType[] = [
   {
     id: 1,
     image: "1.jpg",

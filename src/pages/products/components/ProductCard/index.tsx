@@ -1,71 +1,80 @@
 import * as S from "./style";
 import MapIcon from "assets/map.svg?react";
 import StarIcon from "assets/icons/Star.svg?react";
-import { Product } from "@pages/products/types";
+import { Link } from "react-router-dom";
+import { ProductType } from "@pages/products/types/productsType";
+import { numberFormat } from "@utils/numberFormat";
 
-type ProductCardProps = Partial<
-  Omit<Product, "latitude" | "longitude"> & { fullContent?: boolean }
->;
+type Product = Omit<ProductType, "latitude" | "longitude">;
 
-// FIXME: 기본값 수정
-const ProductCard = ({ canNegotiate = false, fullContent = true }: ProductCardProps) => {
+interface ProductCardProps {
+  product: Product;
+}
+
+const ProductCard = ({ product }: ProductCardProps) => {
   return (
-    <>
-      <S.ItemContainer fullContent={fullContent}>
-        <S.ImageContainer>
-          <S.Image src="https://bit.ly/2Z4KKcF" />
-          <S.DiscountRate>70%</S.DiscountRate>
-          <S.LocationContainer>
-            <MapIcon />
-            <S.Location>강원도 강릉시</S.Location>
-          </S.LocationContainer>
-        </S.ImageContainer>
-        <S.InformationContainer>
-          <S.ProductName>속초 굿모닝 호텔 앤 리조트</S.ProductName>
-          <S.RoomName>Forest Tower Deluxe King</S.RoomName>
-          <S.Period>12/25 ~ 12/26 (1박)</S.Period>
-          <S.StarUserContainer>
-            {fullContent && (
+    <S.Container>
+      <Link to={`/products/${product.id}`}>
+        <S.ItemContainer>
+          <S.ImageContainer>
+            <S.Image src={product.image} />
+            <S.DiscountRate>{product.salesPercentage}%</S.DiscountRate>
+            <S.LocationContainer>
+              <MapIcon />
+              <S.Location>{product.address.split(" ").slice(0, 2).join(" ")}</S.Location>
+            </S.LocationContainer>
+          </S.ImageContainer>
+          <S.InformationContainer>
+            <S.ProductName>{product.accommodationName}</S.ProductName>
+            <S.RoomName>{product.roomName}</S.RoomName>
+            <S.Period>
+              {product.checkIn.toString()} ~ {product.checkOut.toString()} (1박)
+            </S.Period>
+            <S.StarUserContainer>
               <S.StarContainer>
                 <StarIcon />
-                <S.StarRating>4.4</S.StarRating>
+                <S.StarRating>{product.rating}</S.StarRating>
               </S.StarContainer>
-            )}
-            <S.UserContainer>
-              <S.UserIcon />
-              <S.UserNumber>기준 2명 / 최대 4명</S.UserNumber>
-            </S.UserContainer>
-          </S.StarUserContainer>
-          <S.RightInnerContainer>
-            <S.TimerNegoContainer>
-              <S.TimerContainer>
-                <S.TimerIcon />
-                <S.TimerText>3일 15시간 23분</S.TimerText>
-              </S.TimerContainer>
-              <S.NegoText canNegotiate={canNegotiate}>
-                {canNegotiate ? "가격제안가능" : "가격제안불가"}
-              </S.NegoText>
-            </S.TimerNegoContainer>
-            {fullContent && (
+              <S.UserContainer>
+                <S.UserIcon />
+                <S.UserNumber>
+                  기준 {product.min}명 / 최대 {product.max}명
+                </S.UserNumber>
+              </S.UserContainer>
+            </S.StarUserContainer>
+            <S.RightInnerContainer>
+              <S.TimerNegoContainer>
+                <S.TimerContainer>
+                  <S.TimerIcon />
+                  <S.TimerText>{product.saleEnd.toString()}</S.TimerText>
+                </S.TimerContainer>
+                {product.canNegotiate ? (
+                  <S.NegoContainer>
+                    <p>가격제안가능</p>
+                  </S.NegoContainer>
+                ) : (
+                  <S.NoNegoContainer>
+                    <p>가격제안불가</p>
+                  </S.NoNegoContainer>
+                )}
+              </S.TimerNegoContainer>
               <S.PriceContainer>
                 <S.PriceText>원가</S.PriceText>
-                <S.Price>2,000,000원</S.Price>
+                <S.Price>{numberFormat(product.price)}원</S.Price>
               </S.PriceContainer>
-            )}
-            {fullContent && (
               <S.PriceContainer>
-                <S.PriceText>실구매가</S.PriceText>
-                <S.Price>2,000,000원</S.Price>
+                <S.PriceText>구매가</S.PriceText>
+                <S.Price>{numberFormat(product.purchasePrice)}원</S.Price>
               </S.PriceContainer>
-            )}
-            <S.PriceContainer>
-              <S.PriceText>판매가</S.PriceText>
-              <S.Price className="sellingPrice">1,264,000원</S.Price>
-            </S.PriceContainer>
-          </S.RightInnerContainer>
-        </S.InformationContainer>
-      </S.ItemContainer>
-    </>
+              <S.PriceContainer>
+                <S.PriceText>판매가</S.PriceText>
+                <S.Price className="sellingPrice">{numberFormat(product.sellingPrice)}원</S.Price>
+              </S.PriceContainer>
+            </S.RightInnerContainer>
+          </S.InformationContainer>
+        </S.ItemContainer>
+      </Link>
+    </S.Container>
   );
 };
 
