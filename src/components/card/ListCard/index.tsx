@@ -24,6 +24,7 @@ interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   timerText?: string;
   roomName: string;
   price: string;
+  badgeText: string;
 }
 
 const ListCard = ({
@@ -35,7 +36,8 @@ const ListCard = ({
   saleDate,
   timerText,
   roomName,
-  price
+  price,
+  badgeText
 }: ListCardProps) => {
   const getTimerIconColor = (cardType: ListCardProps["cardType"]) => {
     switch (cardType) {
@@ -71,7 +73,7 @@ const ListCard = ({
   return (
     <S.ListCardContainer width={width}>
       <S.TopWrapper>
-        <Badges badgeType={badgeType}>승인요청</Badges>
+        <Badges badgeType={badgeType}>{badgeText}</Badges>
         <S.TopRightWrapper>
           <S.TopRightText>{accommodationName}</S.TopRightText>
         </S.TopRightWrapper>
