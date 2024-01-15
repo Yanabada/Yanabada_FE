@@ -4,11 +4,11 @@ export interface ProductType {
   accommodationName: string;
   roomName: string;
   address: string;
-  checkIn: string;
-  checkOut: string;
+  checkIn: Date;
+  checkOut: Date;
   min: number;
   max: number;
-  saleEnd: string;
+  saleEnd: Date;
   rating: number;
   salesPercentage: number;
   canNegotiate: boolean;

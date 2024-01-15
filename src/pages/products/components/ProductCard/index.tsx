@@ -28,7 +28,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             <S.ProductName>{product.accommodationName}</S.ProductName>
             <S.RoomName>{product.roomName}</S.RoomName>
             <S.Period>
-              {product.checkIn} ~ {product.checkOut} (1박)
+              {product.checkIn.toString()} ~ {product.checkOut.toString()} (1박)
             </S.Period>
             <S.StarUserContainer>
               <S.StarContainer>
@@ -46,7 +46,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               <S.TimerNegoContainer>
                 <S.TimerContainer>
                   <S.TimerIcon />
-                  <S.TimerText>{product.saleEnd}</S.TimerText>
+                  <S.TimerText>{product.saleEnd.toString()}</S.TimerText>
                 </S.TimerContainer>
                 {product.canNegotiate ? (
                   <S.NegoContainer>
