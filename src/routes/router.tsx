@@ -117,43 +117,23 @@ const router = createBrowserRouter([
           },
           {
             path: "salesHistory",
-            element: (
-              <>
-                <SalesHistory width="100%" />
-              </>
-            )
+            element: <SalesHistory width="100%" />
           },
           {
             path: "transactionStatement/sale",
-            element: (
-              <>
-                <TransactionStatement width="100%" from="sale" />
-              </>
-            )
+            element: <TransactionStatement width="100%" from="sale" />
           },
           {
             path: "transactionStatement/purchase",
-            element: (
-              <>
-                <TransactionStatement width="100%" from="purchase" />
-              </>
-            )
+            element: <TransactionStatement width="100%" from="purchase" />
           },
           {
             path: "transactionStatement/cancel",
-            element: (
-              <>
-                <TransactionStatement width="100%" from="cancel" />
-              </>
-            )
+            element: <TransactionStatement width="100%" from="cancel" />
           },
           {
             path: "purchaseHistory",
-            element: (
-              <>
-                <PurchaseHistory width="100%" />
-              </>
-            )
+            element: <PurchaseHistory width="100%" />
           }
         ]
       }
