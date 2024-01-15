@@ -10,17 +10,17 @@ import GoToMapButton from "./components/ToMapButton";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import getProducts from "./api/products";
-import { ProductItemsType } from "@pages/products/types/productsType";
+import { ProductType } from "@pages/products/types/productsType";
 
 const Products = () => {
   const [isMapOpen, setMapOpen] = useState(false);
-  const [productItem, setProductItem] = useState<ProductItemsType[] | null>(null);
+  const [product, setProduct] = useState<ProductType[] | null>(null);
 
   useEffect(() => {
     const productData = async () => {
       try {
         const data = await getProducts();
-        setProductItem(data);
+        setProduct(data);
       } catch (error) {
         console.error("/products error: ", error);
       }
@@ -48,7 +48,7 @@ const Products = () => {
             <OptionTab />
             <Order />
             <S.ProductCardWrapper>
-              {productItem?.map((product: ProductItemsType) => <ProductCard product={product} />)}
+              {product?.map((product) => <ProductCard key={product.id} product={product} />)}
             </S.ProductCardWrapper>
           </S.SecondContainer>
         </>
