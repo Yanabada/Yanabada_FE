@@ -21,8 +21,6 @@ export const OrderItem = styled.div`
   border-radius: 5px;
   transition: background-color 0.3s;
 
-  border: 1px solid red;
-
   &:hover {
     background-color: #e0e0e0;
   }
