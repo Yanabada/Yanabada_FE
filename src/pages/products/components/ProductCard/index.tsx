@@ -2,45 +2,43 @@ import * as S from "./style";
 import MapIcon from "assets/map.svg?react";
 import StarIcon from "assets/icons/Star.svg?react";
 import { Link } from "react-router-dom";
-import { Product } from "@pages/products/types";
-import { ProductItemsType } from "@pages/products/types/productsType";
+import { ProductType } from "@pages/products/types/productsType";
+import { numberFormat } from "@utils/numberFormat";
 
-type ProductCardProps = Partial<
-  Omit<Product, "latitude" | "longitude"> & { fullContent?: boolean } & {
-    product: ProductItemsType;
-  }
->;
+type Product = Omit<ProductType, "latitude" | "longitude">;
 
-const ProductCard = ({ product, fullContent = true }: ProductCardProps) => {
+interface ProductCardProps {
+  product: Product;
+}
+
+const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <S.Container>
-      <Link to={`/products/${product?.id}`}>
-        <S.ItemContainer fullContent={fullContent}>
+      <Link to={`/products/${product.id}`}>
+        <S.ItemContainer>
           <S.ImageContainer>
-            <S.Image src={product?.image} />
-            <S.DiscountRate>{product?.salesPercentage}%</S.DiscountRate>
+            <S.Image src={product.image} />
+            <S.DiscountRate>{product.salesPercentage}%</S.DiscountRate>
             <S.LocationContainer>
               <MapIcon />
-              <S.Location>{product?.address.split(" ").slice(0, 2).join(" ")}</S.Location>
+              <S.Location>{product.address.split(" ").slice(0, 2).join(" ")}</S.Location>
             </S.LocationContainer>
           </S.ImageContainer>
           <S.InformationContainer>
-            <S.ProductName>{product?.accommodationName}</S.ProductName>
-            <S.RoomName>{product?.roomName}</S.RoomName>
+            <S.ProductName>{product.accommodationName}</S.ProductName>
+            <S.RoomName>{product.roomName}</S.RoomName>
             <S.Period>
-              {product?.checkIn} ~ {product?.checkOut} (1박)
+              {product.checkIn} ~ {product.checkOut} (1박)
             </S.Period>
             <S.StarUserContainer>
-              {fullContent && (
-                <S.StarContainer>
-                  <StarIcon />
-                  <S.StarRating>{product?.rating}</S.StarRating>
-                </S.StarContainer>
-              )}
+              <S.StarContainer>
+                <StarIcon />
+                <S.StarRating>{product.rating}</S.StarRating>
+              </S.StarContainer>
               <S.UserContainer>
                 <S.UserIcon />
                 <S.UserNumber>
-                  기준 {product?.min}명 / 최대 {product?.max}명
+                  기준 {product.min}명 / 최대 {product.max}명
                 </S.UserNumber>
               </S.UserContainer>
             </S.StarUserContainer>
@@ -48,9 +46,9 @@ const ProductCard = ({ product, fullContent = true }: ProductCardProps) => {
               <S.TimerNegoContainer>
                 <S.TimerContainer>
                   <S.TimerIcon />
-                  <S.TimerText>{product?.saleEnd}</S.TimerText>
+                  <S.TimerText>{product.saleEnd}</S.TimerText>
                 </S.TimerContainer>
-                {product?.canNegotiate ? (
+                {product.canNegotiate ? (
                   <S.NegoContainer>
                     <p>가격제안가능</p>
                   </S.NegoContainer>
@@ -60,27 +58,17 @@ const ProductCard = ({ product, fullContent = true }: ProductCardProps) => {
                   </S.NoNegoContainer>
                 )}
               </S.TimerNegoContainer>
-              {fullContent && (
-                <S.PriceContainer>
-                  <S.PriceText>원가</S.PriceText>
-                  <S.Price>
-                    {product?.price && new Intl.NumberFormat().format(product?.price)}원
-                  </S.Price>
-                </S.PriceContainer>
-              )}
-              {fullContent && (
-                <S.PriceContainer>
-                  <S.PriceText>구매가</S.PriceText>
-                  <S.Price>
-                    {product?.price && new Intl.NumberFormat().format(product?.purchasePrice)}원
-                  </S.Price>
-                </S.PriceContainer>
-              )}
+              <S.PriceContainer>
+                <S.PriceText>원가</S.PriceText>
+                <S.Price>{numberFormat(product.price)}원</S.Price>
+              </S.PriceContainer>
+              <S.PriceContainer>
+                <S.PriceText>구매가</S.PriceText>
+                <S.Price>{numberFormat(product.purchasePrice)}원</S.Price>
+              </S.PriceContainer>
               <S.PriceContainer>
                 <S.PriceText>판매가</S.PriceText>
-                <S.Price className="sellingPrice">
-                  {product?.price && new Intl.NumberFormat().format(product?.sellingPrice)}원
-                </S.Price>
+                <S.Price className="sellingPrice">{numberFormat(product.sellingPrice)}원</S.Price>
               </S.PriceContainer>
             </S.RightInnerContainer>
           </S.InformationContainer>
