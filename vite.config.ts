@@ -6,18 +6,5 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tsconfigPaths(),
-    svgr(),
-    VitePWA({
-      strategies: "injectManifest",
-      srcDir: "src",
-      filename: "firebase-messaging-sw.ts",
-      workbox: {
-        globPatterns: [],
-        globIgnores: ["*"]
-      }
-    })
-  ]
+  plugins: [react(), tsconfigPaths(), svgr()]
 });
