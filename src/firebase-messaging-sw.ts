@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+
 // import { firebase } from "firebase";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -47,6 +48,7 @@ export function resetUI() {
     .then((currentToken) => {
       if (currentToken) {
         sendTokenToServer(currentToken);
+        console.log("currentToken", currentToken);
         // updateUIForPushEnabled(currentToken);
       } else {
         // Show permission request.
@@ -72,7 +74,7 @@ export function resetUI() {
 // Send the registration token your application server, so that it can:
 // - send messages back to this app
 // - subscribe/unsubscribe the token from topics
-function sendTokenToServer(currentToken) {
+function sendTokenToServer(currentToken: string) {
   if (!isTokenSentToServer()) {
     console.log("Sending token to server...", currentToken);
     // TODO(developer): Send the current token to your server.
@@ -86,7 +88,7 @@ function isTokenSentToServer() {
   return window.localStorage.getItem("sentToServer") === "1";
 }
 
-function setTokenSentToServer(sent) {
+function setTokenSentToServer(sent: boolean) {
   window.localStorage.setItem("sentToServer", sent ? "1" : "0");
 }
 
@@ -168,25 +170,3 @@ export function requestPermission() {
 
 // document.getElementById("request-permission-button")!.addEventListener("click", requestPermission);
 // document.getElementById("delete-token-button")!.addEventListener("click", deleteTokenFromFirebase);
-
-resetUI();
-
-navigator.serviceWorker
-  .register("./firebase-messaging-sw.js")
-  .then(function (registration) {
-    console.log("Service Worker registered with scope:", registration.scope);
-  })
-  .catch(function (error) {
-    console.error("Service Worker registration failed:", error);
-  });
-
-resetUI();
-
-navigator.serviceWorker
-  .register("./firebase-messaging-sw.js")
-  .then(function (registration) {
-    console.log("Service Worker registered with scope:", registration.scope);
-  })
-  .catch(function (error) {
-    console.error("Service Worker registration failed:", error);
-  });
