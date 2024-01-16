@@ -6,7 +6,7 @@ import theme from "themes/theme";
 import "./main.css";
 import { Global, ThemeProvider } from "@emotion/react";
 import globalStyles from "styles/globalStyles";
-import { requestPermission } from "./firebase-messaging-sw.js";
+import { requestPermission } from "../firebase-messaging-sw";
 
 const queryClient = new QueryClient({
   defaultOptions: {
