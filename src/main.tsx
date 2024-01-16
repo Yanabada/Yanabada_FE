@@ -16,7 +16,6 @@ const queryClient = new QueryClient({
   }
 });
 
-// 커밋용 주석
 requestPermission();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
