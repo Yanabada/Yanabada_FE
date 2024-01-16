@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
 
+interface TextWrapperProps {
+  color?: string;
+}
+
 export const NoticeWrapper = styled.div`
   padding: 8px 10px;
   border-radius: 5px;
@@ -40,15 +44,15 @@ export const NoticeTitle = styled.div`
   &.orange {
     color: ${({ theme }) => theme.colors.orange[200]};
   }
-  /* &.question {
-    color: ${({ theme }) => theme.colors.orange[200]};
-  } */
 `;
-export const TextWrapper = styled.div`
+
+export const TextWrapper = styled.div<TextWrapperProps>`
   width: 100%;
   display: flex;
   flex-direction: column;
   ${({ theme }) => theme.text.body2}
+
+  color: ${({ color, theme }) => (color ? theme.colors.blue[200] : "inherit")};
 `;
 
 export const IconBox = styled.div`
