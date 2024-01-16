@@ -24,6 +24,8 @@ import SellDetail from "@pages/sell/detail";
 import SellResult from "@pages/sell/result";
 import SellConfirm from "@pages/sell/confirm";
 import Charge from "@pages/charge";
+import ChargeConfirm from "@pages/charge/confirm";
+import PasswordConfirm from "@pages/charge/confirm";
 
 const router = createBrowserRouter([
   {
@@ -195,6 +197,14 @@ const router = createBrowserRouter([
                 <Charge />
               </>
             )
+          },
+          {
+            path: "password",
+            element: <PasswordConfirm />
+          },
+          {
+            path: "confirm",
+            element: <ChargeConfirm />
           }
         ]
       }

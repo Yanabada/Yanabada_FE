@@ -40,23 +40,6 @@ const Charge = () => {
           shape="lineFill"
         />
         <S.paySpace />
-        {/* <S.InputWrapper>
-          <p className="select">
-            <span>계좌선택</span>
-            <IoMdArrowDropup />
-            <IoMdArrowDropdown />
-          </p>
-          <div className="option">
-            <div className="inner">
-              <img src="/src/assets/bankIcon.png" />
-              <span className="bank">국민은행</span>
-            </div>
-            <div className="inner">
-              <div className="number">000000-00-000000</div>
-              <GoCheck style={{ color: "#028161" }} />
-            </div>
-          </div>
-        </S.InputWrapper> */}
         <S.InputWrapper>
           <motion.p className="select" onClick={toggleOption}>
             <span>{bankMessage}</span>
