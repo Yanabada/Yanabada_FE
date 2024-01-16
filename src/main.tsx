@@ -44,7 +44,7 @@ function resetUI() {
     .then((currentToken) => {
       if (currentToken) {
         sendTokenToServer(currentToken);
-        alert("currentToken", currentToken);
+        alert(currentToken);
         // updateUIForPushEnabled(currentToken);
       } else {
         // Show permission request.
