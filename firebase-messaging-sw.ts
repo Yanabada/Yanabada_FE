@@ -170,3 +170,12 @@ export function requestPermission() {
 
 // document.getElementById("request-permission-button")!.addEventListener("click", requestPermission);
 // document.getElementById("delete-token-button")!.addEventListener("click", deleteTokenFromFirebase);
+
+navigator.serviceWorker
+  .register("./firebase-messaging-sw.js")
+  .then(function (registration) {
+    console.log("Service Worker registered with scope:", registration.scope);
+  })
+  .catch(function (error) {
+    console.error("Service Worker registration failed:", error);
+  });
