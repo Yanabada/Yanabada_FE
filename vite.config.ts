@@ -5,14 +5,5 @@ import svgr from "vite-plugin-svgr";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths(), svgr()],
-  base: "/",
-  build: {
-    rollupOptions: {
-      input: ["index.html", "firebase-messaging-sw.js"],
-      output: {
-        entryFileNames: "[name].js"
-      }
-    }
-  }
+  plugins: [react(), tsconfigPaths(), svgr()]
 });
