@@ -24,7 +24,7 @@ const NoChatList = ({ type }: NoChatListProps) => {
               }}
             >
               로그인
-            </S.HightLight>{" "}
+            </S.HightLight>
             후 채팅 기능을 이용할 수 있어요
           </S.Content>
         )
