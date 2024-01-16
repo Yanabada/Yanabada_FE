@@ -20,7 +20,7 @@ const UpperNavBar = ({
   type = "back",
   rightElement = null,
   setIsVisible,
-  shape = "",
+  shape = "fill",
   customBack,
   ...props
 }: UpperNavProp) => {
@@ -53,7 +53,7 @@ const UpperNavBar = ({
   };
 
   return (
-    <S.UpperNavWrapper className={hasBorder ? `${hasBorder} ${shape}` : `${shape}`} {...props}>
+    <S.UpperNavWrapper className={hasBorder ? `hasBorder ${shape}` : `${shape}`} {...props}>
       <S.LeftIconWrapper onClick={handleClick}>{icon}</S.LeftIconWrapper>
       <S.TextWrapper {...props}>{title}</S.TextWrapper>
       {rightElement && <S.RightIconWrapper>{rightElement}</S.RightIconWrapper>}

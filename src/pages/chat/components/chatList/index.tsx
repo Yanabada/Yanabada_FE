@@ -9,7 +9,7 @@ const ChatList = ({ roomId }: ChatListProps) => {
   const navigate = useNavigate();
 
   return (
-    <S.List onClick={() => navigate(`/${roomId}`)}>
+    <S.List onClick={() => navigate(`/chat/${roomId}`)}>
       <S.ProfileImg
         src="https://i.pinimg.com/564x/4d/a5/dd/4da5dd3d7b0a981cd56ec1f7db32c0cf.jpg"
         alt="프로필"
