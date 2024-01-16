@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 interface DateChangeButtonProps {
   width?: string;
+  disabled?: boolean | undefined;
 }
 
 export const DateChangeButton = styled.div<DateChangeButtonProps>`
@@ -23,14 +24,18 @@ export const LeftSection = styled.div`
   flex: 1 0;
 `;
 
-export const Label = styled.p`
+export const Label = styled.p<DateChangeButtonProps>`
   ${({ theme }) => theme.text.button2};
-  color: ${({ theme }) => theme.colors.gray[900]};
+
+  color: ${({ theme, disabled }) => (disabled ? theme.colors.blue[400] : theme.colors.gray[900])};
+
   text-align: center;
 `;
 
-export const DescriptionLabel = styled.p`
+export const DescriptionLabel = styled.p<DateChangeButtonProps>`
   ${({ theme }) => theme.text.button2};
+
+  color: ${({ theme, disabled }) => (disabled ? theme.colors.blue[400] : theme.colors.gray[900])};
 `;
 
 export const RightButton = styled.button`
