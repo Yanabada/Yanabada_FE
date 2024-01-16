@@ -53,12 +53,17 @@ const router = createBrowserRouter([
         element: (
           <>
             <Outlet />
+            <BottomNavBar />
           </>
         ),
         children: [
           {
             index: true,
-            element: <Sell />
+            element: (
+              <>
+                <Sell />
+              </>
+            )
           },
           {
             path: "register",

@@ -180,6 +180,11 @@ export const ListButton = styled.button`
 
   background-color: ${({ theme }) => theme.colors.blue[200]};
 
+  a {
+    display: block;
+    width: 100%;
+  }
+
   svg {
     padding-top: 3px;
   }
