@@ -22,6 +22,7 @@
     "@tanstack/react-query-devtools": "^5.14.7",
     "axios": "^1.6.2",
     "date-fns": "^3.0.6",
+    "esbuild": "^0.19.11",
     "firebase": "^10.7.1",
     "framer-motion": "^10.16.16",
     "popmotion": "^11.0.5",
