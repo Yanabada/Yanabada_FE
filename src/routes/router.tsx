@@ -21,6 +21,7 @@ import SignInSecond from "@pages/signIn/components/signInSecond/SignInSecond";
 import SignInThird from "@pages/signIn/components/signInThird/SignInThird";
 import SellRegister from "@pages/sell/register";
 import SellDetail from "@pages/sell/detail";
+import ChatRoom from "@pages/chat/ChatRoom";
 
 const router = createBrowserRouter([
   {
@@ -77,11 +78,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/chat",
-        element: (
-          <>
-            <Chat />
-          </>
-        )
+        element: <Outlet />,
+        children: [
+          {
+            index: true,
+            element: <Chat />
+          },
+          {
+            path: "/chat:roomId",
+            element: <ChatRoom />
+          }
+        ]
       },
       {
         path: "/login",
