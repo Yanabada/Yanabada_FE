@@ -66,7 +66,7 @@ const Sell = () => {
                     </div>
                   </div>
                   <Link to="/sell/detail">
-                    <AuthenticationButton type="disabled" width="100%">
+                    <AuthenticationButton buttonType="disabled" width="100%">
                       상세보기
                     </AuthenticationButton>
                   </Link>

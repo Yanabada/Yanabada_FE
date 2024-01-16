@@ -111,12 +111,12 @@ const SellRegister = () => {
           <S.RegisterDes>네고 불가능 선택 시 구매자는 채팅을 신청할 수 없습니다.</S.RegisterDes>
           <S.SelectWrap>
             <S.ButtonInner>
-              <AuthenticationButton type="disabled" width="100%">
+              <AuthenticationButton buttonType="disabled" width="100%">
                 예
               </AuthenticationButton>
             </S.ButtonInner>
             <S.ButtonInner>
-              <AuthenticationButton type="default" width="100%">
+              <AuthenticationButton buttonType="default" width="100%">
                 아니오
               </AuthenticationButton>
             </S.ButtonInner>
@@ -175,7 +175,7 @@ const SellRegister = () => {
                 </div>
               </S.CalcInner>
               <S.SmallSpace />
-              <BaseButton type="default" width="100%">
+              <BaseButton buttonType="default" width="100%">
                 확인
               </BaseButton>
             </S.CalendarInner>
@@ -188,7 +188,7 @@ const SellRegister = () => {
           <S.SelectWrap>
             <S.ButtonInner>
               <AuthenticationButton
-                type={isAutoCancel ? "disabled" : "default"}
+                buttonType={isAutoCancel ? "disabled" : "default"}
                 width="100%"
                 onClick={() => setIsAutoCancel(true)}
               >
@@ -197,7 +197,7 @@ const SellRegister = () => {
             </S.ButtonInner>
             <S.ButtonInner>
               <AuthenticationButton
-                type={isAutoCancel ? "default" : "disabled"}
+                buttonType={isAutoCancel ? "default" : "disabled"}
                 width="100%"
                 onClick={() => setIsAutoCancel(false)}
               >
@@ -258,7 +258,7 @@ const SellRegister = () => {
             <p className="des">
               <Link to="/">이용규칙</Link>에 동의하실 경우 상품 등록하기를 클릭해주세요
             </p>
-            <BaseButton type="default" width="100%">
+            <BaseButton buttonType="default" width="100%">
               상품 등록하기
             </BaseButton>
           </S.ConfirmWrap>
