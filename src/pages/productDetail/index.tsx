@@ -5,7 +5,7 @@ import SellerSay from "./components/SellerSay";
 import Location from "./components/Location";
 import Information from "./components/Information";
 import ServiceInfo from "./components/ServiceInfo";
-import Notice from "./components/Notice";
+import DetailNotice from "./components/DetailNotice";
 import Footer from "./components/Footer";
 import NegoButton from "./components/NegoButton";
 import useProductDetail from "./hooks/useProductDetail";
@@ -28,7 +28,7 @@ const ProductDetail = () => {
             accommodationInfo={detailData.accommodationInfo}
             roomInfo={detailData.roomInfo}
           />
-          <Notice roomInfo={detailData.roomInfo} />
+          <DetailNotice roomInfo={detailData.roomInfo} />
           <Footer phoneNumber={detailData.accommodationInfo.phoneNumber} />
           <NegoButton data={detailData} />
         </>

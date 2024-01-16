@@ -2,6 +2,7 @@ import * as S from "./style";
 import { DetailType } from "@pages/productDetail/types/detailType";
 import StarIcon from "assets/icons/Star.svg?react";
 import { numberFormat } from "@utils/numberFormat";
+import Notice from "@components/notice";
 
 interface DetailProps {
   data: DetailType;
@@ -29,10 +30,14 @@ const DetailInfo = ({ data }: DetailProps) => {
         </S.ImageCounterContainer>
       </S.ImageContainer>
       <S.InfoContainer>
+        <Notice
+          type="yanolja"
+          content="야놀자에서 실제 예약된 숙소만 거래할 수 있습니다."
+          shape="lineFill"
+        />
         <S.StarContainer>
           <StarIcon />
           <S.StarRating>{roomInfo.rating}</S.StarRating>
-          <S.StarRating>(2,242)</S.StarRating>
           <S.Category>
             ·&nbsp;
             {categoryList.find((item) => item.id === accommodationInfo.category)?.name}

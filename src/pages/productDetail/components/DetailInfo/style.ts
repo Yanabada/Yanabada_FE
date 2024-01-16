@@ -39,7 +39,7 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  padding: 1rem;
+  padding: 0.8rem;
 `;
 
 export const StarContainer = styled.div`
@@ -47,7 +47,7 @@ export const StarContainer = styled.div`
   align-items: center;
   height: 1.125rem;
   gap: 0.3rem;
-  margin-bottom: 0.3rem;
+  margin: 0.3rem 0;
 `;
 
 export const StarRating = styled.p`
