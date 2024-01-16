@@ -22,6 +22,10 @@ export const NoticeWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.gray[200]};
     border: 1px solid ${({ theme }) => theme.colors.gray[300]};
   }
+  &.lineDark {
+    background-color: ${({ theme }) => theme.colors.gray[100]};
+    border: 1px solid ${({ theme }) => theme.colors.gray[300]};
+  }
   &.line {
     border: 1px solid ${({ theme }) => theme.colors.gray[300]};
   }
