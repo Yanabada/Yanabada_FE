@@ -1,100 +1,12 @@
 import { http, HttpResponse } from "msw";
+import { data } from "./api/data/products";
 
 export const handlers = [
   http.get("/api/products", () => {
     return HttpResponse.json([
       {
         status: "SUCCESS",
-        data: {
-          products: [
-            {
-              id: 1,
-              image: "https://bit.ly/2Z4KKcF",
-              accommodationName: "춘천세종호텔",
-              roomName: "스탠다드 룸",
-              address: "강원특별자치도 춘천시 봉의산길 31",
-              checkIn: "2024-01-26",
-              checkOut: "2024-01-30",
-              min: 2,
-              max: 4,
-              saleEnd: "2024-01-19",
-              rating: 0.0,
-              salesPercentage: 20,
-              canNegotiate: true,
-              price: 65000,
-              sellingPrice: 80000,
-              purchasePrice: 100000,
-              latitude: 35.1631049574,
-              longitude: 126.9882125981,
-              status: "ON_SALE"
-            },
-            {
-              id: 2,
-              image: "https://bit.ly/2Z4KKcF",
-              accommodationName: "춘천세종호텔",
-              roomName: "스탠다드 룸",
-              address: "경기도 의왕시",
-              checkIn: "2024-01-26",
-              checkOut: "2024-01-30",
-              min: 2,
-              max: 4,
-              saleEnd: "2024-01-19",
-              rating: 0.0,
-              salesPercentage: 20,
-              canNegotiate: false,
-              price: 65000,
-              sellingPrice: 80000,
-              purchasePrice: 100000,
-              latitude: 35.1631049574,
-              longitude: 126.9882125981,
-              status: "SOLD_OUT"
-            },
-            {
-              id: 3,
-              image: "https://bit.ly/2Z4KKcF",
-              accommodationName: "춘천세종호텔",
-              roomName: "스탠다드 룸",
-              address: "강원특별자치도 춘천시 봉의산길 31",
-              checkIn: "2024-01-26",
-              checkOut: "2024-01-30",
-              min: 2,
-              max: 4,
-              saleEnd: "2024-01-19",
-              rating: 0.0,
-              salesPercentage: 20,
-              canNegotiate: true,
-              price: 65000,
-              sellingPrice: 80000,
-              purchasePrice: 100000,
-              latitude: 35.1631049574,
-              longitude: 126.9882125981,
-              status: "BOOKING"
-            },
-            {
-              id: 4,
-              image: "https://bit.ly/2Z4KKcF",
-              accommodationName: "춘천세종호텔",
-              roomName: "스탠다드 룸",
-              address: "강원특별자치도 춘천시 봉의산길 31",
-              checkIn: "2024-01-26",
-              checkOut: "2024-01-30",
-              min: 2,
-              max: 4,
-              saleEnd: "2024-01-19",
-              rating: 0.0,
-              salesPercentage: 20,
-              canNegotiate: false,
-              price: 65000,
-              sellingPrice: 80000,
-              purchasePrice: 100000,
-              latitude: 35.1631049574,
-              longitude: 126.9882125981,
-              status: "ON_SALE"
-            }
-          ],
-          totalElements: 1,
-          totalPages: 1
-        }
+        data: data
       }
     ]);
   }),
