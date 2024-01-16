@@ -5,11 +5,6 @@ import { AnimatePresence, useAnimationControls } from "framer-motion";
 
 import ArrowDown from "@assets/icons/search_arrowDown.svg?react";
 import { useEffect, useState } from "react";
-import { Product } from "@pages/products/types";
-import { AnimatePresence, useAnimationControls } from "framer-motion";
-
-import ArrowDown from "@assets/icons/search_arrowDown.svg?react";
-import { useEffect, useState } from "react";
 
 interface ProductCardProps {
   selectedProduct: ProductType;
