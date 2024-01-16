@@ -24,6 +24,8 @@ const SellRegister = () => {
   const [check2, setCheck2] = useState(false);
   const [check3, setCheck3] = useState(false);
 
+  const [isAutoCancel, setIsAutoCancel] = useState(false);
+
   const originalPrice = 1200000;
   const purchasePrice = 1200000;
   const cancelFee = 600000;
@@ -185,12 +187,20 @@ const SellRegister = () => {
           </S.RegisterSubTitle>
           <S.SelectWrap>
             <S.ButtonInner>
-              <AuthenticationButton type="disabled" width="100%">
+              <AuthenticationButton
+                type={isAutoCancel ? "disabled" : "default"}
+                width="100%"
+                onClick={() => setIsAutoCancel(true)}
+              >
                 예
               </AuthenticationButton>
             </S.ButtonInner>
             <S.ButtonInner>
-              <AuthenticationButton type="default" width="100%">
+              <AuthenticationButton
+                type={isAutoCancel ? "default" : "disabled"}
+                width="100%"
+                onClick={() => setIsAutoCancel(false)}
+              >
                 아니오
               </AuthenticationButton>
             </S.ButtonInner>
