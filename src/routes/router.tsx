@@ -19,6 +19,8 @@ import Search from "@pages/search";
 import SignInFirst from "@pages/signIn/components/signInFirst/SignInFirst";
 import SignInSecond from "@pages/signIn/components/signInSecond/SignInSecond";
 import SignInThird from "@pages/signIn/components/signInThird/SignInThird";
+import SellRegister from "@pages/sell/register";
+import SellDetail from "@pages/sell/detail";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +50,30 @@ const router = createBrowserRouter([
       // },
       {
         path: "/sell",
-        element: <Sell />
+        element: (
+          <>
+            <Outlet />
+            <BottomNavBar />
+          </>
+        ),
+        children: [
+          {
+            index: true,
+            element: (
+              <>
+                <Sell />
+              </>
+            )
+          },
+          {
+            path: "register",
+            element: <SellRegister />
+          },
+          {
+            path: "detail",
+            element: <SellDetail />
+          }
+        ]
       },
       {
         path: "/chat",
