@@ -31,7 +31,8 @@ const theme = {
   shadows: {
     1: "0px 1px 7px 0px rgba(0, 0, 0, 0.25)", // 은은한 쉐도우 & 위로 올라가는 쉐도우
     2: "0px 3px 9.2px 0px rgba(0, 0, 0, 0.1)", // 하단 네비
-    3: "0px 2px 10px 0px rgba(0, 0, 0, 0.03)" // 은은한 쉐도우
+    3: "0px 2px 10px 0px rgba(0, 0, 0, 0.03)", // 은은한 쉐도우
+    4: "0px 2px 18px 3px rgba(0, 0, 0, 0.10)" // 깊은 쉐도우
   },
   text: {
     subtitle2: {
