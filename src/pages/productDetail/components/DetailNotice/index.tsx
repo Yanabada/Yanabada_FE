@@ -5,7 +5,7 @@ interface RoomInfoProps {
   roomInfo: RoomInfoType;
 }
 
-const Notice = ({ roomInfo }: RoomInfoProps) => {
+const DetailNotice = ({ roomInfo }: RoomInfoProps) => {
   return (
     <S.Container>
       <S.Text>예약 공지</S.Text>
@@ -23,4 +23,4 @@ const Notice = ({ roomInfo }: RoomInfoProps) => {
   );
 };
 
-export default Notice;
+export default DetailNotice;
