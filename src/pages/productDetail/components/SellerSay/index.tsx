@@ -1,4 +1,5 @@
 import * as S from "./style";
+import Say from "@components/say";
 import { SellerType } from "@pages/productDetail/types/detailType";
 
 interface SellerProps {
@@ -13,12 +14,7 @@ const SellerSay = ({ seller, description }: SellerProps) => {
         <S.Text>판매자 한마디</S.Text>
         <S.NickName>{seller.nickname} 님</S.NickName>
       </S.NickNameContainer>
-      <S.SayContainer>
-        <S.UserImage src={seller.imageUrl} />
-        <S.SayInnerContainer>
-          <S.SellerText>{description}</S.SellerText>
-        </S.SayInnerContainer>
-      </S.SayContainer>
+      <Say seller={seller} description={description} />
     </S.Container>
   );
 };
