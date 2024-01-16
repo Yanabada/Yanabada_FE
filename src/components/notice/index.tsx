@@ -3,6 +3,7 @@ import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
 import CautionIcon from "@assets/icons/caution_Icon.svg?react";
 import QuestionIcon from "@assets/icons/QuestionIcon.svg?react";
 import InfoIcon from "@assets/icons/infoIcon.svg?react";
+import InfoBlueIcon from "@assets/icons/infoBlueIcon.svg?react";
 
 interface YanoljaProps {
   type: "yanolja";
@@ -13,6 +14,7 @@ interface YanoljaProps {
 interface InfoProps {
   type: "info";
   content: string;
+  color?: "blue" | "green";
   shape?: "lineFill";
 }
 
@@ -44,10 +46,15 @@ const Notice = (props: NoticeProps) => {
         </S.NoticeWrapper>
       );
     case "info":
+      if (props.color === "green") {
+        icon = <InfoIcon />;
+      } else {
+        icon = <InfoBlueIcon />;
+      }
       return (
         <S.NoticeWrapper className={props.shape ? `${props.shape} yanolja` : "yanolja"}>
-          <InfoIcon />
-          <S.TextWrapper>{props.content}</S.TextWrapper>
+          {icon}
+          <S.TextWrapper color={props.color}>{props.content}</S.TextWrapper>
         </S.NoticeWrapper>
       );
     case "question":
