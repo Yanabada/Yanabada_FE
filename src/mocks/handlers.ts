@@ -28,9 +28,9 @@ export const handlers = [
           status: "ON_SALE",
           checkInDate: "2024-01-26",
           checkOutDate: "2024-01-30",
-          sellingPrice: 80000,
-          price: 65000,
-          purchasePrice: 100000,
+          sellingPrice: 800000,
+          price: 1000000,
+          purchasePrice: 900000,
           salesPercentage: 20,
           accommodationInfo: {
             id: 1,
