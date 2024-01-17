@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 
 interface CardProps {
   canNegotiate?: boolean;
+  fullContent?: boolean;
+  borderRadius?: string;
 }
 
 export const Container = styled.div`
@@ -57,7 +59,7 @@ export const Image = styled.img`
   object-fit: cover;
 `;
 
-export const DiscountRate = styled.div`
+export const DiscountRate = styled.div<CardProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,6 +76,7 @@ export const DiscountRate = styled.div`
   font-weight: 600;
   line-height: 130%;
   position: absolute;
+  border-radius: ${({ borderRadius }) => borderRadius || "0px"};
 `;
 
 export const LocationContainer = styled.div`
