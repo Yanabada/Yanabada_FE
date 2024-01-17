@@ -22,6 +22,7 @@ export const InfoWrapper = styled.div<TransactionStatementProps>`
   background: #fff;
 `;
 
+// FIXME: 모듈화
 export const TopWrapper = styled.div<TransactionStatementProps>`
   display: flex;
   width: ${({ width }) => width || "332px"};

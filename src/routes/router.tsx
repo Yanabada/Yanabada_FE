@@ -8,6 +8,7 @@ import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDi
 import SalesHistory from "@pages/myPage/salesHistory";
 import PurchaseHistory from "@pages/myPage/purchaseHistory";
 import TransactionStatement from "@pages/myPage/transactionStatement";
+import Purchase from "@pages/purchase";
 import Sell from "@pages/sell";
 import Products from "@pages/products";
 import ProductDetail from "@pages/productDetail";
