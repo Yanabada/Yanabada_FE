@@ -8,7 +8,8 @@ const RowCard = (props: DeadLineProps) => {
     {
       id: 1,
       image: "https://bit.ly/2Z4KKcF",
-      accommodationName: "파라스파라 서울 더 그레이트 현대 런던1",
+      accommodationName:
+        "파라스파라 서울 더 그레이트 현대 런던런던런던런던런던런던런던런던런던런던런던런던",
       roomName: "Forest Tower Deluxe King",
       checkIn: "01/10",
       checkOut: "01/13",
@@ -18,7 +19,7 @@ const RowCard = (props: DeadLineProps) => {
     {
       id: 2,
       image: "https://bit.ly/2Z4KKcF",
-      accommodationName: "파라스파라 서울 더 그레이트 현대 런던2",
+      accommodationName: "파라스파라",
       roomName: "Forest Tower Deluxe King",
       checkIn: "01/12",
       checkOut: "01/13",
