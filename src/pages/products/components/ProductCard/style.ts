@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 
 interface CardProps {
   canNegotiate?: boolean;
-  fullContent?: boolean;
 }
 
 export const Container = styled.div`
@@ -29,6 +28,20 @@ export const ItemContainer = styled(motion.div)<CardProps>`
     z-index: 1001;
 
     bottom: 2rem;
+  }
+
+  button.icon {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+
+    &[data-opened="false"] {
+      rotate: 180deg;
+    }
+
+    svg > path {
+      stroke: #0751c3;
+    }
   }
 `;
 
