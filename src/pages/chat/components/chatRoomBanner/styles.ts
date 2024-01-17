@@ -27,6 +27,10 @@ export const BottomContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+export const NotOnSaLeText = styled.div`
+  color: ${({ theme }) => theme.colors.pink[200]};
+  ${({ theme }) => theme.text.caption1};
+`;
 
 export const PriceContainer = styled.div`
   display: flex;
