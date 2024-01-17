@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import * as S from "./styles";
 import { CustomOverlayMap, useMap } from "react-kakao-maps-sdk";
-import { Product } from "@pages/products/types";
+import { ProductType } from "@pages/products/types/productsType";
 
 interface ProductMarkersProps {
-  products: Product[];
+  products: ProductType[];
   setSelectedProductId: Dispatch<SetStateAction<number>>;
 }
 
@@ -20,7 +20,7 @@ export const ProductsMarkers = ({ products, setSelectedProductId }: ProductMarke
   const overlayRef = useRef<kakao.maps.CustomOverlay>(null);
   overlayRef.current?.setZIndex(1);
 
-  const handleSelect = (product: Product) => {
+  const handleSelect = (product: ProductType) => {
     const { latitude, longitude } = product;
     setSelectedId(product.id);
     setSelectedProductId(product.id);

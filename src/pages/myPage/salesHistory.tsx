@@ -1,13 +1,13 @@
-import * as S from "./styles/salesHistory.styles";
+import * as S from "./styles/history.styles";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import ListCard from "@components/card/ListCard";
 
 // FIXME: 모듈화
-interface PointsMiddleTabProps {
+interface SalesHistoryProps {
   width?: string;
 }
 
-const SalesHistory = ({ width }: PointsMiddleTabProps) => {
+const SalesHistory = ({ width }: SalesHistoryProps) => {
   return (
     <>
       <UpperNavBar title="판매내역" type="back" />
@@ -46,6 +46,7 @@ const SalesHistory = ({ width }: PointsMiddleTabProps) => {
           timerText="3일 15시간 23분"
           roomName="Forest Tower Deluxe King"
           price="800,000"
+          badgeText="판매중"
         />
         <ListCard
           cardType="saleCanceled"
@@ -55,6 +56,7 @@ const SalesHistory = ({ width }: PointsMiddleTabProps) => {
           buyerInfo="승인 거절 / 판매 종료에 의한 취소"
           roomName="Forest Tower Deluxe King"
           price="800,000"
+          badgeText="취소"
         />
         <ListCard
           cardType="saleEnd"
@@ -65,6 +67,7 @@ const SalesHistory = ({ width }: PointsMiddleTabProps) => {
           saleDate="2024.01.06(토) 00:00"
           roomName="Forest Tower Deluxe King"
           price="800,000"
+          badgeText="판매완료"
         />
       </S.ListCardWrapper>
     </>
