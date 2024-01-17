@@ -1,16 +1,16 @@
 import * as S from "./styles/styles";
 
-import UpperNavBar from "@components/navBar/upperNavBar";
-import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
-import Notice from "@components/notice";
-
+import { useState } from "react";
 import { IoMdArrowDropup } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { GoCheck } from "react-icons/go";
+import { motion, AnimatePresence } from "framer-motion";
+
+import UpperNavBar from "@components/navBar/upperNavBar";
+import Notice from "@components/notice";
 import BaseButton from "@components/buttons/BaseButton";
 import PriceArea from "@components/priceArea";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
 
 const Charge = () => {
   const [isOptionVisible, setIsOptionVisible] = useState(false);
@@ -51,7 +51,10 @@ const Charge = () => {
                 className="option"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                onClick={() => setBankMessage("국민은행 000000-00-000000")}
+                onClick={() => {
+                  setBankMessage("국민은행 000000-00-000000");
+                  setIsOptionVisible(false);
+                }}
               >
                 <motion.div className="inner">
                   <motion.img src="/src/assets/bankIcon.png" />

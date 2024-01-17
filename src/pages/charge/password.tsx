@@ -1,10 +1,16 @@
 import * as S from "./styles/password";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
+
 import LockIcon from "assets/icons/lockIcon.svg?react";
 
-const ChargeConfirm = () => {
-  const numbers = Array.from({ length: 12 }, (_, index) => index + 1);
+const PasswordConfirm = () => {
+  const numbers = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+    ["전체삭제", 0, "⌫"]
+  ];
 
   return (
     <>
@@ -19,15 +25,23 @@ const ChargeConfirm = () => {
           <S.KeyInput>*</S.KeyInput>
           <S.KeyInput>*</S.KeyInput>
           <S.KeyInput>*</S.KeyInput>
+          <S.AlertMessage>
+            비밀번호가 일치하지 않습니다.
+            <br /> 다시 한 번 입력해주세요
+          </S.AlertMessage>
         </S.KeyWrapper>
       </S.ConfirmWrapper>
       <S.KeyPadWrapper>
-        {numbers.map((number) => (
-          <S.KeyPad key={number}>{number}</S.KeyPad>
+        {numbers.map((row, rowIndex) => (
+          <div key={rowIndex}>
+            {row.map((button, columnIndex) => (
+              <S.KeyPad key={columnIndex}>{button}</S.KeyPad>
+            ))}
+          </div>
         ))}
       </S.KeyPadWrapper>
     </>
   );
 };
 
-export default ChargeConfirm;
+export default PasswordConfirm;
