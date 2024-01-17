@@ -27,13 +27,11 @@ const queryClient = new QueryClient({
 
 enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <Global styles={globalStyles} />
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <Global styles={globalStyles} />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 });
