@@ -17,5 +17,4 @@ const Home = () => {
     </S.Container>
   );
 };
-
 export default Home;
