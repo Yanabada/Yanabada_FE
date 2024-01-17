@@ -21,6 +21,8 @@ import SignInSecond from "@pages/signIn/components/signInSecond/SignInSecond";
 import SignInThird from "@pages/signIn/components/signInThird/SignInThird";
 import SellRegister from "@pages/sell/register";
 import SellDetail from "@pages/sell/detail";
+import SellResult from "@pages/sell/result";
+import SellConfirm from "@pages/sell/confirm";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +74,14 @@ const router = createBrowserRouter([
           {
             path: "detail",
             element: <SellDetail />
+          },
+          {
+            path: "result",
+            element: <SellResult />
+          },
+          {
+            path: "confirm",
+            element: <SellConfirm />
           }
         ]
       },

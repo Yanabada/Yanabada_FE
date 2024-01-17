@@ -19,7 +19,6 @@ const UpperNavBar = ({
   title,
   type = "back",
   rightElement = null,
-  setIsVisible,
   shape = "",
   customBack,
   ...props
@@ -45,7 +44,8 @@ const UpperNavBar = ({
         customBack && customBack();
         break;
       case "close":
-        setIsVisible && setIsVisible(false);
+        navigate(-1);
+        customBack && customBack();
         break;
       default:
         break;
