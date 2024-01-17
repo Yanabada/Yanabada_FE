@@ -8,6 +8,7 @@ import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDi
 import SalesHistory from "@pages/myPage/salesHistory";
 import PurchaseHistory from "@pages/myPage/purchaseHistory";
 import TransactionStatement from "@pages/myPage/transactionStatement";
+import Purchase from "@pages/purchase";
 import Sell from "@pages/sell";
 import Products from "@pages/products";
 import { Outlet, createBrowserRouter } from "react-router-dom";
@@ -134,6 +135,20 @@ const router = createBrowserRouter([
           {
             path: "purchaseHistory",
             element: <PurchaseHistory width="100%" />
+          }
+        ]
+      },
+      {
+        path: "/purchase",
+        element: (
+          <>
+            <Outlet />
+          </>
+        ),
+        children: [
+          {
+            index: true,
+            element: <Purchase width="100%" timerText="3일 15시간 23분" />
           }
         ]
       }
