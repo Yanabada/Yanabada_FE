@@ -7,9 +7,9 @@ type Picked = "onChange" | "placeholder" | "value" | "type";
 interface InputProps extends Pick<ComponentProps<"input">, Picked> {
   variant?: "static" | "move";
   label?: string;
-  errorMessage?: string;
+  errorMessage?: string | null;
   isSuccess?: boolean;
-  rightElement?: ReactNode;
+  rightElement?: ReactNode | null;
   onRightElementClick?: VoidFunction;
 }
 

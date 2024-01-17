@@ -10,6 +10,7 @@ export const paySpace = styled.div`
 
 export const PayBalance = styled.div`
   padding: 20px;
+
   box-shadow: ${({ theme }) => theme.shadows[3]};
 
   display: flex;
@@ -23,6 +24,7 @@ export const PayBalance = styled.div`
 
     padding-left: 8px;
   }
+
   .price {
     ${({ theme }) => theme.text.subtitle4};
   }
@@ -42,7 +44,7 @@ export const InputWrapper = styled.div`
     line-height: 40px;
 
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid ${({ theme }) => theme.colors.gray[500]};
     border-radius: 5px;
 
     background: #fff;
@@ -68,7 +70,7 @@ export const InputWrapper = styled.div`
     line-height: 40px;
 
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid ${({ theme }) => theme.colors.gray[500]};
     border-radius: 0 0 5px 5px;
 
     padding: 0 20px;
@@ -89,9 +91,10 @@ export const InputWrapper = styled.div`
       ${({ theme }) => theme.text.subtitle3};
       color: ${({ theme }) => theme.colors.gray[700]};
     }
+
     .number {
       ${({ theme }) => theme.text.caption1};
-      color: #ccc;
+      color: ${({ theme }) => theme.colors.gray[500]};
     }
   }
 `;
