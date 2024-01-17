@@ -14,13 +14,13 @@ import { ProductType } from "@pages/products/types/productsType";
 
 const Products = () => {
   const [isMapOpen, setMapOpen] = useState(false);
-  const [product, setProduct] = useState<ProductType[] | null>(null);
+  const [products, setProducts] = useState<ProductType[]>([]);
 
   useEffect(() => {
     const productData = async () => {
       try {
-        const data = await getProducts();
-        setProduct(data);
+        const data = await getProducts({ size: 20 });
+        setProducts(data);
       } catch (error) {
         console.error("/products error: ", error);
       }
@@ -39,19 +39,19 @@ const Products = () => {
       </S.Container>
       {isMapOpen && (
         <S.MapContainer>
-          <KakaoMap />
+          <KakaoMap products={products} />
         </S.MapContainer>
       )}
       {!isMapOpen && (
-        <>
-          <S.SecondContainer>
-            <OptionTab />
-            <Order />
-            <S.ProductCardWrapper>
-              {product?.map((product) => <ProductCard key={product.id} product={product} />)}
-            </S.ProductCardWrapper>
-          </S.SecondContainer>
-        </>
+        <S.SecondContainer>
+          <OptionTab />
+          <Order />
+          <S.ProductCardWrapper>
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </S.ProductCardWrapper>
+        </S.SecondContainer>
       )}
       {!isMapOpen && <GoToMapButton handleClick={() => setMapOpen(true)} />}
     </>
