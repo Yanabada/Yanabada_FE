@@ -18,6 +18,8 @@ interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
     | "disabled-icon"
     | "disabled-default";
   width?: string;
+  color?: string;
+  backgroundColor?: string;
 }
 
 const BaseButton = ({ buttonType, children, ...props }: BaseButtonProps) => {

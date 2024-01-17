@@ -10,7 +10,7 @@ import PurchaseHistory from "@pages/myPage/purchaseHistory";
 import TransactionStatement from "@pages/myPage/transactionStatement";
 import Sell from "@pages/sell";
 import Products from "@pages/products";
-// import ProductDetail from "@pages/productDetail";
+import ProductDetail from "@pages/productDetail";
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import Login from "@pages/login";
 import EmailLogin from "@pages/login/EmailLogin";
@@ -172,6 +172,10 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <Search />
+  },
+  {
+    path: "/products/:id",
+    element: <ProductDetail />
   }
 ]);
 
