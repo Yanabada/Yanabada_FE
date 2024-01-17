@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 
-export const Container = styled.div`
+export const Container = styled(motion.div)`
   max-width: 780px;
   display: block;
   position: fixed;
@@ -9,16 +10,30 @@ export const Container = styled.div`
   width: 100%;
   height: 3.5rem;
   background: linear-gradient(231deg, #5d99f2 35.76%, #5ed8ff 83.56%);
+
+  &.isHeaderActive {
+    .bell {
+      color: black;
+    }
+    .gotoText {
+      color: ${({ theme }) => theme.colors.gray[700]};
+    }
+    .logoContainer {
+      > svg {
+        fill: url(#paint0_linear_2987_31414);
+      }
+    }
+  }
 `;
 
-export const HeaderContainer = styled.nav`
+export const HeaderContainer = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 3.5rem;
   padding: 0 1rem;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[300]};
   background: rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(10px);
 `;
@@ -36,9 +51,13 @@ export const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-left: 1.5rem;
+
+  > svg {
+    fill: #fff;
+  }
 `;
 
-export const GotoContainer = styled.div`
+export const GotoContainer = styled.a`
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -53,7 +72,5 @@ export const GotoContainer = styled.div`
 
 export const GotoText = styled.p`
   color: #fff;
-  font-size: ${({ theme }) => theme.text.overline.fontSize};
-  font-weight: ${({ theme }) => theme.text.overline.fontWeight};
-  line-height: ${({ theme }) => theme.text.overline.lineHeight};
+  ${({ theme }) => theme.text.overline};
 `;
