@@ -32,6 +32,7 @@ async function requestPermission() {
   if (token) {
     alert(token);
     console.log("Token: ", token);
+    localStorage.setItem("token", token);
   } else console.log("Can not get Token");
 
   onMessage(messaging, (payload) => {
