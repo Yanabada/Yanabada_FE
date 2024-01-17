@@ -1,4 +1,4 @@
-export interface Product {
+export interface ProductType {
   id: number;
   image: string;
   accommodationName: string;

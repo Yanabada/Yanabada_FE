@@ -7,7 +7,6 @@ export const Container = styled.div`
   gap: 0.8rem;
   padding: 1rem;
   background-color: #fff;
-  margin-bottom: 3rem;
 `;
 
 export const RecentSearchText = styled.p`
@@ -36,8 +35,7 @@ export const RecordBoxContainer = styled.div`
   justify-content: center;
   width: 7rem;
   height: 5rem;
-  padding: 4px 10px;
-  gap: 0.1rem;
+  padding: 0.25rem 0.3rem;
   background-color: #fff;
   border-radius: 20px;
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};

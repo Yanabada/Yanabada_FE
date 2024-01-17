@@ -7,11 +7,26 @@ import * as S from "./styles/style";
 import KakaoMap from "./components/KakaoMap";
 import CategoryTab from "./components/CategoryTab";
 import GoToMapButton from "./components/ToMapButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import getProducts from "./api/products";
+import { ProductType } from "@pages/products/types/productsType";
 
 const Products = () => {
   const [isMapOpen, setMapOpen] = useState(false);
+  const [products, setProducts] = useState<ProductType[]>([]);
+
+  useEffect(() => {
+    const productData = async () => {
+      try {
+        const data = await getProducts({ size: 20 });
+        setProducts(data);
+      } catch (error) {
+        console.error("/products error: ", error);
+      }
+    };
+    productData();
+  }, []);
 
   return (
     <>
@@ -24,19 +39,19 @@ const Products = () => {
       </S.Container>
       {isMapOpen && (
         <S.MapContainer>
-          <KakaoMap />
+          <KakaoMap products={products} />
         </S.MapContainer>
       )}
       {!isMapOpen && (
-        <>
-          <S.SecondContainer>
-            <OptionTab />
-            <Order />
-          </S.SecondContainer>
+        <S.SecondContainer>
+          <OptionTab />
+          <Order />
           <S.ProductCardWrapper>
-            <ProductCard />
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
           </S.ProductCardWrapper>
-        </>
+        </S.SecondContainer>
       )}
       {!isMapOpen && <GoToMapButton handleClick={() => setMapOpen(true)} />}
     </>
