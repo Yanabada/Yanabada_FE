@@ -77,52 +77,6 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: "/chat",
-        element: <Outlet />,
-        children: [
-          {
-            index: true,
-            element: <Chat />
-          },
-          {
-            path: "/chat:roomId",
-            element: <ChatRoom />
-          }
-        ]
-      },
-      {
-        path: "/login",
-        element: <Outlet />,
-        children: [
-          {
-            index: true,
-            element: <Login />
-          },
-          {
-            path: "email",
-            element: <EmailLogin />
-          }
-        ]
-      },
-      {
-        path: "/signin",
-        element: <SignIn />,
-        children: [
-          {
-            index: true,
-            element: <SignInFirst />
-          },
-          {
-            path: "1",
-            element: <SignInSecond />
-          },
-          {
-            path: "2",
-            element: <SignInThird />
-          }
-        ]
-      },
-      {
         path: "/mypage",
         element: (
           <>
@@ -183,6 +137,57 @@ const router = createBrowserRouter([
   {
     path: "/products/:id",
     element: <ProductDetail />
+  },
+  {
+    path: "/chat",
+    element: <Outlet />,
+    children: [
+      {
+        index: true,
+        element: (
+          <>
+            <Chat />
+            <BottomNavBar />
+          </>
+        )
+      },
+      {
+        path: "/chat:roomId",
+        element: <ChatRoom />
+      }
+    ]
+  },
+  {
+    path: "/login",
+    element: <Outlet />,
+    children: [
+      {
+        index: true,
+        element: <Login />
+      },
+      {
+        path: "email",
+        element: <EmailLogin />
+      }
+    ]
+  },
+  {
+    path: "/signin",
+    element: <SignIn />,
+    children: [
+      {
+        index: true,
+        element: <SignInFirst />
+      },
+      {
+        path: "1",
+        element: <SignInSecond />
+      },
+      {
+        path: "2",
+        element: <SignInThird />
+      }
+    ]
   }
 ]);
 
