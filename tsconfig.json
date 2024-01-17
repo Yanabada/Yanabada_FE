@@ -39,6 +39,11 @@
 
     "types": ["kakao.maps.d.ts"]
   },
-  "include": ["src", "custom.d.ts", "firebase-messaging-sw.js", "src/firebase-messaging-sw.js"],
+  "include": [
+    "src",
+    "custom.d.ts",
+    "public/firebase-messaging-sw.js",
+    "src/firebase-messaging-sw.js"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

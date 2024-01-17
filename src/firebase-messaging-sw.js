@@ -29,7 +29,7 @@ async function requestPermission() {
     vapidKey: import.meta.env.VITE_APP_VAPID_KEY
   });
 
-  if (token) console.log("token: ", token);
+  if (token) alert(token);
   else console.log("Can not get Token");
 
   onMessage(messaging, (payload) => {
