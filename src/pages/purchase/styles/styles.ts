@@ -152,7 +152,6 @@ export const Price = styled.p`
 
 export const PersonInfoWrapper = styled.div`
   display: flex;
-  width: 332px;
   padding: 8px 0px;
   flex-direction: column;
   justify-content: center;
@@ -203,13 +202,17 @@ export const UserInfoTextRed = styled.span`
 export const CheckBoxWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 `;
 
 export const ChipWrapper = styled.div`
   display: flex;
-  width: 332px;
   padding-left: 252px;
   justify-content: flex-end;
   align-items: center;
+`;
+
+export const ToggleButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

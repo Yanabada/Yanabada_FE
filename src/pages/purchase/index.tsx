@@ -11,12 +11,28 @@ import Checkbox from "@components/input/Checkbox";
 import { useState } from "react";
 import TextInput from "@components/input/TextInput";
 import ManipulationChip from "@components/chips/ManipulationChip";
+import * as CS from "@pages/myPage/components/Info/styles";
+import ToggleButton from "@components/buttons/ToggleButton";
+
 interface PurchaseProps {
   width?: string;
   timerText: string;
+  divType: string;
+  yanoljaPurchasePrice: string;
+  charge: string;
+  yanoljaPoint: string;
+  totalPurchasePrice: string;
 }
 
-const Purchase = ({ width, timerText }: PurchaseProps) => {
+const Purchase = ({
+  width,
+  timerText,
+  divType,
+  yanoljaPurchasePrice,
+  charge,
+  yanoljaPoint,
+  totalPurchasePrice
+}: PurchaseProps) => {
   const [isChecked, setIsChecked] = useState(true);
 
   return (
@@ -142,6 +158,60 @@ const Purchase = ({ width, timerText }: PurchaseProps) => {
         <S.ChipWrapper>
           <ManipulationChip buttonType="abledDefault">전액 사용</ManipulationChip>
         </S.ChipWrapper>
+      </S.ReservationContainer>
+      <CS.InfoWrapper divType={divType} width={width}>
+        <CS.TopWrapper>
+          <CS.TopLabel>결제 정보</CS.TopLabel>
+        </CS.TopWrapper>
+        <CS.SeperationForm>
+          <CS.FormLeftText color="gray">상품 금액</CS.FormLeftText>
+          <CS.FormRightPrice color="black">{yanoljaPurchasePrice}원</CS.FormRightPrice>
+        </CS.SeperationForm>
+        <CS.SeperationForm>
+          <CS.FormTextWrapper>
+            <CS.FormLeftText color="gray">수수료</CS.FormLeftText>
+          </CS.FormTextWrapper>
+          <CS.FormRightPrice color="darkGray">{charge}원</CS.FormRightPrice>
+        </CS.SeperationForm>
+        <CS.SeperationForm>
+          <CS.FormTextWrapper>
+            <CS.FormLeftText color="gray">야놀자 포인트</CS.FormLeftText>
+          </CS.FormTextWrapper>
+          <CS.FormRightPrice color="lightGray">-{yanoljaPoint}P</CS.FormRightPrice>
+        </CS.SeperationForm>
+        <CS.SeperationForm isBorder={true}>
+          <CS.FormLeftTextBold>총 결제 금액</CS.FormLeftTextBold>
+          <CS.FormRightPrice color="blue">{totalPurchasePrice}원</CS.FormRightPrice>
+        </CS.SeperationForm>
+      </CS.InfoWrapper>
+      <S.Spacer width={width} />
+      <S.ReservationContainer width={width} gap="16px">
+        <S.PersonInfoWrapper>
+          <S.InfoText>
+            결제 수단 <S.UserInfoTextRed>*</S.UserInfoTextRed>
+          </S.InfoText>
+        </S.PersonInfoWrapper>
+        <S.ToggleButtonWrapper>
+          <ToggleButton buttonType="yanolja" subText="*40,000원 할인" width="48%">
+            야놀자 페이
+          </ToggleButton>
+          <ToggleButton buttonType="toss" width="48%">
+            토스 페이
+          </ToggleButton>
+        </S.ToggleButtonWrapper>
+        <S.ToggleButtonWrapper>
+          <ToggleButton buttonType="default" width="48%">
+            무통장 입금
+          </ToggleButton>
+          <ToggleButton buttonType="default" width="48%">
+            카드
+          </ToggleButton>
+        </S.ToggleButtonWrapper>
+        <S.PersonInfoWrapper>
+          <S.InfoText>
+            카드 결제 <S.UserInfoTextRed>*</S.UserInfoTextRed>
+          </S.InfoText>
+        </S.PersonInfoWrapper>
       </S.ReservationContainer>
     </>
   );
