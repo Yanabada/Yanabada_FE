@@ -3,6 +3,11 @@ import OutIcon from "@assets/icons/chatRoomDelete.svg?react";
 import ChatRoomBanner from "./components/chatRoomBanner";
 import { useState } from "react";
 import Modal from "@components/modal";
+import ChatText from "./components/chatText";
+import { numberFormat } from "@utils/numberFormat";
+import * as S from "./styles/styles";
+import ChatInput from "./components/chatInput";
+
 const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -36,13 +41,21 @@ const ChatRoom = () => {
         status="ON_SALE"
         roomName="Forest Tower Deluxe King"
         salesPercentage={50}
-        sellingPrice={600000}
-        price={1200000}
+        sellingPrice={numberFormat(600000)}
+        price={numberFormat(1200000)}
         saleEndDate="2021-09-30"
         sellerId={1}
-        purchasePrice={600000}
+        purchasePrice={numberFormat(600000)}
         productData={productData}
       />
+      <S.ChatContainer>
+        <ChatText isNotice />
+        <ChatText senderId={2} />
+        <ChatText senderId={1} />
+      </S.ChatContainer>
+
+      <ChatInput />
+
       <Modal
         title="이 채팅방을 나가시겠어요?"
         content="채팅 내역이 모두 삭제됩니다."

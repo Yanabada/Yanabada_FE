@@ -4,6 +4,7 @@ export const Container = styled.div`
   background-color: #fff;
   width: 100%;
   box-shadow: ${({ theme }) => theme.shadows[4]};
+  z-index: 5;
 `;
 
 export const TextContainer = styled.div`
