@@ -37,9 +37,13 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["kakao.maps.d.ts"]
+    "types": ["kakao.maps.d.ts", "node"]
   },
-  "include": ["src", "custom.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }],
-  "declarationDir": "types"
+  "include": [
+    "src",
+    "custom.d.ts",
+    "public/firebase-messaging-sw.js",
+    "src/firebase-messaging-sw.js"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

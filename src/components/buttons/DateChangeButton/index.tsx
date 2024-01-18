@@ -2,19 +2,21 @@ import * as S from "./styles";
 import { FaRegCalendarAlt } from "react-icons/fa";
 
 interface DateChangeButtonProps {
+  endDate: string;
   width?: string;
+  disabled?: boolean | undefined;
+  onClick?: () => void;
 }
 
-const DateChangeButton = ({ width }: DateChangeButtonProps) => {
+const DateChangeButton = ({ width, endDate, disabled, onClick }: DateChangeButtonProps) => {
   return (
-    <S.DateChangeButton width={width}>
+    <S.DateChangeButton width={width} onClick={onClick}>
       <S.LeftSection>
         <FaRegCalendarAlt size="18px" />
-        {/* FIXME: 나중에 date 변수로 받아와서 넣어주기 */}
-        <S.Label>2023.12.25(월)</S.Label>
-        <S.DescriptionLabel>(설명 레이블)</S.DescriptionLabel>
+        <S.Label disabled={disabled}>{endDate} (월)</S.Label>
+        <S.DescriptionLabel disabled={disabled}>00시00분 종료</S.DescriptionLabel>
       </S.LeftSection>
-      <S.RightButton>변경</S.RightButton>
+      {!disabled && <S.RightButton>변경</S.RightButton>}
     </S.DateChangeButton>
   );
 };
