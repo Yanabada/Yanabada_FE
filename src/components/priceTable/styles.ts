@@ -69,10 +69,6 @@ export const PriceInfoBox = styled.div`
           ${({ theme }) => theme.text.body3};
           color: ${({ theme }) => theme.colors.gray[700]};
         }
-        .time {
-          ${({ theme }) => theme.text.body2};
-          color: ${({ theme }) => theme.colors.gray[600]};
-        }
       }
     }
   }
@@ -132,68 +128,11 @@ export const PriceTableData = styled.div`
   }
 `;
 
-export const MessageWrap = styled.div`
-  position: relative;
+export const PolicyInner = styled.div`
+  text-align: left;
+  padding: 16px;
 `;
 
-export const PriceInput = styled.input`
-  font-size: 1rem;
-  color: ${(props) => props.theme.colors.gray[900]};
-
-  width: 100%;
-
-  border: none;
-  border-bottom: 1px solid ${(props) => props.theme.colors.gray[100]};
-  outline: none;
-
-  background-color: transparent;
-  padding-bottom: 6px;
-
-  &::placeholder {
-    color: ${(props) => props.theme.colors.gray[500]};
-  }
-`;
-
-export const ErrorMessage = styled.p`
-  ${({ theme }) => theme.text.body2};
-  color: ${(props) => props.theme.colors.pink[200]};
-
-  border-top: 1px solid ${(props) => props.theme.colors.pink[200]};
-`;
-
-export const AlertMessage = styled.p`
-  ${({ theme }) => theme.text.body2};
-  color: #ff7456;
-`;
-
-export const SalesMessage = styled.p`
-  ${({ theme }) => theme.text.body2};
-  color: #38a3eb;
-
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  padding-bottom: 6px;
-`;
-
-export const ButtonWrap = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-
-  margin-top: 12px;
-`;
-
-export const CalcButton = styled.button`
-  color: ${({ theme }) => theme.colors.gray[700]};
-
-  background-color: ${({ theme }) => theme.colors.gray[100]};
-
-  border-radius: 30px;
-  padding: 7px 12px;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+export const PriceSpace = styled.div`
+  height: 16px;
 `;

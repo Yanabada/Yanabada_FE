@@ -23,6 +23,12 @@ import SellRegister from "@pages/sell/register";
 import SellDetail from "@pages/sell/detail";
 import SellResult from "@pages/sell/result";
 import SellConfirm from "@pages/sell/confirm";
+import Charge from "@pages/charge";
+import ChargeIntro from "@pages/charge/intro";
+import PasswordConfirm from "@pages/charge/password";
+import Account from "@pages/charge/account";
+import ChargeConfirm from "@pages/charge/confirm";
+import ChargeSuccess from "@pages/charge/success";
 
 const router = createBrowserRouter([
   {
@@ -30,19 +36,24 @@ const router = createBrowserRouter([
     element: (
       <>
         <Outlet />
-        <BottomNavBar />
       </>
     ),
     children: [
       {
         index: true,
-        element: <Home />
+        element: (
+          <>
+            <Home />
+            <BottomNavBar />
+          </>
+        )
       },
       {
         path: "/products",
         element: (
           <>
             <Products />
+            <BottomNavBar />
           </>
         )
       },
@@ -86,6 +97,7 @@ const router = createBrowserRouter([
         element: (
           <>
             <Chat />
+            <BottomNavBar />
           </>
         )
       },
@@ -170,6 +182,44 @@ const router = createBrowserRouter([
           {
             path: "purchaseHistory",
             element: <PurchaseHistory width="100%" />
+          }
+        ]
+      },
+      {
+        path: "/charge",
+        element: (
+          <>
+            <Outlet />
+          </>
+        ),
+        children: [
+          {
+            index: true,
+            element: (
+              <>
+                <Charge />
+              </>
+            )
+          },
+          {
+            path: "intro",
+            element: <ChargeIntro />
+          },
+          {
+            path: "password",
+            element: <PasswordConfirm />
+          },
+          {
+            path: "account",
+            element: <Account />
+          },
+          {
+            path: "confirm",
+            element: <ChargeConfirm />
+          },
+          {
+            path: "success",
+            element: <ChargeSuccess />
           }
         ]
       }
