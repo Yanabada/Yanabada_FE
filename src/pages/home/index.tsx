@@ -5,7 +5,7 @@ import Banner from "./components/Banner";
 import RecentlyProduct from "./components/RecentlyProduct";
 import CategoryProduct from "./components/CategoryProduct";
 import SpecialServices from "./components/SpecialServices";
-import CategoryList from "./components/Category";
+import CategoryList from "./components/CategoryList";
 import SubServices from "./components/SubServices";
 import Footer from "./components/Footer";
 

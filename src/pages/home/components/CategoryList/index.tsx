@@ -13,11 +13,15 @@ const categoryList = [
 const CategoryList = () => {
   return (
     <S.Container>
-      {categoryList.map((category) => (
-        <Link key={category.id} to={`products${category.search}`}>
-          <S.CategoryWrapper>{category.name}</S.CategoryWrapper>
-        </Link>
-      ))}
+      <S.Title>카테고리</S.Title>
+      <S.CategoryWrapper>
+        {categoryList.map((category) => (
+          <Link key={category.id} to={`products${category.search}`}>
+            <S.CategoryIconBox>{category.name}</S.CategoryIconBox>
+            <span>{category.name}</span>
+          </Link>
+        ))}
+      </S.CategoryWrapper>
     </S.Container>
   );
 };

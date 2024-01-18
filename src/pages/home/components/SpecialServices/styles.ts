@@ -1,14 +1,30 @@
 import styled from "@emotion/styled";
 import { NoScrollBar } from "@styles/base";
 
+export const Container = styled.div`
+  position: relative;
+
+  /* TODO: z-index 조정 어떻게? */
+  /* ::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background-color: #f0dcc4;
+    z-index: 1;
+  } */
+`;
+
 export const TitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0.75rem;
+  padding: 1rem;
 
-  margin-block: 1rem;
-  padding-inline: 1rem;
+  z-index: 2;
 
   .title {
     display: flex;
@@ -41,4 +57,5 @@ export const CardWrapper = styled.div`
   overflow-x: scroll;
 
   ${NoScrollBar};
+  z-index: 2;
 `;

@@ -51,7 +51,7 @@ const products: OptionCardType[] = [
 
 const SpecialServices = () => {
   return (
-    <>
+    <S.Container>
       <S.TitleWrapper>
         <div className="logo">2024 로고</div>
         <div className="title">
@@ -67,7 +67,7 @@ const SpecialServices = () => {
           <ColumnCard key={product.id} product={product} />
         ))}
       </S.CardWrapper>
-    </>
+    </S.Container>
   );
 };
 
