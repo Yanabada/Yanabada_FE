@@ -10,8 +10,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  position: fixed;
-  z-index: 999;
   width: 100%;
   height: 14.5rem;
   padding: 1.3rem;

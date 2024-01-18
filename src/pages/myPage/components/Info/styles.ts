@@ -74,7 +74,9 @@ export const FormLeftTextBold = styled.p`
 
 export const FormRightPrice = styled.p<TransactionStatementProps>`
   color: ${({ color }) =>
+    (color === "lightGray" && "#CCC") ||
     (color === "gray" && "#9C9C9C") ||
+    (color === "darkGray" && "#616161") ||
     (color === "blue" && "#38A3EB") ||
     (color === "black" && "#1A1A1A")};
   text-align: right;

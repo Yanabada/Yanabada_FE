@@ -42,9 +42,9 @@ const Banner = () => {
     <S.Carousel>
       <AnimatePresence initial={false} custom={direction}>
         <S.CarouselItem>
-          <S.Image
-            src={images[imageIndex]}
-            key={page}
+          <S.PrevImage
+            src={images[wrap(0, images.length, imageIndex - 1)]}
+            key={page - 1}
             variants={variants}
             initial="enter"
             animate="center"
@@ -54,22 +54,50 @@ const Banner = () => {
               x: { type: "spring", stiffness: 300, damping: 30 },
               opacity: { duration: 0.2 }
             }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={1}
-            onDragEnd={(_e, { offset, velocity }) => {
-              const swipe = swipePower(offset.x, velocity.x);
+          />
+          <S.ImageContainer>
+            <S.Image
+              src={images[imageIndex]}
+              key={page}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              custom={direction}
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 }
+              }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={1}
+              onDragEnd={(_e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
 
-              if (swipe < -swipeConfidenceThreshold) {
-                paginate(1);
-              } else if (swipe > swipeConfidenceThreshold) {
-                paginate(-1);
-              }
+                if (swipe < -swipeConfidenceThreshold) {
+                  paginate(1);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  paginate(-1);
+                }
+              }}
+            />
+            <S.ImageIndex>
+              {imageIndex + 1} / {images.length}
+            </S.ImageIndex>
+          </S.ImageContainer>
+          <S.NextImage
+            src={images[wrap(0, images.length, imageIndex + 1)]}
+            key={page + 1}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            custom={direction}
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30 },
+              opacity: { duration: 0.2 }
             }}
           />
-          <S.ImageIndex>
-            {imageIndex + 1} / {images.length}
-          </S.ImageIndex>
         </S.CarouselItem>
       </AnimatePresence>
     </S.Carousel>

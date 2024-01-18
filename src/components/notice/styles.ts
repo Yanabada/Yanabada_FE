@@ -1,6 +1,11 @@
 import styled from "@emotion/styled";
 
-export const NoticeWrapper = styled.div`
+interface TextWrapperProps {
+  color?: string;
+  bgColor?: string;
+}
+
+export const NoticeWrapper = styled.div<TextWrapperProps>`
   padding: 8px 10px;
   border-radius: 5px;
 
@@ -16,10 +21,14 @@ export const NoticeWrapper = styled.div`
   color: ${({ theme }) => theme.colors.gray[700]};
 
   &.fill {
-    background-color: ${({ theme }) => theme.colors.gray[100]};
+    background-color: ${({ bgColor, theme }) => (bgColor ? bgColor : theme.colors.gray[200])};
   }
   &.lineFill {
     background-color: ${({ theme }) => theme.colors.gray[200]};
+    border: 1px solid ${({ theme }) => theme.colors.gray[300]};
+  }
+  &.lineDark {
+    background-color: ${({ theme }) => theme.colors.gray[100]};
     border: 1px solid ${({ theme }) => theme.colors.gray[300]};
   }
   &.line {
@@ -36,15 +45,15 @@ export const NoticeTitle = styled.div`
   &.orange {
     color: ${({ theme }) => theme.colors.orange[200]};
   }
-  /* &.question {
-    color: ${({ theme }) => theme.colors.orange[200]};
-  } */
 `;
-export const TextWrapper = styled.div`
+
+export const TextWrapper = styled.div<TextWrapperProps>`
   width: 100%;
   display: flex;
   flex-direction: column;
   ${({ theme }) => theme.text.body2}
+
+  color: ${({ color, theme }) => (color ? theme.colors.blue[200] : "inherit")};
 `;
 
 export const IconBox = styled.div`
