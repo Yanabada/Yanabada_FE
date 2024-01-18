@@ -1,10 +1,17 @@
 import * as S from "./styles";
 import { tags } from "./tags";
+import Logo from "@assets/icons/yanabada_ci.svg?react";
+import ArrowDown from "@assets/icons/search_arrowDown.svg?react";
 
 const Footer = () => {
   return (
     <S.Container>
-      <div>로고 및 드롭다운</div>
+      <S.AboveWrapper>
+        <Logo />
+        <div>
+          패밀리사이트 <ArrowDown />
+        </div>
+      </S.AboveWrapper>
       <S.TagWrapper>
         {tags.map((tag) => (
           <S.Tag key={tag}>{tag}</S.Tag>
