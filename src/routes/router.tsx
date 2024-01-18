@@ -233,6 +233,30 @@ const router = createBrowserRouter([
   {
     path: "/products/:id",
     element: <ProductDetail />
+  },
+  {
+    path: "/purchase",
+    element: (
+      <>
+        <Outlet />
+      </>
+    ),
+    children: [
+      {
+        index: true,
+        element: (
+          <Purchase
+            width="100%"
+            timerText="3일 15시간 23분"
+            divType="payInfo"
+            yanoljaPurchasePrice="800,000"
+            charge="40,000"
+            yanoljaPoint="0"
+            totalPurchasePrice="840,000"
+          />
+        )
+      }
+    ]
   }
 ]);
 

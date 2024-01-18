@@ -64,6 +64,7 @@ export const CheckInOutWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 8px;
 `;
 
 export const CheckInOut = styled.div<PurchaseProps>`
@@ -215,4 +216,53 @@ export const ChipWrapper = styled.div`
 export const ToggleButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const DetailText = styled.p`
+  color: ${({ theme }) => theme.colors.gray[600]};
+
+  /* [Caption1] 하단네비 */
+  ${({ theme }) => theme.text.caption1}
+`;
+
+export const NoticeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const ReservationBottomWrapper = styled.div<PurchaseProps>`
+  width: ${({ width }) => width || "360px"};
+  height: 264px;
+
+  background: #fff;
+`;
+
+export const ButtonFormWrapper = styled.div<PurchaseProps>`
+  display: flex;
+  width: ${({ width }) => width || "360px"};
+  padding: 16px 0px;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  border-top: 1px solid ${({ theme }) => theme.colors.gray[300]};
+`;
+
+export const BottomDetailText = styled.span`
+  color: ${({ theme }) => theme.colors.gray[700]};
+
+  /* [Caption1] 하단네비 */
+  ${({ theme }) => theme.text.caption1}
+`;
+
+export const BottomDetailTextBlue = styled.span`
+  color: ${({ theme }) => theme.colors.blue[400]};
+
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 150% */
+  letter-spacing: -0.24px;
+  text-decoration-line: underline;
 `;
