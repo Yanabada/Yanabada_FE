@@ -24,7 +24,7 @@ const ChatList = ({ roomId }: ChatListProps) => {
         </S.LeftContainer>
         <S.RightContainer>
           <S.TimeText>오후5:50</S.TimeText>
-          <NumberBadge number={3} />
+          <NumberBadge number={3} isChatPage={true} />
         </S.RightContainer>
       </S.DetailContainer>
     </S.List>

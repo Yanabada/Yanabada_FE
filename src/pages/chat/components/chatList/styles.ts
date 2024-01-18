@@ -31,6 +31,7 @@ export const LeftContainer = styled.div`
 
 export const RightContainer = styled.div`
   display: flex;
+  position: relative;
   justify-content: space-between;
   flex-direction: column;
 `;
