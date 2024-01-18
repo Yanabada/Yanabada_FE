@@ -15,5 +15,5 @@ export const ChatContainer = styled.div<ContainerProp>`
   z-index: 1;
   padding-bottom: 65px;
 
-  ${({ status }) => (status === "ON_SALE" ? `padding-top:123px` : `padding-top:83px`)}
+  padding-top: ${({ status }) => (status === "ON_SALE" ? "123px" : "83px")};
 `;
