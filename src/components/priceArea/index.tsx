@@ -48,7 +48,7 @@ const PriceArea = ({
   };
 
   const getErrorMessage = () => {
-    if (purchasePrice !== undefined && cancelFee !== undefined) {
+    if (purchasePrice && cancelFee) {
       if (0 < price && price > purchasePrice) {
         return <S.ErrorMessage>실구매가보다 낮은 금액으로만 판매 가능해요.</S.ErrorMessage>;
       } else if (0 < price && price < cancelFee) {
@@ -68,7 +68,7 @@ const PriceArea = ({
   };
 
   const getSalesMessage = () => {
-    if (originalPrice !== undefined && purchasePrice !== undefined && cancelFee !== undefined) {
+    if (originalPrice && purchasePrice && cancelFee) {
       const discountPercentage = ((originalPrice - price) / originalPrice) * 100;
       const savingsAmount = originalPrice - price;
 
