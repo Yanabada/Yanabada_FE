@@ -14,8 +14,8 @@ const CategoryList = () => {
   return (
     <S.Container>
       {categoryList.map((category) => (
-        <Link to={`products${category.search}`}>
-          <S.CategoryWrapper key={category.id}>{category.name}</S.CategoryWrapper>
+        <Link key={category.id} to={`products${category.search}`}>
+          <S.CategoryWrapper>{category.name}</S.CategoryWrapper>
         </Link>
       ))}
     </S.Container>
