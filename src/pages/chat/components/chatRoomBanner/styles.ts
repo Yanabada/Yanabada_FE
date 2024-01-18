@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
+  position: fixed;
   background-color: #fff;
   width: 100%;
   box-shadow: ${({ theme }) => theme.shadows[4]};
