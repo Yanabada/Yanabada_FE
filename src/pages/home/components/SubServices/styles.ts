@@ -5,7 +5,7 @@ export const OptionWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1rem;
+  padding-inline: 1rem;
 
   overflow-x: scroll;
 
