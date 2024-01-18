@@ -43,6 +43,7 @@ export const NameContainer = styled.div`
 `;
 
 export const NickName = styled.span`
+  white-space: nowrap;
   color: ${({ theme }) => theme.colors.gray[900]};
   ${({ theme }) => theme.text.button1};
 `;
@@ -52,7 +53,7 @@ export const RoomName = styled.span`
   text-overflow: ellipsis;
   display: -webkit-box !important;
   -webkit-line-clamp: 1;
-  max-width: 140px;
+  max-width: 100%;
   -webkit-box-orient: vertical;
   word-wrap: break-word;
   padding: 3px !important;
@@ -62,11 +63,20 @@ export const RoomName = styled.span`
 `;
 
 export const ChatText = styled.span`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1;
+  max-width: 100%;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+
   color: ${({ theme }) => theme.colors.gray[600]};
   ${({ theme }) => theme.text.body2};
 `;
 
 export const TimeText = styled.span`
+  white-space: nowrap;
   color: ${({ theme }) => theme.colors.gray[600]};
   ${({ theme }) => theme.text.caption1};
 `;

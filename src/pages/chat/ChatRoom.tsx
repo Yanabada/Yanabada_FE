@@ -1,15 +1,17 @@
 import UpperNavBar from "@components/navBar/upperNavBar";
 import OutIcon from "@assets/icons/chatRoomDelete.svg?react";
 import ChatRoomBanner from "./components/chatRoomBanner";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "@components/modal";
 import ChatText from "./components/chatText";
 import { numberFormat } from "@utils/numberFormat";
 import * as S from "./styles/styles";
 import ChatInput from "./components/chatInput";
+import { Message } from "./types/chatRoom";
 
 const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const productData = {
     code: "240107f84892a35ed5",
@@ -20,6 +22,18 @@ const ChatRoom = () => {
     checkOutDate: "2024-01-19",
     policyNumber: 2
   };
+  const status = "ON_SALE";
+
+  // 채팅 왔을 때 아래로 스크롤
+  const bottom = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    bottom.current!.scrollIntoView({ behavior: "smooth", block: "end" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <>
       <UpperNavBar
@@ -48,13 +62,16 @@ const ChatRoom = () => {
         purchasePrice={numberFormat(600000)}
         productData={productData}
       />
-      <S.ChatContainer>
+      <S.ChatContainer ref={bottom} status={status}>
         <ChatText isNotice />
+        {/* FIXME - 테스트 화면 녹화 후 삭제 예정 */}
         <ChatText senderId={2} />
-        <ChatText senderId={1} />
+        {messages.reverse().map(({ senderId, content }: Message, index) => (
+          <ChatText key={index} senderId={senderId} content={content} />
+        ))}
       </S.ChatContainer>
 
-      <ChatInput />
+      <ChatInput chatRoomCode={1} senderId={1} setMessages={setMessages} />
 
       <Modal
         title="이 채팅방을 나가시겠어요?"

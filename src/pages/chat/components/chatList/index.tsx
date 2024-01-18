@@ -20,7 +20,7 @@ const ChatList = ({ roomId }: ChatListProps) => {
             <S.NickName>강쥐사랑해진짜로</S.NickName>
             <S.RoomName>파라스파라 서울 더 그레이트 현대 런던 </S.RoomName>
           </S.NameContainer>
-          <S.ChatText>만원만 깎아줘</S.ChatText>
+          <S.ChatText>만원만 깎아줘만원만 깎아줘만원만 깎아줘만원만 깎아줘만원만 깎아줘</S.ChatText>
         </S.LeftContainer>
         <S.RightContainer>
           <S.TimeText>오후5:50</S.TimeText>
