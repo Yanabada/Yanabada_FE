@@ -4,6 +4,8 @@ import { css } from "@emotion/react";
 interface BaseButtonProps {
   width?: string;
   buttonType?: string;
+  color?: string;
+  backgroundColor?: string;
 }
 
 const ButtonLayout = css`
@@ -47,9 +49,8 @@ export const DefaultButton = styled.button<BaseButtonProps>`
   ${({ theme }) => theme.text.button1};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
-  background: ${({ theme }) => theme.colors.blue[200]};
-
-  color: #fff;
+  color: ${({ color }) => color || "#fff"};
+  background: ${({ backgroundColor }) => backgroundColor || "#38A3EB"};
   text-align: center;
 `;
 

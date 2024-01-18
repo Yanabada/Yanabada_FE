@@ -28,6 +28,7 @@ const globalStyles = css`
   ul,
   li,
   form,
+  textarea,
   label,
   table {
     font-family: "Pretendard-Regular";

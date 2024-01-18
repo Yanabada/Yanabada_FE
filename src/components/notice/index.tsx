@@ -7,7 +7,7 @@ import InfoIcon from "@assets/icons/infoIcon.svg?react";
 interface YanoljaProps {
   type: "yanolja";
   content: string;
-  shape?: "lineFill";
+  shape?: "lineFill" | "lineDark";
 }
 
 interface InfoProps {

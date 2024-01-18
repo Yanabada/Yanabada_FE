@@ -11,7 +11,9 @@ interface TransactionStatementProps {
 export const InfoWrapper = styled.div<TransactionStatementProps>`
   width: ${({ width }) => width || "332px"};
   height: ${({ divType }) =>
-    (divType === "payInfo" && "244.993px") || (divType === "transactionInfo" && "300px")};
+    (divType === "payInfo" && "244.993px") ||
+    (divType === "payInfo-tall" && "270px") ||
+    (divType === "transactionInfo" && "300px")};
   padding: 14px 14px;
   display: flex;
   flex-direction: column;
@@ -24,9 +26,9 @@ export const TopWrapper = styled.div<TransactionStatementProps>`
   display: flex;
   width: ${({ width }) => width || "332px"};
   padding: 8px 0px;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
   align-items: flex-start;
+  justify-content: space-between;
   gap: 7px;
 `;
 
@@ -44,8 +46,8 @@ export const SeperationForm = styled.div<TransactionStatementProps>`
   gap: 10px;
   align-self: stretch;
 
-  border-bottom: ${({ isBorder }) => isBorder && "1px dashed #CCCCCC"};
-  padding-bottom: ${({ isBorder }) => isBorder && "12px"};
+  border-top: ${({ isBorder }) => isBorder && "1px dashed #CCCCCC"};
+  padding-top: ${({ isBorder }) => isBorder && "12px"};
 `;
 
 export const FormTextWrapper = styled.div`
@@ -53,7 +55,10 @@ export const FormTextWrapper = styled.div`
 `;
 
 export const FormLeftText = styled.p<TransactionStatementProps>`
-  color: ${({ color }) => (color === "gray" && "#9C9C9C") || (color === "blue" && "#38A3EB")};
+  color: ${({ color }) =>
+    (color === "gray" && "#9C9C9C") ||
+    (color === "blue" && "#38A3EB") ||
+    (color === "red" && "#DE2E5F")};
 
   /* [body2]본문 */
   ${({ theme }) => theme.text.body2}
@@ -140,4 +145,22 @@ export const RoomName = styled.p`
 
   /* [body2]본문 */
   ${({ theme }) => theme.text.body2}
+`;
+
+export const ShortcutWrapper = styled.div`
+  display: flex;
+  padding: 2px;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+
+  border-radius: 3px;
+  background: ${({ theme }) => theme.colors.gray[100]};
+`;
+
+export const ShortcutText = styled.p`
+  color: ${({ theme }) => theme.colors.gray[700]};
+
+  /* [Overline] 오버라인 */
+  ${({ theme }) => theme.text.overline}
 `;

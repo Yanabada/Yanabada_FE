@@ -6,7 +6,16 @@ import theme from "themes/theme";
 import "./main.css";
 import { Global, ThemeProvider } from "@emotion/react";
 import globalStyles from "styles/globalStyles";
-import { requestPermission } from "./firebase-messaging-sw.js";
+import "./firebase-messaging-sw.js";
+
+async function enableMocking() {
+  if (process.env.NODE_ENV !== "development") {
+    return;
+  }
+
+  const { worker } = await import("./mocks/browser");
+  return worker.start();
+}
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,13 +25,13 @@ const queryClient = new QueryClient({
   }
 });
 
-requestPermission();
-
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider theme={theme}>
-      <Global styles={globalStyles} />
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+enableMocking().then(() => {
+  ReactDOM.createRoot(document.getElementById("root")!).render(
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <Global styles={globalStyles} />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+});

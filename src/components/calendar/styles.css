@@ -67,7 +67,7 @@
 
 .react-datepicker__day--today:before {
   content: "";
-  border: 2px solid black;
+  border: 1.5px solid black;
   width: 90%;
   height: 70%;
   border-radius: 20px;
@@ -171,6 +171,10 @@
   font-size: 12px;
   display: block;
   color: #38a3eb;
+  @media all and (max-width: 500px) {
+    font-size: 10px;
+    margin-left: -2px;
+  }
 }
 
 .exclude-text {
@@ -206,7 +210,7 @@
 
 .react-datepicker__current-month {
   height: 25px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
 }
 
