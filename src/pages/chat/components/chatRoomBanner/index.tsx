@@ -11,11 +11,11 @@ interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   status: "ON_SALE" | "SOLD_OUT" | "BOOKING" | "CANCELED";
   roomName: string;
   salesPercentage: number;
-  sellingPrice: number;
-  price: number;
+  sellingPrice: string;
+  price: string;
   saleEndDate: string;
   sellerId: number;
-  purchasePrice: number;
+  purchasePrice: string;
   // TODO - api 확정 후 연결할 때 type 수정
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   productData: any;

@@ -8,11 +8,11 @@ const Chat = () => {
   return (
     <>
       <UpperNavBar title="채팅" type="back" hasBorder />
-      <S.ChatContainer>
+      <S.ChatListContainer>
         <ChatList roomId={1} />
         <ChatList roomId={2} />
         {/* <NoChatList type="noLogin" /> */}
-      </S.ChatContainer>
+      </S.ChatListContainer>
     </>
   );
 };
