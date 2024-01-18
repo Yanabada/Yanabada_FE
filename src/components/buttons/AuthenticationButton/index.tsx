@@ -1,9 +1,10 @@
 import * as S from "./styles";
-
 interface AuthenticationButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  buttonType: "light" | "default" | "abled" | "disabled";
+  buttonType: "light" | "default" | "abled" | "disabled" | undefined;
   width?: string;
+  className?: string | undefined;
+  onClick?: () => void | undefined;
 }
 
 const AuthenticationButton = ({ buttonType, children, ...props }: AuthenticationButtonProps) => {

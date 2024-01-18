@@ -3,20 +3,38 @@ import { FaRegBell } from "react-icons/fa";
 import LogoIcon from "assets/icons/nav_Logo.svg?react";
 import YanoljaIcon from "assets/icons/yanolja_Icon.svg?react";
 import NumberBadge from "@components/numberBadge";
+import { useTransform, useScroll } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const Header = () => {
+  const [isHeaderActive, setIsHeaderActive] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const position = window.scrollY >= 180;
+      setIsHeaderActive(position);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const { scrollY } = useScroll();
+  const backgroundColor = useTransform(scrollY, [180, 230], ["rgba(0,0,0,0)", "#fff"]);
+
   return (
-    <S.Container>
-      <S.HeaderContainer>
+    <S.Container className={isHeaderActive ? "isHeaderActive" : ""}>
+      <S.HeaderContainer style={{ backgroundColor }}>
         <S.BellContainer>
           <NumberBadge number={99} />
           <FaRegBell className="bell" />
         </S.BellContainer>
-        <S.LogoContainer>
+        <S.LogoContainer className="logoContainer">
           <LogoIcon />
         </S.LogoContainer>
-        <S.GotoContainer>
-          <S.GotoText>야놀자 바로가기</S.GotoText>
+        <S.GotoContainer href="https://www.yanolja.com/" target="_blank">
+          <S.GotoText className="gotoText">야놀자 바로가기</S.GotoText>
           <YanoljaIcon />
         </S.GotoContainer>
       </S.HeaderContainer>

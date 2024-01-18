@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 
 interface DateChangeButtonProps {
   width?: string;
+  disabled?: boolean | undefined;
 }
 
-export const DateChangeButton = styled.button<DateChangeButtonProps>`
+export const DateChangeButton = styled.div<DateChangeButtonProps>`
   display: flex;
   width: ${({ width }) => width || "332px"};
   padding: 12px 8px;
@@ -13,7 +14,7 @@ export const DateChangeButton = styled.button<DateChangeButtonProps>`
 
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
-  background: 1px solid ${({ theme }) => theme.colors.gray[100]};
+  background-color: ${({ theme }) => theme.colors.gray[200]};
 `;
 
 export const LeftSection = styled.div`
@@ -23,18 +24,23 @@ export const LeftSection = styled.div`
   flex: 1 0;
 `;
 
-export const Label = styled.p`
+export const Label = styled.p<DateChangeButtonProps>`
   ${({ theme }) => theme.text.button2};
-  color: ${({ theme }) => theme.colors.gray[900]};
+
+  color: ${({ theme, disabled }) => (disabled ? theme.colors.blue[400] : theme.colors.gray[900])};
+
   text-align: center;
 `;
 
-export const DescriptionLabel = styled.p`
-  ${({ theme }) => theme.text.body2};
-  color: ${({ theme }) => theme.colors.gray[600]};
+export const DescriptionLabel = styled.p<DateChangeButtonProps>`
+  ${({ theme }) => theme.text.button2};
+
+  color: ${({ theme, disabled }) => (disabled ? theme.colors.blue[400] : theme.colors.gray[900])};
 `;
 
 export const RightButton = styled.button`
+  color: #0751c3;
+
   display: flex;
   justify-content: center;
   align-items: center;

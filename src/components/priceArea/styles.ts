@@ -7,7 +7,7 @@ export const PriceTitle = styled.p`
   margin-bottom: 16px;
 
   span {
-    color: ${({ theme }) => theme.colors.gray[900]};
+    color: ${({ theme }) => theme.colors.pink[200]};
   }
 `;
 
@@ -68,6 +68,10 @@ export const PriceInfoBox = styled.div`
         .date {
           ${({ theme }) => theme.text.body3};
           color: ${({ theme }) => theme.colors.gray[700]};
+        }
+        .time {
+          ${({ theme }) => theme.text.body2};
+          color: ${({ theme }) => theme.colors.gray[600]};
         }
       }
     }
@@ -144,6 +148,10 @@ export const PriceInput = styled.input`
 
   background-color: transparent;
   padding-bottom: 6px;
+
+  &::placeholder {
+    color: ${(props) => props.theme.colors.gray[500]};
+  }
 `;
 
 export const ErrorMessage = styled.p`
@@ -188,9 +196,4 @@ export const CalcButton = styled.button`
   display: inline-flex;
   align-items: center;
   gap: 4px;
-`;
-
-export const PolicyInner = styled.div`
-  text-align: left;
-  padding: 16px;
 `;
