@@ -8,14 +8,14 @@ export const Switch = styled.div<SwitchButtonProps>`
   display: flex;
   width: 48.75px;
   height: 26px;
-  justify-content: ${({ isOn }) => (isOn ? "flex-start" : "flex-end")};
+  justify-content: ${({ isOn }) => (isOn ? "flex-end" : "flex-start")};
   align-items: center;
   flex-shrink: 0;
   cursor: pointer;
 
   border-radius: 30px;
   border: 0.4px solid #309ce4;
-  background-color: ${({ theme }) => theme.colors.blue[400]};
+  background-color: ${({ isOn }) => (isOn ? "#0751C3" : "#9C9C9C")};
 
   .handle {
     width: 24px;
