@@ -4,14 +4,15 @@ interface ListCardProps {
   width?: string;
   imageURL?: string;
   cardType?:
-    | "approval_saleEnd"
-    | "approval_sale"
-    | "approval_wait"
-    | "saleEnd"
-    | "sale"
-    | "saleCanceled"
-    | "purchased"
-    | "purchasedCanceled";
+    | "approval_sale" // 판매대기
+    | "approval_request" // 승인요청
+    | "approval_wait" // 승인대기
+    | "approved" // 승인완료
+    | "saleEnd" // 판매완료
+    | "sale" // 판매중
+    | "saleCanceled" // 판매취소
+    | "purchased" // 구매완료
+    | "purchasedCanceled"; // 승인취소(판매자 거절, 구매자 거절), 구매취소
 }
 
 export const ListCardContainer = styled.div<ListCardProps>`
@@ -122,7 +123,10 @@ export const Timer = styled.div`
 
 export const TimerText = styled.p<ListCardProps>`
   color: ${({ cardType }) =>
-    ((cardType === "approval_sale" || cardType === "approval_wait") && "#FF7456") ||
+    ((cardType === "approval_sale" ||
+      cardType === "approval_request" ||
+      cardType === "approval_wait") &&
+      "#FF7456") ||
     (cardType === "sale" && "#38A3EB")};
   font-size: 12px;
   font-style: normal;

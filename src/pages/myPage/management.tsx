@@ -34,7 +34,7 @@ const Management = ({ width }: ManagementProps) => {
       </S.PointsMiddleContainer>
       <S.ListCardWrapper width={width}>
         <ListCard
-          cardType="approval_wait"
+          cardType="approval_request"
           width={width}
           imageURL="https://s3-alpha-sig.figma.com/img/36c2/822d/857605b4a76677c08f70ec465ea3025b?Expires=1706486400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=FV3YV8J1iK7a56Z5Q2ba~-NQViojN0kJgdWE8MeQKpBYmLk4wDjFDeFj7mfIQH7HttUF80b-fyEnZJlnyev0lLmhIjoQp7NF-dKd5Lz7VKout34e~0MWDj3YNBZtmg9m77v4gOvTcm-Hif2nd9FmX2SE436-Uv0wGV~LVFVhbP8K0QUhtbnADYBg0PJ71-P7Ub4lsbP59Q-kLIJk1-LRF2WTRyWexr9D2OmDsIsxN33Kq1hxol5VL9EbdDpHyt4T6djtVzuKs7HRdwhFcykM9REL6WTxY8PHpkASu5k9G--Il2AgAbvGjLG9XvK5Az8IWNN~hacp75q1TnNoyylsYQ__"
           accommodationName="떨이로 파는호텔"
@@ -70,7 +70,7 @@ const Management = ({ width }: ManagementProps) => {
           badgeText="승인취소"
         />
         <ListCard
-          cardType="purchased"
+          cardType="approved"
           width={width}
           imageURL="https://s3-alpha-sig.figma.com/img/7d35/e595/ba1e4b6774a105487957b1570338b5b3?Expires=1706486400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=q9dHkPzBSvfhNoqfW12DuVqJTg5V0tDqHZdoWhnmDdw4msW8QEXSEEkR70oj8Il1IBhx1BBNcy29luTy634OXzFQwo~7Mnlc6m~TsR0l4frsZmoSl-n-5PIUQgShImvf554t9BeipOjEPBmCkB33Zag2sgwGIAUWaY-eh9jHSEKRNRXyCBy7sbtS3LAmNEzq8QZkXIxq8zlM6-j6NJ7a0D5loOSkJb5BaeQxWIARLuWh0zrrQaw0bEM~lgDiXFNtsV36SYC7oiUXETh8jW~LBoclwE4uETmf1V584pyXtTfWcvaZoF~~hNKWXOtFpBRMSwKTBxVKZoyNUcLMBoclJw__"
           accommodationName="돈벌레짱많은호텔"
