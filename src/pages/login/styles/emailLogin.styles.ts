@@ -7,8 +7,8 @@ export const EmailLoginContainer = styled.div`
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 25px;
   margin: 0 0 36px;
+  gap: 40px;
 `;
 
 export const BtnFlexContainer = styled.div`
