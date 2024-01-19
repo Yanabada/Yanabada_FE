@@ -8,7 +8,6 @@ interface UpperNavProp
   hasBorder?: boolean;
   type: "back" | "close";
   rightElement?: ReactNode;
-  setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
   shape?: "fill" | "";
   color?: string;
   customBack?: () => void;
@@ -19,7 +18,6 @@ const UpperNavBar = ({
   title,
   type = "back",
   rightElement = null,
-  setIsVisible,
   shape = "fill",
   customBack,
   ...props
@@ -39,18 +37,8 @@ const UpperNavBar = ({
   }
 
   const handleClick = () => {
-    switch (type) {
-      case "back":
-        navigate(-1);
-        customBack && customBack();
-        break;
-      case "close":
-        navigate(-1);
-        customBack && customBack();
-        break;
-      default:
-        break;
-    }
+    navigate(-1);
+    customBack && customBack();
   };
 
   return (
