@@ -19,6 +19,7 @@ export const AbledDefaultChipWrapper = styled.button`
 
 export const AbledChipText = styled.p`
   color: ${({ theme }) => theme.colors.blue[400]};
+  white-space: nowrap;
 
   /* [Button2] 칩 버튼 */
   ${({ theme }) => theme.text.button2}
@@ -35,6 +36,7 @@ export const DisabledChipText = styled.p`
 
   /* [Button2] 칩 버튼 */
   ${({ theme }) => theme.text.button2}
+  white-space: nowrap;
 `;
 
 export const AbledIconChipWrapper = styled(AbledDefaultChipWrapper)`

@@ -19,3 +19,10 @@ export interface ProductType {
   longitude: number;
   status: "ON_SALE" | "SOLD_OUT" | "BOOKING" | "CANCELED";
 }
+
+export interface GetProductResponseData {
+  status: string;
+  data: ProductType[];
+  totalElement: number;
+  totalPages: number;
+}

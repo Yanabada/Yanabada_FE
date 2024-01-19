@@ -4,7 +4,7 @@ import qs from "qs";
 type OrderState = "RECENT" | "END_DATE_ASC" | "SALES_PERCENTAGE_DESC" | "PRICE_ASC" | "RATING_DESC";
 type Category = "HOTEL_RESORT" | "MOTEL" | "PENSION" | "GUESTHOUSE" | "POOL_VILLA";
 type Option = "SAUNA" | "ROOF_TOP" | "POOL" | "GYM" | "LOUNGE_BAR" | "PARKING" | "PARTY_ROOM";
-interface GetProductsRequestParams {
+export interface GetProductsRequestParams {
   keyword: string;
   checkInDate: Date;
   checkOutDate: Date;
