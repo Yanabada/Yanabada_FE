@@ -30,7 +30,7 @@ async function requestPermission() {
   });
 
   if (token) {
-    alert(token);
+    // alert(token);
     console.log("Token: ", token);
   } else console.log("Can not get Token");
 
