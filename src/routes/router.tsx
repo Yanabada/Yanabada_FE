@@ -32,6 +32,7 @@ import Account from "@pages/charge/account";
 import ChargeConfirm from "@pages/charge/confirm";
 import ChargeSuccess from "@pages/charge/success";
 import EditInfo from "@pages/purchase/editInfo";
+import Notice from "@pages/notice";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             <BottomNavBar />
           </>
         )
+      },
+      {
+        path: "/notice",
+        element: <Notice />
       },
       {
         path: "/products",
@@ -269,7 +274,7 @@ const router = createBrowserRouter([
         element: <EditInfo />
       }
     ]
-  },
+  }
 ]);
 
 export default router;
