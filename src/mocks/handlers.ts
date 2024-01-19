@@ -1,12 +1,20 @@
 import { http, HttpResponse } from "msw";
-import { data } from "./api/data/products";
+import { data as products } from "./api/data/products";
 
 export const handlers = [
-  http.get("/api/products", () => {
+  http.get("/api/products", ({ request }) => {
+    const url = new URL(request.url);
+    const option = url.searchParams.get("option");
+
+    // TODO: option 별로 product list를 따로 만들어야 하는건가?
+    if (option) {
+      console.log(option);
+    }
+
     return HttpResponse.json([
       {
         status: "SUCCESS",
-        data: data
+        data: products
       }
     ]);
   }),

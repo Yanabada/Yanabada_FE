@@ -6,17 +6,17 @@ interface ManipulationChipProps extends React.ButtonHTMLAttributes<HTMLButtonEle
   buttonType: "abledDefault" | "abledIcon" | "disabledDefault" | "disabledIcon";
 }
 
-const ManipulationChip = ({ buttonType, children }: ManipulationChipProps) => {
+const ManipulationChip = ({ buttonType, children, ...props }: ManipulationChipProps) => {
   switch (buttonType) {
     case "abledDefault":
       return (
-        <S.AbledDefaultChipWrapper>
+        <S.AbledDefaultChipWrapper {...props}>
           <S.AbledChipText>{children}</S.AbledChipText>
         </S.AbledDefaultChipWrapper>
       );
     case "disabledDefault":
       return (
-        <S.DisabledDefaultChipWrapper>
+        <S.DisabledDefaultChipWrapper {...props}>
           <S.DisabledChipText>{children}</S.DisabledChipText>
         </S.DisabledDefaultChipWrapper>
       );

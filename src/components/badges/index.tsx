@@ -2,7 +2,7 @@ import * as S from "./styles";
 
 interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  badgeType: "sale" | "approval" | "completed" | "reserved" | "canceled";
+  badgeType?: "sale" | "approval" | "completed" | "reserved" | "canceled";
 }
 
 const Badges = ({ badgeType, children }: BadgeProps) => {

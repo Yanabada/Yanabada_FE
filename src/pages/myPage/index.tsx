@@ -4,6 +4,9 @@ import ArrowForwardIcon from "@assets/icons/arrowForwardIcon.svg?react";
 import CardSectionButton from "@components/buttons/CardSectionButton";
 import ListButton from "@components/buttons/ListButton";
 import { useState } from "react";
+// import { registerServiceWorker } from "@utils/notification";
+// import { AppCheckTokenResult } from "@firebase/app-check-types";
+// import { getDeviceToken } from "../../firebase";
 
 interface MyPageProps {
   width?: string;
