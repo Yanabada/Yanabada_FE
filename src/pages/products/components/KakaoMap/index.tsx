@@ -5,7 +5,7 @@ import MyPositionIcon from "@assets/icons/myPosition.svg?react";
 import * as S from "./styles";
 import { ProductsMarkers } from "./ProductsMarkers";
 import ProductCardForMap from "../ProductCard/ProductCardForMap";
-import { ProductType } from "@pages/products/types/productsType";
+import useProducts from "@pages/products/api/queries";
 
 interface PositionState {
   center: {
@@ -14,10 +14,6 @@ interface PositionState {
   };
   errorMessage: string;
   isLoading: boolean;
-}
-
-interface MapProps {
-  products: ProductType[];
 }
 
 const clustererStyles = {
@@ -37,7 +33,8 @@ const clustererStyles = {
   color: "#fff"
 };
 
-const KakaoMap = ({ products }: MapProps) => {
+const KakaoMap = () => {
+  const { data: products } = useProducts();
   const [selectedProductId, setSelectedProductId] = useState<number>(products[0].id); // default is first product fetched (maybe 1)
   const [position, setPosition] = useState<PositionState>({
     center: {
