@@ -27,7 +27,7 @@ const Header = () => {
   return (
     <S.Container className={isHeaderActive ? "isHeaderActive" : ""}>
       <S.HeaderContainer style={{ backgroundColor }}>
-        <Link to={"/notice"}>
+        <Link to="/notice">
           <S.BellContainer>
             <NumberBadge number={99} />
             <FaRegBell className="bell" />
