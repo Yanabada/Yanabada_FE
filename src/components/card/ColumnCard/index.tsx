@@ -2,6 +2,7 @@ import * as S from "./styles";
 import MapIcon from "assets/map.svg?react";
 import { RiTimerLine } from "react-icons/ri";
 import { OptionCardType } from "@pages/home/components/SpecialServices";
+import { formatDateTo } from "@utils/formatDateTo";
 
 interface ColumnCardProps {
   product: OptionCardType;
@@ -30,7 +31,7 @@ const ColumnCard = ({ product }: ColumnCardProps) => {
             <S.ProductName>{product.accommodationName}</S.ProductName>
             <S.RoomName>{product.roomName}</S.RoomName>
             <S.Period>
-              {product.checkIn.toLocaleDateString()} ~ {product.checkOut.toLocaleDateString()}
+              {formatDateTo(product.checkIn, "MM/dd")} ~ {formatDateTo(product.checkOut, "MM/dd")}
             </S.Period>
           </S.ProductContainer>
         </S.InformationContainer>
