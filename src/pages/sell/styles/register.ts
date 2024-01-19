@@ -10,6 +10,10 @@ export const RegisterInner = styled.div`
   background-color: #fff;
 
   padding: 32px 14px;
+
+  &.gray-bg {
+    background-color: ${(props) => props.theme.colors.gray[100]};
+  }
 `;
 
 export const RegisterTitle = styled.p`
@@ -33,6 +37,10 @@ export const RegisterDes = styled.p`
   color: ${(props) => props.theme.colors.gray[700]};
 
   margin-bottom: 12px;
+
+  .text-blue {
+    color: ${(props) => props.theme.colors.blue[200]};
+  }
 `;
 
 export const RegisterComment = styled.textarea`

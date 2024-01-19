@@ -9,8 +9,6 @@ interface ListButtonProps {
 }
 
 const ListButton = ({ width, alertCount, children }: ListButtonProps) => {
-  console.log(alertCount);
-
   return (
     <S.ListButtonWrapper width={width}>
       <S.LeftSection>

@@ -7,6 +7,7 @@ import { eachDayOfInterval, endOfMonth, startOfMonth } from "date-fns";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
 import PriceArea from "@components/priceArea";
+import PriceTable from "@components/priceTable";
 import Notice from "@components/notice";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import DateChangeButton from "@components/buttons/DateChangeButton";
@@ -95,11 +96,21 @@ const SellRegister = () => {
           />
           <S.SmallSpace />
           <S.SmallSpace />
-          <PriceArea
+          <PriceTable
             originalPrice={originalPrice}
             purchasePrice={purchasePrice}
             cancelFee={cancelFee}
             productData={productData}
+          />
+          <PriceArea
+            title="판매가격"
+            placeholder="￦ 판매 가격을 입력해주세요"
+            originalPrice={originalPrice}
+            purchasePrice={purchasePrice}
+            cancelFee={cancelFee}
+            resetPrice={purchasePrice}
+            isAlert
+            charge={false}
           />
         </S.RegisterInner>
         <CS.DetailBlank />

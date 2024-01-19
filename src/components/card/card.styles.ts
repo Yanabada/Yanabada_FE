@@ -51,7 +51,6 @@ export const LocationContainer = styled.div`
 `;
 
 export const Location = styled.p`
-  margin-top: 0.125rem;
   color: #fff;
   font-size: 0.6875rem;
   font-weight: 500;
@@ -61,6 +60,8 @@ export const Location = styled.p`
 export const InformationContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
 `;
 
 export const TimerContainer = styled.div`
@@ -70,6 +71,7 @@ export const TimerContainer = styled.div`
 
   .TimeIcon {
     color: ${({ theme }) => theme.colors.blue[200]};
+    margin-top: 0.2rem;
   }
 `;
 
@@ -85,31 +87,34 @@ export const TimerText = styled.p`
 export const ProductContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 0.2rem;
+  height: 100%;
   margin-bottom: 0.6rem;
 `;
 
 export const ProductName = styled.p`
+  width: 100%;
   color: ${({ theme }) => theme.colors.gray[900]};
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25rem;
+  ${({ theme }) => theme.text.body1}
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 export const RoomName = styled.p`
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: ${({ theme }) => theme.colors.gray[600]};
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1.125rem;
-  letter-spacing: -0.015rem;
+  ${({ theme }) => theme.text.caption1}
 `;
 
 export const Period = styled.p`
   color: ${({ theme }) => theme.colors.gray[700]};
-  font-size: 0.8125rem;
-  font-weight: 400;
-  line-height: 1.3125rem;
-  letter-spacing: 0.0081rem;
+  ${({ theme }) => theme.text.body3}
 `;
 
 export const PriceContainer = styled.div`
