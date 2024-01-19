@@ -6,9 +6,21 @@ interface MapButtonProps {
   handleClick: () => void;
 }
 
+const variants = {
+  initial: {
+    opacity: 0,
+    x: "-50%",
+    y: "20px"
+  },
+  animate: {
+    opacity: 1,
+    y: 0
+  }
+};
+
 const GoToMapButton = ({ handleClick }: MapButtonProps) => {
   return createPortal(
-    <S.Button onClick={handleClick}>
+    <S.Button variants={variants} initial="initial" animate="animate" onClick={handleClick}>
       <MapIcon />
       지도로 보기
     </S.Button>,
