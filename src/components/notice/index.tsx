@@ -15,7 +15,8 @@ interface InfoProps {
   type: "info";
   content: string;
   color?: "blue" | "green";
-  shape?: "lineFill";
+  shape?: "lineFill" | "fill";
+  bgColor?: string;
 }
 
 interface QuestionProps {
@@ -52,7 +53,10 @@ const Notice = (props: NoticeProps) => {
         icon = <InfoBlueIcon />;
       }
       return (
-        <S.NoticeWrapper className={props.shape ? `${props.shape} yanolja` : "yanolja"}>
+        <S.NoticeWrapper
+          className={props.shape ? `${props.shape} yanolja` : "yanolja"}
+          bgColor={props.bgColor}
+        >
           {icon}
           <S.TextWrapper color={props.color}>{props.content}</S.TextWrapper>
         </S.NoticeWrapper>

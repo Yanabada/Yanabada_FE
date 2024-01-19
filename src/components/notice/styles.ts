@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 
 interface TextWrapperProps {
   color?: string;
+  bgColor?: string;
 }
 
-export const NoticeWrapper = styled.div`
+export const NoticeWrapper = styled.div<TextWrapperProps>`
   padding: 8px 10px;
   border-radius: 5px;
 
@@ -20,7 +21,7 @@ export const NoticeWrapper = styled.div`
   color: ${({ theme }) => theme.colors.gray[700]};
 
   &.fill {
-    background-color: ${({ theme }) => theme.colors.gray[100]};
+    background-color: ${({ bgColor, theme }) => (bgColor ? bgColor : theme.colors.gray[200])};
   }
   &.lineFill {
     background-color: ${({ theme }) => theme.colors.gray[200]};

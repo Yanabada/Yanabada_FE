@@ -22,6 +22,7 @@ export const InfoWrapper = styled.div<TransactionStatementProps>`
   background: #fff;
 `;
 
+// FIXME: 모듈화
 export const TopWrapper = styled.div<TransactionStatementProps>`
   display: flex;
   width: ${({ width }) => width || "332px"};
@@ -73,7 +74,9 @@ export const FormLeftTextBold = styled.p`
 
 export const FormRightPrice = styled.p<TransactionStatementProps>`
   color: ${({ color }) =>
+    (color === "lightGray" && "#CCC") ||
     (color === "gray" && "#9C9C9C") ||
+    (color === "darkGray" && "#616161") ||
     (color === "blue" && "#38A3EB") ||
     (color === "black" && "#1A1A1A")};
   text-align: right;

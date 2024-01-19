@@ -8,6 +8,7 @@ import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDi
 import SalesHistory from "@pages/myPage/salesHistory";
 import PurchaseHistory from "@pages/myPage/purchaseHistory";
 import TransactionStatement from "@pages/myPage/transactionStatement";
+import Purchase from "@pages/purchase";
 import Sell from "@pages/sell";
 import Products from "@pages/products";
 import ProductDetail from "@pages/productDetail";
@@ -21,6 +22,7 @@ import SignInSecond from "@pages/signIn/components/signInSecond/SignInSecond";
 import SignInThird from "@pages/signIn/components/signInThird/SignInThird";
 import SellRegister from "@pages/sell/register";
 import SellDetail from "@pages/sell/detail";
+import ChatRoom from "@pages/chat/ChatRoom";
 import SellResult from "@pages/sell/result";
 import SellConfirm from "@pages/sell/confirm";
 import Charge from "@pages/charge";
@@ -90,47 +92,6 @@ const router = createBrowserRouter([
           {
             path: "confirm",
             element: <SellConfirm />
-          }
-        ]
-      },
-      {
-        path: "/chat",
-        element: (
-          <>
-            <Chat />
-            <BottomNavBar />
-          </>
-        )
-      },
-      {
-        path: "/login",
-        element: <Outlet />,
-        children: [
-          {
-            index: true,
-            element: <Login />
-          },
-          {
-            path: "email",
-            element: <EmailLogin />
-          }
-        ]
-      },
-      {
-        path: "/signin",
-        element: <SignIn />,
-        children: [
-          {
-            index: true,
-            element: <SignInFirst />
-          },
-          {
-            path: "1",
-            element: <SignInSecond />
-          },
-          {
-            path: "2",
-            element: <SignInThird />
           }
         ]
       },
@@ -235,23 +196,80 @@ const router = createBrowserRouter([
     element: <ProductDetail />
   },
   {
-    path: "/purchase",
-    element: (
-      <>
-        <Outlet />
-      </>
-    ),
+    path: "/chat",
+    element: <Outlet />,
     children: [
       {
         index: true,
-        element: <></>
+        element: (
+          <>
+            <Chat />
+            <BottomNavBar />
+          </>
+        )
+      },
+      {
+        path: "/chat:roomId",
+        element: <ChatRoom />
+      }
+    ]
+  },
+  {
+    path: "/login",
+    element: <Outlet />,
+    children: [
+      {
+        index: true,
+        element: <Login />
+      },
+      {
+        path: "email",
+        element: <EmailLogin />
+      }
+    ]
+  },
+  {
+    path: "/signin",
+    element: <SignIn />,
+    children: [
+      {
+        index: true,
+        element: <SignInFirst />
+      },
+      {
+        path: "1",
+        element: <SignInSecond />
+      },
+      {
+        path: "2",
+        element: <SignInThird />
+      }
+    ]
+  },
+  {
+    path: "/purchase",
+    element: <Outlet />,
+    children: [
+      {
+        index: true,
+        element: (
+          <Purchase
+            width="100%"
+            timerText="3일 15시간 23분"
+            divType="payInfo"
+            yanoljaPurchasePrice="800,000"
+            charge="40,000"
+            yanoljaPoint="0"
+            totalPurchasePrice="840,000"
+          />
+        )
       },
       {
         path: "editinfo",
         element: <EditInfo />
       }
     ]
-  }
+  },
 ]);
 
 export default router;

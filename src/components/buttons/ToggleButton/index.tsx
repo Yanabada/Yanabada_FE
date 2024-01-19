@@ -1,22 +1,33 @@
 import * as S from "./styles";
 import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
+import TossIcon from "@assets/icons/tossIcon.svg?react";
 
 interface ToggleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  buttonType: "icon" | "default";
+  buttonType: "yanolja" | "toss" | "default";
   width?: string;
+  subText?: string;
 }
 
-const ToggleButton = ({ buttonType, children, ...props }: ToggleButtonProps) => {
+const ToggleButton = ({ buttonType, subText, children, ...props }: ToggleButtonProps) => {
   switch (buttonType) {
-    case "icon":
+    case "yanolja":
       return (
         <S.ToggleButton {...props}>
           <YanoljaIcon />
           <S.TextWrapper>
             <S.ToggleButtonText>{children}</S.ToggleButtonText>
-            {/* FIXME: 나중에 할인 가격 받아와서 렌더링 예정 */}
-            <S.ToggleButtonSubText>*40,000원 할인</S.ToggleButtonSubText>
+            {subText && <S.ToggleButtonSubText>{subText}</S.ToggleButtonSubText>}
+          </S.TextWrapper>
+        </S.ToggleButton>
+      );
+    case "toss":
+      return (
+        <S.ToggleButton {...props}>
+          <TossIcon />
+          <S.TextWrapper>
+            <S.ToggleButtonText>{children}</S.ToggleButtonText>
+            {subText && <S.ToggleButtonSubText>{subText}</S.ToggleButtonSubText>}
           </S.TextWrapper>
         </S.ToggleButton>
       );

@@ -1,0 +1,29 @@
+import { Link } from "react-router-dom";
+import * as S from "./styles";
+
+const categoryList = [
+  { id: "ALL", name: "전체", search: "" },
+  { id: "HOTEL_RESORT", name: "호텔/리조트", search: "?category=HOTEL_RESORT" },
+  { id: "MOTEL", name: "모텔", search: "?category=MOTEL" },
+  { id: "PENSION", name: "펜션", search: "?category=PENSION" },
+  { id: "GUESTHOUSE", name: "게스트하우스", search: "?category=GUESTHOUSE" },
+  { id: "POOL_VILLA", name: "풀빌라", search: "?category=POOL_VILLA" }
+];
+
+const CategoryList = () => {
+  return (
+    <S.Container>
+      <S.Title>카테고리</S.Title>
+      <S.CategoryWrapper>
+        {categoryList.map((category) => (
+          <Link key={category.id} to={`products${category.search}`}>
+            <S.CategoryIconBox>{category.name}</S.CategoryIconBox>
+            <span>{category.name}</span>
+          </Link>
+        ))}
+      </S.CategoryWrapper>
+    </S.Container>
+  );
+};
+
+export default CategoryList;

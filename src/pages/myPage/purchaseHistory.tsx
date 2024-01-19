@@ -3,11 +3,11 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import ListCard from "@components/card/ListCard";
 
 // FIXME: 모듈화
-interface PointsMiddleTabProps {
+interface PurchaseHistoryProps {
   width?: string;
 }
 
-const PurchaseHistory = ({ width }: PointsMiddleTabProps) => {
+const PurchaseHistory = ({ width }: PurchaseHistoryProps) => {
   return (
     <>
       <UpperNavBar title="구매내역" type="back" />
