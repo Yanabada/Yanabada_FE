@@ -270,8 +270,8 @@ const Purchase = ({
                   setIsCardOptionVisible(false);
                 }}
                 style={{
-                  position: "absolute",
-                  top: "100%",
+                  position: "relative",
+                  top: "-3px",
                   left: 0,
                   zIndex: 1,
                   display: "flex",
@@ -300,8 +300,8 @@ const Purchase = ({
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 style={{
-                  position: "absolute",
-                  top: "100%",
+                  position: "relative",
+                  top: "-3px",
                   left: 0,
                   zIndex: 1,
                   display: "flex",
