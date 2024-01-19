@@ -58,12 +58,12 @@ export const ImageOverlay = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 반투명한 검은 배경 */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
-  ${({ theme }) => theme.text.subtitle5}/* z-index: 1; */
+  ${({ theme }) => theme.text.subtitle5}
 `;
 
 export const Image = styled.img`
