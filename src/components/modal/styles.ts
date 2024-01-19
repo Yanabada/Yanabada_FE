@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 
 export const ModalBg = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 900;
   left: 0;
   top: 0;
@@ -12,7 +12,7 @@ export const ModalBg = styled.div`
 `;
 
 export const ModalWrapper = styled(motion.div)`
-  position: absolute;
+  position: fixed;
   z-index: 1001;
   left: 50%;
   top: 50%;

@@ -1,12 +1,25 @@
 import styled from "@emotion/styled";
+import { Flex } from "@styles/base";
 
 export const Container = styled.div`
   display: grid;
   gap: 24px;
 
   padding: 1.5rem 1rem;
+  margin-bottom: 3rem;
 
   background-color: ${({ theme }) => theme.colors.gray[100]};
+`;
+
+export const AboveWrapper = styled(Flex)`
+  justify-content: space-between;
+  align-items: center;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 `;
 
 export const Text = styled.p`
