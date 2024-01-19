@@ -17,7 +17,12 @@ const Products = () => {
 
   return (
     <>
-      <UpperNavBar title="상품 리스트" type="back" hasBorder={false} />
+      <UpperNavBar
+        title={isMapOpen ? "지도검색" : "상품리스트"}
+        type={isMapOpen ? "close" : "back"}
+        hasBorder={false}
+        {...(isMapOpen && { customBack: () => setMapOpen(false) })}
+      />
       <S.Container>
         <Link to="/search">
           <SearchBar />
