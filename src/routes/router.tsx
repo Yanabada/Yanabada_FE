@@ -31,6 +31,7 @@ import PasswordConfirm from "@pages/charge/password";
 import Account from "@pages/charge/account";
 import ChargeConfirm from "@pages/charge/confirm";
 import ChargeSuccess from "@pages/charge/success";
+import EditInfo from "@pages/purchase/editInfo";
 
 const router = createBrowserRouter([
   {
@@ -264,8 +265,8 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/chat:roomId",
-        element: <ChatRoom />
+        path: "editinfo",
+        element: <EditInfo />
       }
     ]
   },
