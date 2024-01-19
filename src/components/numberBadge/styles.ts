@@ -1,6 +1,10 @@
 import styled from "@emotion/styled";
 
-export const BadgeCircle = styled.div`
+interface BadgeCircleProp {
+  isChatPage?: boolean;
+}
+
+export const BadgeCircle = styled.span<BadgeCircleProp>`
   background-color: ${({ theme }) => theme.colors.orange[200]};
   color: #fff;
   font-size: 12px;
@@ -13,4 +17,12 @@ export const BadgeCircle = styled.div`
   &.big {
     border-radius: 16px;
   }
+  ${({ isChatPage }) =>
+    isChatPage &&
+    `
+    bottom:0;
+    right:0;
+    transform: translate(0);
+    text-align:center;
+  `}
 `;

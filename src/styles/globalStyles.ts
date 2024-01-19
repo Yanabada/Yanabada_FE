@@ -38,6 +38,10 @@ const globalStyles = css`
     vertical-align: baseline;
     box-sizing: border-box;
   }
+  html,
+  body {
+    height: 100%;
+  }
   body {
     line-height: 1;
     background: black;
