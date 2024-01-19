@@ -5,7 +5,6 @@ export const Button = styled(motion.button)`
   position: fixed;
   bottom: 4.5rem;
   left: 50%;
-  transform: translateX(-50%);
 
   display: flex;
   justify-content: center;

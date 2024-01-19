@@ -17,7 +17,7 @@ const Products = () => {
 
   return (
     <>
-      <UpperNavBar title="상품 리스트" type="back" />
+      <UpperNavBar title="상품 리스트" type="back" hasBorder={false} />
       <S.Container>
         <Link to="/search">
           <SearchBar />
