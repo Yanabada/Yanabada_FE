@@ -4,7 +4,7 @@ interface ListButtonProps {
   width?: string;
 }
 
-export const ListButtonWrapper = styled.div<ListButtonProps>`
+export const ListButtonWrapper = styled.button<ListButtonProps>`
   display: flex;
   width: ${({ width }) => width || "100%"};
   height: 50px;
