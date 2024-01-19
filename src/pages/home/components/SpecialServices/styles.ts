@@ -4,8 +4,8 @@ import { NoScrollBar } from "@styles/base";
 export const Container = styled.div`
   position: relative;
 
-  /* TODO: z-index 조정 어떻게? */
-  /* ::before {
+  /* TODO: 이거 왜 안 보임? */
+  ::before {
     content: "";
     position: absolute;
     top: 0;
@@ -13,8 +13,8 @@ export const Container = styled.div`
     width: 100%;
     height: 200px;
     background-color: #f0dcc4;
-    z-index: 1;
-  } */
+    z-index: -1;
+  }
 `;
 
 export const TitleWrapper = styled.div`
@@ -23,8 +23,6 @@ export const TitleWrapper = styled.div`
   align-items: center;
   gap: 0.75rem;
   padding: 1rem;
-
-  z-index: 2;
 
   .title {
     display: flex;
@@ -57,5 +55,4 @@ export const CardWrapper = styled.div`
   overflow-x: scroll;
 
   ${NoScrollBar};
-  z-index: 2;
 `;
