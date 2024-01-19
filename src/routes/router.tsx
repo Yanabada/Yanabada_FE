@@ -21,6 +21,7 @@ import SignInSecond from "@pages/signIn/components/signInSecond/SignInSecond";
 import SignInThird from "@pages/signIn/components/signInThird/SignInThird";
 import SellRegister from "@pages/sell/register";
 import SellDetail from "@pages/sell/detail";
+import ChatRoom from "@pages/chat/ChatRoom";
 import SellResult from "@pages/sell/result";
 import SellConfirm from "@pages/sell/confirm";
 import Charge from "@pages/charge";
@@ -89,47 +90,6 @@ const router = createBrowserRouter([
           {
             path: "confirm",
             element: <SellConfirm />
-          }
-        ]
-      },
-      {
-        path: "/chat",
-        element: (
-          <>
-            <Chat />
-            <BottomNavBar />
-          </>
-        )
-      },
-      {
-        path: "/login",
-        element: <Outlet />,
-        children: [
-          {
-            index: true,
-            element: <Login />
-          },
-          {
-            path: "email",
-            element: <EmailLogin />
-          }
-        ]
-      },
-      {
-        path: "/signin",
-        element: <SignIn />,
-        children: [
-          {
-            index: true,
-            element: <SignInFirst />
-          },
-          {
-            path: "1",
-            element: <SignInSecond />
-          },
-          {
-            path: "2",
-            element: <SignInThird />
           }
         ]
       },
@@ -232,6 +192,57 @@ const router = createBrowserRouter([
   {
     path: "/products/:id",
     element: <ProductDetail />
+  },
+  {
+    path: "/chat",
+    element: <Outlet />,
+    children: [
+      {
+        index: true,
+        element: (
+          <>
+            <Chat />
+            <BottomNavBar />
+          </>
+        )
+      },
+      {
+        path: "/chat:roomId",
+        element: <ChatRoom />
+      }
+    ]
+  },
+  {
+    path: "/login",
+    element: <Outlet />,
+    children: [
+      {
+        index: true,
+        element: <Login />
+      },
+      {
+        path: "email",
+        element: <EmailLogin />
+      }
+    ]
+  },
+  {
+    path: "/signin",
+    element: <SignIn />,
+    children: [
+      {
+        index: true,
+        element: <SignInFirst />
+      },
+      {
+        path: "1",
+        element: <SignInSecond />
+      },
+      {
+        path: "2",
+        element: <SignInThird />
+      }
+    ]
   }
 ]);
 
