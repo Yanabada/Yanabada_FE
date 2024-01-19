@@ -4,11 +4,12 @@ import Notice from "@components/notice";
 import * as S from "./signInFirst.styles";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
 
 const SignInFirst = () => {
+  const navigate = useNavigate();
   const [isSuccess, setIsSuccess] = useState(false);
   const [sentCount, setSentCount] = useState(5);
   const [btnText, setBtnText] = useState("인증번호 전송");
@@ -18,11 +19,17 @@ const SignInFirst = () => {
   const {
     register,
     formState: { errors },
-    getValues
+    getValues,
+    trigger
   } = useForm({
     mode: "onBlur"
   });
   const email = getValues("email");
+
+  // 최초 렌더링 시에도 유효성 검사 적용하기!
+  useEffect(() => {
+    trigger("email");
+  }, [trigger]);
 
   useEffect(() => {
     if (!errors.email && email) {
@@ -30,7 +37,7 @@ const SignInFirst = () => {
       return;
     }
     setIsSuccess(false);
-  }, [email]);
+  }, [email, errors.email]);
 
   // 인증번호 유효성검사
   const isCodeValid = (value: number) => {
@@ -112,11 +119,20 @@ const SignInFirst = () => {
         인증번호는 <S.ImportantText>입력한 이메일 주소</S.ImportantText>로 발송됩니다. 수신하지
         못했다면 스팸함 또는 해당 이메일 서비스의 설정을 확인해주세요.
       </S.InformText>
-      <Link to="/signin/1">
-        <ColoredButtonForm isBottom={true} width="100%" isActive={isNumCorrect}>
-          다음
-        </ColoredButtonForm>
-      </Link>
+
+      <ColoredButtonForm
+        isBottom={true}
+        width="100%"
+        isActive={isNumCorrect}
+        onClick={() => {
+          if (!isSuccess || !isNumCorrect) {
+            return;
+          }
+          navigate("/signin/1");
+        }}
+      >
+        다음
+      </ColoredButtonForm>
     </>
   );
 };
