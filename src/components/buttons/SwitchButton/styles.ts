@@ -24,13 +24,3 @@ export const Switch = styled.div<SwitchButtonProps>`
     border-radius: 40px;
   }
 `;
-
-export const WithdrawalWrapper = styled.div`
-  display: flex;
-  width: 331px;
-  height: 50px;
-  padding: 10px 0px;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-`;
