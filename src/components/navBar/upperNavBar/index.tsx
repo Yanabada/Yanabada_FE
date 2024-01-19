@@ -8,6 +8,7 @@ interface UpperNavProp
   hasBorder?: boolean;
   type: "back" | "close";
   rightElement?: ReactNode;
+  setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
   shape?: "fill" | "";
   color?: string;
   customBack?: () => void;
