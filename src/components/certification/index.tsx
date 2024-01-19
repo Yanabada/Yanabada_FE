@@ -31,7 +31,9 @@ const Certification = ({ width, upperNavBarText, buttonText }: CertificationProp
           </S.CertificationText>
         </S.CertificationWrapper>
         <S.ButtonWrapper>
-          <BaseButton buttonType="default">{buttonText}</BaseButton>
+          <BaseButton buttonType="default" width="100%">
+            {buttonText}
+          </BaseButton>
         </S.ButtonWrapper>
       </S.CertificationContainer>
     </>
