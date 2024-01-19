@@ -7,6 +7,7 @@ import PointsMiddleTabList from "@pages/myPage/components/PointsMiddleTabList";
 import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDisappear";
 import SalesHistory from "@pages/myPage/salesHistory";
 import PurchaseHistory from "@pages/myPage/purchaseHistory";
+import Management from "@pages/myPage/management";
 import TransactionStatement from "@pages/myPage/transactionStatement";
 import Purchase from "@pages/purchase";
 import Sell from "@pages/sell";
@@ -128,6 +129,10 @@ const router = createBrowserRouter([
           {
             path: "salesHistory",
             element: <SalesHistory width="100%" />
+          },
+          {
+            path: "management",
+            element: <Management width="100%" />
           },
           {
             path: "transactionStatement/sale",
