@@ -4,6 +4,7 @@ import StarIcon from "assets/icons/Star.svg?react";
 import { Link } from "react-router-dom";
 import { ProductType } from "@pages/products/types/productsType";
 import { numberFormat } from "@utils/numberFormat";
+import CheckStore from "@pages/products/stores/checkStore";
 
 type Product = Omit<ProductType, "latitude" | "longitude">;
 
@@ -12,12 +13,18 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const { isCheck } = CheckStore();
+
   return (
     <S.Container>
       <Link to={`/products/${product.id}`}>
         <S.ItemContainer>
           <S.ImageContainer>
             <S.Image src={product.image} />
+            {!isCheck && product.status === "SOLD_OUT" && (
+              <S.ImageOverlay>판매 완료</S.ImageOverlay>
+            )}
+            {product.status === "BOOKING" && <S.ImageOverlay>예약중</S.ImageOverlay>}
             <S.DiscountRate>{product.salesPercentage}%</S.DiscountRate>
             <S.LocationContainer>
               <MapIcon />
