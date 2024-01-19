@@ -6,6 +6,7 @@ interface ColoredButtonFormProps {
   width?: string;
   isBottom?: boolean;
   onClick?: () => void;
+  isActive?: boolean;
 }
 
 const ColoredButtonForm = ({
@@ -13,7 +14,8 @@ const ColoredButtonForm = ({
   width,
   children,
   isBottom,
-  onClick
+  onClick,
+  isActive
 }: ColoredButtonFormProps) => {
   return (
     <S.ColoredButtonWrapper width={width} className={isBottom ? "isBottom" : ""}>
@@ -24,7 +26,9 @@ const ColoredButtonForm = ({
           </S.NormalText>
         </>
       )}
-      <S.ColoredButton onClick={onClick}>{children}</S.ColoredButton>
+      <S.ColoredButton isActive={isActive} onClick={onClick}>
+        {children}
+      </S.ColoredButton>
     </S.ColoredButtonWrapper>
   );
 };
