@@ -21,7 +21,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             <S.DiscountRate>{product.salesPercentage}%</S.DiscountRate>
             <S.LocationContainer>
               <MapIcon />
-              <S.Location>{product.address.split(" ").slice(0, 2).join(" ")}</S.Location>
+              <S.Location>{product.address}</S.Location>
             </S.LocationContainer>
           </S.ImageContainer>
           <S.InformationContainer>
