@@ -8,6 +8,7 @@ import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDi
 import SalesHistory from "@pages/myPage/salesHistory";
 import PurchaseHistory from "@pages/myPage/purchaseHistory";
 import TransactionStatement from "@pages/myPage/transactionStatement";
+import Purchase from "@pages/purchase";
 import Sell from "@pages/sell";
 import Products from "@pages/products";
 import ProductDetail from "@pages/productDetail";
@@ -243,7 +244,31 @@ const router = createBrowserRouter([
         element: <SignInThird />
       }
     ]
-  }
+  },
+  {
+    path: "/purchase",
+    element: <Outlet />,
+    children: [
+      {
+        index: true,
+        element: (
+          <Purchase
+            width="100%"
+            timerText="3일 15시간 23분"
+            divType="payInfo"
+            yanoljaPurchasePrice="800,000"
+            charge="40,000"
+            yanoljaPoint="0"
+            totalPurchasePrice="840,000"
+          />
+        )
+      },
+      {
+        path: "/chat:roomId",
+        element: <ChatRoom />
+      }
+    ]
+  },
 ]);
 
 export default router;
