@@ -122,8 +122,7 @@ export const Timer = styled.div`
 
 export const TimerText = styled.p<ListCardProps>`
   color: ${({ cardType }) =>
-    (cardType === "approval_saleEnd" && "#9C9C9C") ||
-    (cardType === "approval_sale" && "#38A3EB") ||
+    ((cardType === "approval_sale" || cardType === "approval_wait") && "#FF7456") ||
     (cardType === "sale" && "#38A3EB")};
   font-size: 12px;
   font-style: normal;
@@ -186,4 +185,13 @@ export const ButtonWrapper = styled.div`
   gap: 10px;
   align-self: stretch;
   flex-wrap: wrap;
+`;
+
+export const StatusText = styled.p`
+  color: ${({ theme }) => theme.colors.gray[600]};
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 200% */
+  letter-spacing: -0.24px;
 `;
