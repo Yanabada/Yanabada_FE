@@ -31,7 +31,7 @@ const ColumnCard = ({ product }: ColumnCardProps) => {
             <S.ProductName>{product.accommodationName}</S.ProductName>
             <S.RoomName>{product.roomName}</S.RoomName>
             <S.Period>
-              {formatDateTo(product.checkIn, "MM/dd")} ~ {formatDateTo(product.checkOut, "MM/dd")}
+              {formatDateTo(product.checkIn)} ~ {formatDateTo(product.checkOut)}
             </S.Period>
           </S.ProductContainer>
         </S.InformationContainer>
