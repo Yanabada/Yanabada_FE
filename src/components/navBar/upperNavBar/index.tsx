@@ -45,7 +45,8 @@ const UpperNavBar = ({
         customBack && customBack();
         break;
       case "close":
-        setIsVisible && setIsVisible(false);
+        navigate(-1);
+        customBack && customBack();
         break;
       default:
         break;

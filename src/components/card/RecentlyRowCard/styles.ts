@@ -19,7 +19,9 @@ export const InformationContainer = styled(Card.InformationContainer)`
   padding: 0 0.5rem;
 `;
 
-export const ProductContainer = styled(Card.ProductContainer)``;
+export const ProductContainer = styled(Card.ProductContainer)`
+  margin-bottom: 0.3rem;
+`;
 
 export const ProductName = styled(Card.ProductName)`
   margin-top: 0.1rem;

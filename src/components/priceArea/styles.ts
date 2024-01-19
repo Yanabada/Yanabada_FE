@@ -69,6 +69,10 @@ export const PriceInfoBox = styled.div`
           ${({ theme }) => theme.text.body3};
           color: ${({ theme }) => theme.colors.gray[700]};
         }
+        .time {
+          ${({ theme }) => theme.text.body2};
+          color: ${({ theme }) => theme.colors.gray[600]};
+        }
       }
     }
   }
@@ -192,13 +196,4 @@ export const CalcButton = styled.button`
   display: inline-flex;
   align-items: center;
   gap: 4px;
-`;
-
-export const PolicyInner = styled.div`
-  text-align: left;
-  padding: 16px;
-`;
-
-export const PriceSpace = styled.div`
-  height: 16px;
 `;

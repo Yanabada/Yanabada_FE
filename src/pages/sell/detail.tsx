@@ -3,8 +3,20 @@ import * as S from "./styles/detail";
 import { IoPersonOutline } from "react-icons/io5";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
+import InfoBox from "./components/InfoBox";
 
 const Sell = () => {
+  const InfoProps = {
+    imgUrl: "http://via.placeholder.com/300x300",
+    number: "20231219186542325",
+    title: "파라스파라 서울 더 그레이트 현대 런던 ",
+    room: "Forest Tower Deluxe King",
+    checkInDate: "2024-01-15",
+    checkOutDate: "2024-01-18",
+    checkInTime: "17:00",
+    checkOutTime: "12:00"
+  };
+
   return (
     <>
       <UpperNavBar title="예약내역 상세" type="back" />
@@ -15,18 +27,7 @@ const Sell = () => {
         <S.DetailBlank />
         <S.DetailBox>
           <p className="title">상품 및 이용 정보</p>
-          <div className="info-box__detail">
-            <div className="img-bx">
-              <img src="https://via.placeholder.com/300x300" alt="썸네일" />
-            </div>
-            <div className="txt-bx">
-              <p className="number">숙소 예약 번호 20231219186542325</p>
-              <p className="tit">파라스파라 서울 더 그레이트 현대 런던 </p>
-              <p className="room">Forest Tower Deluxe King</p>
-              <p className="date">2023.12.25 (월) - 2023.12.16 (화)</p>
-              <p className="time">체크인 14:00 | 체크아웃 11:00</p>
-            </div>
-          </div>
+          <InfoBox infoProps={InfoProps} />
           <div className="info-box__right">
             <p className="option">
               <IoPersonOutline /> 기준 2명 / 최대 2명
