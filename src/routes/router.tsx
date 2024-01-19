@@ -37,6 +37,7 @@ import EditInfo from "@pages/purchase/editInfo";
 import SignInFourth from "@pages/signIn/components/signInFourth/SignInFourth";
 import ReservationComplete from "@pages/purchase/reservationComplete";
 import Notice from "@pages/notice";
+import ChargeLists from "@pages/charge/list";
 
 const router = createBrowserRouter([
   {
@@ -183,6 +184,10 @@ const router = createBrowserRouter([
           {
             path: "intro",
             element: <ChargeIntro />
+          },
+          {
+            path: "lists",
+            element: <ChargeLists />
           },
           {
             path: "password",

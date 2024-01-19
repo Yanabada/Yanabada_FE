@@ -24,6 +24,12 @@ const Charge = () => {
     <>
       <UpperNavBar title="충전" type="back" />
       <S.ChargeWrapper>
+        <S.PayBalance className="product-balance">
+          <div>
+            <span className="text">₩ 상품가격</span>
+          </div>
+          <span className="price">623,000원</span>
+        </S.PayBalance>
         <S.PayBalance>
           <div>
             <YanoljaIcon />
@@ -31,7 +37,7 @@ const Charge = () => {
           </div>
           <span className="price">0원</span>
         </S.PayBalance>
-        <S.paySpace />
+        <S.PaySpace />
         <S.PayTitle>페이를 충전하실 계좌를 선택해 주세요</S.PayTitle>
         <Notice
           type="info"
@@ -39,7 +45,7 @@ const Charge = () => {
           content="잔액 충전은 야놀자 페이에 등록된 본인 명의 계좌로만 가능합니다."
           shape="lineFill"
         />
-        <S.paySpace />
+        <S.PaySpace />
         <S.InputWrapper>
           <motion.p className="select" onClick={toggleOption}>
             <span>{bankMessage}</span>
@@ -68,8 +74,8 @@ const Charge = () => {
             )}
           </AnimatePresence>
         </S.InputWrapper>
-        <S.paySpace />
-        <S.paySpace />
+        <S.PaySpace />
+        <S.PaySpace />
         <PriceArea
           title="충전 금액을 입력해 주세요"
           placeholder="￦ 금액을 입력해주세요"
@@ -77,6 +83,13 @@ const Charge = () => {
           isAlert={false}
           charge
         />
+        <S.AlertBanner>
+          <p className="text">
+            야놀자페이 잔액이 부족합니다.
+            <br />
+            충전을 진행해주세요!
+          </p>
+        </S.AlertBanner>
         <S.ButtonWrapper>
           <BaseButton buttonType="default" width="100%">
             ₩ 충전하기

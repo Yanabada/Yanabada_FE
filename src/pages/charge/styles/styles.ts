@@ -4,7 +4,7 @@ export const ChargeWrapper = styled.div`
   padding: 22px 14px;
 `;
 
-export const paySpace = styled.div`
+export const PaySpace = styled.div`
   height: 20px;
 `;
 
@@ -27,6 +27,10 @@ export const PayBalance = styled.div`
 
   .price {
     ${({ theme }) => theme.text.subtitle4};
+  }
+
+  &.product-balance {
+    margin-bottom: 16px;
   }
 `;
 
@@ -99,6 +103,28 @@ export const InputWrapper = styled.div`
   }
 `;
 
+export const BottomInner = styled.div`
+  padding: 14px;
+
+  .tit {
+    ${({ theme }) => theme.text.subtitle5};
+
+    padding: 6px 0;
+  }
+
+  .des {
+    ${({ theme }) => theme.text.body2};
+
+    padding: 8px 0;
+    padding-bottom: 20px;
+  }
+`;
+
+export const ButtonInner = styled.div`
+  padding-top: 16px;
+  ${({ theme }) => theme.shadows[1]};
+`;
+
 export const ButtonWrapper = styled.div`
   width: 100%;
   padding: 0 14px;
@@ -107,4 +133,26 @@ export const ButtonWrapper = styled.div`
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
+`;
+
+export const AlertBanner = styled.div`
+  color: #fff;
+  text-align: center;
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 100px;
+  width: 100%;
+
+  padding: 0 20px;
+
+  .text {
+    ${({ theme }) => theme.text.subtitle6};
+
+    background-color: #000000b2;
+    border-radius: 5px;
+
+    padding: 20px;
+  }
 `;
