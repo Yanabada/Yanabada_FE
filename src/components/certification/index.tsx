@@ -141,13 +141,7 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
         setIsVisible={setIsModalVisible}
         leftBtnText="아니오"
         rightBtnText="전송하기"
-        title={
-          <>
-            <p>입력한 휴대폰 번호로</p>
-            <br />
-            <p>인증번호를 전송하시겠어요?</p>
-          </>
-        }
+        title="입력한 휴대폰 번호로 \n 인증번호를 전송하시겠어요?"
         content={phoneNumber}
         leftAction={() => {
           setIsModalVisible(false);
