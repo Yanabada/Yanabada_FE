@@ -33,8 +33,10 @@ export const LoginButton = styled.button`
 `;
 
 export const BellContainer = styled.div`
-  width: 1.375rem;
-  height: 1.375rem;
-  color: #000;
-  cursor: pointer;
+  .bell {
+    width: 1.375rem;
+    height: 1.375rem;
+    color: #000;
+    cursor: pointer;
+  }
 `;
