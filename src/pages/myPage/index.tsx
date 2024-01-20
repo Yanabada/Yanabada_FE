@@ -55,7 +55,7 @@ const MyPage = ({ width }: MyPageProps) => {
         type="back"
         rightElement={
           <>
-            <Link to="/">
+            <Link to="/notice">
               <S.BellContainer>
                 <NumberBadge number={6} />
                 <FaRegBell className="bell" />
