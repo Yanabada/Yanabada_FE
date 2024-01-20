@@ -27,25 +27,25 @@ const MyPage = ({ width }: MyPageProps) => {
 
   const loginModalProps = {
     title: "회원가입 또는 로그인 후 사용할 수 있습니다.",
-    leftBtnText: "취소",
-    rightBtnText: "로그인/가입",
+    leftBtnText: "로그인/가입",
+    rightBtnText: "취소",
     isVisible: isLoginModalVisible,
     setIsVisible: setIsLoginModalVisible,
-    leftAction: () => setIsLoginModalVisible(false),
-    rightAction: () => navigate("/login")
+    leftAction: () => navigate("/login"),
+    rightAction: () => setIsLoginModalVisible(false)
   };
 
   const logoutModalProps = {
     title: "로그아웃 하시겠습니까?",
-    leftBtnText: "취소",
-    rightBtnText: "확인",
+    leftBtnText: "확인",
+    rightBtnText: "취소",
     isVisible: isLogoutModalVisible,
     setIsVisible: setIsLogoutModalVisible,
-    leftAction: () => setIsLogoutModalVisible(false),
-    rightAction: () => {
+    leftAction: () => {
       setIsLoginned(false);
       navigate("/mypage");
-    }
+    },
+    rightAction: () => setIsLogoutModalVisible(false)
   };
 
   return isLoginned ? (
