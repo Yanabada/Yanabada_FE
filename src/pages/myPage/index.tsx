@@ -54,14 +54,12 @@ const MyPage = ({ width }: MyPageProps) => {
         title="MY 야나바다"
         type="back"
         rightElement={
-          <>
-            <Link to="/notice">
-              <S.BellContainer>
-                <NumberBadge number={6} />
-                <FaRegBell className="bell" />
-              </S.BellContainer>
-            </Link>
-          </>
+          <Link to="/notice">
+            <S.BellContainer>
+              <NumberBadge number={6} />
+              <FaRegBell className="bell" />
+            </S.BellContainer>
+          </Link>
         }
       />
       <S.MyPageContainer>
