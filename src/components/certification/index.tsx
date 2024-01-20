@@ -143,9 +143,9 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
         rightBtnText="전송하기"
         title={
           <>
-            입력한 휴대폰 번호로
+            <p>입력한 휴대폰 번호로</p>
             <br />
-            인증번호를 전송하시겠어요?
+            <p>인증번호를 전송하시겠어요?</p>
           </>
         }
         content={phoneNumber}
