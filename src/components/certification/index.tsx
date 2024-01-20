@@ -31,6 +31,7 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
     mode: "onBlur"
   });
   const phoneNumber = getValues("phoneNumber");
+  const modalTitle = "입력한 휴대폰 번호로 \n 인증번호를 전송하시겠어요?";
 
   // 휴대폰 번호 input 형식 변환 및 입력
   const formatPhoneNumber = (value: string): string => {
@@ -141,7 +142,7 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
         setIsVisible={setIsModalVisible}
         leftBtnText="아니오"
         rightBtnText="전송하기"
-        title="입력한 휴대폰 번호로 \n 인증번호를 전송하시겠어요?"
+        title={modalTitle}
         content={phoneNumber}
         leftAction={() => {
           setIsModalVisible(false);
