@@ -33,6 +33,7 @@ import ChargeConfirm from "@pages/charge/confirm";
 import ChargeSuccess from "@pages/charge/success";
 import EditInfo from "@pages/purchase/editInfo";
 import SignInFourth from "@pages/signIn/components/signInFourth/SignInFourth";
+import Notice from "@pages/notice";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
             <BottomNavBar />
           </>
         )
+      },
+      {
+        path: "/notice",
+        element: <Notice />
       },
       {
         path: "/products",
