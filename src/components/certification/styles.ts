@@ -22,7 +22,6 @@ export const CertificationContainer = styled.div`
 export const CertificationWrapper = styled.div<CertificationProps>`
   width: ${({ width }) => width || "360px"};
   display: flex;
-  padding: 20px 14px;
   flex-direction: column;
   gap: ${({ gap }) => gap || "0px"};
   background-color: #fff;
@@ -44,7 +43,7 @@ export const CertificationTextBold = styled.span`
 
 export const ButtonWrapper = styled.div`
   display: inline-flex;
-  padding: 16px 14px;
+  padding: 16px 0;
   flex-direction: column;
   align-items: center;
   gap: 16px;

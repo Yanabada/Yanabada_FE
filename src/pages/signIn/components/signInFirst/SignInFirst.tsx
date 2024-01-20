@@ -26,7 +26,7 @@ const SignInFirst = () => {
   });
   const email = getValues("email");
 
-  // 최초 렌더링 시에도 유효성 검사 적용하기!
+  // 최초 렌더링 시에도 유효성 검사 적용
   useEffect(() => {
     trigger("email");
   }, [trigger]);

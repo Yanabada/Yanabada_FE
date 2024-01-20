@@ -2,10 +2,10 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import * as S from "./styles";
 import TextInput from "@components/input/TextInput";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
-import BaseButton from "@components/buttons/BaseButton";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Modal from "@components/modal";
+import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 
 interface CertificationProps {
   width?: string;
@@ -101,11 +101,15 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
           <S.InputContainer>
             {openInput && (
               <TextInput
-                type="numberCode"
+                type="number"
                 variant="move"
                 label="인증번호 6자리"
                 {...register("code", {
                   required: true,
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "숫자만 입력하세요."
+                  },
                   validate: {
                     validCode: (value) => isCodeValid(value) || "인증번호가 올바르지 않습니다."
                   }
@@ -122,13 +126,14 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
           </S.InputContainer>
         </S.CertificationWrapper>
         <S.ButtonWrapper>
-          <BaseButton
-            buttonType={isNumCorrect ? "default" : "gray"}
+          <ColoredButtonForm
+            isActive={isNumCorrect}
+            isBottom={true}
             width="100%"
             onClick={handleClick}
           >
             {buttonText}
-          </BaseButton>
+          </ColoredButtonForm>
         </S.ButtonWrapper>
       </S.CertificationContainer>
       <Modal
@@ -136,7 +141,13 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
         setIsVisible={setIsModalVisible}
         leftBtnText="아니오"
         rightBtnText="전송하기"
-        title="입력한 휴대폰 번호로 인증번호를 전송하시겠어요?"
+        title={
+          <>
+            입력한 휴대폰 번호로
+            <br />
+            인증번호를 전송하시겠어요?
+          </>
+        }
         content={phoneNumber}
         leftAction={() => {
           setIsModalVisible(false);
