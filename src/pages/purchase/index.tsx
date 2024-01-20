@@ -62,6 +62,7 @@ const Purchase = ({
   const [bankMessage, setBankMessage] = useState("은행 선택");
   const [installmentMessage, setInstallmentMessage] = useState("할부 기간 선택");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isChangeButtonClicked, setIsChangeButtonClicked] = useState(false);
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
   const [isYanoljaPaySubscribed] = useState(false);
 
@@ -155,10 +156,41 @@ const Purchase = ({
       <S.ReservationContainer width={width}>
         <S.PersonInfoWrapper>
           <S.PersonInfoTopWrapper>
-            <S.InfoText>예약자 정보</S.InfoText>
-            <S.ChangeText>변경하기</S.ChangeText>
+            <S.InfoText>
+              예약자 정보<S.UserInfoTextRed>*</S.UserInfoTextRed>
+            </S.InfoText>
+            <S.ChangeText onClick={() => setIsChangeButtonClicked(true)}>변경하기</S.ChangeText>
           </S.PersonInfoTopWrapper>
-          <S.PersonInfoBottomWrapper>김팔자 / 010-1234-5678</S.PersonInfoBottomWrapper>
+          {isChangeButtonClicked ? (
+            <>
+              <TextInput
+                variant="move"
+                label={
+                  <>
+                    <span>성명</span>
+                    <span style={{ color: "#E01F3E" }}>*</span>
+                  </>
+                }
+                errorMessage="이용자 이름은 한글과 영문만 가능합니다."
+              />
+              <TextInput
+                variant="move"
+                label={
+                  <>
+                    <span>휴대폰 번호</span>
+                    <span style={{ color: "#E01F3E" }}>*</span>
+                  </>
+                }
+                errorMessage="이용자 이름은 한글과 영문만 가능합니다."
+              />
+              <S.ChipWrapper>
+                {/* FIXME: 유효성 검사 후 input을 모두 채워야지만 abled되게 변경 */}
+                <ManipulationChip buttonType="abledDefault">인증 변경하기</ManipulationChip>
+              </S.ChipWrapper>
+            </>
+          ) : (
+            <S.PersonInfoBottomWrapper>김팔자 / 010-1234-5678</S.PersonInfoBottomWrapper>
+          )}
         </S.PersonInfoWrapper>
       </S.ReservationContainer>
       <S.Spacer width={width} />
