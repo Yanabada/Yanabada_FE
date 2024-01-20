@@ -326,7 +326,7 @@ const Purchase = ({
             카드
           </ToggleButton>
         </S.ToggleButtonWrapper>
-        {paymentMethod === "yanoljaPay" || paymentMethod === "tossPay" ? (
+        {paymentMethod === "card" ? (
           <>
             <S.PersonInfoWrapper>
               <S.InfoText>
@@ -424,7 +424,7 @@ const Purchase = ({
           <>
             <S.PersonInfoWrapper>
               <S.InfoText>
-                무통장 입급 <S.UserInfoTextRed>*</S.UserInfoTextRed>
+                무통장 입금 <S.UserInfoTextRed>*</S.UserInfoTextRed>
               </S.InfoText>
             </S.PersonInfoWrapper>
             <Notice
@@ -471,7 +471,7 @@ const Purchase = ({
           </>
         ) : null}
 
-        {paymentMethod === "yanoljaPay" && isYanoljaPaySubscribed ? null : (
+        {paymentMethod !== "yanoljaPay" || isYanoljaPaySubscribed ? null : (
           <>
             <Notice
               type="default"
