@@ -15,6 +15,7 @@ import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
 const Charge = () => {
   const [isOptionVisible, setIsOptionVisible] = useState(false);
   const [bankMessage, setBankMessage] = useState("계좌선택");
+  const [price, setPrice] = useState(0);
 
   const toggleOption = () => {
     setIsOptionVisible((prev) => !prev);
@@ -82,6 +83,8 @@ const Charge = () => {
           resetPrice={0}
           isAlert={false}
           charge
+          price={price}
+          setPrice={setPrice}
         />
         <S.AlertBanner>
           <p className="text">

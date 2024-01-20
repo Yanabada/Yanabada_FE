@@ -13,7 +13,7 @@ import Checkbox from "@components/input/Checkbox";
 import BaseButton from "@components/buttons/BaseButton";
 import { feePolicy2 } from "@constants/feePolicys";
 
-import NegoOption from "./components/negoOption";
+import NegoOption from "./components/NegoOption";
 import AutoCancelOption from "./components/AutoCancelOption";
 import DateOption from "./components/DateOption";
 
