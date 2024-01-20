@@ -180,6 +180,10 @@ export const BottomActions = styled.div`
     gap: 1rem;
 
     a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
       padding: 0.75rem;
       border-radius: 5px;
       background-color: ${({ theme }) => theme.colors.gray[100]};
