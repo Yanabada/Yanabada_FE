@@ -32,6 +32,7 @@ import Account from "@pages/charge/account";
 import ChargeConfirm from "@pages/charge/confirm";
 import ChargeSuccess from "@pages/charge/success";
 import EditInfo from "@pages/purchase/editInfo";
+import SignInFourth from "@pages/signIn/components/signInFourth/SignInFourth";
 
 const router = createBrowserRouter([
   {
@@ -243,6 +244,10 @@ const router = createBrowserRouter([
       {
         path: "2",
         element: <SignInThird />
+      },
+      {
+        path: "3",
+        element: <SignInFourth />
       }
     ]
   },
@@ -269,7 +274,7 @@ const router = createBrowserRouter([
         element: <EditInfo />
       }
     ]
-  },
+  }
 ]);
 
 export default router;
