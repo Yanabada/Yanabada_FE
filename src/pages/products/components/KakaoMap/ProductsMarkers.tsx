@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import * as S from "./styles";
 import { CustomOverlayMap, useMap } from "react-kakao-maps-sdk";
 import { ProductType } from "@pages/products/types/productsType";
@@ -16,9 +16,6 @@ const getPriceWithComma = (price: number) => {
 export const ProductsMarkers = ({ products, setSelectedProductId }: ProductMarkersProps) => {
   const [selectedId, setSelectedId] = useState<number>(1);
   const map = useMap();
-
-  const overlayRef = useRef<kakao.maps.CustomOverlay>(null);
-  overlayRef.current?.setZIndex(1);
 
   const handleSelect = (product: ProductType) => {
     const { latitude, longitude } = product;
