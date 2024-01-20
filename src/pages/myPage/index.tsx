@@ -4,11 +4,6 @@ import ArrowForwardIcon from "@assets/icons/arrowForwardIcon.svg?react";
 import CardSectionButton from "@components/buttons/CardSectionButton";
 import ListButton from "@components/buttons/ListButton";
 import { useState } from "react";
-// import { Link } from "react-router-dom";
-// import Modal from "@components/modal";
-// import { useNavigate } from "react-router-dom";
-// import NumberBadge from "@components/numberBadge";
-// import { FaRegBell } from "react-icons/fa";
 
 interface MyPageProps {
   width?: string;

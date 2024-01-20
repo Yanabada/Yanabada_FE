@@ -20,6 +20,8 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { useEffect } from "react";
 import BaseButton from "@components/buttons/BaseButton";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
+import Modal from "@components/modal";
+import { useNavigate } from "react-router-dom";
 
 interface PurchaseProps {
   width?: string;
@@ -59,8 +61,21 @@ const Purchase = ({
   const [cardMessage, setCardMessage] = useState("카드사 선택");
   const [bankMessage, setBankMessage] = useState("은행 선택");
   const [installmentMessage, setInstallmentMessage] = useState("할부 기간 선택");
+  const [isModalVisible, setIsModalVisible] = useState(false);
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
   const [isYanoljaPaySubscribed] = useState(false);
+
+  const navigate = useNavigate();
+
+  const modalProps = {
+    title: "야놀자 페이 가입 후 이용 가능합니다",
+    leftBtnText: "가입하기",
+    rightBtnText: "아니오",
+    isVisible: isModalVisible,
+    setIsVisible: setIsModalVisible,
+    leftAction: () => navigate("/login"),
+    rightAction: () => setIsModalVisible(false)
+  };
 
   const toggleCardOption = () => {
     setIsCardOptionVisible((prev) => !prev);
@@ -432,9 +447,10 @@ const Purchase = ({
               shape="fill"
               color="red"
             />
-            <AuthenticationButton buttonType="default">
+            <AuthenticationButton buttonType="default" onClick={() => setIsModalVisible(true)}>
               야놀자 페이 가입하러 가기
             </AuthenticationButton>
+            <Modal {...modalProps} />
           </>
         )}
 
