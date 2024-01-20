@@ -3,33 +3,19 @@ import * as CS from "./styles/detail";
 
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  addDays,
-  differenceInDays,
-  eachDayOfInterval,
-  endOfMonth,
-  startOfMonth,
-  subDays,
-  subMonths
-} from "date-fns";
+import { differenceInDays } from "date-fns";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
 import PriceArea from "@components/priceArea";
 import PriceTable from "@components/priceTable";
 import Notice from "@components/notice";
-import AuthenticationButton from "@components/buttons/AuthenticationButton";
-import DateChangeButton from "@components/buttons/DateChangeButton";
 import Checkbox from "@components/input/Checkbox";
 import BaseButton from "@components/buttons/BaseButton";
-import BottomSheet from "@components/bottomSheet";
-import Calendar from "@components/calendar";
-
-import YanoljaIcon from "assets/icons/yanolja_Icon.svg?react";
-import { numberFormat } from "@utils/numberFormat";
-import todayFormat from "@utils/todayFormat";
-import dateFormat from "@utils/dateFormat";
 import { feePolicy2 } from "@constants/feePolicys";
-import { getDayOfWeek } from "@utils/getDayOfWeek";
+
+import NegoOption from "./components/negoOption";
+import AutoCancelOption from "./components/AutoCancelOption";
+import DateOption from "./components/DateOption";
 
 interface EndDateInfo {
   endDate: string;
@@ -38,7 +24,6 @@ interface EndDateInfo {
 }
 
 const SellRegister = () => {
-  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [allCheck, setAllCheck] = useState(false);
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
@@ -47,29 +32,24 @@ const SellRegister = () => {
   const [price, setPrice] = useState(0);
   const [isNego, setIsNego] = useState(false);
   const [isAutoCancel, setIsAutoCancel] = useState(false);
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [endDate, setEndDate] = useState<string | undefined>();
-  const [startDate, setStartDate] = useState<string | null>(null);
+  const [, setStartDate] = useState<string | null>(null);
   const [endDateInfo, setEndDateInfo] = useState<EndDateInfo>({
     endDate: "",
     daysBefore: 0,
     feePercentage: 0
   });
 
-  // 달력에서 시작일과 종료일 설정
-  const location = useLocation();
-
-  console.log("종료일에 대한 정보 담기", endDateInfo);
-
+  // 시작일과 종료일 쿼리스트링으로 등록
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const startParam = searchParams.get("start");
     const endParam = searchParams.get("end");
-
-    // start와 end 값을 콘솔에 출력
-    console.log("Start Date:", startParam);
-    console.log("End Date:", endParam);
 
     setStartDate(String(startParam));
     setEndDate(String(endParam));
@@ -88,9 +68,7 @@ const SellRegister = () => {
     }
   }, [location.search]);
 
-  console.log("종료일", endDate);
-  console.log(startDate);
-
+  // API 연결 전, 데이터 상수
   const originalPrice = 1200000;
   const purchasePrice = 1200000;
   const cancelFee = 600000;
@@ -104,84 +82,6 @@ const SellRegister = () => {
     checkOutDate: "2024-01-26",
     policyNumber: 2
   };
-
-  const bottomSheetProps = {
-    title: "판매기한 선택",
-    isVisible: bottomSheetVisible,
-    setIsVisible: setBottomSheetVisible
-  };
-
-  // calendar 영역
-  const currentMonth = new Date(productData.checkInDate);
-  console.log(currentMonth);
-  const nextYear = new Date(currentMonth);
-  const prevYear = subMonths(new Date(currentMonth), 12);
-  nextYear.setFullYear(currentMonth.getFullYear() + 1);
-  const today = new Date();
-
-  const seletedDates = eachDayOfInterval({
-    start: startOfMonth(prevYear),
-    end: endOfMonth(nextYear)
-  });
-
-  const minDay = subDays(new Date(productData.checkInDate), 6);
-  const maxDay = addDays(new Date(productData.checkInDate), 0);
-
-  const excludeDates = seletedDates.filter((date) => {
-    const dateMonth = date.getMonth();
-    const dateDay = date.getDate();
-    const minMonth = minDay.getMonth();
-    const minDayOfMonth = minDay.getDate();
-    const maxMonth = maxDay.getMonth();
-    const maxDayOfMonth = maxDay.getDate();
-
-    return (
-      dateMonth < minMonth ||
-      (dateMonth === minMonth && dateDay < minDayOfMonth) ||
-      dateMonth > maxMonth ||
-      (dateMonth === maxMonth && dateDay > maxDayOfMonth)
-    );
-  });
-
-  const renderDayContents = (dayOfMonth: number, date?: Date | null | undefined) => {
-    const isExcluded =
-      date instanceof Date &&
-      excludeDates.some((excludedDate) => excludedDate.getTime() === date.getTime());
-
-    const currentDate = date instanceof Date ? date : new Date();
-    const daysBefore = differenceInDays(new Date(productData.checkInDate), currentDate);
-
-    // 맨 앞의 정책을 뺀 새로운 배열 생성
-    const feePolicyWithoutFirst = feePolicy2.slice(1);
-
-    const feePercentage =
-      feePolicyWithoutFirst.find((policy) => policy.daysBefore === daysBefore)?.percentage || 0;
-    const calculatedFee = originalPrice - (originalPrice * feePercentage) / 100;
-
-    return (
-      <div>
-        {dayOfMonth}
-        {!isExcluded && (
-          <span className="include-text">
-            {daysBefore === 0 ? "입실일" : numberFormat(calculatedFee)}
-          </span>
-        )}
-        {isExcluded && <span className="exclude-text">0</span>}
-      </div>
-    );
-  };
-
-  // 구매가 대비 판매가격 % 계산
-  function calculateDiscount(originalPrice: number, price: number) {
-    const discountPercentage = ((originalPrice - price) / originalPrice) * 100;
-    return Math.floor(discountPercentage);
-  }
-
-  // TODO : 수수료 제외 받을 금액 계산
-  function calculateOriginDiscount(originalPrice: number, price: number, feePercentage: number) {
-    const discountedPrice = price - (price * feePercentage) / 100;
-    return discountedPrice;
-  }
 
   return (
     <>
@@ -216,155 +116,23 @@ const SellRegister = () => {
           />
         </S.RegisterInner>
         <CS.DetailBlank />
-        <S.RegisterInner>
-          <S.RegisterTitle>판매 옵션</S.RegisterTitle>
-          <S.RegisterSubTitle>
-            네고 여부 선택 <span>*</span>
-          </S.RegisterSubTitle>
-          <S.RegisterDes>네고 불가능 선택 시 구매자는 채팅을 신청할 수 없습니다.</S.RegisterDes>
-          <S.SelectWrap>
-            <S.ButtonInner>
-              <AuthenticationButton
-                buttonType={isNego ? "disabled" : "default"}
-                width="100%"
-                onClick={() => setIsNego(true)}
-              >
-                예
-              </AuthenticationButton>
-            </S.ButtonInner>
-            <S.ButtonInner>
-              <AuthenticationButton
-                buttonType={isNego ? "default" : "disabled"}
-                width="100%"
-                onClick={() => setIsNego(false)}
-              >
-                아니오
-              </AuthenticationButton>
-            </S.ButtonInner>
-          </S.SelectWrap>
-        </S.RegisterInner>
-        <S.RegisterInner>
-          <S.RegisterSubTitle>
-            판매 중단 날짜 설정 <span>*</span>
-          </S.RegisterSubTitle>
-          <S.RegisterDes>
-            판매 중단 날짜 내 상품이 판매되지 않을 경우 자동으로 야나바다에서 판매가 중단됩니다.
-          </S.RegisterDes>
-          <DateChangeButton
-            endDate={dateFormat(endDate)}
-            week={getDayOfWeek(String(endDate))}
-            width="100%"
-            onClick={() => setBottomSheetVisible(true)}
-          />
-          <BottomSheet {...bottomSheetProps}>
-            <S.CalendarInner>
-              <Notice
-                type="default"
-                title="판매 종료일을 선택해주세요"
-                content={`날짜별 판매 종료 시 환불받을 수 있는 금액이에요
-                오늘(${todayFormat(today)})부터 입실일까지 판매할 수 있어요.`}
-                shape="line"
-              />
-              <S.SmallSpace />
-              <Calendar excludeDates={excludeDates} renderDayContents={renderDayContents} />
-              <S.SmallSpace />
-              <S.RegisterSubTitle>받을 수 있는 금액</S.RegisterSubTitle>
-              <S.CalcInner>
-                <div className="calc-box calc-box__left">
-                  <p className="tit">양도 판매 성공 시</p>
-                  <p className="discount">
-                    <span>{numberFormat(purchasePrice)}</span>원
-                  </p>
-                  <p className="inner">
-                    <span className="percentage text-blue">
-                      {calculateDiscount(purchasePrice, price)}%
-                    </span>
-                    <span className="price">{numberFormat(price)}원</span>
-                  </p>
-                  {/* startDate 입력 전 */}
-                  {/* <p className="tit no-text">
-                    판매 가격이
-                    <br /> 설정되지 않았어요
-                  </p> */}
-                </div>
-                <div className="calc-box calc-box__right">
-                  <p className="tit">
-                    <p className="tit">
-                      {isNaN(Date.parse(endDate || "")) ? (
-                        <span>판매 종료일을 선택해주세요</span>
-                      ) : (
-                        <span>{dateFormat(endDate || "")} 판매 종료시</span>
-                      )}
-                    </p>
-                  </p>
-                  <p className="discount">
-                    <span>{numberFormat(originalPrice)}</span>원
-                  </p>
-                  <p className="inner">
-                    <span className="percentage text-orange">
-                      {/* TODO */}
-                      {endDateInfo.feePercentage}%
-                    </span>
-                    {/* TODO */}
-                    <span className="price">
-                      {numberFormat(
-                        calculateOriginDiscount(
-                          originalPrice,
-                          originalPrice,
-                          endDateInfo.feePercentage
-                        )
-                      )}
-                      원
-                    </span>
-                  </p>
-                </div>
-              </S.CalcInner>
-              <S.SmallSpace />
-              <BaseButton buttonType="default" width="100%">
-                확인
-              </BaseButton>
-            </S.CalendarInner>
-          </BottomSheet>
-        </S.RegisterInner>
-        <S.RegisterInner>
-          <S.RegisterSubTitle>
-            판매 중단 후 야놀자에서 자동 예약 취소 할게요 <span>*</span>
-          </S.RegisterSubTitle>
-          <S.SelectWrap>
-            <S.ButtonInner>
-              <AuthenticationButton
-                buttonType={isAutoCancel ? "disabled" : "default"}
-                width="100%"
-                onClick={() => setIsAutoCancel(true)}
-              >
-                예
-              </AuthenticationButton>
-            </S.ButtonInner>
-            <S.ButtonInner>
-              <AuthenticationButton
-                buttonType={isAutoCancel ? "default" : "disabled"}
-                width="100%"
-                onClick={() => setIsAutoCancel(false)}
-              >
-                아니오
-              </AuthenticationButton>
-            </S.ButtonInner>
-          </S.SelectWrap>
-          <S.RefundText>
-            <p className="text">
-              <YanoljaIcon />
-              야놀자에서 취소 시 환불금
-            </p>
-            <p className="price">
-              <span>
-                {numberFormat(
-                  calculateOriginDiscount(originalPrice, originalPrice, endDateInfo.feePercentage)
-                )}
-              </span>
-              원
-            </p>
-          </S.RefundText>
-        </S.RegisterInner>
+        <NegoOption isNego={isNego} setIsNego={setIsNego} />
+        <DateOption
+          bottomSheetVisible={bottomSheetVisible}
+          setBottomSheetVisible={setBottomSheetVisible}
+          productData={productData}
+          originalPrice={originalPrice}
+          purchasePrice={purchasePrice}
+          price={price}
+          endDate={endDate}
+          endDateInfo={endDateInfo}
+        />
+        <AutoCancelOption
+          isAutoCancel={isAutoCancel}
+          setIsAutoCancel={setIsAutoCancel}
+          originalPrice={originalPrice}
+          endDateInfo={endDateInfo}
+        />
         <CS.DetailBlank />
         <S.RegisterInner>
           <S.RegisterTitle>판매자 한마디</S.RegisterTitle>
