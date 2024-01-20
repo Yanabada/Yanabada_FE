@@ -11,12 +11,10 @@ export const handlers = [
       console.log(option);
     }
 
-    return HttpResponse.json([
-      {
-        status: "SUCCESS",
-        data: products
-      }
-    ]);
+    return HttpResponse.json({
+      status: "SUCCESS",
+      data: products
+    });
   }),
   http.get("/api/products/:id", () => {
     return HttpResponse.json([
