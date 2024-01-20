@@ -185,6 +185,7 @@ const Purchase = ({
               />
               <S.ChipWrapper>
                 {/* FIXME: 유효성 검사 후 input을 모두 채워야지만 abled되게 변경 */}
+                {/* FIXME: 휴대폰 인증 페이지(H-2) 라우터 추가 후 이동 로직 추가 */}
                 <ManipulationChip buttonType="abledDefault">인증 변경하기</ManipulationChip>
               </S.ChipWrapper>
             </>
