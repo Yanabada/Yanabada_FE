@@ -61,7 +61,7 @@ const SubServices = () => {
     <>
       <S.TitleWrapper>
         <h2>부가서비스 모아보기</h2>
-        <Link to={`/products?${selectedOption.path}`}>전체보기</Link>
+        <Link to={`/products?option=${selectedOption.path}`}>전체보기</Link>
       </S.TitleWrapper>
       <S.OptionWrapper>
         {optionList.map((option) => (
