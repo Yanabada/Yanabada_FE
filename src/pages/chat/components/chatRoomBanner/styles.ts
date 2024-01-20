@@ -3,7 +3,10 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
   position: fixed;
   background-color: #fff;
-  width: 100%;
+  max-width: 780px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   box-shadow: ${({ theme }) => theme.shadows[4]};
   z-index: 5;
 `;
