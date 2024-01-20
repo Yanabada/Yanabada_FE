@@ -10,7 +10,7 @@ interface DateChangeButtonProps {
 }
 
 const DateChangeButton = ({ width, endDate, week, disabled, onClick }: DateChangeButtonProps) => {
-  console.log(endDate);
+  console.log(typeof endDate);
 
   return (
     <S.DateChangeButton width={width} onClick={onClick}>
@@ -19,7 +19,7 @@ const DateChangeButton = ({ width, endDate, week, disabled, onClick }: DateChang
         <S.Label disabled={disabled}>
           {endDate} ({week})
         </S.Label>
-        <S.DescriptionLabel disabled={disabled}>00시00분 종료</S.DescriptionLabel>
+        <S.DescriptionLabel disabled={disabled}>23시 59분 종료</S.DescriptionLabel>
       </S.LeftSection>
       {!disabled && <S.RightButton>변경</S.RightButton>}
     </S.DateChangeButton>

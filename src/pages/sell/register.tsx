@@ -31,6 +31,12 @@ import dateFormat from "@utils/dateFormat";
 import { feePolicy2 } from "@constants/feePolicys";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
 
+interface EndDateInfo {
+  endDate: string;
+  daysBefore: number;
+  feePercentage: number;
+}
+
 const SellRegister = () => {
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [allCheck, setAllCheck] = useState(false);
@@ -45,9 +51,16 @@ const SellRegister = () => {
   const navigate = useNavigate();
   const [endDate, setEndDate] = useState<string | undefined>();
   const [startDate, setStartDate] = useState<string | null>(null);
+  const [endDateInfo, setEndDateInfo] = useState<EndDateInfo>({
+    endDate: "",
+    daysBefore: 0,
+    feePercentage: 0
+  });
 
   // 달력에서 시작일과 종료일 설정
   const location = useLocation();
+
+  console.log("종료일에 대한 정보 담기", endDateInfo);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -60,6 +73,19 @@ const SellRegister = () => {
 
     setStartDate(String(startParam));
     setEndDate(String(endParam));
+
+    if (endParam) {
+      const currentDate = new Date(endParam);
+      const daysBefore = differenceInDays(new Date(productData.checkInDate), currentDate);
+      const feePercentage =
+        feePolicy2.find((policy) => policy.daysBefore === daysBefore)?.percentage || 0;
+
+      setEndDateInfo({
+        endDate: String(endParam),
+        daysBefore: daysBefore,
+        feePercentage: feePercentage
+      });
+    }
   }, [location.search]);
 
   console.log("종료일", endDate);
@@ -86,8 +112,7 @@ const SellRegister = () => {
   };
 
   // calendar 영역
-  // TODO : checkIn 을 기준으로 바꿔야 할 것
-  const currentMonth = new Date(productData.checkInDate); // checkInDate를 시작 월로 사용합니다.
+  const currentMonth = new Date(productData.checkInDate);
   console.log(currentMonth);
   const nextYear = new Date(currentMonth);
   const prevYear = subMonths(new Date(currentMonth), 12);
@@ -150,6 +175,12 @@ const SellRegister = () => {
   function calculateDiscount(originalPrice: number, price: number) {
     const discountPercentage = ((originalPrice - price) / originalPrice) * 100;
     return Math.floor(discountPercentage);
+  }
+
+  // TODO : 수수료 제외 받을 금액 계산
+  function calculateOriginDiscount(originalPrice: number, price: number, feePercentage: number) {
+    const discountedPrice = price - (price * feePercentage) / 100;
+    return discountedPrice;
   }
 
   return (
@@ -272,10 +303,19 @@ const SellRegister = () => {
                   <p className="inner">
                     <span className="percentage text-orange">
                       {/* TODO */}
-                      테스트%
+                      {endDateInfo.feePercentage}%
                     </span>
                     {/* TODO */}
-                    <span className="price">테스트원</span>
+                    <span className="price">
+                      {numberFormat(
+                        calculateOriginDiscount(
+                          originalPrice,
+                          originalPrice,
+                          endDateInfo.feePercentage
+                        )
+                      )}
+                      원
+                    </span>
                   </p>
                 </div>
               </S.CalcInner>
@@ -316,7 +356,12 @@ const SellRegister = () => {
               야놀자에서 취소 시 환불금
             </p>
             <p className="price">
-              <span>700,000</span>원
+              <span>
+                {numberFormat(
+                  calculateOriginDiscount(originalPrice, originalPrice, endDateInfo.feePercentage)
+                )}
+              </span>
+              원
             </p>
           </S.RefundText>
         </S.RegisterInner>
