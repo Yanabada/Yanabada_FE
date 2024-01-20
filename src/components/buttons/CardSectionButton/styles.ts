@@ -48,7 +48,6 @@ export const ListButton = styled.button`
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
-  backdrop-filter: blur(10px);
 `;
 
 export const ListButtonTextWrapper = styled.div`

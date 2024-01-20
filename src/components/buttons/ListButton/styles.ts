@@ -14,7 +14,6 @@ export const ListButtonWrapper = styled.button<ListButtonProps>`
   flex-shrink: 0;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
-  backdrop-filter: blur(10px);
 `;
 
 export const LeftSection = styled.div`

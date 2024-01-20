@@ -10,7 +10,7 @@ interface ManagementProps {
 const Management = ({ width }: ManagementProps) => {
   return (
     <>
-      <UpperNavBar title="판매내역" type="back" />
+      <UpperNavBar title="승인요청관리" type="back" />
       <S.PointsMiddleContainer width={width}>
         <S.MiddleWrapper>
           <S.MiddleLeftText>전체</S.MiddleLeftText>
