@@ -55,10 +55,12 @@ const MyPage = ({ width }: MyPageProps) => {
         type="back"
         rightElement={
           <>
-            <S.BellContainer>
-              <NumberBadge number={6} />
-              <FaRegBell className="bell" />
-            </S.BellContainer>
+            <Link to="/">
+              <S.BellContainer>
+                <NumberBadge number={6} />
+                <FaRegBell className="bell" />
+              </S.BellContainer>
+            </Link>
           </>
         }
       />
@@ -73,11 +75,13 @@ const MyPage = ({ width }: MyPageProps) => {
         </S.LoginButtonWrapper>
 
         <CardSectionButton buttonType="abledPay" width={width} />
-        <Link to="points/list">
+        <Link to="/points/list">
           <CardSectionButton buttonType="abledPoint" width={width} />
         </Link>
         {/* FIXME: 승인요청관리 페이지(G-10)으로 이동 */}
-        <CardSectionButton buttonType="management" width={width} />
+        <Link to="/mypage/management">
+          <CardSectionButton buttonType="management" width={width} />
+        </Link>
 
         {/* FIXME: 추후 알람 개수에 따라 alert 개수 변경 */}
         <Link to="/mypage/salesHistory">

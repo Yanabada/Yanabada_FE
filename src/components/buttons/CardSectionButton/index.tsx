@@ -69,7 +69,7 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
             <S.ListButton>
               <S.ListButtonTextWrapper>
                 <YanoljaIcon />
-                <S.ListButtonText>야놀자 페이</S.ListButtonText>
+                <S.ListButtonText>야놀자 포인트</S.ListButtonText>
               </S.ListButtonTextWrapper>
               <S.RightSectionWrapper>
                 {/* FIXME: 추후 변수값으로 대체 예정 */}
