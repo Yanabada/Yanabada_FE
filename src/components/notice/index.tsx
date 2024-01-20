@@ -4,7 +4,6 @@ import CautionIcon from "@assets/icons/caution_Icon.svg?react";
 import QuestionIcon from "@assets/icons/QuestionIcon.svg?react";
 import InfoIcon from "@assets/icons/infoIcon.svg?react";
 import InfoBlueIcon from "@assets/icons/infoBlueIcon.svg?react";
-import CautionIconRed from "@assets/icons/cautionIconRed.svg?react";
 
 interface YanoljaProps {
   type: "yanolja";
@@ -31,7 +30,7 @@ interface DefaultProps {
   type: "default";
   title: string;
   content?: string;
-  color?: "blue" | "orange" | "red";
+  color?: "blue" | "orange";
   shape?: "line" | "fill" | "lineFill";
 }
 
@@ -77,8 +76,6 @@ const Notice = (props: NoticeProps) => {
         icon = <QuestionIcon />;
       } else if (props.color === "orange") {
         icon = <CautionIcon />;
-      } else if (props.color === "red") {
-        icon = <CautionIconRed />;
       }
       return (
         <S.NoticeWrapper className={props.shape ? props.shape : ""}>

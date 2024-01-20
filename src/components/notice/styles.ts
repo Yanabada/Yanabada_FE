@@ -45,9 +45,6 @@ export const NoticeTitle = styled.div`
   &.orange {
     color: ${({ theme }) => theme.colors.orange[200]};
   }
-  &.red {
-    color: ${({ theme }) => theme.colors.pink[200]};
-  }
 `;
 
 export const TextWrapper = styled.div<TextWrapperProps>`
