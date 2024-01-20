@@ -79,7 +79,7 @@ const SignInThird = () => {
           if (isMultiple) {
             return;
           }
-          navigate("/sign-in/3");
+          navigate("/signin/3");
         }}
       >
         다음

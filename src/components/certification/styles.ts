@@ -52,3 +52,7 @@ export const ButtonWrapper = styled.div`
 
   border-top: 1px solid ${({ theme }) => theme.colors.gray[300]};
 `;
+
+export const InputContainer = styled.div`
+  margin: 32px 0 16px;
+`;
