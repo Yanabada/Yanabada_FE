@@ -1,6 +1,8 @@
 import * as S from "./style";
 import { AccommodationInfoType } from "@pages/productDetail/types/detailType";
 import CopyIcon from "@assets/icons/copy.svg?react";
+import { CustomOverlayMap, Map } from "react-kakao-maps-sdk";
+import PositionIcon from "@assets/icons/product_position_mark.svg?react";
 
 interface AccommodationInfoProps {
   accommodationInfo: AccommodationInfoType;
@@ -10,7 +12,18 @@ const Location = ({ accommodationInfo }: AccommodationInfoProps) => {
   return (
     <S.Container>
       <S.Text>위치 / 교통</S.Text>
-      <S.MapContainer></S.MapContainer>
+      <S.MapContainer>
+        <Map
+          style={{ width: "100%", height: "100%" }}
+          center={{ lat: accommodationInfo.latitude, lng: accommodationInfo.longitude }}
+        >
+          <CustomOverlayMap
+            position={{ lat: accommodationInfo.latitude, lng: accommodationInfo.longitude }}
+          >
+            <PositionIcon />
+          </CustomOverlayMap>
+        </Map>
+      </S.MapContainer>
       <S.AddressContainer>
         <S.Address>{accommodationInfo.address}</S.Address>
         <S.CopyButton>
