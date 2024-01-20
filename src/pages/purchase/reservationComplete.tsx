@@ -118,7 +118,7 @@ const ReservationComplete = () => {
           승인 진행상황은 MY야나바다 &gt; 구매내역에서 확인하실 수 있습니다.
         </S.Text>
         <div className="bottom">
-          <Link to="/">구매내역으로 이동</Link>
+          <Link to="/mypage/purchaseHistory">구매내역으로 이동</Link>
           <Link to="/" className="blue">
             홈으로 이동
           </Link>
