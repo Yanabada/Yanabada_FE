@@ -1,11 +1,14 @@
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 
 export const Container = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.colors.gray[200]};
+
+  overflow: hidden;
 `;
 
-export const NoticeContainer = styled.div`
+export const NoticeContainer = styled(motion.div)`
   position: relative;
   display: flex;
   align-items: center;
@@ -69,7 +72,7 @@ export const EditButton = styled.label`
   justify-content: center;
   align-items: center;
   top: 0;
-  right: 0;
+  right: -46px;
   width: 46px;
   height: 100%;
 
