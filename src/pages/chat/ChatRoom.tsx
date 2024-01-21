@@ -66,7 +66,7 @@ const ChatRoom = () => {
         <ChatText isNotice />
         {/* FIXME - 테스트 화면 녹화 후 삭제 예정 */}
         <ChatText senderId={2} />
-        {messages.reverse().map(({ senderId, content }: Message, index) => (
+        {messages.map(({ senderId, content }: Message, index) => (
           <ChatText key={index} senderId={senderId} content={content} />
         ))}
       </S.ChatContainer>
