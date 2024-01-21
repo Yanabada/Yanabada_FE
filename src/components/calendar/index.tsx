@@ -1,4 +1,5 @@
-// import { useState } from "react";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import DatePicker, { registerLocale, ReactDatePickerCustomHeaderProps } from "react-datepicker";
 import ko from "date-fns/locale/ko";
@@ -8,25 +9,38 @@ import { IoChevronBack } from "react-icons/io5";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
-import CalendarStore from "@stores/CalendarStore";
-
 interface calendarProp {
   excludeDates?: Date[];
   renderDayContents?: (dayOfMonth: number, date?: Date | undefined) => React.ReactNode;
 }
 
 const Calendar = ({ excludeDates, renderDayContents }: calendarProp) => {
-  // const [startDate, setStartDate] = useState<Date>();
-  // const [endDate, setEndDate] = useState<Date>();
-  const { searchStartDate, searchEndDate, setSearchStartDate, setSearchEndDate } = CalendarStore();
+  const [startDate, setStartDate] = useState<Date>();
+  const [endDate, setEndDate] = useState<Date>();
   const today = new Date();
 
   registerLocale("ko", ko);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  if (startDate) {
+    searchParams.set("start", startDate.toISOString());
+  } else {
+    searchParams.delete("start");
+  }
+
+  if (endDate) {
+    searchParams.set("end", endDate.toISOString());
+  } else {
+    searchParams.delete("end");
+  }
+
+  setSearchParams(searchParams);
+
   const onChangeDate = (dates: [Date, Date]) => {
     const [start, end] = dates;
-    setSearchStartDate(start);
-    setSearchEndDate(end);
+    setStartDate(start);
+    setEndDate(end);
   };
 
   const renderCustomHeader = ({
@@ -69,8 +83,8 @@ const Calendar = ({ excludeDates, renderDayContents }: calendarProp) => {
     <>
       <DatePicker
         onChange={onChangeDate}
-        startDate={searchStartDate}
-        endDate={searchEndDate}
+        startDate={startDate}
+        endDate={endDate}
         minDate={today}
         selectsRange
         dayClassName={addDayClass}
@@ -78,6 +92,7 @@ const Calendar = ({ excludeDates, renderDayContents }: calendarProp) => {
         renderCustomHeader={renderCustomHeader}
         renderDayContents={renderDayContents}
         excludeDates={excludeDates}
+        showPreviousMonths={false}
         inline
       />
     </>

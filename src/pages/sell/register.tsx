@@ -1,32 +1,74 @@
 import * as S from "./styles/register";
 import * as CS from "./styles/detail";
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { eachDayOfInterval, endOfMonth, startOfMonth } from "date-fns";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { differenceInDays } from "date-fns";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
 import PriceArea from "@components/priceArea";
 import PriceTable from "@components/priceTable";
 import Notice from "@components/notice";
-import AuthenticationButton from "@components/buttons/AuthenticationButton";
-import DateChangeButton from "@components/buttons/DateChangeButton";
 import Checkbox from "@components/input/Checkbox";
 import BaseButton from "@components/buttons/BaseButton";
-import BottomSheet from "@components/bottomSheet";
-import Calendar from "@components/calendar";
+import { feePolicy2 } from "@constants/feePolicys";
 
-import YanoljaIcon from "assets/icons/yanolja_Icon.svg?react";
+import NegoOption from "./components/NegoOption";
+import AutoCancelOption from "./components/AutoCancelOption";
+import DateOption from "./components/DateOption";
+
+interface EndDateInfo {
+  endDate: string;
+  daysBefore: number;
+  feePercentage: number;
+}
 
 const SellRegister = () => {
-  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [allCheck, setAllCheck] = useState(false);
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
   const [check3, setCheck3] = useState(false);
 
+  const [price, setPrice] = useState(0);
+  const [isNego, setIsNego] = useState(false);
   const [isAutoCancel, setIsAutoCancel] = useState(false);
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [endDate, setEndDate] = useState<string | undefined>();
+  const [, setStartDate] = useState<string | null>(null);
+  const [endDateInfo, setEndDateInfo] = useState<EndDateInfo>({
+    endDate: "",
+    daysBefore: 0,
+    feePercentage: 0
+  });
+
+  // 시작일과 종료일 쿼리스트링으로 등록
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const startParam = searchParams.get("start");
+    const endParam = searchParams.get("end");
+
+    setStartDate(String(startParam));
+    setEndDate(String(endParam));
+
+    if (endParam) {
+      const currentDate = new Date(endParam);
+      const daysBefore = differenceInDays(new Date(productData.checkInDate), currentDate);
+      const feePercentage =
+        feePolicy2.find((policy) => policy.daysBefore === daysBefore)?.percentage || 0;
+
+      setEndDateInfo({
+        endDate: String(endParam),
+        daysBefore: daysBefore,
+        feePercentage: feePercentage
+      });
+    }
+  }, [location.search]);
+
+  // API 연결 전, 데이터 상수
   const originalPrice = 1200000;
   const purchasePrice = 1200000;
   const cancelFee = 600000;
@@ -36,51 +78,9 @@ const SellRegister = () => {
     image: "http://via.placeholder.com/300x300",
     accommodationName: "춘천세종호텔",
     roomName: "스탠다드 룸",
-    checkInDate: "2024-01-16",
-    checkOutDate: "2024-01-19",
+    checkInDate: "2024-01-25",
+    checkOutDate: "2024-01-26",
     policyNumber: 2
-  };
-
-  const bottomSheetProps = {
-    title: "판매기한 선택",
-    isVisible: bottomSheetVisible,
-    setIsVisible: setBottomSheetVisible
-  };
-
-  // calendar 영역
-  const currentMonth = new Date(2024, 0);
-  const nextYear = new Date(currentMonth);
-  nextYear.setFullYear(currentMonth.getFullYear() + 1);
-  const today = new Date();
-
-  const seletedDates = eachDayOfInterval({
-    start: startOfMonth(currentMonth),
-    end: endOfMonth(currentMonth)
-  });
-
-  const excludeDates = seletedDates
-    .filter((date) => date.getDate() < 16 || date.getDate() > 19)
-    .concat(
-      eachDayOfInterval({
-        start: startOfMonth(new Date(currentMonth.getFullYear(), 1)),
-        end: endOfMonth(nextYear)
-      })
-    );
-
-  const renderDayContents = (dayOfMonth: number, date?: Date | null | undefined) => {
-    const isExcluded =
-      date instanceof Date &&
-      excludeDates.some((excludedDate) => excludedDate.getTime() === date.getTime());
-
-    const isBeforeToday = date instanceof Date && date < today;
-
-    return (
-      <div>
-        {dayOfMonth}
-        {!(isBeforeToday || isExcluded) && <span className="include-text">90,000</span>}
-        {(isBeforeToday || isExcluded) && <span className="exclude-text">0</span>}
-      </div>
-    );
   };
 
   return (
@@ -111,121 +111,28 @@ const SellRegister = () => {
             resetPrice={purchasePrice}
             isAlert
             charge={false}
+            price={price}
+            setPrice={setPrice}
           />
         </S.RegisterInner>
         <CS.DetailBlank />
-        <S.RegisterInner>
-          <S.RegisterTitle>판매 옵션</S.RegisterTitle>
-          <S.RegisterSubTitle>
-            네고 여부 선택 <span>*</span>
-          </S.RegisterSubTitle>
-          <S.RegisterDes>네고 불가능 선택 시 구매자는 채팅을 신청할 수 없습니다.</S.RegisterDes>
-          <S.SelectWrap>
-            <S.ButtonInner>
-              <AuthenticationButton buttonType="disabled" width="100%">
-                예
-              </AuthenticationButton>
-            </S.ButtonInner>
-            <S.ButtonInner>
-              <AuthenticationButton buttonType="default" width="100%">
-                아니오
-              </AuthenticationButton>
-            </S.ButtonInner>
-          </S.SelectWrap>
-        </S.RegisterInner>
-        <S.RegisterInner>
-          <S.RegisterSubTitle>
-            판매 중단 날짜 설정 <span>*</span>
-          </S.RegisterSubTitle>
-          <S.RegisterDes>
-            판매 중단 날짜 내 상품이 판매되지 않을 경우 자동으로 야나바다에서 판매가 중단됩니다.
-          </S.RegisterDes>
-          <DateChangeButton
-            endDate={"2024.01.06"}
-            width="100%"
-            onClick={() => setBottomSheetVisible(true)}
-          />
-          <BottomSheet {...bottomSheetProps}>
-            <S.CalendarInner>
-              <Notice
-                type="default"
-                title="판매 종료일을 선택해주세요"
-                content="날짜별 판매 종료 시 환불받을 수 있는 금액이에요
-                오늘(1월 3일)부터 입실일까지 판매할 수 있어요."
-                shape="line"
-              />
-              <S.SmallSpace />
-              <Calendar excludeDates={excludeDates} renderDayContents={renderDayContents} />
-              <S.SmallSpace />
-              <S.RegisterSubTitle>받을 수 있는 금액</S.RegisterSubTitle>
-              <S.CalcInner>
-                <div className="calc-box calc-box__left">
-                  <p className="tit">양도 판매 성공 시</p>
-                  <p className="discount">
-                    <span>1,029,000</span>원
-                  </p>
-                  <p className="inner">
-                    <span className="percentage text-blue">90%</span>
-                    <span className="price">926,1000원</span>
-                  </p>
-                  {/* startDate 입력 전 */}
-                  {/* <p className="tit no-text">
-                    판매 가격이
-                    <br /> 설정되지 않았어요
-                  </p> */}
-                </div>
-                <div className="calc-box calc-box__right">
-                  <p className="tit">1월 8일 판매 종료시</p>
-                  <p className="discount">
-                    <span>1,029,000</span>원
-                  </p>
-                  <p className="inner">
-                    <span className="percentage text-orange">7%</span>
-                    <span className="price">100,000원</span>
-                  </p>
-                </div>
-              </S.CalcInner>
-              <S.SmallSpace />
-              <BaseButton buttonType="default" width="100%">
-                확인
-              </BaseButton>
-            </S.CalendarInner>
-          </BottomSheet>
-        </S.RegisterInner>
-        <S.RegisterInner>
-          <S.RegisterSubTitle>
-            판매 중단 후 야놀자에서 자동 예약 취소 할게요 <span>*</span>
-          </S.RegisterSubTitle>
-          <S.SelectWrap>
-            <S.ButtonInner>
-              <AuthenticationButton
-                buttonType={isAutoCancel ? "disabled" : "default"}
-                width="100%"
-                onClick={() => setIsAutoCancel(true)}
-              >
-                예
-              </AuthenticationButton>
-            </S.ButtonInner>
-            <S.ButtonInner>
-              <AuthenticationButton
-                buttonType={isAutoCancel ? "default" : "disabled"}
-                width="100%"
-                onClick={() => setIsAutoCancel(false)}
-              >
-                아니오
-              </AuthenticationButton>
-            </S.ButtonInner>
-          </S.SelectWrap>
-          <S.RefundText>
-            <p className="text">
-              <YanoljaIcon />
-              야놀자에서 취소 시 환불금
-            </p>
-            <p className="price">
-              <span>700,000</span>원
-            </p>
-          </S.RefundText>
-        </S.RegisterInner>
+        <NegoOption isNego={isNego} setIsNego={setIsNego} />
+        <DateOption
+          bottomSheetVisible={bottomSheetVisible}
+          setBottomSheetVisible={setBottomSheetVisible}
+          productData={productData}
+          originalPrice={originalPrice}
+          purchasePrice={purchasePrice}
+          price={price}
+          endDate={endDate}
+          endDateInfo={endDateInfo}
+        />
+        <AutoCancelOption
+          isAutoCancel={isAutoCancel}
+          setIsAutoCancel={setIsAutoCancel}
+          originalPrice={originalPrice}
+          endDateInfo={endDateInfo}
+        />
         <CS.DetailBlank />
         <S.RegisterInner>
           <S.RegisterTitle>판매자 한마디</S.RegisterTitle>
@@ -269,7 +176,15 @@ const SellRegister = () => {
             <p className="des">
               <Link to="/">이용규칙</Link>에 동의하실 경우 상품 등록하기를 클릭해주세요
             </p>
-            <BaseButton buttonType="default" width="100%">
+            <BaseButton
+              buttonType="default"
+              width="100%"
+              onClick={() => {
+                if (allCheck) {
+                  navigate("/sell/result");
+                }
+              }}
+            >
               상품 등록하기
             </BaseButton>
           </S.ConfirmWrap>
