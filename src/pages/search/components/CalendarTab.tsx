@@ -4,7 +4,7 @@ import { useSearchTab } from "../stores/tabStore";
 
 import CalendarIcon from "@assets/icons/search_Calendar.svg?react";
 import CalendarStore from "@stores/CalendarStore";
-import { format } from "date-fns";
+import { formatDateTo } from "@utils/formatDateTo";
 
 const CalendarTab = () => {
   const { tab, setTab } = useSearchTab();
@@ -12,7 +12,7 @@ const CalendarTab = () => {
 
   const changeDate = (date: Date | null) => {
     if (date) {
-      return format(date, "MM/dd");
+      return formatDateTo(date, "MM/dd");
     }
     return null;
   };
