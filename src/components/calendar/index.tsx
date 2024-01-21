@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import DatePicker, { registerLocale, ReactDatePickerCustomHeaderProps } from "react-datepicker";
@@ -23,19 +23,21 @@ const Calendar = ({ excludeDates, renderDayContents }: calendarProp) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  if (startDate) {
-    searchParams.set("start", startDate.toISOString());
-  } else {
-    searchParams.delete("start");
-  }
+  useEffect(() => {
+    if (startDate) {
+      searchParams.set("start", startDate.toISOString());
+    } else {
+      searchParams.delete("start");
+    }
 
-  if (endDate) {
-    searchParams.set("end", endDate.toISOString());
-  } else {
-    searchParams.delete("end");
-  }
+    if (endDate) {
+      searchParams.set("end", endDate.toISOString());
+    } else {
+      searchParams.delete("end");
+    }
 
-  setSearchParams(searchParams);
+    setSearchParams(searchParams);
+  }, [startDate, endDate, searchParams, setSearchParams]);
 
   const onChangeDate = (dates: [Date, Date]) => {
     const [start, end] = dates;
