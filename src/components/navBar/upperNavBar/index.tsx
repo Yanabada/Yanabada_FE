@@ -12,6 +12,7 @@ interface UpperNavProp
   shape?: "fill" | "";
   color?: string;
   customBack?: () => void;
+  isCustom?: boolean;
 }
 
 const UpperNavBar = ({
@@ -22,6 +23,7 @@ const UpperNavBar = ({
   shape = "fill",
   customBack,
   setIsVisible,
+  isCustom = true,
   ...props
 }: UpperNavProp) => {
   const navigate = useNavigate();
@@ -40,6 +42,10 @@ const UpperNavBar = ({
   }
 
   const handleClick = () => {
+    if (isCustom) {
+      customBack && customBack();
+      return;
+    }
     switch (type) {
       case "back":
       case "backClose":
