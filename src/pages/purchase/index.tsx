@@ -23,6 +23,7 @@ import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import Modal from "@components/modal";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 
 interface PurchaseProps {
   width?: string;
@@ -108,7 +109,9 @@ const Purchase = ({
     console.log("name1", name1);
     console.log("phoneNumber1", phoneNumber1);
 
-    navigate("/signin?from=changePassword&redirect=/purchase");
+    navigate(
+      `/signin/3?from=changeReservationInfo&name=${name1}&phonenumber=${phoneNumber1}&redirect=/purchase`
+    );
   };
 
   const {
@@ -119,6 +122,10 @@ const Purchase = ({
   } = useForm({
     mode: "onBlur"
   });
+
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get("name");
+  const phoneNumber = searchParams.get("phonenumber");
 
   useEffect(() => {
     if (isChecked3 && isChecked4) {
@@ -249,7 +256,10 @@ const Purchase = ({
               </form>
             </S.FormWrapper>
           ) : (
-            <S.PersonInfoBottomWrapper>김팔자 / 010-1234-5678</S.PersonInfoBottomWrapper>
+            <S.PersonInfoBottomWrapper>
+              {/* FIXME: name과 phoneNumber값이 없으면 api 호출하여 렌더링 */}
+              {name ? name : "김팔자"} / {phoneNumber ? phoneNumber : "010-1234-5678"}
+            </S.PersonInfoBottomWrapper>
           )}
         </S.PersonInfoWrapper>
       </S.ReservationContainer>
