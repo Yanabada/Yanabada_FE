@@ -3,6 +3,7 @@ interface AuthenticationButtonProps extends React.ButtonHTMLAttributes<HTMLButto
   children: React.ReactNode;
   buttonType: "light" | "default" | "abled" | "disabled" | undefined;
   width?: string;
+  height?: string;
   className?: string | undefined;
   onClick?: () => void | undefined;
 }

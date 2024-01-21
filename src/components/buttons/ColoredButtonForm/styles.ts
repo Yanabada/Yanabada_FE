@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 interface ColoredButtonFormProps {
   width?: string;
+  isActive?: boolean;
 }
 
 export const ColoredButtonWrapper = styled.div<ColoredButtonFormProps>`
@@ -37,6 +38,9 @@ export const ColoredButton = styled.button<ColoredButtonFormProps>`
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.gray[500]};
   color: #fff;
+
+  background: ${({ theme, isActive }) =>
+    isActive ? theme.colors.blue[200] : theme.colors.gray[500]};
 `;
 
 export const ColoredText = styled.span`

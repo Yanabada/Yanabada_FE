@@ -29,6 +29,12 @@ export const Input = styled.input`
   &.error {
     border-bottom: 1px solid ${(props) => props.theme.colors.pink[200]};
   }
+
+  ::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+  }
 `;
 
 export const Label = styled.label`

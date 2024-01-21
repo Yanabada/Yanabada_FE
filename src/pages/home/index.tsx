@@ -16,8 +16,16 @@ const Home = () => {
       <SearchInput />
       <Banner />
       <RecentlyProduct />
-      <CategoryProduct title="마감 임박 상품" link="/products" rowCardProps="마감임박" />
-      <CategoryProduct title="높은 할인율 상품" link="/products" rowCardProps="높안할인율" />
+      <CategoryProduct
+        title="마감 임박 상품"
+        link="/products?order=END_DATE_ASC"
+        rowCardProps="마감임박"
+      />
+      <CategoryProduct
+        title="높은 할인율 상품"
+        link="/products?order=SALES_PERCENTAGE_DESC"
+        rowCardProps="높안할인율"
+      />
       <SpecialServices />
       <CategoryList />
       <SubServices />

@@ -54,6 +54,18 @@ export const ImageContainer = styled.div`
   overflow: hidden;
 `;
 
+export const ImageOverlay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  ${({ theme }) => theme.text.subtitle5}
+`;
+
 export const Image = styled.img`
   width: 7.25rem;
   object-fit: cover;
