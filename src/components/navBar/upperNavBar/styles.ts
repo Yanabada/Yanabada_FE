@@ -11,7 +11,7 @@ export const UpperNavWrapper = styled.div`
 
   text-align: center;
 
-  background-color: #fff;
+  background-color: transparent;
   z-index: 999;
 
   &.hasBorder {
