@@ -9,20 +9,13 @@ import BottomSheet from "@components/bottomSheet";
 import Notice from "@components/notice";
 import CancellationPolicyTable from "@components/priceModal";
 import { checkDayOfFee } from "@utils/checkDayOfFee";
+import { productData } from "@/types/priceTable";
 
 interface PriceTableProps {
   originalPrice: number;
   purchasePrice: number;
   cancelFee: number;
-  productData: {
-    code: string;
-    image: string;
-    accommodationName: string;
-    roomName: string;
-    checkInDate: string;
-    checkOutDate: string;
-    policyNumber: number;
-  };
+  productData: productData;
 }
 
 const PriceTable = ({ originalPrice, purchasePrice, cancelFee, productData }: PriceTableProps) => {

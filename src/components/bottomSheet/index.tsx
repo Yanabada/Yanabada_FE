@@ -8,9 +8,18 @@ interface bottomSheetProp extends Pick<React.HTMLAttributes<HTMLButtonElement>, 
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   children: ReactNode;
+  isCustom?: boolean;
+  customBack?: () => void;
 }
 
-const BottomSheet = ({ title, isVisible, setIsVisible, children }: bottomSheetProp) => {
+const BottomSheet = ({
+  title,
+  isVisible,
+  setIsVisible,
+  children,
+  isCustom,
+  customBack
+}: bottomSheetProp) => {
   return (
     <AnimatePresence>
       {isVisible && (
@@ -33,6 +42,8 @@ const BottomSheet = ({ title, isVisible, setIsVisible, children }: bottomSheetPr
                 title={title}
                 className="bottomSheet"
                 setIsVisible={setIsVisible}
+                isCustom={isCustom}
+                customBack={customBack}
               />
             )}
             {children}

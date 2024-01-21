@@ -71,3 +71,7 @@ export const TimeContainer = styled.div`
     fill: ${({ theme }) => theme.colors.blue[200]};
   }
 `;
+
+export const PriceInfoBox = styled.div`
+  padding: 65px 14px 14px;
+`;
