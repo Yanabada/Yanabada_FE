@@ -29,7 +29,7 @@ export const InfoWrapper = styled.div`
 export const Title = styled.h2`
   ${({ theme }) => theme.text.subtitle3};
   color: ${({ theme }) => theme.colors.gray[900]};
-  margin: 1rem 1rem 1rem 1rem;
+  margin: 1rem;
 `;
 
 export const SubTitle = styled.p`
