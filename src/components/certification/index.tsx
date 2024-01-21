@@ -49,8 +49,9 @@ const Certification = ({
   const {
     register,
     setValue,
-    formState: { errors },
-    getValues
+    formState: { errors, isValid },
+    getValues,
+    trigger
   } = useForm<FormData>({
     mode: "onBlur"
   });
@@ -108,8 +109,11 @@ const Certification = ({
   useEffect(() => {
     if (phoneNum) {
       setValue("phoneNumber", phoneNum);
+      trigger("phoneNumber");
     }
-  }, []);
+  }, [phoneNum, setValue, trigger]);
+
+  console.log("isValid:", isValid); // isValid를 콘솔에 로그
 
   return (
     <>
@@ -130,7 +134,7 @@ const Certification = ({
             errorMessage={errors.phoneNumber && `${errors.phoneNumber?.message}`}
           />
           <AuthenticationButton
-            buttonType={isSendValid ? "disabled" : "abled"}
+            buttonType={isValid ? "disabled" : "abled"}
             width={width}
             onClick={handleAuthenticationBtnClick}
           >
