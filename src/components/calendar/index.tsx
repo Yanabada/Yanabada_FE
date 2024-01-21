@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import DatePicker, { registerLocale, ReactDatePickerCustomHeaderProps } from "react-datepicker";
 import ko from "date-fns/locale/ko";
@@ -17,29 +17,25 @@ interface calendarProp {
 const Calendar = ({ excludeDates, renderDayContents }: calendarProp) => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
-  const navigate = useNavigate();
-  const location = useLocation();
   const today = new Date();
 
   registerLocale("ko", ko);
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-    if (startDate) {
-      searchParams.set("start", startDate.toISOString());
-    } else {
-      searchParams.delete("start");
-    }
+  if (startDate) {
+    searchParams.set("start", startDate.toISOString());
+  } else {
+    searchParams.delete("start");
+  }
 
-    if (endDate) {
-      searchParams.set("end", endDate.toISOString());
-    } else {
-      searchParams.delete("end");
-    }
+  if (endDate) {
+    searchParams.set("end", endDate.toISOString());
+  } else {
+    searchParams.delete("end");
+  }
 
-    navigate(`?${searchParams.toString()}`);
-  }, [startDate, endDate, navigate, location.search]);
+  setSearchParams(searchParams);
 
   const onChangeDate = (dates: [Date, Date]) => {
     const [start, end] = dates;
