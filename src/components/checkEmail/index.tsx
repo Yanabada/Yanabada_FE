@@ -9,7 +9,9 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
 
 interface CheckEmailProps {
+  type: "back" | "close" | "backClose";
   title: string;
+  to: string;
 }
 
 interface FormData {
@@ -17,7 +19,7 @@ interface FormData {
   code: number;
 }
 
-const CheckEmail = ({ title }: CheckEmailProps) => {
+const CheckEmail = ({ type, title, to }: CheckEmailProps) => {
   const navigate = useNavigate();
   const [isSuccess, setIsSuccess] = useState(false);
   const [sentCount, setSentCount] = useState(5);
@@ -72,7 +74,7 @@ const CheckEmail = ({ title }: CheckEmailProps) => {
 
   return (
     <>
-      <UpperNavBar type="back" title={title} />
+      <UpperNavBar type={type} title={title} />
 
       <TextInput
         variant="move"
@@ -137,7 +139,7 @@ const CheckEmail = ({ title }: CheckEmailProps) => {
           if (!isSuccess || !isNumCorrect) {
             return;
           }
-          navigate("/signin/1");
+          navigate(to);
         }}
       >
         다음
