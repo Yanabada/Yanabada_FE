@@ -1,19 +1,14 @@
 import UpperNavBar from "@components/navBar/upperNavBar";
 import SearchBar from "./components/SearchBar";
-import OptionTab from "./components/OptionTap";
-import Order from "./components/Order";
-import ProductCard from "./components/ProductCard";
 import * as S from "./styles/style";
-import KakaoMap from "./components/KakaoMap";
 import CategoryTab from "./components/CategoryTab";
 import GoToMapButton from "./components/ToMapButton";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Link } from "react-router-dom";
-import useProducts from "./api/queries";
+import ProductList from "./components/ProductList";
 
 const Products = () => {
   const [isMapOpen, setMapOpen] = useState(false);
-  const { data: products } = useProducts();
 
   return (
     <>
@@ -29,22 +24,9 @@ const Products = () => {
         </Link>
         {!isMapOpen && <CategoryTab />}
       </S.Container>
-      {isMapOpen && (
-        <S.MapContainer>
-          <KakaoMap />
-        </S.MapContainer>
-      )}
-      {!isMapOpen && (
-        <S.SecondContainer>
-          <OptionTab />
-          <Order />
-          <S.ProductCardWrapper>
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </S.ProductCardWrapper>
-        </S.SecondContainer>
-      )}
+      <Suspense fallback={<p>Loading...</p>}>
+        <ProductList isMapOpen={isMapOpen} />
+      </Suspense>
       {!isMapOpen && <GoToMapButton handleClick={() => setMapOpen(true)} />}
     </>
   );
