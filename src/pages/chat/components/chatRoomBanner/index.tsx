@@ -2,23 +2,22 @@ import BaseButton from "@components/buttons/BaseButton";
 import * as S from "./styles";
 import TimerIcon from "@assets/icons/timerIcon.svg?react";
 import Badges from "@components/badges";
-// import BottomSheet from "@components/bottomSheet";
-// import { useState } from "react";
-// import PriceArea from "@components/priceArea";
+import BottomSheet from "@components/bottomSheet";
+import { useState } from "react";
+import PriceArea from "@components/priceArea";
 
 interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   status: "ON_SALE" | "SOLD_OUT" | "BOOKING" | "CANCELED";
   roomName: string;
   salesPercentage: number;
-  sellingPrice: string;
-  price: string;
+  sellingPrice: number;
+  price: number;
   saleEndDate: string;
   sellerId: number;
-  purchasePrice: string;
+  purchasePrice: number;
+  cancelFee: number;
   // TODO - api 확정 후 연결할 때 type 수정
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  productData: any;
 }
 interface CommonContent {
   badgeText: string;
@@ -34,11 +33,11 @@ const ChatRoomBanner = ({
   sellingPrice,
   price,
   saleEndDate,
-  sellerId
-  // purchasePrice,
-  // productData
+  sellerId,
+  purchasePrice,
+  cancelFee
 }: ChatRoomBannerProps) => {
-  // const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 
   const commonContent: Record<string, CommonContent> = {
     ON_SALE: {
@@ -134,7 +133,7 @@ const ChatRoomBanner = ({
         <BaseButton
           buttonType="icon"
           onClick={() => {
-            // setIsBottomSheetVisible(true);
+            setIsBottomSheetVisible(true);
           }}
           width="100%"
           style={{ borderRadius: "0px" }}
@@ -144,13 +143,18 @@ const ChatRoomBanner = ({
         </BaseButton>
       )}
       {/* TODO - price area 컴포넌트 수정되면 반영 */}
-      {/* <BottomSheet isVisible={isBottomSheetVisible} setIsVisible={setIsBottomSheetVisible}>
+      <BottomSheet isVisible={isBottomSheetVisible} setIsVisible={setIsBottomSheetVisible}>
         <PriceArea
+          title="가격 변경하기"
+          placeholder="￦ 판매 가격을 입력해주세요"
           originalPrice={price}
           purchasePrice={purchasePrice}
-          productData={productData}
+          cancelFee={cancelFee}
+          resetPrice={purchasePrice}
+          isAlert
+          charge={false}
         />
-      </BottomSheet> */}
+      </BottomSheet>
     </S.Container>
   );
 };
