@@ -29,7 +29,7 @@ const Profile = ({ width }: ProfileProps) => {
           <S.EmailText>email*****@gmail.com</S.EmailText>
         </S.ProfileWrapper>
 
-        <Spacer />
+        <Spacer width={width} />
 
         <S.PersonalInfoWrapper gap="16px">
           <S.Label>개인정보</S.Label>
@@ -76,7 +76,7 @@ const Profile = ({ width }: ProfileProps) => {
           </S.PersonalInfoTextWrapper>
         </S.PersonalInfoWrapper>
 
-        <Spacer />
+        <Spacer width={width} />
 
         <S.PersonalInfoWrapper gap="16px">
           <S.Label>광고성 정보 수신동의</S.Label>
@@ -103,7 +103,7 @@ const Profile = ({ width }: ProfileProps) => {
           </S.CheckBoxContainer>
         </S.PersonalInfoWrapper>
 
-        <Spacer />
+        <Spacer width={width} />
 
         <S.PersonalInfoWrapper gap="16px">
           <S.SwitchLabel>
@@ -115,7 +115,7 @@ const Profile = ({ width }: ProfileProps) => {
           </S.SwitchLabel>
         </S.PersonalInfoWrapper>
 
-        <Spacer />
+        <Spacer width={width} />
 
         <S.PersonalInfoWrapper gap="16px">
           <S.WithdrawalWrapper>
