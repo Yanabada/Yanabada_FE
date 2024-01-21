@@ -61,8 +61,6 @@ export const RightElement = styled.button`
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-
-  pointer-events: none;
 `;
 
 export const ErrorMessage = styled.p`

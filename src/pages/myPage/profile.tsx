@@ -7,6 +7,11 @@ import CheckIcon from "@assets/icons/checkbox_Check.svg?react";
 import { Input, Icon } from "@components/input/Checkbox/allConsentCheckbox.style";
 import SwitchButton from "@components/buttons/SwitchButton";
 import ArrowForwardIcon from "@assets/icons/arrowForwardIconLight.svg?react";
+import { useState } from "react";
+import TextInput from "@components/input/TextInput";
+import ManipulationChip from "@components/chips/ManipulationChip";
+import CancelIcon from "@assets/icons/cancelIcon.svg?react";
+import { useForm } from "react-hook-form";
 
 interface ProfileProps {
   width?: string;
@@ -14,6 +19,26 @@ interface ProfileProps {
 }
 
 const Profile = ({ width }: ProfileProps) => {
+  const [isEditIconClicked, setIsEditIconClicked] = useState(false);
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (errors.nickName) return;
+    // FIXME: API 연동
+    console.log("submit");
+    const nickName = getValues("nickName");
+    console.log("nickName", nickName);
+  };
+
+  const {
+    register,
+    formState: { errors },
+    getValues,
+    setValue
+  } = useForm({
+    mode: "onBlur"
+  });
+
   return (
     <>
       <UpperNavBar title="내 정보 관리" type="back" />
@@ -22,11 +47,47 @@ const Profile = ({ width }: ProfileProps) => {
           {/* FIXME: 추후 DB에서 받아온 이미지로 변경 예정 */}
           {/* <S.ProfileImage imageURL={imageURL} /> */}
           <ProfileImg />
-          <S.ProfileTextWrapper>
-            <S.ProfileText>강쥐사랑해</S.ProfileText>
-            <EditIcon />
-          </S.ProfileTextWrapper>
-          <S.EmailText>email*****@gmail.com</S.EmailText>
+          {isEditIconClicked ? (
+            <S.FormWrapper width={width}>
+              <form onSubmit={onSubmit}>
+                <S.TextInputWrapper width={width}>
+                  <TextInput
+                    variant="move"
+                    label="닉네임"
+                    rightElement={<CancelIcon />}
+                    onRightElementClick={() => setValue("nickName", "")}
+                    {...register("nickName", {
+                      required: true,
+                      pattern: {
+                        value: /^[가-힣a-zA-Z0-9]{2,8}$/,
+                        message: "2~8자 한글/영문/숫자만 가능합니다."
+                      }
+                    })}
+                    errorMessage={errors.nickName && `${errors.nickName?.message}`}
+                  />
+                </S.TextInputWrapper>
+                <S.TextInputBottomWrapper width={width}>
+                  <ManipulationChip
+                    buttonType={!errors.nickName ? "abledDefault" : "disabledDefault"}
+                    type="submit"
+                  >
+                    확인
+                  </ManipulationChip>
+                  <ManipulationChip buttonType="disabledDefault">취소</ManipulationChip>
+                </S.TextInputBottomWrapper>
+              </form>
+            </S.FormWrapper>
+          ) : (
+            <>
+              <S.ProfileTextWrapper>
+                <S.ProfileText>강쥐사랑해</S.ProfileText>
+                <S.EditIconWrapper onClick={() => setIsEditIconClicked(true)}>
+                  <EditIcon />
+                </S.EditIconWrapper>
+              </S.ProfileTextWrapper>
+              <S.EmailText>email*****@gmail.com</S.EmailText>
+            </>
+          )}
         </S.ProfileWrapper>
 
         <Spacer width={width} />
