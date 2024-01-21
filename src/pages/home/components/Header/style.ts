@@ -30,7 +30,6 @@ export const HeaderContainer = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   height: 3.5rem;
   padding: 0 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[300]};
@@ -39,6 +38,7 @@ export const HeaderContainer = styled(motion.nav)`
 `;
 
 export const BellContainer = styled.div`
+  width: 33%;
   .bell {
     width: 1.375rem;
     height: 1.375rem;
@@ -48,29 +48,15 @@ export const BellContainer = styled.div`
 `;
 
 export const LogoContainer = styled.div`
+  width: 33%;
   display: flex;
   justify-content: center;
-  margin-left: 1.5rem;
 
   > svg {
     fill: #fff;
   }
 `;
 
-export const GotoContainer = styled.a`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 7rem;
-  height: 0.9375rem;
-  gap: 0.125rem;
-  padding: 0.7rem 0.5rem;
-  border-radius: 3px;
-  background: rgba(242, 242, 242, 0.3);
-  cursor: pointer;
-`;
-
-export const GotoText = styled.p`
-  color: #fff;
-  ${({ theme }) => theme.text.overline};
+export const Wrapper = styled.div`
+  width: 33%;
 `;

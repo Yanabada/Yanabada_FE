@@ -1,7 +1,6 @@
 import * as S from "./style";
 import { FaRegBell } from "react-icons/fa";
 import LogoIcon from "assets/icons/nav_Logo.svg?react";
-import YanoljaIcon from "assets/icons/yanolja_Icon.svg?react";
 import NumberBadge from "@components/numberBadge";
 import { useTransform, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -36,10 +35,7 @@ const Header = () => {
         <S.LogoContainer className="logoContainer">
           <LogoIcon />
         </S.LogoContainer>
-        <S.GotoContainer href="https://www.yanolja.com/" target="_blank">
-          <S.GotoText className="gotoText">야놀자 바로가기</S.GotoText>
-          <YanoljaIcon />
-        </S.GotoContainer>
+        <S.Wrapper></S.Wrapper>
       </S.HeaderContainer>
     </S.Container>
   );
