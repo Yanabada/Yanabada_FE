@@ -12,6 +12,7 @@ interface CheckEmailProps {
   type: "back" | "close" | "backClose";
   title: string;
   to: string;
+  noticeTitle?: string;
 }
 
 interface FormData {
@@ -19,7 +20,7 @@ interface FormData {
   code: number;
 }
 
-const CheckEmail = ({ type, title, to }: CheckEmailProps) => {
+const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
   const navigate = useNavigate();
   const [isSuccess, setIsSuccess] = useState(false);
   const [sentCount, setSentCount] = useState(5);
@@ -93,7 +94,11 @@ const CheckEmail = ({ type, title, to }: CheckEmailProps) => {
       <Notice
         type="default"
         color="orange"
-        title="회원 가입시 ID는 반드시 본인 소유의 연락 가능한 이메일 주소를 사용하여야 합니다."
+        title={
+          noticeTitle
+            ? noticeTitle
+            : "회원 가입시 ID는 반드시 본인 소유의 연락 가능한 이메일 주소를 사용하여야 합니다."
+        }
       />
       <S.ButtonContainer>
         <AuthenticationButton
