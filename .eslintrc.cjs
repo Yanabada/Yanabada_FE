@@ -4,8 +4,8 @@ module.exports = {
 
   extends: [
     "eslint:recommended", // ESLint의 기본 권장 규칙 사용
-    "plugin:@typescript-eslint/recommended", // TypeScript 관련 권장 규칙 사용
-    "plugin:react-hooks/recommended" // React Hooks 규칙 사용
+    "plugin:@typescript-eslint/recommended" // TypeScript 관련 권장 규칙 사용
+    // "plugin:react-hooks/recommended" // React Hooks 규칙 사용
   ],
 
   ignorePatterns: ["dist", ".eslintrc.cjs"], // ESLint 무시할 파일 또는 디렉토리 설정

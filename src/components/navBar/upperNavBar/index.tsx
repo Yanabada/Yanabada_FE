@@ -6,12 +6,13 @@ import { ReactNode } from "react";
 interface UpperNavProp
   extends Pick<React.HTMLAttributes<HTMLButtonElement>, "className" | "title"> {
   hasBorder?: boolean;
-  type: "back" | "close";
+  type: "back" | "close" | "backClose";
   rightElement?: ReactNode;
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
   shape?: "fill" | "";
   color?: string;
   customBack?: () => void;
+  isCustom?: boolean;
 }
 
 const UpperNavBar = ({
@@ -21,6 +22,8 @@ const UpperNavBar = ({
   rightElement = null,
   shape = "fill",
   customBack,
+  setIsVisible,
+  isCustom = true,
   ...props
 }: UpperNavProp) => {
   const navigate = useNavigate();
@@ -31,6 +34,7 @@ const UpperNavBar = ({
       icon = <IoChevronBackSharp size="25px" />;
       break;
     case "close":
+    case "backClose":
       icon = <IoCloseSharp size="25px" />;
       break;
     default:
@@ -38,8 +42,22 @@ const UpperNavBar = ({
   }
 
   const handleClick = () => {
-    navigate(-1);
-    customBack && customBack();
+    if (isCustom) {
+      customBack && customBack();
+      return;
+    }
+    switch (type) {
+      case "back":
+      case "backClose":
+        navigate(-1);
+        customBack && customBack();
+        break;
+      case "close":
+        setIsVisible && setIsVisible(false);
+        break;
+      default:
+        break;
+    }
   };
 
   return (

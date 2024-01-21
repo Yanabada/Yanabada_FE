@@ -24,7 +24,7 @@ export const ModalWrapper = styled(motion.div)`
   border-radius: 20px;
   padding: 24px;
   text-align: center;
-  text-wrap: balance;
+  white-space: pre-line;
   box-shadow: ${({ theme }) => theme.shadows[1]};
 
   display: flex;
