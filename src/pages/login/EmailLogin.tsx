@@ -7,8 +7,10 @@ import * as C from "./styles/login.styles";
 import { useState } from "react";
 import SignInBottomSheet from "./components/signInBottomSheet/SignInBottomSheet";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const EmailLogin = () => {
+  const navigate = useNavigate();
   const [sheetVisible, setSheetVisible] = useState(false);
 
   const {
@@ -80,7 +82,11 @@ const EmailLogin = () => {
         </BaseButton>
       </form>
       <S.BtnFlexContainer>
-        <C.BtnFlex>
+        <C.BtnFlex
+          onClick={() => {
+            navigate("/signin?from=changePassword&redirect=/login/email");
+          }}
+        >
           비밀번호 재설정
           <IoChevronForwardSharp />
         </C.BtnFlex>
