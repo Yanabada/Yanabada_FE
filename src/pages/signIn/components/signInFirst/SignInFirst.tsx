@@ -12,6 +12,7 @@ const SignInFirst = () => {
         type="backClose"
         title="비밀번호 재설정"
         to={`/signin/1?from=changePassword&redirect=${redirectParams}`}
+        noticeTitle="회원가입 시 등록한 이메일을 입력해 주세요."
       />
     );
   }
