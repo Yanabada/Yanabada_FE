@@ -11,12 +11,10 @@ import KeywordStore from "@pages/search/stores/KeywordStore";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import GuestCounter from "./components/SearchTab/GuestCounter";
 import Calendar from "@components/calendar";
-import CalendarStore from "@stores/CalendarStore";
 
 const Search = () => {
   const [openTab, setOpenTab] = useState("keyword");
   const { locationName } = KeywordStore();
-  const { searchStartDate, searchEndDate } = CalendarStore();
 
   const changeDate = (date: Date | null) => {
     if (date) {
