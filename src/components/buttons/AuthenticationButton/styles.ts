@@ -3,6 +3,8 @@ import { css } from "@emotion/react";
 
 interface AuthenticationButtonProps {
   width?: string;
+  height?: string;
+  lineHeight?: string;
 }
 
 const ButtonLayout = css`
@@ -43,6 +45,7 @@ export const AbledAuthenticationButton = styled.button<AuthenticationButtonProps
 export const DisAbledAuthenticationButton = styled.button<AuthenticationButtonProps>`
   ${ButtonLayout}
   width: ${({ width }) => width || "332px"};
+  height: ${({ height }) => height || "auto"};
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.blue[200]};
 

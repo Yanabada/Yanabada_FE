@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
 interface CardSectionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  buttonType: "abledPay" | "disabledPay" | "abledPoint" | "disabledPoint";
+  buttonType: "abledPay" | "disabledPay" | "abledPoint" | "disabledPoint" | "management";
   width?: string;
 }
 
@@ -17,7 +17,7 @@ const ButtonLayout = css`
   border-radius: 5px;
 `;
 
-export const CardSectionWrapper = styled.div<CardSectionProps>`
+export const CardSectionWrapper = styled.button<CardSectionProps>`
   display: flex;
   width: ${({ width }) => width || "100%"};
   padding: ${({ buttonType }) =>
@@ -48,7 +48,6 @@ export const ListButton = styled.button`
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
-  backdrop-filter: blur(10px);
 `;
 
 export const ListButtonTextWrapper = styled.div`
@@ -92,7 +91,7 @@ export const BottomLeftButton = styled.button<CardSectionProps>`
 export const BottomLeftButtonText = styled.p<CardSectionProps>`
   ${({ theme }) => theme.text.button1};
   color: ${({ theme, buttonType }) =>
-    buttonType === "abledPay" ? theme.colors.pink[100] : theme.colors.gray[600]};
+    buttonType === "abledPay" ? theme.colors.pink[100] : "#CCC"};
   text-align: center;
 `;
 
