@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ProductType } from "@pages/products/types/productsType";
 import { numberFormat } from "@utils/numberFormat";
 import CheckStore from "@pages/products/stores/checkStore";
+import { formatDateTo } from "@utils/formatDateTo";
 
 type Product = Omit<ProductType, "latitude" | "longitude">;
 
@@ -35,7 +36,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             <S.ProductName>{product.accommodationName}</S.ProductName>
             <S.RoomName>{product.roomName}</S.RoomName>
             <S.Period>
-              {product.checkIn.toString()} ~ {product.checkOut.toString()} (1박)
+              {formatDateTo(product.checkIn)} ~ {formatDateTo(product.checkOut)} (1박)
             </S.Period>
             <S.StarUserContainer>
               <S.StarContainer>

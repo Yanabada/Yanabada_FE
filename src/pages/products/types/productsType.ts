@@ -22,7 +22,9 @@ export interface ProductType {
 
 export interface GetProductResponseData {
   status: string;
-  data: ProductType[];
-  totalElement: number;
-  totalPages: number;
+  data: {
+    products: ProductType[];
+    totalElement: number;
+    totalPages: number;
+  };
 }

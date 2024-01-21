@@ -44,3 +44,20 @@ export const Pin = styled.button`
     }
   }
 `;
+
+export const clustererStyles = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "80px",
+  height: "80px",
+  padding: "10px",
+  border: "2px solid #fff",
+  borderRadius: "50%",
+  background:
+    "linear-gradient(102deg, rgba(58, 200, 244, 0.90) 10.91%, rgba(94, 155, 243, 0.90) 89.69%)",
+  boxShadow: "0px 2px 18px 3px rgba(0, 0, 0, 0.10)",
+  fontSize: "20px",
+  fontWeight: 600,
+  color: "#fff"
+};
