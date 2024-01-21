@@ -6,6 +6,7 @@ import { FaCheck } from "react-icons/fa6";
 import DateChangeButton from "@components/buttons/DateChangeButton";
 import InfoBox from "./components/InfoBox";
 import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
+import SellerSay from "@pages/productDetail/components/SellerSay";
 
 const SellConfirm = () => {
   const InfoProps = {
@@ -17,6 +18,12 @@ const SellConfirm = () => {
     checkOutDate: "2024-01-18",
     checkInTime: "17:00",
     checkOutTime: "12:00"
+  };
+
+  const sellerProp = {
+    id: 1,
+    nickname: "나나라나",
+    imageUrl: "http://via.placeholder.com/300x300"
   };
 
   return (
@@ -134,7 +141,7 @@ const SellConfirm = () => {
         </CS.RegisterInner>
         <CS.RegisterInner className="gray-bg">
           <CS.RegisterTitle>판매자 한마디</CS.RegisterTitle>
-          {/* 공통 컴포넌트 들어갈 자리 */}
+          <SellerSay seller={sellerProp} description="갑자기 개인사정이 생겨서 싸게 내놓습니다~" />
         </CS.RegisterInner>
       </CS.RegisterWrap>
     </>

@@ -55,11 +55,11 @@ const ChatRoom = () => {
         roomName="Forest Tower Deluxe King"
         salesPercentage={50}
         sellingPrice={600000}
-        price={1200000}
+        originalPrice={1200000}
         saleEndDate="2021-09-30"
         sellerId={1}
         purchasePrice={600000}
-        cancelFee={0}
+        cancelFee={300000}
         // productData={productData}
       />
       <S.ChatContainer ref={bottom} status={status}>
