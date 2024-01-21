@@ -1,8 +1,9 @@
 import * as S from "./style";
 import { useState } from "react";
 import { ToggleMenu, ToggleMenuItem } from "./ToggleMenu";
-// import Checkbox from "@components/input/Checkbox";
 import { menu, item } from "@animations/dropDown";
+import CheckStore from "@pages/products/stores/checkStore";
+import { useSearchParams } from "react-router-dom";
 
 const orderList = [
   { id: "RECENT", name: "최신순" },
@@ -14,20 +15,31 @@ const orderList = [
 
 const Order = () => {
   const [open, setOpen] = useState(false);
-  const [orderName, setOrderName] = useState("최신순");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const orderParams = searchParams.get("order");
+
+  const handleClick = (orderId: string) => {
+    searchParams.set("order", orderId);
+    setSearchParams(searchParams);
+  };
+
+  const { isCheck, setIsCheck } = CheckStore();
+
+  const orderLabel = orderList.find((list) => list.id === orderParams);
 
   return (
     <S.OrderContainer>
-      {/* <Checkbox
-        variant="all"
-        content="판매 완료 상품 가리기"
-        transparent={true}
-        fontSize="0.9375rem"
-        fontWeight="400"
-        color="#9C9C9C"
-      ></Checkbox> */}
+      <S.Label htmlFor="box">
+        <S.CheckBox
+          id="box"
+          type="checkbox"
+          checked={isCheck}
+          onChange={(e) => setIsCheck(e.target.checked)}
+        />
+        <S.CheckText>판매 완료 상품 가리기</S.CheckText>
+      </S.Label>
       <ToggleMenu
-        label={orderName}
+        label={orderLabel?.name || "최신순"}
         open={open}
         setOpen={setOpen}
         animate={open ? "open" : "closed"}
@@ -36,7 +48,7 @@ const Order = () => {
         variants={menu}
       >
         {orderList.map((order) => (
-          <ToggleMenuItem key={order.id} {...item} onClick={() => setOrderName(order.name)}>
+          <ToggleMenuItem key={order.id} onClick={() => handleClick(order.id)} {...item}>
             {order.name}
           </ToggleMenuItem>
         ))}
