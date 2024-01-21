@@ -42,10 +42,10 @@ const KakaoMap = () => {
             },
             isLoading: false
           }));
+          mapRef.current?.setLevel(5);
           mapRef.current?.setCenter(
             new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude)
           );
-          mapRef.current?.setLevel(5);
         },
         (err) => {
           setState((prev) => ({
