@@ -34,7 +34,6 @@ export const HeaderContainer = styled(motion.nav)`
   padding: 0 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[300]};
   background: rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(10px);
 `;
 
 export const BellContainer = styled.div`

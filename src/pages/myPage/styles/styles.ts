@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 export const MyPageContainer = styled.div`
   width: 100%;
+  height: 100%;
   padding: 0 14px;
 `;
 
@@ -28,5 +29,14 @@ export const LoginButton = styled.button`
 
     stroke-width: 2px;
     stroke: #000;
+  }
+`;
+
+export const BellContainer = styled.div`
+  .bell {
+    width: 1.375rem;
+    height: 1.375rem;
+    color: #000;
+    cursor: pointer;
   }
 `;
