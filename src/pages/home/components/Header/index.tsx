@@ -26,12 +26,12 @@ const Header = () => {
   return (
     <S.Container className={isHeaderActive ? "isHeaderActive" : ""}>
       <S.HeaderContainer style={{ backgroundColor }}>
-        <Link to="/notice">
-          <S.BellContainer>
+        <S.BellContainer>
+          <Link to="/notice">
             <NumberBadge number={99} />
             <FaRegBell className="bell" />
-          </S.BellContainer>
-        </Link>
+          </Link>
+        </S.BellContainer>
         <S.LogoContainer className="logoContainer">
           <LogoIcon />
         </S.LogoContainer>
