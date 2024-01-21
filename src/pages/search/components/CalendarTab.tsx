@@ -10,15 +10,8 @@ const CalendarTab = () => {
   const { tab, setTab } = useSearchTab();
   const { searchStartDate, searchEndDate } = CalendarStore();
 
-  const changeDate = (date: Date | null) => {
-    if (date) {
-      return formatDateTo(date, "MM/dd");
-    }
-    return null;
-  };
-
-  const startDate = changeDate(searchStartDate);
-  const endDate = changeDate(searchEndDate);
+  const startDate = formatDateTo(searchStartDate, "MM/dd");
+  const endDate = formatDateTo(searchEndDate, "MM/dd");
 
   return (
     <SearchTab
