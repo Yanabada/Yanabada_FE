@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem;
+  padding: 1rem 0 1rem 1rem;
   background-color: #fff;
 `;
 
@@ -19,6 +19,7 @@ export const Title = styled.p`
 `;
 
 export const AllTitle = styled.p`
+  margin-right: 1rem;
   color: ${({ theme }) => theme.colors.blue[400]};
   ${({ theme }) => theme.text.body1};
 `;
