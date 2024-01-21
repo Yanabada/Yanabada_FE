@@ -14,6 +14,11 @@ interface CertificationProps {
   handleClick: () => void; // 화면 하단 버튼 동작
 }
 
+interface FormData {
+  phoneNumber: string;
+  code: number | null;
+}
+
 const Certification = ({ width, upperNavBarText, buttonText, handleClick }: CertificationProps) => {
   const [isSendValid, setIsSendValid] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -27,7 +32,7 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
     setValue,
     formState: { errors },
     getValues
-  } = useForm({
+  } = useForm<FormData>({
     mode: "onBlur"
   });
   const phoneNumber = getValues("phoneNumber");
@@ -63,9 +68,9 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
   };
 
   // 인증번호 유효성검사
-  const isCodeValid = (value: number) => {
+  const isCodeValid = (value: number | null) => {
     //  TODO - 인증번호 같은지 비교하는 로직 추가
-    if (value.toString().length === 6) {
+    if (value?.toString().length === 6) {
       setIsNumCorrect(true);
       return true;
     }
@@ -151,7 +156,7 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
           // TODO - 전송하기 클릭 시 문자 전송 로직 함수 & 따로 handle 함수로 분리하기
           setIsModalVisible(false);
           setOpenInput(true);
-          setValue("code", "");
+          setValue("code", null);
         }}
       />
     </>

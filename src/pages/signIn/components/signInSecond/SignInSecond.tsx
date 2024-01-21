@@ -7,13 +7,18 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
+interface FormData {
+  password: string;
+  secondPassword: string;
+}
+
 const SignInSecond = () => {
   const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     getValues
-  } = useForm({
+  } = useForm<FormData>({
     mode: "onBlur"
   });
 
