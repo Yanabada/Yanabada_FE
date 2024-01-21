@@ -38,7 +38,7 @@ const Certification = ({
   phoneNum
 }: CertificationProps) => {
   const navigate = useNavigate();
-  const [isSendValid, setIsSendValid] = useState(false);
+  // const [isSendValid, setIsSendValid] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [openInput, setOpenInput] = useState(false);
   const [isNumCorrect, setIsNumCorrect] = useState(false);
@@ -71,21 +71,24 @@ const Certification = ({
     const formattedValue = formatPhoneNumber(e.target.value);
 
     setValue("phoneNumber", formattedValue);
-    if (formattedValue.length >= 12) {
-      setIsSendValid(true);
-    }
+    // if (formattedValue.length >= 12) {
+    //   setIsSendValid(true);
+    // }
   };
 
   // 인증번호 전송 남은 횟수
   const handleAuthenticationBtnClick = () => {
     // TODO - 인증번호 재전송 5회 소진시 동작 기획에 맞게 수정
-    if (!isSendValid || sentCount < 0) {
+    if (!isValid || sentCount < 0) {
       return;
     }
     setSentCount(sentCount - 1);
-    setBtnText(`인증번호 재전송(남은 횟수 ${sentCount}회)`);
     setIsModalVisible(true);
   };
+
+  useEffect(() => {
+    setBtnText(`인증번호 재전송(남은 횟수 ${sentCount}회)`);
+  }, [sentCount]);
 
   // 인증번호 유효성검사
   const isCodeValid = (value: number | null) => {
@@ -111,9 +114,7 @@ const Certification = ({
       setValue("phoneNumber", phoneNum);
       trigger("phoneNumber");
     }
-  }, [phoneNum, setValue, trigger]);
-
-  console.log("isValid:", isValid); // isValid를 콘솔에 로그
+  }, []);
 
   return (
     <>
