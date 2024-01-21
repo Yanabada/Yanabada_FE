@@ -12,15 +12,15 @@ const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
 
-  // const productData = {
-  //   code: "240107f84892a35ed5",
-  //   image: "http://via.placeholder.com/300x300",
-  //   accommodationName: "춘천세종호텔",
-  //   roomName: "스탠다드 룸",
-  //   checkInDate: "2024-01-16",
-  //   checkOutDate: "2024-01-19",
-  //   policyNumber: 2
-  // };
+  const productData = {
+    code: "240107f84892a35ed5",
+    image: "http://via.placeholder.com/300x300",
+    accommodationName: "춘천세종호텔",
+    roomName: "스탠다드 룸",
+    checkInDate: "2024-01-16",
+    checkOutDate: "2024-01-19",
+    policyNumber: 2
+  };
   const status = "ON_SALE";
 
   // 채팅 왔을 때 아래로 스크롤
@@ -60,13 +60,13 @@ const ChatRoom = () => {
         sellerId={1}
         purchasePrice={600000}
         cancelFee={300000}
-        // productData={productData}
+        productData={productData}
       />
       <S.ChatContainer ref={bottom} status={status}>
         <ChatText isNotice />
         {/* FIXME - 테스트 화면 녹화 후 삭제 예정 */}
         <ChatText senderId={2} />
-        {messages.reverse().map(({ senderId, content }: Message, index) => (
+        {messages.map(({ senderId, content }: Message, index) => (
           <ChatText key={index} senderId={senderId} content={content} />
         ))}
       </S.ChatContainer>

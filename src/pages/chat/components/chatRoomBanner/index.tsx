@@ -6,6 +6,8 @@ import BottomSheet from "@components/bottomSheet";
 import { useState } from "react";
 import PriceArea from "@components/priceArea";
 import PriceTable from "@components/priceTable";
+import { productData } from "@/types/priceTable";
+import UpperNavBar from "@components/navBar/upperNavBar";
 
 interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -18,7 +20,7 @@ interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   sellerId: number;
   purchasePrice: number;
   cancelFee: number;
-  // TODO - api 확정 후 연결할 때 type 수정
+  productData: productData;
 }
 interface CommonContent {
   badgeText: string;
@@ -36,20 +38,11 @@ const ChatRoomBanner = ({
   saleEndDate,
   sellerId,
   purchasePrice,
-  cancelFee
+  cancelFee,
+  productData
 }: ChatRoomBannerProps) => {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [price, setPrice] = useState(0);
-
-  const productData = {
-    code: "240107f84892a35ed5",
-    image: "http://via.placeholder.com/300x300",
-    accommodationName: "춘천세종호텔",
-    roomName: "스탠다드 룸",
-    checkInDate: "2024-01-25",
-    checkOutDate: "2024-01-26",
-    policyNumber: 2
-  };
 
   const commonContent: Record<string, CommonContent> = {
     ON_SALE: {
@@ -124,6 +117,11 @@ const ChatRoomBanner = ({
     ]
   ]);
 
+  const handleSubmit = () => {
+    // TODO - 가격 변경 API 연동
+    setIsBottomSheetVisible(false);
+  };
+
   return (
     <S.Container>
       <S.TextContainer>
@@ -154,26 +152,36 @@ const ChatRoomBanner = ({
           {sellerId === sellerId ? "가격 변경" : "결제하기"}
         </BaseButton>
       )}
-      {/* TODO - price area 컴포넌트 수정되면 반영 */}
       <BottomSheet isVisible={isBottomSheetVisible} setIsVisible={setIsBottomSheetVisible}>
-        <PriceTable
-          originalPrice={originalPrice}
-          purchasePrice={purchasePrice}
-          cancelFee={cancelFee}
-          productData={productData}
-        />
-        <PriceArea
+        <UpperNavBar
           title="가격 변경하기"
-          placeholder="￦ 판매 가격을 입력해주세요"
-          originalPrice={originalPrice}
-          purchasePrice={purchasePrice}
-          cancelFee={cancelFee}
-          resetPrice={purchasePrice}
-          isAlert
-          charge={false}
-          price={price}
-          setPrice={setPrice}
+          type="close"
+          setIsVisible={setIsBottomSheetVisible}
+          shape=""
         />
+        <S.PriceInfoBox>
+          <PriceTable
+            originalPrice={originalPrice}
+            purchasePrice={purchasePrice}
+            cancelFee={cancelFee}
+            productData={productData}
+          />
+          <PriceArea
+            title="판매 가격"
+            placeholder="￦ 판매 가격을 입력해주세요"
+            originalPrice={originalPrice}
+            purchasePrice={purchasePrice}
+            cancelFee={cancelFee}
+            resetPrice={purchasePrice}
+            isAlert
+            charge={false}
+            price={price}
+            setPrice={setPrice}
+          />
+          <BaseButton buttonType="default" onClick={handleSubmit}>
+            확인
+          </BaseButton>
+        </S.PriceInfoBox>
       </BottomSheet>
     </S.Container>
   );

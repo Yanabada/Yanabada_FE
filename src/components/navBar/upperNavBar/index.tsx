@@ -23,7 +23,7 @@ const UpperNavBar = ({
   shape = "fill",
   customBack,
   setIsVisible,
-  isCustom = true,
+  isCustom,
   ...props
 }: UpperNavProp) => {
   const navigate = useNavigate();
