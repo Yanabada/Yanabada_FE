@@ -53,7 +53,6 @@ export const PointList = styled.div<PointsMiddleTabProps>`
   gap: 1px;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
-  backdrop-filter: blur(10px);
 `;
 
 export const PointListRow = styled.div`

@@ -1,20 +1,40 @@
+import { useSearchParams } from "react-router-dom";
 import * as S from "./style";
 
 const optionList = [
-  { id: "SAUNA", name: "사우나", search: "?options=SAUNA" },
-  { id: "ROOF_TOP", name: "루프탑", search: "?options=ROOF_TOP" },
-  { id: "POOL", name: "수영장", search: "?options=POOL" },
-  { id: "GYM", name: "피트니스", search: "?options=GYM" },
-  { id: "LOUNGE_BAR", name: "라운지바", search: "?options=LOUNGE_BAR" },
-  { id: "PARKING", name: "주차 가능", search: "?options=PARKING" },
-  { id: "PARTY_ROOM", name: "파티룸", search: "?options=PARTY_ROOM" }
+  { id: "SAUNA", name: "사우나" },
+  { id: "ROOF_TOP", name: "루프탑" },
+  { id: "POOL", name: "수영장" },
+  { id: "GYM", name: "피트니스" },
+  { id: "LOUNGE_BAR", name: "라운지바" },
+  { id: "PARKING", name: "주차 가능" },
+  { id: "PARTY_ROOM", name: "파티룸" }
 ];
 
 const OptionTab = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const optionsParams = searchParams.getAll("options");
+
+  const handleClick = (optionId: string) => {
+    if (!optionsParams.includes(optionId)) {
+      searchParams.append("options", optionId);
+    } else {
+      searchParams.delete("options", optionId);
+    }
+    setSearchParams(searchParams);
+  };
   return (
     <S.OptionContainer>
-      {optionList.map((category, index) => {
-        return <S.OptionList key={index}>{category.name}</S.OptionList>;
+      {optionList.map((option) => {
+        return (
+          <S.OptionList
+            key={option.id}
+            className={optionsParams.includes(option.id) ? "selected_option" : ""}
+            onClick={() => handleClick(option.id)}
+          >
+            {option.name}
+          </S.OptionList>
+        );
       })}
     </S.OptionContainer>
   );
