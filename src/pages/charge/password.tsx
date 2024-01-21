@@ -1,45 +1,121 @@
 import * as S from "./styles/password";
 
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { motion, useAnimation } from "framer-motion";
+
 import UpperNavBar from "@components/navBar/upperNavBar";
+import Keypads from "./components/Keypads";
 
 import LockIcon from "assets/icons/lockIcon.svg?react";
 
 const PasswordConfirm = () => {
-  const numbers = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    ["전체삭제", 0, "⌫"]
-  ];
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const isRegistration = queryParams.get("registration") === "true";
+  const navigate = useNavigate();
+
+  const [enteredDigits, setEnteredDigits] = useState<number[]>([]);
+  const [savedDigits, setSavedDigits] = useState<number[]>([]);
+  const [isMatched, setIsMatched] = useState<boolean | null>(null);
+  const [confirmText, setConfirmText] = useState<string>(
+    isRegistration
+      ? "야놀자 페이에서 사용할 비밀번호를 등록해주세요."
+      : "간편결제 비밀번호 6자리를 입력해주세요"
+  );
+
+  const shakeOnMismatch = () => {
+    keyInputControls.start({
+      x: [-5, 5, -5, 5, 0],
+      transition: { duration: 0.3, ease: "easeInOut" }
+    });
+  };
+  const keyInputControls = useAnimation();
+
+  // 등록 시 비밀번호 확인
+  const checkPasswordMatch = () => {
+    if (enteredDigits.length === 6 && isRegistration && savedDigits.length === 6) {
+      const matched = enteredDigits.join("") === savedDigits.join("");
+      setIsMatched(matched);
+
+      if (!matched) {
+        shakeOnMismatch();
+      } else {
+        navigate("/charge/account");
+      }
+    }
+  };
+
+  // 등록 시 최초 비밀번호 입력
+  useEffect(() => {
+    if (enteredDigits.length === 6 && isRegistration) {
+      setSavedDigits((prevSavedDigits) => {
+        if (prevSavedDigits.length === 0) {
+          return [...enteredDigits];
+        } else {
+          return prevSavedDigits;
+        }
+      });
+
+      setTimeout(() => {
+        setEnteredDigits([]);
+        checkPasswordMatch();
+        setConfirmText("동일한 비밀번호를 한 번 더 입력해주세요.");
+      }, 800);
+    }
+  }, [enteredDigits, isRegistration]);
+
+  const handleKeyPress = (digit: number | string) => {
+    if (digit === "전체삭제") {
+      setEnteredDigits([]);
+    } else if (digit === "⌫") {
+      setEnteredDigits((prevDigits) => prevDigits.slice(0, -1));
+    } else if (typeof digit === "number" && enteredDigits.length < 6) {
+      setEnteredDigits([...enteredDigits, digit]);
+    }
+  };
+
+  // 등록이 아닌 비밀번호 확인
+  useEffect(() => {
+    if (!isRegistration && enteredDigits.length === 6) {
+      // API 호출 자리
+      // 호출 응답이 success
+      navigate("/charge/confirm");
+
+      // 호출 응답이 failed
+      setIsMatched(false);
+      shakeOnMismatch();
+
+      setEnteredDigits([]);
+    }
+  }, [enteredDigits, isRegistration]);
 
   return (
     <>
-      <UpperNavBar title="비밀번호 입력" type="back" />
+      <UpperNavBar title={isRegistration ? "비밀번호 등록" : "비밀번호 입력"} type="back" />
       <S.ConfirmWrapper>
         <LockIcon />
-        <S.ConfirmTit>간편결제 비밀번호 6자리를 입력해주세요</S.ConfirmTit>
+        <S.ConfirmTit>{confirmText}</S.ConfirmTit>
         <S.KeyWrapper>
-          <S.KeyInput className="active">*</S.KeyInput>
-          <S.KeyInput>*</S.KeyInput>
-          <S.KeyInput>*</S.KeyInput>
-          <S.KeyInput>*</S.KeyInput>
-          <S.KeyInput>*</S.KeyInput>
-          <S.KeyInput>*</S.KeyInput>
-          <S.AlertMessage>
-            비밀번호가 일치하지 않습니다.
-            <br /> 다시 한 번 입력해주세요
-          </S.AlertMessage>
+          {[...Array(6)].map((_, index) => (
+            <motion.div
+              key={index}
+              variants={{ shake: { x: [-5, 5, -5, 5, 0] } }}
+              initial="initial"
+              animate={keyInputControls}
+            >
+              <S.KeyInput className={index < enteredDigits.length ? "active" : ""}>*</S.KeyInput>
+            </motion.div>
+          ))}
+          {isMatched === false && (
+            <S.AlertMessage>
+              비밀번호가 일치하지 않습니다.
+              <br /> 다시 한 번 입력해주세요
+            </S.AlertMessage>
+          )}
         </S.KeyWrapper>
+        <Keypads random={!isRegistration ? true : false} onKeyPress={handleKeyPress} />
       </S.ConfirmWrapper>
-      <S.KeyPadWrapper>
-        {numbers.map((row, rowIndex) => (
-          <div key={rowIndex}>
-            {row.map((button, columnIndex) => (
-              <S.KeyPad key={columnIndex}>{button}</S.KeyPad>
-            ))}
-          </div>
-        ))}
-      </S.KeyPadWrapper>
     </>
   );
 };
