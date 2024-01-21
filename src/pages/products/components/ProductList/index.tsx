@@ -14,12 +14,11 @@ const ProductList = ({ isMapOpen }: ProductListProps) => {
 
   return (
     <>
-      {isMapOpen && (
+      {isMapOpen ? (
         <S.MapContainer>
           <KakaoMap />
         </S.MapContainer>
-      )}
-      {!isMapOpen && (
+      ) : (
         <S.SecondContainer>
           <OptionTab />
           <Order />
