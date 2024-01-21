@@ -21,6 +21,8 @@ export const Image = styled.img`
 
 export const ImageCounterContainer = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 2.5rem;
   height: 1.125rem;
   background: var(--Dimming, rgba(0, 0, 0, 0.4));

@@ -10,7 +10,9 @@ const Footer = ({ phoneNumber }: PhoneNumberProps) => {
     <S.Container>
       <S.PhoneContainer>
         <S.Text>숙소 문의</S.Text>
-        <S.PhoneNumber> {phoneNumber}</S.PhoneNumber>
+        <a href={`tel:${phoneNumber}`}>
+          <S.PhoneNumber>전화연결</S.PhoneNumber>
+        </a>
       </S.PhoneContainer>
       <S.FooterContainer>
         <YanabadaIcon />

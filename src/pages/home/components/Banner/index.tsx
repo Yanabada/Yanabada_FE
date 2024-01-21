@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import images from "./images";
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { wrap } from "popmotion";
 
 const variants = {
@@ -24,11 +24,6 @@ const variants = {
   }
 };
 
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset: number, velocity: number) => {
-  return Math.abs(offset) * velocity;
-};
-
 const Banner = () => {
   const [[page, direction], setPage] = useState([0, 0]);
 
@@ -37,6 +32,13 @@ const Banner = () => {
   const paginate = (newDirection: number) => {
     setPage([page + newDirection, newDirection]);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      paginate(1);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [page]);
 
   return (
     <S.Carousel>
@@ -67,18 +69,6 @@ const Banner = () => {
               transition={{
                 x: { type: "spring", stiffness: 300, damping: 30 },
                 opacity: { duration: 0.2 }
-              }}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={1}
-              onDragEnd={(_e, { offset, velocity }) => {
-                const swipe = swipePower(offset.x, velocity.x);
-
-                if (swipe < -swipeConfidenceThreshold) {
-                  paginate(1);
-                } else if (swipe > swipeConfidenceThreshold) {
-                  paginate(-1);
-                }
               }}
             />
             <S.ImageIndex>
