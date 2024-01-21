@@ -5,6 +5,7 @@ import Badges from "@components/badges";
 import BottomSheet from "@components/bottomSheet";
 import { useState } from "react";
 import PriceArea from "@components/priceArea";
+import PriceTable from "@components/priceTable";
 
 interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -12,7 +13,7 @@ interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   roomName: string;
   salesPercentage: number;
   sellingPrice: number;
-  price: number;
+  originalPrice: number;
   saleEndDate: string;
   sellerId: number;
   purchasePrice: number;
@@ -31,13 +32,24 @@ const ChatRoomBanner = ({
   roomName,
   salesPercentage,
   sellingPrice,
-  price,
+  originalPrice,
   saleEndDate,
   sellerId,
   purchasePrice,
   cancelFee
 }: ChatRoomBannerProps) => {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
+  const [price, setPrice] = useState(0);
+
+  const productData = {
+    code: "240107f84892a35ed5",
+    image: "http://via.placeholder.com/300x300",
+    accommodationName: "춘천세종호텔",
+    roomName: "스탠다드 룸",
+    checkInDate: "2024-01-25",
+    checkOutDate: "2024-01-26",
+    policyNumber: 2
+  };
 
   const commonContent: Record<string, CommonContent> = {
     ON_SALE: {
@@ -144,15 +156,23 @@ const ChatRoomBanner = ({
       )}
       {/* TODO - price area 컴포넌트 수정되면 반영 */}
       <BottomSheet isVisible={isBottomSheetVisible} setIsVisible={setIsBottomSheetVisible}>
+        <PriceTable
+          originalPrice={originalPrice}
+          purchasePrice={purchasePrice}
+          cancelFee={cancelFee}
+          productData={productData}
+        />
         <PriceArea
           title="가격 변경하기"
           placeholder="￦ 판매 가격을 입력해주세요"
-          originalPrice={price}
+          originalPrice={originalPrice}
           purchasePrice={purchasePrice}
           cancelFee={cancelFee}
           resetPrice={purchasePrice}
           isAlert
           charge={false}
+          price={price}
+          setPrice={setPrice}
         />
       </BottomSheet>
     </S.Container>

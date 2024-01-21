@@ -1,6 +1,8 @@
 export const feePolicy1 = [
   { daysBefore: 7, percentage: 0 },
+  { daysBefore: 6, percentage: 10 },
   { daysBefore: 5, percentage: 10 },
+  { daysBefore: 4, percentage: 30 },
   { daysBefore: 3, percentage: 30 },
   { daysBefore: 2, percentage: 50 },
   { daysBefore: 1, percentage: 70 },

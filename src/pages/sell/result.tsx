@@ -11,7 +11,7 @@ const SellResult = () => {
       <UpperNavBar title="상품 등록 완료" type="close" />
       <S.ResultWrap>
         <div>
-          <p>체크모양 로티 들어갈 자리</p>
+          <img src="/src/assets/check-ico.png" alt="체크아이콘" />
           <p className="title">상품 등록이 정상적으로 완료되었습니다.</p>
         </div>
         <S.BaseButtonWrap>

@@ -1,6 +1,6 @@
 import * as S from "./styles";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import { GrPowerReset } from "react-icons/gr";
 
 import { numberFormat } from "@utils/numberFormat";
@@ -13,6 +13,8 @@ interface PriceAreaProps {
   cancelFee?: number;
   isAlert: boolean;
   charge: boolean;
+  price: number;
+  setPrice: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const PriceArea = ({
@@ -23,10 +25,10 @@ const PriceArea = ({
   resetPrice,
   cancelFee,
   isAlert,
-  charge
+  charge,
+  price,
+  setPrice
 }: PriceAreaProps) => {
-  const [price, setPrice] = useState(0);
-
   const plusAmountData: [number, string, string][] = [
     [10000, "1만", "plus"],
     [50000, "5만", "plus"],
