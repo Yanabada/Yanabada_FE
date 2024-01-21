@@ -14,8 +14,9 @@ const Products = () => {
     <>
       <UpperNavBar
         title={isMapOpen ? "지도검색" : "상품리스트"}
-        type={isMapOpen ? "close" : "back"}
+        type={isMapOpen ? "backClose" : "back"}
         hasBorder={false}
+        isCustom={isMapOpen}
         {...(isMapOpen && { customBack: () => setMapOpen(false) })}
       />
       <S.Container>
