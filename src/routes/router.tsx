@@ -2,6 +2,7 @@ import Home from "@pages/home";
 import BottomNavBar from "@components/navBar/bottomNavBar";
 import Chat from "@pages/chat";
 import MyPage from "@pages/myPage";
+import Profile from "@pages/myPage/profile";
 import Points from "@pages/myPage/points";
 import PointsMiddleTabList from "@pages/myPage/components/PointsMiddleTabList";
 import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDisappear";
@@ -113,6 +114,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <MyPage width="100%" />
+          },
+          {
+            path: "profile",
+            element: <Profile width="100%" />
           },
           {
             path: "points/list",
