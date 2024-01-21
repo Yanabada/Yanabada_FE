@@ -9,7 +9,7 @@ export const ChatInputContainer = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
-  z-index: 899;
+  z-index: 1;
 
   border-top: 1px solid ${({ theme }) => theme.colors.gray[300]};
   background-color: #fff;
