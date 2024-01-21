@@ -17,6 +17,11 @@ export const OptionContainer = styled.ul`
   @media (max-width: 780px) {
     justify-content: space-between;
   }
+
+  .selected_option {
+    color: ${({ theme }) => theme.colors.blue[400]};
+    background: ${({ theme }) => theme.colors.blue[50]};
+  }
 `;
 
 export const OptionList = styled.li`
