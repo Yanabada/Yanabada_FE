@@ -8,6 +8,10 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
+interface FormData {
+  nickname: string;
+}
+
 const SignInThird = () => {
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
@@ -18,7 +22,7 @@ const SignInThird = () => {
     formState: { errors },
     getValues,
     setError
-  } = useForm({
+  } = useForm<FormData>({
     mode: "onBlur"
   });
   const nickname = getValues("nickname");
