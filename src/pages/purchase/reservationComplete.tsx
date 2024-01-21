@@ -65,9 +65,8 @@ const ReservationComplete = () => {
       <S.Title>거래 정보</S.Title>
       <S.NoticeWrapper>
         <Notice
-          title=""
+          title="구매 취소는 판매자 승인 전까지만 가능합니다."
           type="default"
-          content="구매 취소는 판매자 승인 전까지만 가능합니다."
           color="orange"
           shape="line"
         />
