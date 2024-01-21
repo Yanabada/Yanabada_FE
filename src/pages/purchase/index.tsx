@@ -98,20 +98,24 @@ const Purchase = ({
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (errors.nickName) return;
+
+    if (errors.name1 || errors.phoneNumber1) return;
     // FIXME: API 연동
     console.log("submit");
 
-    const name = getValues("name");
-    const phoneNumber = getValues("phoneNumber");
-    console.log("name", name);
-    console.log("phoneNumber", phoneNumber);
+    const name1 = getValues("name1");
+    const phoneNumber1 = getValues("phoneNumber1");
+    console.log("name1", name1);
+    console.log("phoneNumber1", phoneNumber1);
+
+    navigate("/signin?from=changePassword&redirect=/purchase");
   };
 
   const {
     register,
     formState: { errors },
-    getValues
+    getValues,
+    trigger
   } = useForm({
     mode: "onBlur"
   });
@@ -123,6 +127,13 @@ const Purchase = ({
       setIsAllChecked(false);
     }
   }, [isChecked1, isChecked2, isChecked3, isChecked4]);
+
+  useEffect(() => {
+    trigger("name1");
+    trigger("name2");
+    trigger("phoneNumber1");
+    trigger("phoneNumber2");
+  }, [trigger]);
 
   return (
     <>
@@ -194,14 +205,14 @@ const Purchase = ({
                         <span style={{ color: "#E01F3E" }}>*</span>
                       </>
                     }
-                    {...register("name", {
+                    {...register("name1", {
                       required: true,
                       pattern: {
                         value: /^[가-힣a-zA-Z]*$/,
                         message: "이용자 이름은 한글과 영문만 가능합니다."
                       }
                     })}
-                    errorMessage={errors.name && `${errors.name?.message}`}
+                    errorMessage={errors.name1 && `${errors.name1?.message}`}
                   />
                   <S.TextInputSpacer />
                   <TextInput
@@ -212,21 +223,28 @@ const Purchase = ({
                         <span style={{ color: "#E01F3E" }}>*</span>
                       </>
                     }
-                    {...register("phoneNumber", {
+                    {...register("phoneNumber1", {
                       required: true,
                       pattern: {
                         value: /^010-\d{4}-\d{4}$/,
                         message: "010-0000-0000 형태로 입력해주세요."
                       }
                     })}
-                    errorMessage={errors.phoneNumber && `${errors.phoneNumber?.message}`}
+                    errorMessage={errors.phoneNumber1 && `${errors.phoneNumber1?.message}`}
                   />
                 </S.TextInputWrapper>
 
                 <S.ChipWrapper>
                   {/* FIXME: 유효성 검사 후 input을 모두 채워야지만 abled되게 변경 */}
                   {/* FIXME: 휴대폰 인증 페이지(H-2) 라우터 추가 후 이동 로직 추가 */}
-                  <ManipulationChip buttonType="abledDefault">인증 변경하기</ManipulationChip>
+                  <ManipulationChip
+                    buttonType={
+                      !errors.name1 && !errors.phoneNumber1 ? "abledDefault" : "disabledDefault"
+                    }
+                    type="submit"
+                  >
+                    인증 변경하기
+                  </ManipulationChip>
                 </S.ChipWrapper>
               </form>
             </S.FormWrapper>
@@ -254,7 +272,7 @@ const Purchase = ({
             setList={[setIsChecked1]}
           />
           <S.FormWrapper width={width}>
-            <form onSubmit={onSubmit}>
+            <form>
               <S.TextInputWrapper>
                 <TextInput
                   variant="move"
@@ -264,14 +282,14 @@ const Purchase = ({
                       <span style={{ color: "#E01F3E" }}>*</span>
                     </>
                   }
-                  {...register("name", {
+                  {...register("name2", {
                     required: true,
                     pattern: {
                       value: /^[가-힣a-zA-Z]*$/,
                       message: "이용자 이름은 한글과 영문만 가능합니다."
                     }
                   })}
-                  errorMessage={errors.name && `${errors.name?.message}`}
+                  errorMessage={errors.name2 && `${errors.name2?.message}`}
                 />
                 <S.TextInputSpacer />
                 <TextInput
@@ -282,14 +300,14 @@ const Purchase = ({
                       <span style={{ color: "#E01F3E" }}>*</span>
                     </>
                   }
-                  {...register("phoneNumber", {
+                  {...register("phoneNumber2", {
                     required: true,
                     pattern: {
                       value: /^010-\d{4}-\d{4}$/,
                       message: "010-0000-0000 형태로 입력해주세요."
                     }
                   })}
-                  errorMessage={errors.phoneNumber && `${errors.phoneNumber?.message}`}
+                  errorMessage={errors.phoneNumber2 && `${errors.phoneNumber2?.message}`}
                 />
               </S.TextInputWrapper>
             </form>
