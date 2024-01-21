@@ -19,6 +19,9 @@ import { IoMdArrowDropup } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useEffect } from "react";
 import BaseButton from "@components/buttons/BaseButton";
+import AuthenticationButton from "@components/buttons/AuthenticationButton";
+import Modal from "@components/modal";
+import { useNavigate } from "react-router-dom";
 
 interface PurchaseProps {
   width?: string;
@@ -39,6 +42,14 @@ const Purchase = ({
   yanoljaPoint,
   totalPurchasePrice
 }: PurchaseProps) => {
+  const PaymentMethod = {
+    None: "none",
+    YanoljaPay: "yanoljaPay",
+    TossPay: "tossPay",
+    AccountTransfer: "accountTransfer",
+    Card: "card"
+  };
+
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [isChecked1, setIsChecked1] = useState(true);
   const [isChecked2, setIsChecked2] = useState(false);
@@ -46,8 +57,26 @@ const Purchase = ({
   const [isChecked4, setIsChecked4] = useState(false);
   const [isCardOptionVisible, setIsCardOptionVisible] = useState(false);
   const [isInstallmentOptionVisible, setIsInstallmentOptionVisible] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState(PaymentMethod.None);
   const [cardMessage, setCardMessage] = useState("카드사 선택");
+  const [bankMessage, setBankMessage] = useState("은행 선택");
   const [installmentMessage, setInstallmentMessage] = useState("할부 기간 선택");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isChangeButtonClicked, setIsChangeButtonClicked] = useState(false);
+  // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
+  const [isYanoljaPaySubscribed] = useState(false);
+
+  const navigate = useNavigate();
+
+  const modalProps = {
+    title: "야놀자 페이 가입 후 이용 가능합니다",
+    leftBtnText: "가입하기",
+    rightBtnText: "아니오",
+    isVisible: isModalVisible,
+    setIsVisible: setIsModalVisible,
+    leftAction: () => navigate("/login"),
+    rightAction: () => setIsModalVisible(false)
+  };
 
   const toggleCardOption = () => {
     setIsCardOptionVisible((prev) => !prev);
@@ -60,6 +89,10 @@ const Purchase = ({
   const handleInstallmentOption = (months: number) => {
     setInstallmentMessage(`${months}개월`);
     setIsInstallmentOptionVisible(false);
+  };
+
+  const handlePaymentMethodChange = (selectedMethod: string) => {
+    setPaymentMethod(selectedMethod);
   };
 
   useEffect(() => {
@@ -123,10 +156,42 @@ const Purchase = ({
       <S.ReservationContainer width={width}>
         <S.PersonInfoWrapper>
           <S.PersonInfoTopWrapper>
-            <S.InfoText>예약자 정보</S.InfoText>
-            <S.ChangeText>변경하기</S.ChangeText>
+            <S.InfoText>
+              예약자 정보<S.UserInfoTextRed>*</S.UserInfoTextRed>
+            </S.InfoText>
+            <S.ChangeText onClick={() => setIsChangeButtonClicked(true)}>변경하기</S.ChangeText>
           </S.PersonInfoTopWrapper>
-          <S.PersonInfoBottomWrapper>김팔자 / 010-1234-5678</S.PersonInfoBottomWrapper>
+          {isChangeButtonClicked ? (
+            <>
+              <TextInput
+                variant="move"
+                label={
+                  <>
+                    <span>성명</span>
+                    <span style={{ color: "#E01F3E" }}>*</span>
+                  </>
+                }
+                errorMessage="이용자 이름은 한글과 영문만 가능합니다."
+              />
+              <TextInput
+                variant="move"
+                label={
+                  <>
+                    <span>휴대폰 번호</span>
+                    <span style={{ color: "#E01F3E" }}>*</span>
+                  </>
+                }
+                errorMessage="이용자 이름은 한글과 영문만 가능합니다."
+              />
+              <S.ChipWrapper>
+                {/* FIXME: 유효성 검사 후 input을 모두 채워야지만 abled되게 변경 */}
+                {/* FIXME: 휴대폰 인증 페이지(H-2) 라우터 추가 후 이동 로직 추가 */}
+                <ManipulationChip buttonType="abledDefault">인증 변경하기</ManipulationChip>
+              </S.ChipWrapper>
+            </>
+          ) : (
+            <S.PersonInfoBottomWrapper>김팔자 / 010-1234-5678</S.PersonInfoBottomWrapper>
+          )}
         </S.PersonInfoWrapper>
       </S.ReservationContainer>
       <S.Spacer width={width} />
@@ -206,7 +271,9 @@ const Purchase = ({
           <CS.FormTextWrapper>
             <CS.FormLeftText color="gray">수수료</CS.FormLeftText>
           </CS.FormTextWrapper>
-          <CS.FormRightPrice color="darkGray">{charge}원</CS.FormRightPrice>
+          <CS.FormRightPrice color="darkGray">
+            {paymentMethod === "yanojaPay" ? "야놀자 페이 사용 무료" : charge}
+          </CS.FormRightPrice>
         </CS.SeperationForm>
         <CS.SeperationForm>
           <CS.FormTextWrapper>
@@ -227,108 +294,199 @@ const Purchase = ({
           </S.InfoText>
         </S.PersonInfoWrapper>
         <S.ToggleButtonWrapper>
-          <ToggleButton buttonType="yanolja" subText="*40,000원 할인" width="48%">
+          <ToggleButton
+            buttonType="yanolja"
+            subText="*40,000원 할인"
+            width="48%"
+            onClick={() => handlePaymentMethodChange(PaymentMethod.YanoljaPay)}
+          >
             야놀자 페이
           </ToggleButton>
-          <ToggleButton buttonType="toss" width="48%">
+          <ToggleButton
+            buttonType="toss"
+            width="48%"
+            onClick={() => handlePaymentMethodChange(PaymentMethod.TossPay)}
+          >
             토스 페이
           </ToggleButton>
         </S.ToggleButtonWrapper>
         <S.ToggleButtonWrapper>
-          <ToggleButton buttonType="default" width="48%">
+          <ToggleButton
+            buttonType="default"
+            width="48%"
+            onClick={() => handlePaymentMethodChange(PaymentMethod.AccountTransfer)}
+          >
             무통장 입금
           </ToggleButton>
-          <ToggleButton buttonType="default" width="48%">
+          <ToggleButton
+            buttonType="default"
+            width="48%"
+            onClick={() => handlePaymentMethodChange(PaymentMethod.Card)}
+          >
             카드
           </ToggleButton>
         </S.ToggleButtonWrapper>
-        <S.PersonInfoWrapper>
-          <S.InfoText>
-            카드 결제 <S.UserInfoTextRed>*</S.UserInfoTextRed>
-          </S.InfoText>
-        </S.PersonInfoWrapper>
-        <Notice
-          type="info"
-          content="카드사와 할부기간을 선택해주세요"
-          color="blue"
-          shape="fill"
-          bgColor="#F8F8F8"
-        />
-        <InputWrapper>
-          <motion.p className="select" onClick={toggleCardOption}>
-            <span>{cardMessage}</span>
-            {isCardOptionVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
-          </motion.p>
-          <AnimatePresence>
-            {isCardOptionVisible && (
-              <motion.div
-                className="option"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                onClick={() => {
-                  setCardMessage("국민카드");
-                  setIsCardOptionVisible(false);
-                }}
-                style={{
-                  position: "relative",
-                  top: "-3px",
-                  left: 0,
-                  zIndex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "auto",
-                  alignItems: "flex-start"
-                }}
-              >
-                <motion.div className="inner">
-                  <motion.img src="/src/assets/bankIcon.png" />
-                  <span className="card">국민카드</span>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </InputWrapper>
-        <InputWrapper>
-          <motion.p className="select" onClick={toggleInstallmentOption}>
-            <span>{installmentMessage}</span>
-            {isInstallmentOptionVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
-          </motion.p>
-          <AnimatePresence>
-            {isInstallmentOptionVisible && (
-              <motion.div
-                className="option"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                style={{
-                  position: "relative",
-                  top: "-3px",
-                  left: 0,
-                  zIndex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "auto",
-                  alignItems: "flex-start"
-                }}
-              >
-                <motion.div className="inner" onClick={() => handleInstallmentOption(1)}>
-                  <span className="installment">1개월(무이자)</span>
-                </motion.div>
-                <motion.div className="inner" onClick={() => handleInstallmentOption(2)}>
-                  <span className="installment">2개월</span>
-                </motion.div>
-                <motion.div className="inner" onClick={() => handleInstallmentOption(3)}>
-                  <span className="installment">3개월</span>
-                </motion.div>
-                <motion.div className="inner" onClick={() => handleInstallmentOption(4)}>
-                  <span className="installment">4개월</span>
-                </motion.div>
-                <motion.div className="inner" onClick={() => handleInstallmentOption(5)}>
-                  <span className="installment">5개월</span>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </InputWrapper>
+        {paymentMethod === "card" ? (
+          <>
+            <S.PersonInfoWrapper>
+              <S.InfoText>
+                카드 결제 <S.UserInfoTextRed>*</S.UserInfoTextRed>
+              </S.InfoText>
+            </S.PersonInfoWrapper>
+            <Notice
+              type="info"
+              content="카드사와 할부기간을 선택해주세요"
+              color="blue"
+              shape="fill"
+              bgColor="#F8F8F8"
+            />
+            <InputWrapper>
+              <motion.p className="select" onClick={toggleCardOption}>
+                <span>{cardMessage}</span>
+                {isCardOptionVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
+              </motion.p>
+              <AnimatePresence>
+                {isCardOptionVisible && (
+                  <motion.div
+                    className="option"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    onClick={() => {
+                      setCardMessage("국민카드");
+                      setIsCardOptionVisible(false);
+                    }}
+                    style={{
+                      position: "relative",
+                      top: "-3px",
+                      left: 0,
+                      zIndex: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      height: "auto",
+                      alignItems: "flex-start"
+                    }}
+                  >
+                    <motion.div className="inner">
+                      <motion.img src="/src/assets/bankIcon.png" />
+                      <span className="card">국민카드</span>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </InputWrapper>
+
+            {/* FIXME: 카드 -> 5만원 미만시 할부기간 선택불가 */}
+            <InputWrapper>
+              <motion.p className="select" onClick={toggleInstallmentOption}>
+                <span>{installmentMessage}</span>
+                {isInstallmentOptionVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
+              </motion.p>
+              <AnimatePresence>
+                {isInstallmentOptionVisible && (
+                  <motion.div
+                    className="option"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    style={{
+                      position: "relative",
+                      top: "-3px",
+                      left: 0,
+                      zIndex: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      height: "auto",
+                      alignItems: "flex-start"
+                    }}
+                  >
+                    <motion.div className="inner" onClick={() => handleInstallmentOption(1)}>
+                      <span className="installment">1개월(무이자)</span>
+                    </motion.div>
+                    <motion.div className="inner" onClick={() => handleInstallmentOption(2)}>
+                      <span className="installment">2개월</span>
+                    </motion.div>
+                    <motion.div className="inner" onClick={() => handleInstallmentOption(3)}>
+                      <span className="installment">3개월</span>
+                    </motion.div>
+                    <motion.div className="inner" onClick={() => handleInstallmentOption(4)}>
+                      <span className="installment">4개월</span>
+                    </motion.div>
+                    <motion.div className="inner" onClick={() => handleInstallmentOption(5)}>
+                      <span className="installment">5개월</span>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </InputWrapper>
+          </>
+        ) : null}
+
+        {paymentMethod === "accountTransfer" ? (
+          <>
+            <S.PersonInfoWrapper>
+              <S.InfoText>
+                무통장 입금 <S.UserInfoTextRed>*</S.UserInfoTextRed>
+              </S.InfoText>
+            </S.PersonInfoWrapper>
+            <Notice
+              type="info"
+              content="이용하실 은행을 선택해주세요"
+              color="blue"
+              shape="fill"
+              bgColor="#F8F8F8"
+            />
+            <InputWrapper>
+              <motion.p className="select" onClick={toggleCardOption}>
+                <span>{bankMessage}</span>
+                {isCardOptionVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
+              </motion.p>
+              <AnimatePresence>
+                {isCardOptionVisible && (
+                  <motion.div
+                    className="option"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    onClick={() => {
+                      setBankMessage("국민은행");
+                      setIsCardOptionVisible(false);
+                    }}
+                    style={{
+                      position: "relative",
+                      top: "-3px",
+                      left: 0,
+                      zIndex: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      height: "auto",
+                      alignItems: "flex-start"
+                    }}
+                  >
+                    <motion.div className="inner">
+                      <motion.img src="/src/assets/bankIcon.png" />
+                      <span className="card">국민은행</span>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </InputWrapper>
+          </>
+        ) : null}
+
+        {paymentMethod !== "yanoljaPay" || isYanoljaPaySubscribed ? null : (
+          <>
+            <Notice
+              type="default"
+              title="야놀자 페이에 가입되어 있지 않습니다. 가입 후 이용하실 수 있어요!"
+              content="야놀자 페이 가입 후 야나바다 수수료 전액 무료 혜택을 이용해보세요"
+              shape="fill"
+              color="red"
+            />
+            <AuthenticationButton buttonType="default" onClick={() => setIsModalVisible(true)}>
+              야놀자 페이 가입하러 가기
+            </AuthenticationButton>
+            <Modal {...modalProps} />
+          </>
+        )}
+
         <S.PersonInfoWrapper>
           <S.InfoText>주의사항 및 결제 동의</S.InfoText>
           <S.DetailText>
@@ -364,7 +522,7 @@ const Purchase = ({
             variant="all"
             checked={isAllChecked}
             setChecked={setIsChecked2}
-            content="예약자 정보와 동일합니다"
+            content="필수 약관 전체 동의"
             transparent={false}
             fontSize="15px"
             fontWeight="600"
@@ -392,9 +550,15 @@ const Purchase = ({
               동의하실 경우 결제하기를 클릭해 주세요
             </S.BottomDetailText>
           </S.ButtonFormWrapper>
-          <BaseButton width="100%" buttonType="default">
-            630,000원 결제하기
-          </BaseButton>
+          {isAllChecked ? (
+            <BaseButton width="100%" buttonType="default">
+              630,000원 결제하기
+            </BaseButton>
+          ) : (
+            <BaseButton width="100%" buttonType="disabled-default">
+              630,000원 결제하기
+            </BaseButton>
+          )}
         </S.ReservationBottomWrapper>
       </S.ReservationContainer>
     </>
