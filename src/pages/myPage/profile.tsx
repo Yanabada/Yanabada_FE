@@ -20,6 +20,7 @@ interface ProfileProps {
 
 const Profile = ({ width }: ProfileProps) => {
   const [isEditIconClicked, setIsEditIconClicked] = useState(false);
+  const [nickName, setNickName] = useState("강쥐사랑해");
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -71,17 +72,26 @@ const Profile = ({ width }: ProfileProps) => {
                   <ManipulationChip
                     buttonType={!errors.nickName ? "abledDefault" : "disabledDefault"}
                     type="submit"
+                    onClick={() => {
+                      setNickName(getValues("nickName"));
+                      setIsEditIconClicked(false);
+                    }}
                   >
                     확인
                   </ManipulationChip>
-                  <ManipulationChip buttonType="disabledDefault">취소</ManipulationChip>
+                  <ManipulationChip
+                    buttonType="disabledDefault"
+                    onClick={() => setIsEditIconClicked(false)}
+                  >
+                    취소
+                  </ManipulationChip>
                 </S.TextInputBottomWrapper>
               </form>
             </S.FormWrapper>
           ) : (
             <>
               <S.ProfileTextWrapper>
-                <S.ProfileText>강쥐사랑해</S.ProfileText>
+                <S.ProfileText>{nickName}</S.ProfileText>
                 <S.EditIconWrapper onClick={() => setIsEditIconClicked(true)}>
                   <EditIcon />
                 </S.EditIconWrapper>
