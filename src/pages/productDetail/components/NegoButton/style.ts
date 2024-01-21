@@ -12,6 +12,7 @@ export const Container = styled.div`
   box-shadow: ${({ theme }) => theme.shadows[2]};
   position: fixed;
   bottom: 0;
+  z-index: 1;
 `;
 
 export const LeftContainer = styled.div`
