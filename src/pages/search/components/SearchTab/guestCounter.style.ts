@@ -20,7 +20,7 @@ export const Wrapper = styled(Flex)`
     color: ${({ theme }) => theme.colors.gray[700]};
   }
 
-  span:nth-child(2) {
+  span:nth-of-type(2) {
     width: 20px;
     text-align: center;
   }
