@@ -89,5 +89,15 @@ export const handlers = [
         }
       }
     ]);
+  }),
+  http.get("/api/member", () => {
+    return HttpResponse.json({
+      id: 1,
+      email: "example1@example.com",
+      phoneNumber: "123-456-7890",
+      imageUrl: "https://example.com/image1.jpg",
+      point: 100,
+      provider: "EMAIL"
+    });
   })
 ];

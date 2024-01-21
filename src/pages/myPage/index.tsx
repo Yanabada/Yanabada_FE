@@ -9,6 +9,7 @@ import Modal from "@components/modal";
 import { useNavigate } from "react-router-dom";
 import NumberBadge from "@components/numberBadge";
 import { FaRegBell } from "react-icons/fa";
+import useProfileDetail from "./hooks/useProfileDetail";
 
 interface MyPageProps {
   width?: string;
@@ -45,6 +46,16 @@ const MyPage = ({ width }: MyPageProps) => {
     rightAction: () => setIsLogoutModalVisible(false)
   };
 
+  const { data, error } = useProfileDetail();
+
+  if (data) {
+    console.log(data);
+  }
+
+  if (error) {
+    console.error("An error has occurred:", error.message);
+  }
+
   return isLoginned ? (
     <>
       <UpperNavBar
@@ -64,7 +75,8 @@ const MyPage = ({ width }: MyPageProps) => {
           <Link to="/mypage/profile">
             <S.LoginButton>
               {/* FIXME: 추후 변수값으로 대체 예정 */}
-              USER123456 <ArrowForwardIcon />
+              {data.id}
+              <ArrowForwardIcon />
             </S.LoginButton>
           </Link>
         </S.LoginButtonWrapper>
