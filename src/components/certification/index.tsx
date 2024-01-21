@@ -3,15 +3,21 @@ import * as S from "./styles";
 import TextInput from "@components/input/TextInput";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import Modal from "@components/modal";
 import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
+import BottomSheet from "@components/bottomSheet";
+import { useNavigate } from "react-router-dom";
 
 interface CertificationProps {
   width?: string;
   upperNavBarText: string;
   buttonText: string;
-  handleClick: () => void; // 화면 하단 버튼 동작
+  customHandleClick?: () => void; // 화면 하단 버튼 동작
+  hasBottomSheet?: boolean;
+  bottomSheetTitle?: string;
+  bottomSheetChildren?: string | ReactNode;
+  bottomSheetNavigate?: string;
 }
 
 interface FormData {
@@ -19,13 +25,24 @@ interface FormData {
   code: number | null;
 }
 
-const Certification = ({ width, upperNavBarText, buttonText, handleClick }: CertificationProps) => {
+const Certification = ({
+  width,
+  upperNavBarText,
+  buttonText,
+  customHandleClick,
+  hasBottomSheet,
+  bottomSheetTitle,
+  bottomSheetChildren,
+  bottomSheetNavigate
+}: CertificationProps) => {
+  const navigate = useNavigate();
   const [isSendValid, setIsSendValid] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [openInput, setOpenInput] = useState(false);
   const [isNumCorrect, setIsNumCorrect] = useState(false);
   const [sentCount, setSentCount] = useState(5);
   const [btnText, setBtnText] = useState("인증번호 전송");
+  const [isSheetVisible, setIsSheetVisible] = useState(false);
 
   const {
     register,
@@ -76,6 +93,14 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
     }
     setIsNumCorrect(false);
     return false;
+  };
+
+  const handleClick = () => {
+    if (!isNumCorrect) {
+      return;
+    }
+    hasBottomSheet && setIsSheetVisible(true);
+    customHandleClick;
   };
 
   return (
@@ -159,6 +184,20 @@ const Certification = ({ width, upperNavBarText, buttonText, handleClick }: Cert
           setValue("code", null);
         }}
       />
+
+      {hasBottomSheet && (
+        <BottomSheet
+          title={bottomSheetTitle}
+          isVisible={isSheetVisible}
+          setIsVisible={setIsSheetVisible}
+          isCustom={true}
+          customBack={() => {
+            navigate(bottomSheetNavigate!);
+          }}
+        >
+          {bottomSheetChildren}
+        </BottomSheet>
+      )}
     </>
   );
 };
