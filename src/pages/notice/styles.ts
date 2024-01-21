@@ -41,11 +41,13 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  cursor: pointer;
 
   .title {
     ${({ theme }) => theme.text.button2};
 
-    .name {
+    .product-name,
+    .user-name {
       font-family: "Pretendard";
       ${({ theme }) => theme.text.button1};
     }
