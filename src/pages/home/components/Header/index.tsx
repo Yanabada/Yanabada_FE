@@ -4,6 +4,7 @@ import LogoIcon from "assets/icons/nav_Logo.svg?react";
 import NumberBadge from "@components/numberBadge";
 import { useTransform, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isHeaderActive, setIsHeaderActive] = useState(false);
@@ -25,10 +26,12 @@ const Header = () => {
   return (
     <S.Container className={isHeaderActive ? "isHeaderActive" : ""}>
       <S.HeaderContainer style={{ backgroundColor }}>
-        <S.BellContainer>
-          <NumberBadge number={99} />
-          <FaRegBell className="bell" />
-        </S.BellContainer>
+        <Link to="/notice">
+          <S.BellContainer>
+            <NumberBadge number={99} />
+            <FaRegBell className="bell" />
+          </S.BellContainer>
+        </Link>
         <S.LogoContainer className="logoContainer">
           <LogoIcon />
         </S.LogoContainer>
