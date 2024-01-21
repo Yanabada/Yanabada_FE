@@ -3,7 +3,7 @@ import * as S from "./styles";
 import TextInput from "@components/input/TextInput";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import { useForm } from "react-hook-form";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Modal from "@components/modal";
 import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import BottomSheet from "@components/bottomSheet";
@@ -18,6 +18,7 @@ interface CertificationProps {
   bottomSheetTitle?: string;
   bottomSheetChildren?: string | ReactNode;
   bottomSheetNavigate?: string;
+  phoneNum?: string | null;
 }
 
 interface FormData {
@@ -33,7 +34,8 @@ const Certification = ({
   hasBottomSheet,
   bottomSheetTitle,
   bottomSheetChildren,
-  bottomSheetNavigate
+  bottomSheetNavigate,
+  phoneNum
 }: CertificationProps) => {
   const navigate = useNavigate();
   const [isSendValid, setIsSendValid] = useState(false);
@@ -100,8 +102,14 @@ const Certification = ({
       return;
     }
     hasBottomSheet && setIsSheetVisible(true);
-    customHandleClick;
+    customHandleClick && customHandleClick();
   };
+
+  useEffect(() => {
+    if (phoneNum) {
+      setValue("phoneNumber", phoneNum);
+    }
+  }, []);
 
   return (
     <>
