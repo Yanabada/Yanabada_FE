@@ -208,7 +208,7 @@ export const CheckBoxWrapper = styled.div`
 
 export const ChipWrapper = styled.div`
   display: flex;
-  padding-left: 252px;
+  width: 100%;
   justify-content: flex-end;
   align-items: center;
 `;
