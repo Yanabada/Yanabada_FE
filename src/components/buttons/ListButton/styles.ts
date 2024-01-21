@@ -4,7 +4,7 @@ interface ListButtonProps {
   width?: string;
 }
 
-export const ListButtonWrapper = styled.div<ListButtonProps>`
+export const ListButtonWrapper = styled.button<ListButtonProps>`
   display: flex;
   width: ${({ width }) => width || "100%"};
   height: 50px;
@@ -14,7 +14,6 @@ export const ListButtonWrapper = styled.div<ListButtonProps>`
   flex-shrink: 0;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
-  backdrop-filter: blur(10px);
 `;
 
 export const LeftSection = styled.div`
