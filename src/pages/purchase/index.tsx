@@ -22,6 +22,7 @@ import BaseButton from "@components/buttons/BaseButton";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import Modal from "@components/modal";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 interface PurchaseProps {
   width?: string;
@@ -95,6 +96,26 @@ const Purchase = ({
     setPaymentMethod(selectedMethod);
   };
 
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (errors.nickName) return;
+    // FIXME: API 연동
+    console.log("submit");
+
+    const name = getValues("name");
+    const phoneNumber = getValues("phoneNumber");
+    console.log("name", name);
+    console.log("phoneNumber", phoneNumber);
+  };
+
+  const {
+    register,
+    formState: { errors },
+    getValues
+  } = useForm({
+    mode: "onBlur"
+  });
+
   useEffect(() => {
     if (isChecked3 && isChecked4) {
       setIsAllChecked(true);
@@ -162,33 +183,53 @@ const Purchase = ({
             <S.ChangeText onClick={() => setIsChangeButtonClicked(true)}>변경하기</S.ChangeText>
           </S.PersonInfoTopWrapper>
           {isChangeButtonClicked ? (
-            <>
-              <TextInput
-                variant="move"
-                label={
-                  <>
-                    <span>성명</span>
-                    <span style={{ color: "#E01F3E" }}>*</span>
-                  </>
-                }
-                errorMessage="이용자 이름은 한글과 영문만 가능합니다."
-              />
-              <TextInput
-                variant="move"
-                label={
-                  <>
-                    <span>휴대폰 번호</span>
-                    <span style={{ color: "#E01F3E" }}>*</span>
-                  </>
-                }
-                errorMessage="이용자 이름은 한글과 영문만 가능합니다."
-              />
-              <S.ChipWrapper>
-                {/* FIXME: 유효성 검사 후 input을 모두 채워야지만 abled되게 변경 */}
-                {/* FIXME: 휴대폰 인증 페이지(H-2) 라우터 추가 후 이동 로직 추가 */}
-                <ManipulationChip buttonType="abledDefault">인증 변경하기</ManipulationChip>
-              </S.ChipWrapper>
-            </>
+            <S.FormWrapper width={width}>
+              <form onSubmit={onSubmit}>
+                <S.TextInputWrapper>
+                  <TextInput
+                    variant="move"
+                    label={
+                      <>
+                        <span>성명</span>
+                        <span style={{ color: "#E01F3E" }}>*</span>
+                      </>
+                    }
+                    {...register("name", {
+                      required: true,
+                      pattern: {
+                        value: /^[가-힣a-zA-Z]*$/,
+                        message: "이용자 이름은 한글과 영문만 가능합니다."
+                      }
+                    })}
+                    errorMessage={errors.name && `${errors.name?.message}`}
+                  />
+                  <S.TextInputSpacer />
+                  <TextInput
+                    variant="move"
+                    label={
+                      <>
+                        <span>휴대폰 번호</span>
+                        <span style={{ color: "#E01F3E" }}>*</span>
+                      </>
+                    }
+                    {...register("phoneNumber", {
+                      required: true,
+                      pattern: {
+                        value: /^010-\d{4}-\d{4}$/,
+                        message: "010-0000-0000 형태로 입력해주세요."
+                      }
+                    })}
+                    errorMessage={errors.phoneNumber && `${errors.phoneNumber?.message}`}
+                  />
+                </S.TextInputWrapper>
+
+                <S.ChipWrapper>
+                  {/* FIXME: 유효성 검사 후 input을 모두 채워야지만 abled되게 변경 */}
+                  {/* FIXME: 휴대폰 인증 페이지(H-2) 라우터 추가 후 이동 로직 추가 */}
+                  <ManipulationChip buttonType="abledDefault">인증 변경하기</ManipulationChip>
+                </S.ChipWrapper>
+              </form>
+            </S.FormWrapper>
           ) : (
             <S.PersonInfoBottomWrapper>김팔자 / 010-1234-5678</S.PersonInfoBottomWrapper>
           )}
@@ -212,26 +253,47 @@ const Purchase = ({
             fontWeight="normal"
             setList={[setIsChecked1]}
           />
-          <TextInput
-            variant="move"
-            label={
-              <>
-                <span>성명</span>
-                <span style={{ color: "#E01F3E" }}>*</span>
-              </>
-            }
-            errorMessage="이용자 이름은 한글과 영문만 가능합니다."
-          />
-          <TextInput
-            variant="move"
-            label={
-              <>
-                <span>휴대폰 번호</span>
-                <span style={{ color: "#E01F3E" }}>*</span>
-              </>
-            }
-            errorMessage="이용자 이름은 한글과 영문만 가능합니다."
-          />
+          <S.FormWrapper width={width}>
+            <form onSubmit={onSubmit}>
+              <S.TextInputWrapper>
+                <TextInput
+                  variant="move"
+                  label={
+                    <>
+                      <span>성명</span>
+                      <span style={{ color: "#E01F3E" }}>*</span>
+                    </>
+                  }
+                  {...register("name", {
+                    required: true,
+                    pattern: {
+                      value: /^[가-힣a-zA-Z]*$/,
+                      message: "이용자 이름은 한글과 영문만 가능합니다."
+                    }
+                  })}
+                  errorMessage={errors.name && `${errors.name?.message}`}
+                />
+                <S.TextInputSpacer />
+                <TextInput
+                  variant="move"
+                  label={
+                    <>
+                      <span>휴대폰 번호</span>
+                      <span style={{ color: "#E01F3E" }}>*</span>
+                    </>
+                  }
+                  {...register("phoneNumber", {
+                    required: true,
+                    pattern: {
+                      value: /^010-\d{4}-\d{4}$/,
+                      message: "010-0000-0000 형태로 입력해주세요."
+                    }
+                  })}
+                  errorMessage={errors.phoneNumber && `${errors.phoneNumber?.message}`}
+                />
+              </S.TextInputWrapper>
+            </form>
+          </S.FormWrapper>
         </S.CheckBoxWrapper>
       </S.ReservationContainer>
       <S.ReservationContainer width={width}>

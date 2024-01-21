@@ -26,6 +26,7 @@ const Profile = ({ width }: ProfileProps) => {
     if (errors.nickName) return;
     // FIXME: API 연동
     console.log("submit");
+
     const nickName = getValues("nickName");
     console.log("nickName", nickName);
   };
