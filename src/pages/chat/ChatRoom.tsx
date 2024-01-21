@@ -4,7 +4,6 @@ import ChatRoomBanner from "./components/chatRoomBanner";
 import { useEffect, useRef, useState } from "react";
 import Modal from "@components/modal";
 import ChatText from "./components/chatText";
-import { numberFormat } from "@utils/numberFormat";
 import * as S from "./styles/styles";
 import ChatInput from "./components/chatInput";
 import { Message } from "./types/chatRoom";
@@ -13,15 +12,15 @@ const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const productData = {
-    code: "240107f84892a35ed5",
-    image: "http://via.placeholder.com/300x300",
-    accommodationName: "춘천세종호텔",
-    roomName: "스탠다드 룸",
-    checkInDate: "2024-01-16",
-    checkOutDate: "2024-01-19",
-    policyNumber: 2
-  };
+  // const productData = {
+  //   code: "240107f84892a35ed5",
+  //   image: "http://via.placeholder.com/300x300",
+  //   accommodationName: "춘천세종호텔",
+  //   roomName: "스탠다드 룸",
+  //   checkInDate: "2024-01-16",
+  //   checkOutDate: "2024-01-19",
+  //   policyNumber: 2
+  // };
   const status = "ON_SALE";
 
   // 채팅 왔을 때 아래로 스크롤
@@ -55,12 +54,13 @@ const ChatRoom = () => {
         status="ON_SALE"
         roomName="Forest Tower Deluxe King"
         salesPercentage={50}
-        sellingPrice={numberFormat(600000)}
-        price={numberFormat(1200000)}
+        sellingPrice={600000}
+        price={1200000}
         saleEndDate="2021-09-30"
         sellerId={1}
-        purchasePrice={numberFormat(600000)}
-        productData={productData}
+        purchasePrice={600000}
+        cancelFee={0}
+        // productData={productData}
       />
       <S.ChatContainer ref={bottom} status={status}>
         <ChatText isNotice />
