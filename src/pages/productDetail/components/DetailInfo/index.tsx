@@ -3,6 +3,7 @@ import { DetailType } from "@pages/productDetail/types/detailType";
 import StarIcon from "assets/icons/Star.svg?react";
 import { numberFormat } from "@utils/numberFormat";
 import Notice from "@components/notice";
+import { useEffect, useState } from "react";
 
 interface DetailProps {
   data: DetailType;
@@ -19,14 +20,23 @@ const categoryList = [
 const DetailInfo = ({ data }: DetailProps) => {
   const accommodationInfo = data.accommodationInfo;
   const roomInfo = data.roomInfo;
+  const images = [accommodationInfo.image, roomInfo.image];
+  const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPage((prev: number) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <S.Container>
       <S.ImageContainer>
-        <S.Image src={accommodationInfo.image} />
+        <S.Image src={images[page]} />
         <S.ImageCounterContainer>
-          <p>01</p>
-          <p className="second">&nbsp;/&nbsp;02</p>
+          <p>{page + 1}</p>
+          <p className="second">&nbsp;/&nbsp;{images.length}</p>
         </S.ImageCounterContainer>
       </S.ImageContainer>
       <S.InfoContainer>
