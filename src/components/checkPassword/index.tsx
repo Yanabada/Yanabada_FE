@@ -6,6 +6,7 @@ import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
 
 interface FormData {
   password: string;
@@ -27,6 +28,7 @@ const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
   } = useForm<FormData>({
     mode: "onBlur"
   });
+  const { setPassword } = SignInDataStore();
 
   const [isPassed, setIsPassed] = useState(false);
 
@@ -84,6 +86,7 @@ const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
           if (!isPassed) {
             return;
           }
+          setPassword(password); // 회원가입용
           navigate(to);
         }}
       >

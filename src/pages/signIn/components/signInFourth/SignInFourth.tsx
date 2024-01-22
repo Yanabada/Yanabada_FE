@@ -33,6 +33,7 @@ const SignInFourth = () => {
         bottomSheetTitle="⠀"
         bottomSheetChildren="회원가입 완료 추카추카~~ 추카 이미지 추가추가"
         bottomSheetNavigate="/"
+        isSignInFlow={true}
       />
     );
   }
