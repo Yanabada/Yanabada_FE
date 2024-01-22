@@ -135,10 +135,15 @@ const Certification = ({
     hasBottomSheet && setIsSheetVisible(true);
     customHandleClick && customHandleClick();
   };
+
   useEffect(() => {
-    if (isSignInFlow && email && password && nickName && phoneNumberSignin) {
-      signInApi({ email, password, nickName, phoneNumberSignin, setIsSheetVisible });
-    }
+    const performSignIn = async () => {
+      if (isSignInFlow && email && password && nickName && phoneNumberSignin) {
+        await signInApi({ email, password, nickName, phoneNumberSignin, setIsSheetVisible });
+      }
+    };
+
+    performSignIn();
   }, [phoneNumberSignin]);
 
   useEffect(() => {

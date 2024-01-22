@@ -11,6 +11,9 @@ instance.interceptors.request.use(
   async (config) => {
     config.headers["Content-Type"] = "application/json";
     const accessToken = getAccessToken();
+    if (!accessToken) {
+      return config;
+    }
     config.headers["Authorization"] = `Bearer ${accessToken}`;
 
     return config;
