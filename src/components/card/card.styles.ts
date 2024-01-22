@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   display: flex;
   gap: 1rem;
+  background-color: #fff;
+  z-index: 2;
 `;
 
 export const Container = styled.div`
