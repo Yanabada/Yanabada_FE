@@ -116,7 +116,7 @@ export const handlers = [
     return HttpResponse.json({ status: 200 });
   }),
   http.post("/auth/verification/email", async () => {
-    return HttpResponse.json({ status: 200 });
+    return HttpResponse.json({ status: 200, code: 111111 });
   }),
   http.put("/member/password", async ({ request }) => {
     const newPut = await request.json();
