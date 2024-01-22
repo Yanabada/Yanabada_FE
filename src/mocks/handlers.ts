@@ -97,7 +97,8 @@ export const handlers = [
       phoneNumber: "123-456-7890",
       imageUrl: "https://example.com/image1.jpg",
       point: 100,
-      provider: "EMAIL"
+      provider: "EMAIL",
+      nickName: "꿀을핥는사람"
     });
   }),
   http.get("/payments/summary", () => {
@@ -113,5 +114,13 @@ export const handlers = [
   }),
   http.post("/auth/logout", async () => {
     return HttpResponse.json({ status: 200 });
+  }),
+  http.post("/auth/verification/email", async () => {
+    return HttpResponse.json({ status: 200 });
+  }),
+  http.put("/member/password", async ({ request }) => {
+    const newPut = await request.json();
+
+    return HttpResponse.json(newPut, { status: 200 });
   })
 ];
