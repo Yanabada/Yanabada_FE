@@ -129,16 +129,21 @@ const Certification = ({
     // 회원가입 플로우일 때 동작
     if (isSignInFlow) {
       setPhoneNumber(phoneNumber);
-      await signInApi({ email, password, nickName, phoneNumberSignin, setIsSheetVisible });
       return;
     }
 
     hasBottomSheet && setIsSheetVisible(true);
     customHandleClick && customHandleClick();
   };
+  useEffect(() => {
+    if (isSignInFlow && email && password && nickName && phoneNumberSignin) {
+      signInApi({ email, password, nickName, phoneNumberSignin, setIsSheetVisible });
+    }
+  }, [phoneNumberSignin]);
 
   useEffect(() => {
     trigger("phoneNumber");
+    trigger("code");
     if (phoneNum) {
       setValue("phoneNumber", phoneNum);
     }

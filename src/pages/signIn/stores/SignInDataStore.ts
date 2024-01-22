@@ -1,5 +1,6 @@
 import { create } from "zustand";
 
+// TODO - persist 추가하기
 interface SignInDataStore {
   email: string;
   password: string;
