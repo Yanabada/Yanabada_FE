@@ -2,22 +2,45 @@ import BaseButton from "@components/buttons/BaseButton";
 import ResetIcon from "@assets/icons/resetIcon.svg?react";
 import * as S from "./styles";
 import { FlexCenter } from "@styles/base";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@components/modal";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import HistoryStore from "@pages/search/stores/historyStore";
+import { HistoryType } from "@pages/search/types/history";
 
 const BottomActions = () => {
   const [isResetModalOpen, setResetModalOpen] = useState(false);
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const params = new URLSearchParams(location.search);
-  const keyword = params.get("keyword");
-  const isActive = !!keyword;
+  const keyword = searchParams.get("keyword");
+  const checkInDate = searchParams.get("checkInDate");
+  const checkOutDate = searchParams.get("checkOutDate");
+  const adult = searchParams.get("adult");
+  const child = searchParams.get("child");
+  const isActive = !!keyword && !!checkInDate && !!checkOutDate && !!adult && !!child;
 
   const handleReset = () => {
     setResetModalOpen(false);
     navigate(location.pathname);
+  };
+
+  const { history, setHistory } = HistoryStore();
+
+  useEffect(() => {
+    localStorage.setItem("searchHistory", JSON.stringify(history));
+  }, [history]);
+
+  const handleLocalStotage = () => {
+    const searchHistory: HistoryType = {
+      id: new Date(),
+      keyword,
+      checkInDate,
+      checkOutDate,
+      adult,
+      child
+    };
+    setHistory([searchHistory, ...history]);
   };
 
   return (
@@ -39,7 +62,7 @@ const BottomActions = () => {
         setIsVisible={setResetModalOpen}
       />
       {isActive ? (
-        <BaseButton buttonType="icon" width="50%">
+        <BaseButton buttonType="icon" width="50%" onClick={handleLocalStotage}>
           검색하기
         </BaseButton>
       ) : (
