@@ -11,6 +11,7 @@ import NumberBadge from "@components/numberBadge";
 import { FaRegBell } from "react-icons/fa";
 import useProfileDetail from "./hooks/useProfileDetail";
 import usePutPhoneNumber from "./hooks/useLogout";
+import useBalance from "./hooks/useBalance";
 
 interface MyPageProps {
   width?: string;
@@ -34,11 +35,16 @@ const MyPage = ({ width }: MyPageProps) => {
     rightAction: () => setIsLoginModalVisible(false)
   };
 
-  const { data, error } = useProfileDetail();
+  const { data: profileData, error: profileError } = useProfileDetail();
+  const { data: balanceData, error: balanceError } = useBalance();
   const { mutate } = usePutPhoneNumber();
 
-  if (error) {
-    console.log(error);
+  if (profileError) {
+    console.log(profileError);
+  }
+
+  if (balanceError) {
+    console.log(balanceError);
   }
 
   const logoutModalProps = {
@@ -74,13 +80,18 @@ const MyPage = ({ width }: MyPageProps) => {
         <S.LoginButtonWrapper>
           <Link to="/mypage/profile">
             <S.LoginButton>
-              {data.id}
+              {profileData.id}
               <ArrowForwardIcon />
             </S.LoginButton>
           </Link>
         </S.LoginButtonWrapper>
 
-        <CardSectionButton buttonType="abledPay" width={width} />
+        {balanceData.hasJoinedYanoljaPay ? (
+          <CardSectionButton buttonType="abledPay" width={width} />
+        ) : (
+          <CardSectionButton buttonType="abledPay_notRegistered" width={width} />
+        )}
+
         <Link to="/points/list">
           <CardSectionButton buttonType="abledPoint" width={width} />
         </Link>
