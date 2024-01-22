@@ -208,3 +208,28 @@ export const WithdrawalWrapper = styled.div<ProfileProps>`
   align-items: center;
   flex-shrink: 0;
 `;
+
+export const EditIconWrapper = styled.div`
+  display: flex;
+`;
+
+export const TextInputWrapper = styled.div<ProfileProps>`
+  width: ${({ width }) => width || "332px"};
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+`;
+
+export const TextInputBottomWrapper = styled.div<ProfileProps>`
+  display: flex;
+  width: ${({ width }) => width || "332px"};
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 16px;
+`;
+
+export const FormWrapper = styled.div<ProfileProps>`
+  width: ${({ width }) => width || "332px"};
+`;
