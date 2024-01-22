@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useChangePassword from "@pages/signIn/hooks/useChangePassword";
 
 interface FormData {
   password: string;
@@ -40,6 +41,12 @@ const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
     }
     return false;
   };
+
+  const { mutate, isSuccess } = useChangePassword();
+
+  useEffect(() => {
+    isSuccess && navigate(to);
+  }, [isSuccess]);
 
   return (
     <>
@@ -84,7 +91,7 @@ const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
           if (!isPassed) {
             return;
           }
-          navigate(to);
+          mutate(password);
         }}
       >
         {buttonText}

@@ -7,6 +7,7 @@ import "./main.css";
 import { Global, ThemeProvider } from "@emotion/react";
 import globalStyles from "styles/globalStyles";
 import "./firebase-messaging-sw.js";
+import { Toaster } from "react-hot-toast";
 
 async function enableMocking() {
   if (process.env.NODE_ENV !== "development") {
@@ -31,6 +32,7 @@ enableMocking().then(() => {
       <ThemeProvider theme={theme}>
         <Global styles={globalStyles} />
         <RouterProvider router={router} />
+        <Toaster />
       </ThemeProvider>
     </QueryClientProvider>
   );
