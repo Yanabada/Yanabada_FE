@@ -5,7 +5,7 @@ import * as S from "./styles";
 
 import ArrowRight from "@assets/icons/arrowRight.svg?react";
 import useProducts from "@pages/products/api/queries";
-import Logo from "@assets/icons/2024.svg?react";
+import Logo from "@assets/icons/hot_place_2024.svg?react";
 
 type Picked =
   | "id"
