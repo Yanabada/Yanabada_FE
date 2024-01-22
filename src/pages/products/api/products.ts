@@ -1,6 +1,6 @@
-import axios from "axios";
 import qs from "qs";
 import { GetProductResponseData } from "../types/productsType";
+import instance from "@apis/instance";
 
 type OrderState = "RECENT" | "END_DATE_ASC" | "SALES_PERCENTAGE_DESC" | "PRICE_ASC" | "RATING_DESC";
 type Category = "HOTEL_RESORT" | "MOTEL" | "PENSION" | "GUESTHOUSE" | "POOL_VILLA";
@@ -24,7 +24,7 @@ export interface GetProductsRequestParams {
 }
 
 const getProducts = async (params: Partial<GetProductsRequestParams> = { size: 20 }) => {
-  const response = await axios.get<GetProductResponseData>("/api/products", {
+  const response = await instance.get<GetProductResponseData>("/products", {
     params,
     paramsSerializer: (params) => {
       return qs.stringify(params, { arrayFormat: "repeat" });
