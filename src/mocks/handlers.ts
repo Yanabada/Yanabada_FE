@@ -99,5 +99,19 @@ export const handlers = [
       point: 100,
       provider: "EMAIL"
     });
+  }),
+  http.get("/payments/summary", () => {
+    return HttpResponse.json({
+      balance: 350000,
+      hasJoinedYanoljaPay: false
+    });
+  }),
+  http.put("/member/phone-number", async ({ request }) => {
+    const newPut = await request.json();
+
+    return HttpResponse.json(newPut, { status: 200 });
+  }),
+  http.post("/auth/logout", async () => {
+    return HttpResponse.json({ status: 200 });
   })
 ];

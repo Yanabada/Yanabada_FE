@@ -3,6 +3,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
 import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
 import { useNavigate } from "react-router-dom";
+import useBalance from "@pages/myPage/hooks/useBalance";
+import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 
 interface CardSectionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   buttonType: "abledPay" | "disabledPay" | "abledPoint" | "disabledPoint" | "management";
@@ -11,6 +13,12 @@ interface CardSectionProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => {
   const navigate = useNavigate();
+
+  const { data: balanceData, error: balanceError } = useBalance();
+
+  if (balanceError) {
+    console.log(balanceError);
+  }
 
   switch (buttonType) {
     case "abledPay":
@@ -23,8 +31,9 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
                 <S.ListButtonText>야놀자 페이</S.ListButtonText>
               </S.ListButtonTextWrapper>
               <S.RightSectionWrapper>
-                {/* FIXME: 추후 변수값으로 대체 예정 */}
-                <S.RightSectionText>350,000원</S.RightSectionText>
+                <S.RightSectionText>
+                  {formatNumberWithCommas(balanceData.balance)}원
+                </S.RightSectionText>
                 <IoIosArrowForward size="18px" color="#616161" />
               </S.RightSectionWrapper>
             </S.ListButton>

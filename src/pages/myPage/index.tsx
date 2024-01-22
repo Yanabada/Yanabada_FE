@@ -10,13 +10,14 @@ import { useNavigate } from "react-router-dom";
 import NumberBadge from "@components/numberBadge";
 import { FaRegBell } from "react-icons/fa";
 import useProfileDetail from "./hooks/useProfileDetail";
+import usePutPhoneNumber from "./hooks/useLogout";
 
 interface MyPageProps {
   width?: string;
 }
 
 const MyPage = ({ width }: MyPageProps) => {
-  // FIXME: 추후 로그인 여부에 따라 상태 변경 예정
+  // FIXME: 추후 로그인 여부에 따라 상태 변경 예정(localstorage member이용)
   const [isLoginned, setIsLoginned] = useState(true);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
@@ -33,6 +34,13 @@ const MyPage = ({ width }: MyPageProps) => {
     rightAction: () => setIsLoginModalVisible(false)
   };
 
+  const { data, error } = useProfileDetail();
+  const { mutate } = usePutPhoneNumber();
+
+  if (error) {
+    console.log(error);
+  }
+
   const logoutModalProps = {
     title: "로그아웃 하시겠습니까?",
     leftBtnText: "확인",
@@ -40,21 +48,13 @@ const MyPage = ({ width }: MyPageProps) => {
     isVisible: isLogoutModalVisible,
     setIsVisible: setIsLogoutModalVisible,
     leftAction: () => {
+      // FIXME: localStorage에서 member 삭제 로직 추가
+      mutate();
       setIsLoginned(false);
       navigate("/mypage");
     },
     rightAction: () => setIsLogoutModalVisible(false)
   };
-
-  const { data, error } = useProfileDetail();
-
-  if (data) {
-    console.log(data);
-  }
-
-  if (error) {
-    console.error("An error has occurred:", error.message);
-  }
 
   return isLoginned ? (
     <>
@@ -74,7 +74,6 @@ const MyPage = ({ width }: MyPageProps) => {
         <S.LoginButtonWrapper>
           <Link to="/mypage/profile">
             <S.LoginButton>
-              {/* FIXME: 추후 변수값으로 대체 예정 */}
               {data.id}
               <ArrowForwardIcon />
             </S.LoginButton>
