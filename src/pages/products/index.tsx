@@ -7,6 +7,8 @@ import { Suspense } from "react";
 import { Link } from "react-router-dom";
 import ProductList from "./components/ProductList";
 import { useMapOpen } from "./stores/mapStore";
+import OptionTab from "./components/OptionTap";
+import Order from "./components/Order";
 
 const Products = () => {
   const { isMapOpen, setMapOpen } = useMapOpen();
@@ -26,6 +28,10 @@ const Products = () => {
         </Link>
         {!isMapOpen && <CategoryTab />}
       </S.Container>
+      <S.OptionWrapper>
+        <OptionTab />
+        <Order />
+      </S.OptionWrapper>
       <Suspense fallback={<p>Loading...</p>}>
         <ProductList />
       </Suspense>

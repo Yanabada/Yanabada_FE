@@ -2,9 +2,21 @@ import axios from "axios";
 import qs from "qs";
 import { GetProductResponseData } from "../types/productsType";
 
-type OrderState = "RECENT" | "END_DATE_ASC" | "SALES_PERCENTAGE_DESC" | "PRICE_ASC" | "RATING_DESC";
-type Category = "HOTEL_RESORT" | "MOTEL" | "PENSION" | "GUESTHOUSE" | "POOL_VILLA";
-type Option = "SAUNA" | "ROOF_TOP" | "POOL" | "GYM" | "LOUNGE_BAR" | "PARKING" | "PARTY_ROOM";
+export type OrderState =
+  | "RECENT"
+  | "END_DATE_ASC"
+  | "SALES_PERCENTAGE_DESC"
+  | "PRICE_ASC"
+  | "RATING_DESC";
+export type Category = "HOTEL_RESORT" | "PENSION" | "GUESTHOUSE" | "POOL_VILLA" | "CAMPING";
+export type Option =
+  | "SAUNA"
+  | "ROOF_TOP"
+  | "POOL"
+  | "GYM"
+  | "LOUNGE_BAR"
+  | "PARKING"
+  | "PARTY_ROOM";
 export interface GetProductsRequestParams {
   keyword: string;
   checkInDate: Date;
@@ -18,7 +30,7 @@ export interface GetProductsRequestParams {
   isHidingSoldOut: boolean;
   order: OrderState;
   category: Category;
-  option: Option[];
+  options: Option[];
   page: number;
   size: number;
 }
@@ -28,7 +40,7 @@ const getProducts = async (params: Partial<GetProductsRequestParams> = { size: 2
   const response = await axios.get<GetProductResponseData>("http://test.yanabada.com/products", {
     headers: {
       Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbDIyMkBlbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwicHJvdmlkZXIiOiJFTUFJTCIsImlhdCI6MTcwNTg5NDkzOCwiZXhwIjoxNzA1ODk2NzM4fQ.8f-D252STnWoP0d-iUSGCoipSnPVoLhLiKsyvMgjd0o"
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbDIyMkBlbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwicHJvdmlkZXIiOiJFTUFJTCIsImlhdCI6MTcwNTkwMzE1OSwiZXhwIjoxNzA1OTA0OTU5fQ.JTKudbFCzwt05uY-DEwnYFRRrLqBDRpatHdo3BWvIrQ"
     },
     params,
     paramsSerializer: (params) => {
