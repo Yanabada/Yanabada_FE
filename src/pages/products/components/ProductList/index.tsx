@@ -4,13 +4,11 @@ import OptionTab from "../OptionTap";
 import Order from "../Order";
 import ProductCard from "../ProductCard";
 import useProducts from "@pages/products/api/queries";
+import { useMapOpen } from "@pages/products/stores/mapStore";
 
-interface ProductListProps {
-  isMapOpen: boolean;
-}
-
-const ProductList = ({ isMapOpen }: ProductListProps) => {
+const ProductList = () => {
   const { data: products } = useProducts();
+  const { isMapOpen } = useMapOpen();
 
   return (
     <>
