@@ -140,7 +140,7 @@ const Purchase = ({
     trigger("name2");
     trigger("phoneNumber1");
     trigger("phoneNumber2");
-  }, [trigger]);
+  }, []);
 
   return (
     <>

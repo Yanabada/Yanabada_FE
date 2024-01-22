@@ -43,7 +43,7 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
   // 최초 렌더링 시에도 유효성 검사 적용
   useEffect(() => {
     trigger("email");
-  }, [trigger]);
+  }, []);
 
   useEffect(() => {
     if (!errors.email && email) {
