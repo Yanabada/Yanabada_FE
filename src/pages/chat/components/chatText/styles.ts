@@ -19,7 +19,8 @@ export const Chat = styled.div`
   align-items: flex-end;
   margin: 10px 0 20px;
 
-  &.right {
+  [data-type="right"] {
+    flex-direction: row-reverse;
     justify-content: flex-end;
   }
 `;
