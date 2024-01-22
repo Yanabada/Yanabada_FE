@@ -45,7 +45,7 @@ export const AbledAuthenticationButton = styled.button<AuthenticationButtonProps
 export const DisAbledAuthenticationButton = styled.button<AuthenticationButtonProps>`
   ${ButtonLayout}
   width: ${({ width }) => width || "332px"};
-  height: ${({ height }) => height || "auto"};
+  height: ${({ height }) => height || "28px"};
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.blue[200]};
 
