@@ -31,3 +31,7 @@ export const ProductCardWrapper = styled.div`
     width: 100%;
   }
 `;
+
+export const OptionWrapper = styled.div`
+  margin-top: 82px;
+`;
