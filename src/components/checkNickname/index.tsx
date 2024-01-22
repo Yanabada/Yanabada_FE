@@ -7,6 +7,7 @@ import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
 
 interface FormData {
   nickname: string;
@@ -21,6 +22,7 @@ const CheckNickname = ({ title, to }: CheckNicknameProps) => {
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
   const [isMultiple, setIsMultiple] = useState(true);
+  const { setNickname } = SignInDataStore();
 
   const {
     register,
@@ -88,6 +90,7 @@ const CheckNickname = ({ title, to }: CheckNicknameProps) => {
           if (isMultiple) {
             return;
           }
+          setNickname(nickname);
           navigate(to);
         }}
       >

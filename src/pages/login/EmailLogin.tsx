@@ -28,7 +28,8 @@ const EmailLogin = () => {
   const password = getValues("password");
   console.log("errors.email", errors.email);
   useEffect(() => {
-    trigger("email"), trigger("password");
+    trigger("email");
+    trigger("password");
   }, [trigger]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
