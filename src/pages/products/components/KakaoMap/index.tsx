@@ -6,6 +6,7 @@ import { ProductsMarkers } from "./ProductsMarkers";
 import ProductCardForMap from "../ProductCard/ProductCardForMap";
 import useProducts from "@pages/products/api/queries";
 import { MyPositionMarker } from "./MyPositionMarker";
+import Research from "./Research";
 
 export interface StateType {
   center: {
@@ -81,6 +82,7 @@ const KakaoMap = () => {
         <MarkerClusterer averageCenter={true} minLevel={10} styles={[S.clustererStyles]}>
           <ProductsMarkers products={products} setSelectedProductId={setSelectedProductId} />
         </MarkerClusterer>
+        <Research />
       </Map>
       <ProductCardForMap selectedProduct={selectedProduct!} />
       <S.Button onClick={handleMyPositionClick}>
