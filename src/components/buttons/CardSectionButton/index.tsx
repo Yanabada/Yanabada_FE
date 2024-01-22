@@ -30,7 +30,8 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
             </S.ListButton>
           </S.ListButtonWrapper>
           <S.BottomSectionWrapper>
-            <S.BottomLeftButton buttonType={buttonType}>
+            {/* FIXME: 잔액인출 페이지 완성되면 이동 url 변경 */}
+            <S.BottomLeftButton buttonType={buttonType} onClick={() => navigate("/charge")}>
               <IoIosSearch size="18px" color="#DE2E5F" />
               <S.BottomLeftButtonText buttonType={buttonType}>잔액인출</S.BottomLeftButtonText>
             </S.BottomLeftButton>
