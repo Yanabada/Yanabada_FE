@@ -44,16 +44,6 @@ const ChatRoomBanner = ({
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [price, setPrice] = useState(0);
 
-  const productData = {
-    code: "240107f84892a35ed5",
-    image: "http://via.placeholder.com/300x300",
-    accommodationName: "춘천세종호텔",
-    roomName: "스탠다드 룸",
-    checkInDate: "2024-01-25",
-    checkOutDate: "2024-01-26",
-    policyNumber: "YNBD_3"
-  };
-
   const commonContent: Record<string, CommonContent> = {
     ON_SALE: {
       badgeText: "판매중",
