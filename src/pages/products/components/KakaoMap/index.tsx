@@ -19,7 +19,8 @@ export interface StateType {
 
 const KakaoMap = () => {
   const { data: products } = useProducts();
-  const [selectedProductId, setSelectedProductId] = useState<number>(products[0].id); // default is first product fetched (maybe 1)
+  // FIXME: 검색 시 숙소 리스트 없을 때 처리
+  const [selectedProductId, setSelectedProductId] = useState<number>(products[0].id);
   const [state, setState] = useState<StateType>({
     center: {
       lat: 33.450701,
