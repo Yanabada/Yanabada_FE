@@ -12,6 +12,7 @@ export const CarouselItem = styled(motion.div)`
   width: 100%;
   height: 100%;
   display: flex;
+  justify-content: space-between;
   gap: 1.5rem;
   margin: 0 auto;
 `;
@@ -19,14 +20,14 @@ export const CarouselItem = styled(motion.div)`
 export const ImageContainer = styled.div`
   position: relative;
   display: flex;
-  width: 100%;
 `;
 
 export const Image = styled(motion.img)`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
   border-radius: 5px;
+  cursor: pointer;
 `;
 
 export const ImageIndex = styled.span`
