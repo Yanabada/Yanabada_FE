@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 144px 0 312px;
+  margin: 20vh 0 0;
   text-align: center;
   color: ${({ theme }) => theme.colors.gray[700]};
   ${({ theme }) => theme.text.body2}
