@@ -52,15 +52,15 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
     setIsSuccess(false);
   }, [email, errors.email]);
 
-  const { mutate, isSuccess: isMutateSuccess } = useEmailAuth();
+  const { mutate, isSuccess: isMutateSuccess, data } = useEmailAuth();
 
   // 인증번호 유효성검사
   const isCodeValid = (value: number) => {
-    //  TODO - 인증번호 같은지 비교하는 로직 추가
-    if (value.toString().length === 6) {
+    if (data && value === data.code.toString()) {
       setIsNumCorrect(true);
       return true;
     }
+
     setIsNumCorrect(false);
     return false;
   };
@@ -80,8 +80,6 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
   }, [sentCount]);
 
   useEffect(() => {
-    console.log(isMutateSuccess);
-
     // TODO - 인증번호 전송 로직
     isMutateSuccess && setOpenInput(true);
   }, [isMutateSuccess]);

@@ -1,9 +1,11 @@
 import axios from "axios";
 
 export const postEmailAuth = async (email: string) => {
-  const postLogoutURL = "/auth/verification/email";
+  const postEmailURL = "/auth/verification/email";
 
-  return await axios.post(postLogoutURL, { email: email });
+  const response = await axios.post(postEmailURL, { email: email });
+
+  return response.data;
 };
 
 export default postEmailAuth;
