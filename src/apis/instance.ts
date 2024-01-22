@@ -1,4 +1,6 @@
 import axios, { AxiosInstance } from "axios";
+import { getAccessToken, refreshAccessToken } from "@utils/getCookie";
+import Cookies from "js-cookie";
 
 const instance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -8,6 +10,8 @@ const instance: AxiosInstance = axios.create({
 instance.interceptors.request.use(
   async (config) => {
     config.headers["Content-Type"] = "application/json";
+    const accessToken = getAccessToken();
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
 
     return config;
   },
@@ -18,9 +22,20 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => response,
-  (error) => {
+
+  async (error) => {
     if (error.response?.status === 401) {
-      alert("인증이 만료되어 재 로그인이 필요합니다.");
+      const originalRequest = error.config;
+
+      if (error.response.data.data.isNeededRefresh) {
+        const newAccessToken = await refreshAccessToken();
+        Cookies.set("accessToken", newAccessToken);
+
+        axios.defaults.headers["Authorization"] = `Bearer ${newAccessToken}`;
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+
+        return axios(originalRequest);
+      }
     }
     return Promise.reject(error);
   }

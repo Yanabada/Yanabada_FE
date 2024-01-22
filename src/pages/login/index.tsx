@@ -6,6 +6,7 @@ import { IoChevronForwardSharp } from "react-icons/io5";
 import BaseButton from "@components/buttons/BaseButton";
 import * as S from "./styles/login.styles";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,7 +21,9 @@ const Login = () => {
       </S.LogoWrapper>
       야나바다는 야놀자 계정으로 이용하실 수 있습니다.
       <S.BtnWrapper>
-        <BaseButton buttonType="kakao">카카오로 시작하기</BaseButton>
+        <Link to="http://test.yanabada.com/oauth2/authorization/kakao">
+          <BaseButton buttonType="kakao">카카오로 시작하기</BaseButton>
+        </Link>
         <BaseButton buttonType="naver" style={{ color: "#fff" }}>
           네이버로 시작하기
         </BaseButton>
