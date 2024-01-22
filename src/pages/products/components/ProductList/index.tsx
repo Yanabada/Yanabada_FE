@@ -1,3 +1,4 @@
+import useIntersect from "@pages/products/hooks/useIntersect";
 import * as S from "../../styles/style";
 import KakaoMap from "../KakaoMap";
 import OptionTab from "../OptionTap";
@@ -7,8 +8,16 @@ import useProducts from "@pages/products/api/queries";
 import { useMapOpen } from "@pages/products/stores/mapStore";
 
 const ProductList = () => {
-  const { data: products } = useProducts();
+  const { data: products, hasNextPage, isFetching, fetchNextPage } = useProducts();
   const { isMapOpen } = useMapOpen();
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching) {
+      // FIXME: 세 번씩 요청됨
+      console.log("fetch next page");
+      fetchNextPage();
+    }
+  });
 
   return (
     <>
@@ -24,6 +33,7 @@ const ProductList = () => {
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
+            <div className="observer" ref={ref} />
           </S.ProductCardWrapper>
         </S.SecondContainer>
       )}
