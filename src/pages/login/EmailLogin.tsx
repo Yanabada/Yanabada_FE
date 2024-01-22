@@ -30,7 +30,7 @@ const EmailLogin = () => {
   useEffect(() => {
     trigger("email");
     trigger("password");
-  }, [trigger]);
+  }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
