@@ -5,12 +5,16 @@ import { useEffect, useRef, useState } from "react";
 import Modal from "@components/modal";
 import ChatText from "./components/chatText";
 import * as S from "./styles/styles";
-import ChatInput from "./components/chatInput";
-import { Message } from "./types/chatRoom";
+import useMessages from "./hooks/useMessages";
+import { useSearchParams } from "react-router-dom";
 
 const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [searchParams] = useSearchParams();
+  // 챗룸으로 왔을 때, 코드는 무조건 있어야 함
+  const code = searchParams.get("chatRoomCode")!;
+  const codeToNumber = parseInt(code);
+  const { data } = useMessages({ code: codeToNumber });
 
   const productData = {
     code: "240107f84892a35ed5",
@@ -23,7 +27,7 @@ const ChatRoom = () => {
   };
   const status = "ON_SALE";
 
-  // 채팅 왔을 때 아래로 스크롤
+  // 채팅 왔을 때 아래로 스크롤 (훅으로 만들어 주쎄용)
   const bottom = useRef<HTMLDivElement>(null);
   const scrollToBottom = () => {
     bottom.current!.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -31,7 +35,9 @@ const ChatRoom = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [data?.data.messages]);
+
+  if (!data || data.data.messages.length === 0) return <p>메시지가 없습니다.</p>;
 
   return (
     <>
@@ -63,15 +69,16 @@ const ChatRoom = () => {
         productData={productData}
       />
       <S.ChatContainer ref={bottom} status={status}>
-        <ChatText isNotice />
+        <ChatText message={data.data.messages[data.data.messages.length - 1]} isNotice />
         {/* FIXME - 테스트 화면 녹화 후 삭제 예정 */}
-        <ChatText senderId={2} />
-        {messages.map(({ senderId, content }: Message, index) => (
-          <ChatText key={index} senderId={senderId} content={content} />
+        {/* <ChatText senderId={2} /> */}
+        {data.data.messages.map((message) => (
+          <ChatText key={message.sendDateTime.toString()} message={message} />
         ))}
       </S.ChatContainer>
 
-      <ChatInput chatRoomCode={1} senderId={1} setMessages={setMessages} />
+      {/* TODO: 소켓으로 구현(?) */}
+      {/* <ChatInput chatRoomCode={code} senderId={1} setMessages={setMessages} /> */}
 
       <Modal
         title="이 채팅방을 나가시겠어요?"
