@@ -29,6 +29,8 @@ export const DisabledDefaultChipWrapper = styled.button`
   ${WrapperLayout}
 
   background: ${({ theme }) => theme.colors.gray[100]};
+
+  cursor: not-allowed;
 `;
 
 export const DisabledChipText = styled.p`

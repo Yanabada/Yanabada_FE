@@ -3,7 +3,7 @@ import * as S from "./styles";
 import TextInput from "@components/input/TextInput";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import { useForm } from "react-hook-form";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Modal from "@components/modal";
 import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import BottomSheet from "@components/bottomSheet";
@@ -18,6 +18,7 @@ interface CertificationProps {
   bottomSheetTitle?: string;
   bottomSheetChildren?: string | ReactNode;
   bottomSheetNavigate?: string;
+  phoneNum?: string | null;
 }
 
 interface FormData {
@@ -33,10 +34,11 @@ const Certification = ({
   hasBottomSheet,
   bottomSheetTitle,
   bottomSheetChildren,
-  bottomSheetNavigate
+  bottomSheetNavigate,
+  phoneNum
 }: CertificationProps) => {
   const navigate = useNavigate();
-  const [isSendValid, setIsSendValid] = useState(false);
+  // const [isSendValid, setIsSendValid] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [openInput, setOpenInput] = useState(false);
   const [isNumCorrect, setIsNumCorrect] = useState(false);
@@ -47,8 +49,9 @@ const Certification = ({
   const {
     register,
     setValue,
-    formState: { errors },
-    getValues
+    formState: { errors, isValid },
+    getValues,
+    trigger
   } = useForm<FormData>({
     mode: "onBlur"
   });
@@ -68,21 +71,24 @@ const Certification = ({
     const formattedValue = formatPhoneNumber(e.target.value);
 
     setValue("phoneNumber", formattedValue);
-    if (formattedValue.length >= 12) {
-      setIsSendValid(true);
-    }
+    // if (formattedValue.length >= 12) {
+    //   setIsSendValid(true);
+    // }
   };
 
   // 인증번호 전송 남은 횟수
   const handleAuthenticationBtnClick = () => {
     // TODO - 인증번호 재전송 5회 소진시 동작 기획에 맞게 수정
-    if (!isSendValid || sentCount < 0) {
+    if (!isValid || sentCount < 0) {
       return;
     }
     setSentCount(sentCount - 1);
-    setBtnText(`인증번호 재전송(남은 횟수 ${sentCount}회)`);
     setIsModalVisible(true);
   };
+
+  useEffect(() => {
+    setBtnText(`인증번호 재전송(남은 횟수 ${sentCount}회)`);
+  }, [sentCount]);
 
   // 인증번호 유효성검사
   const isCodeValid = (value: number | null) => {
@@ -100,8 +106,15 @@ const Certification = ({
       return;
     }
     hasBottomSheet && setIsSheetVisible(true);
-    customHandleClick;
+    customHandleClick && customHandleClick();
   };
+
+  useEffect(() => {
+    if (phoneNum) {
+      setValue("phoneNumber", phoneNum);
+      trigger("phoneNumber");
+    }
+  }, []);
 
   return (
     <>
@@ -122,7 +135,7 @@ const Certification = ({
             errorMessage={errors.phoneNumber && `${errors.phoneNumber?.message}`}
           />
           <AuthenticationButton
-            buttonType={isSendValid ? "disabled" : "abled"}
+            buttonType={isValid ? "disabled" : "abled"}
             width={width}
             onClick={handleAuthenticationBtnClick}
           >

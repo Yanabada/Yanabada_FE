@@ -211,6 +211,8 @@ export const ChipWrapper = styled.div`
   width: 100%;
   justify-content: flex-end;
   align-items: center;
+
+  margin-top: 16px;
 `;
 
 export const ToggleButtonWrapper = styled.div`
@@ -265,4 +267,20 @@ export const BottomDetailTextBlue = styled.span`
   line-height: 18px; /* 150% */
   letter-spacing: -0.24px;
   text-decoration-line: underline;
+`;
+
+export const FormWrapper = styled.div<PurchaseProps>`
+  width: ${({ width }) => width || "332px"};
+  display: flex;
+  flex-direction: column;
+`;
+
+export const TextInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+`;
+
+export const TextInputSpacer = styled.div`
+  margin-top: 20px;
 `;
