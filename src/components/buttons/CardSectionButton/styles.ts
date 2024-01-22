@@ -2,7 +2,13 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
 interface CardSectionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  buttonType: "abledPay" | "disabledPay" | "abledPoint" | "disabledPoint" | "management";
+  buttonType:
+    | "abledPay"
+    | "abledPay_notRegistered"
+    | "disabledPay"
+    | "abledPoint"
+    | "disabledPoint"
+    | "management";
   width?: string;
 }
 
@@ -21,7 +27,11 @@ export const CardSectionWrapper = styled.button<CardSectionProps>`
   display: flex;
   width: ${({ width }) => width || "100%"};
   padding: ${({ buttonType }) =>
-    buttonType === "abledPay" || buttonType === "disabledPay" ? "0px 0px 16px 0px" : "0"};
+    buttonType === "abledPay" ||
+    buttonType === "disabledPay" ||
+    buttonType === "abledPay_notRegistered"
+      ? "0px 0px 16px 0px"
+      : "0"};
   flex-direction: column;
   align-items: flex-start;
   border-radius: 5px;
@@ -91,7 +101,11 @@ export const BottomLeftButton = styled.button<CardSectionProps>`
 export const BottomLeftButtonText = styled.p<CardSectionProps>`
   ${({ theme }) => theme.text.button1};
   color: ${({ theme, buttonType }) =>
-    buttonType === "abledPay" ? theme.colors.pink[100] : "#CCC"};
+    buttonType === "abledPay"
+      ? theme.colors.pink[100]
+      : buttonType === "abledPay_notRegistered"
+        ? theme.colors.pink[200]
+        : "#CCC"};
   text-align: center;
 `;
 
