@@ -122,5 +122,46 @@ export const handlers = [
     const newPut = await request.json();
 
     return HttpResponse.json(newPut, { status: 200 });
+  }),
+  http.get(`products/own`, () => {
+    return HttpResponse.json({
+      products: [
+        {
+          productId: 1,
+          tradeId: 1,
+          image: "1.jpg",
+          accommodationName: "춘천세종호텔",
+          roomName: "스탠다드 룸",
+          saleEnd: "2024-01-24",
+          sellingPrice: 80000,
+          status: "ON_SALE"
+        },
+        {
+          productId: 2,
+          tradeId: 2,
+          image: "1.jpg",
+          accommodationName: "춘천세종호텔",
+          roomName: "스탠다드 룸",
+          saleEnd: "2024-01-24",
+          sellingPrice: 80000,
+          status: "SOLD_OUT"
+        },
+        {
+          productId: 3,
+          tradeId: 3,
+          image: "1.jpg",
+          accommodationName: "춘천세종호텔",
+          roomName: "스탠다드 룸",
+          saleEnd: "2024-01-24",
+          sellingPrice: 80000,
+          status: "BOOKING"
+        }
+      ],
+      pageNum: 0,
+      pageSize: 10,
+      totalPages: 1,
+      isFirst: true,
+      isLast: true
+    });
   })
 ];
