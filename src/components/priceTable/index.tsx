@@ -62,7 +62,7 @@ const PriceTable = ({ originalPrice, purchasePrice, cancelFee, productData }: Pr
               <span>{numberFormat(purchasePrice)}</span>원
             </p>
           </S.PriceTableData>
-          {productData.policyNumber === 3 ? (
+          {productData.policyNumber === "YNBD_3" ? (
             <S.PriceTableData>
               <p className="tit">취소 수수료</p>
               <p className="price">

@@ -2,7 +2,7 @@ import * as S from "./styles/register";
 import * as CS from "./styles/detail";
 
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { differenceInDays } from "date-fns";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
@@ -35,19 +35,33 @@ const SellRegister = () => {
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const [endDate, setEndDate] = useState<string | undefined>();
+  const [searchParams] = useSearchParams();
   const [, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | undefined>();
   const [endDateInfo, setEndDateInfo] = useState<EndDateInfo>({
     endDate: "",
     daysBefore: 0,
     feePercentage: 0
   });
 
+  // API 연결 전, 데이터 상수
+  const originalPrice = 1500000;
+  const purchasePrice = 1200000;
+  const cancelFee = 600000;
+
+  const productData = {
+    code: "240107f84892a35ed5",
+    image: "http://via.placeholder.com/300x300",
+    accommodationName: "춘천세종호텔",
+    roomName: "스탠다드 룸",
+    checkInDate: "2024-01-25",
+    checkOutDate: "2024-01-26",
+    policyNumber: "YNBD_1"
+  };
+
   // 시작일과 종료일 쿼리스트링으로 등록
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
     const startParam = searchParams.get("start");
     const endParam = searchParams.get("end");
 
@@ -66,22 +80,14 @@ const SellRegister = () => {
         feePercentage: feePercentage
       });
     }
-  }, [location.search]);
+  }, [searchParams, productData.checkInDate]);
 
-  // API 연결 전, 데이터 상수
-  const originalPrice = 1200000;
-  const purchasePrice = 1200000;
-  const cancelFee = 600000;
+  // 수정/등록페이지 여부
+  const isRegistration = searchParams.get("registration") === "true";
 
-  const productData = {
-    code: "240107f84892a35ed5",
-    image: "http://via.placeholder.com/300x300",
-    accommodationName: "춘천세종호텔",
-    roomName: "스탠다드 룸",
-    checkInDate: "2024-01-25",
-    checkOutDate: "2024-01-26",
-    policyNumber: 2
-  };
+  // TODO : 수정/등록페이지 여부에 따라서
+  // 수정이면, id값으로 조회해서 값 넣어주고, button에 patch 요청
+  // 등록이면, button에 post 요청
 
   return (
     <>
@@ -126,13 +132,16 @@ const SellRegister = () => {
           price={price}
           endDate={endDate}
           endDateInfo={endDateInfo}
+          policyNumber={productData.policyNumber}
         />
-        <AutoCancelOption
-          isAutoCancel={isAutoCancel}
-          setIsAutoCancel={setIsAutoCancel}
-          originalPrice={originalPrice}
-          endDateInfo={endDateInfo}
-        />
+        {productData.policyNumber === "YNBD_3" ? null : (
+          <AutoCancelOption
+            isAutoCancel={isAutoCancel}
+            setIsAutoCancel={setIsAutoCancel}
+            originalPrice={originalPrice}
+            endDateInfo={endDateInfo}
+          />
+        )}
         <CS.DetailBlank />
         <S.RegisterInner>
           <S.RegisterTitle>판매자 한마디</S.RegisterTitle>
@@ -176,17 +185,31 @@ const SellRegister = () => {
             <p className="des">
               <Link to="/">이용규칙</Link>에 동의하실 경우 상품 등록하기를 클릭해주세요
             </p>
-            <BaseButton
-              buttonType="default"
-              width="100%"
-              onClick={() => {
-                if (allCheck) {
-                  navigate("/sell/result");
-                }
-              }}
-            >
-              상품 등록하기
-            </BaseButton>
+            {isRegistration ? (
+              <BaseButton
+                buttonType={allCheck ? "default" : "disabled-default"}
+                width="100%"
+                onClick={() => {
+                  if (allCheck) {
+                    navigate("/sell/result");
+                  }
+                }}
+              >
+                상품 등록하기
+              </BaseButton>
+            ) : (
+              <BaseButton
+                buttonType={allCheck ? "default" : "disabled-default"}
+                width="100%"
+                onClick={() => {
+                  if (allCheck) {
+                    navigate("/mypage/purchasehistory");
+                  }
+                }}
+              >
+                상품 수정하기
+              </BaseButton>
+            )}
           </S.ConfirmWrap>
         </S.RegisterInner>
       </S.RegisterWrap>

@@ -51,6 +51,7 @@ export const NoListWrap = styled.div`
 `;
 
 export const ListWrap = styled.div`
+  height: 100%;
   padding: 11px 0;
 `;
 
