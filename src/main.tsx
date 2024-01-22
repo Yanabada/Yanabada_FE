@@ -7,6 +7,7 @@ import "./main.css";
 import { Global, ThemeProvider } from "@emotion/react";
 import globalStyles from "styles/globalStyles";
 import "./firebase-messaging-sw.js";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 async function enableMocking() {
   if (process.env.NODE_ENV !== "development") {
@@ -32,6 +33,7 @@ enableMocking().then(() => {
         <Global styles={globalStyles} />
         <RouterProvider router={router} />
       </ThemeProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 });

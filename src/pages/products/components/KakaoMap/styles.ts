@@ -45,6 +45,26 @@ export const Pin = styled.button`
   }
 `;
 
+export const ResearchButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 5px 10px;
+
+  border-radius: 200px;
+  border: 1px solid ${({ theme }) => theme.colors.gray[100]};
+  background: #fff;
+  box-shadow: 0px 2px 18px 3px rgba(0, 0, 0, 0.1);
+
+  ${({ theme }) => theme.text.subtitle5};
+  color: ${({ theme }) => theme.colors.blue[400]};
+
+  z-index: 999;
+  white-space: nowrap;
+`;
+
 export const clustererStyles = {
   display: "flex",
   justifyContent: "center",
