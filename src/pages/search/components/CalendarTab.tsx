@@ -3,7 +3,7 @@ import SearchTab from "./SearchTab";
 import { useSearchTab } from "../stores/tabStore";
 import CalendarIcon from "@assets/icons/search_Calendar.svg?react";
 import { useSearchParams } from "react-router-dom";
-import { format } from "date-fns";
+import { formatDateTo } from "@utils/formatDateTo";
 
 const CalendarTab = () => {
   const { tab, setTab } = useSearchTab();
@@ -11,8 +11,8 @@ const CalendarTab = () => {
   const startParams = searchParams.get("checkInDate");
   const endParams = searchParams.get("checkOutDate");
 
-  const checkInDate = startParams ? format(new Date(startParams), "MM/dd") : null;
-  const checkOutDate = endParams ? format(new Date(endParams), "MM/dd") : null;
+  const checkInDate = startParams && formatDateTo(new Date(startParams));
+  const checkOutDate = endParams && formatDateTo(new Date(endParams));
 
   return (
     <SearchTab
