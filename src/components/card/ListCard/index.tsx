@@ -29,7 +29,7 @@ interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   statusText?: string;
   roomName: string;
   price: string;
-  badgeText: string;
+  badgeText: string | undefined;
 }
 
 const ListCard = ({
