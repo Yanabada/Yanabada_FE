@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import * as S from "./style";
+import useAccumulate from "@pages/home/hooks/useAccumulate";
+import { numberFormat } from "@utils/numberFormat";
 
 const SearchInput = () => {
-  const [searchInput, setSearchInput] = useState("");
+  const {
+    getAccumulateQuery: { data }
+  } = useAccumulate();
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(event.target.value);
-  };
+  const accumulatedProductCount = data.accumulatedProductCount || 0;
+  const accumulatedUsageAmount = data.accumulatedUsageAmount || 0;
+  const accumulatedDiscountAmount = data.accumulatedDiscountAmount || 0;
+
   return (
     <S.Container>
       <S.Text>
@@ -14,26 +19,29 @@ const SearchInput = () => {
         <br /> 안전하고 저렴한 양도매물을 검색해보세요!
       </S.Text>
       <S.InputContainer>
-        <S.InputLabel>
-          <S.LocationInputIcon />
-          <S.Input placeholder="지역을 선택하세요" onChange={handleSearch} />
-        </S.InputLabel>
-        <S.SecondInputContainer>
+        <Link to="/search">
           <S.InputLabel>
-            <S.CalenderInputIcon />
-            <S.Input placeholder="언제 갈까요?" />
+            <S.LocationInputIcon />
+            <S.Input placeholder="원하는 장소/날짜/인원을 검색해보세요" />
           </S.InputLabel>
-          <S.InputLabel>
-            <S.UserInputIcon />
-            <S.Input placeholder="누구와 갈까요?" />
-          </S.InputLabel>
-        </S.SecondInputContainer>
+        </Link>
       </S.InputContainer>
-      {searchInput ? (
-        <S.SearchButton whileTap={{ scale: 0.95 }}>검색하기</S.SearchButton>
-      ) : (
-        <S.ProductNumberText>8456개 상품이 기다리고 있어요</S.ProductNumberText>
-      )}
+      <S.AccumulateContainer>
+        <S.AccumulateTextContainer>
+          <S.AccumulateTitle>누적 매물</S.AccumulateTitle>
+          <S.AccumulateNumber>{accumulatedProductCount}개</S.AccumulateNumber>
+        </S.AccumulateTextContainer>
+        <S.Line></S.Line>
+        <S.AccumulateTextContainer>
+          <S.AccumulateTitle>누적 이용금액</S.AccumulateTitle>
+          <S.AccumulateNumber>{numberFormat(accumulatedUsageAmount)}</S.AccumulateNumber>
+        </S.AccumulateTextContainer>
+        <S.Line></S.Line>
+        <S.AccumulateTextContainer>
+          <S.AccumulateTitle>누적 할인액</S.AccumulateTitle>
+          <S.AccumulateNumber>{numberFormat(accumulatedDiscountAmount)}</S.AccumulateNumber>
+        </S.AccumulateTextContainer>
+      </S.AccumulateContainer>
     </S.Container>
   );
 };
