@@ -47,11 +47,8 @@ const EmailLogin = () => {
       const accessTokenCookie = res.data.data.tokenIssue.accessToken;
       const refreshTokenCookie = res.data.data.tokenIssue.refreshToken;
 
-      const setCookieValue = () => {
-        Cookies.set("accessToken", accessTokenCookie);
-        Cookies.set("refreshToken", refreshTokenCookie);
-      };
-      setCookieValue();
+      Cookies.set("accessToken", accessTokenCookie);
+      Cookies.set("refreshToken", refreshTokenCookie);
 
       navigate("/");
     } catch (error) {
