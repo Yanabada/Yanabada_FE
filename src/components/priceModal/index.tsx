@@ -16,7 +16,7 @@ interface TableRowProps {
 interface PolicyTableProps {
   checkInDate: string;
   originalPrice: number;
-  policyNumber: number;
+  policyNumber: string;
 }
 
 const CancellationTableRow = ({
@@ -31,7 +31,7 @@ const CancellationTableRow = ({
   const cancellationText =
     daysBefore === 0
       ? "체크인 당일 및 No-show"
-      : `${format(cancellationDate, "yyyy.MM.dd")} 24:00 전 까지`;
+      : `${format(cancellationDate, "yyyy.MM.dd")} 23:59 전 까지`;
 
   const cancellationFeeText =
     daysBefore === 0
@@ -53,10 +53,10 @@ const CancellationPolicyTable = ({
   const [tableData, setTableData] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
-    const getFeePercentage = (policyNumber: number) => {
-      if (policyNumber === 1) {
+    const getFeePercentage = (policyNumber: string) => {
+      if (policyNumber === "YNBD_1") {
         return feePolicy1;
-      } else if (policyNumber === 2) {
+      } else if (policyNumber === "YNBD_2") {
         return feePolicy2;
       }
       return [];

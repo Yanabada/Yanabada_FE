@@ -56,7 +56,7 @@ const AutoCancelOption = ({
         <p className="price">
           <span>
             {numberFormat(calculateOriginDiscount(originalPrice, endDateInfo.feePercentage))}
-          </span>
+          </span>{" "}
           원
         </p>
       </CS.RefundText>

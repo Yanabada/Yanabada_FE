@@ -89,11 +89,11 @@ const router = createBrowserRouter([
             )
           },
           {
-            path: "register",
+            path: "register/:id",
             element: <SellRegister />
           },
           {
-            path: "detail",
+            path: "detail/:id",
             element: <SellDetail />
           },
           {

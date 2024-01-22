@@ -10,14 +10,14 @@ import SellerSay from "@pages/productDetail/components/SellerSay";
 
 const SellConfirm = () => {
   const InfoProps = {
-    imgUrl: "http://via.placeholder.com/300x300",
-    number: "20231219186542325",
-    title: "파라스파라 서울 더 그레이트 현대 런던 ",
-    room: "Forest Tower Deluxe King",
-    checkInDate: "2024-01-15",
-    checkOutDate: "2024-01-18",
-    checkInTime: "17:00",
-    checkOutTime: "12:00"
+    code: "2401131a77ef50ccd4",
+    accommodationImage: "http://via.placeholder.com/300x300",
+    accommodationName: "춘천세종호텔",
+    roomName: "스탠다드 룸",
+    checkInDate: "2024-01-26",
+    checkOutDate: "2024-01-30",
+    checkInTime: "11:00",
+    checkOutTime: "15:00"
   };
 
   const sellerProp = {
