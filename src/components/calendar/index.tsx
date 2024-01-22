@@ -26,9 +26,14 @@ const Calendar = ({ excludeDates, renderDayContents }: calendarProp) => {
   useEffect(() => {
     if (startDate) {
       searchParams.set("checkInDate", startDate.toISOString());
+    } else {
+      searchParams.delete("checkInDate");
     }
+
     if (endDate) {
       searchParams.set("checkOutDate", endDate.toISOString());
+    } else {
+      searchParams.delete("checkOutDate");
     }
 
     setSearchParams(searchParams);
