@@ -3,12 +3,13 @@ import SearchBar from "./components/SearchBar";
 import * as S from "./styles/style";
 import CategoryTab from "./components/CategoryTab";
 import GoToMapButton from "./components/ToMapButton";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { Link } from "react-router-dom";
 import ProductList from "./components/ProductList";
+import { useMapOpen } from "./stores/mapStore";
 
 const Products = () => {
-  const [isMapOpen, setMapOpen] = useState(false);
+  const { isMapOpen, setMapOpen } = useMapOpen();
 
   return (
     <>
@@ -17,7 +18,7 @@ const Products = () => {
         type={isMapOpen ? "backClose" : "back"}
         hasBorder={false}
         isCustom={isMapOpen}
-        {...(isMapOpen && { customBack: () => setMapOpen(false) })}
+        {...(isMapOpen && { customBack: setMapOpen })}
       />
       <S.Container>
         <Link to="/search">
@@ -26,9 +27,9 @@ const Products = () => {
         {!isMapOpen && <CategoryTab />}
       </S.Container>
       <Suspense fallback={<p>Loading...</p>}>
-        <ProductList isMapOpen={isMapOpen} />
+        <ProductList />
       </Suspense>
-      {!isMapOpen && <GoToMapButton handleClick={() => setMapOpen(true)} />}
+      {!isMapOpen && <GoToMapButton handleClick={setMapOpen} />}
     </>
   );
 };
