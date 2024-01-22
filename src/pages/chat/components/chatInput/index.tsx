@@ -1,12 +1,8 @@
 import { useState } from "react";
 import * as S from "./styles";
 import SendIcon from "@assets/icons/send_button.svg?react";
-import { Message } from "../../types/chatRoom";
-interface ChatInputProps extends Message {
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-}
 
-const ChatInput = ({ chatRoomCode, senderId, setMessages }: ChatInputProps) => {
+const ChatInput = () => {
   const [value, setValue] = useState("");
 
   const handleSendMessage = () => {
@@ -14,7 +10,6 @@ const ChatInput = ({ chatRoomCode, senderId, setMessages }: ChatInputProps) => {
       return;
     }
     setValue("");
-    setMessages((prev) => [...prev, { chatRoomCode, senderId, content: value }]);
   };
 
   return (
