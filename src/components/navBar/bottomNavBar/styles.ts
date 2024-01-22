@@ -16,6 +16,7 @@ export const BottomNavWrapper = styled.div`
   margin: 0 auto;
 
   user-select: none;
+  z-index: 999;
 
   background-color: #fff;
   color: ${({ theme }) => theme.colors.gray[600]};
