@@ -14,7 +14,7 @@ interface PriceAreaProps {
   isAlert: boolean;
   charge: boolean;
   price: number;
-  setPrice: React.Dispatch<React.SetStateAction<number>>;
+  setPrice: React.Dispatch<React.SetStateAction<number>> | ((price: number) => void);
 }
 
 const PriceArea = ({
