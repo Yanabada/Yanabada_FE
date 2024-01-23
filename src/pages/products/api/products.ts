@@ -2,9 +2,21 @@ import qs from "qs";
 import { GetProductResponseData } from "../types/productsType";
 import instance from "@apis/instance";
 
-type OrderState = "RECENT" | "END_DATE_ASC" | "SALES_PERCENTAGE_DESC" | "PRICE_ASC" | "RATING_DESC";
-type Category = "HOTEL_RESORT" | "MOTEL" | "PENSION" | "GUESTHOUSE" | "POOL_VILLA";
-type Option = "SAUNA" | "ROOF_TOP" | "POOL" | "GYM" | "LOUNGE_BAR" | "PARKING" | "PARTY_ROOM";
+export type OrderState =
+  | "RECENT"
+  | "END_DATE_ASC"
+  | "SALES_PERCENTAGE_DESC"
+  | "PRICE_ASC"
+  | "RATING_DESC";
+export type Category = "HOTEL_RESORT" | "PENSION" | "GUESTHOUSE" | "POOL_VILLA" | "CAMPING";
+export type Option =
+  | "SAUNA"
+  | "ROOF_TOP"
+  | "POOL"
+  | "GYM"
+  | "LOUNGE_BAR"
+  | "PARKING"
+  | "PARTY_ROOM";
 export interface GetProductsRequestParams {
   keyword: string;
   checkInDate: Date;
@@ -18,7 +30,7 @@ export interface GetProductsRequestParams {
   isHidingSoldOut: boolean;
   order: OrderState;
   category: Category;
-  option: Option[];
+  options: Option[];
   page: number;
   size: number;
 }

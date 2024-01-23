@@ -4,10 +4,10 @@ import { useSearchParams } from "react-router-dom";
 const categoryList = [
   { id: "ALL", name: "전체" },
   { id: "HOTEL_RESORT", name: "호텔/리조트" },
-  { id: "MOTEL", name: "모텔" },
   { id: "PENSION", name: "펜션" },
   { id: "GUESTHOUSE", name: "게스트하우스" },
-  { id: "POOL_VILLA", name: "풀빌라" }
+  { id: "POOL_VILLA", name: "풀빌라" },
+  { id: "CAMPING", name: "캠핑" }
 ];
 
 const CategoryTab = () => {
