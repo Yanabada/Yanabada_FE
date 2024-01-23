@@ -38,3 +38,8 @@ export interface ChatRoomResponseData {
   status: string;
   data: ChatRoom[];
 }
+
+export interface SubscribeData {
+  chatRoomCode: string;
+  setChatMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+}
