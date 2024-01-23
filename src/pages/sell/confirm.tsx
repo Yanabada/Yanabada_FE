@@ -107,7 +107,7 @@ const SellConfirm = () => {
           <CS.RegisterDes>
             야나바다 양도 성공 시 <span className="text-blue">200,000원</span>을 절약해요
           </CS.RegisterDes>
-          <S.ConfirmInner>
+          {/* <S.ConfirmInner>
             <div className="inner">
               <div className="calc-box">
                 <p className="tit">양도 판매 성공 시</p>
@@ -118,11 +118,6 @@ const SellConfirm = () => {
                   <span className="percentage text-blue">90%</span>
                   <span className="price">926,1000원</span>
                 </p>
-                {/* startDate 입력 전 */}
-                {/* <p className="tit no-text">
-                    판매 가격이
-                    <br /> 설정되지 않았어요
-                  </p> */}
               </div>
             </div>
             <div className="inner">
@@ -137,7 +132,7 @@ const SellConfirm = () => {
                 </p>
               </div>
             </div>
-          </S.ConfirmInner>
+          </S.ConfirmInner> */}
         </CS.RegisterInner>
         <CS.RegisterInner className="gray-bg">
           <CS.RegisterTitle>판매자 한마디</CS.RegisterTitle>

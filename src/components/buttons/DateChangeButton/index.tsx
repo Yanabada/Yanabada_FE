@@ -13,8 +13,6 @@ interface DateChangeButtonProps {
 const DateChangeButton = ({ width, endDate, week, disabled, onClick }: DateChangeButtonProps) => {
   const isValidDate = endDate && !isNaN(new Date(endDate).getDate());
 
-  console.log(endDate);
-
   return (
     <S.DateChangeButton width={width} onClick={onClick}>
       <S.LeftSection>

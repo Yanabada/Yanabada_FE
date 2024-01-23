@@ -36,7 +36,8 @@ export interface GetProductsRequestParams {
 }
 
 const getProducts = async (params: Partial<GetProductsRequestParams> = { size: 20 }) => {
-  const response = await instance.get<GetProductResponseData>("/products", {
+  // FIXME: 나중에 instance로 연결 필요
+  const response = await instance.get<GetProductResponseData>("http://test.yanabada.com/products", {
     params,
     paramsSerializer: (params) => {
       return qs.stringify(params, { arrayFormat: "repeat" });

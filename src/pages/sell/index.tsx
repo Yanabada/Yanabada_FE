@@ -1,6 +1,6 @@
 import * as S from "./styles/styles";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa6";
 import { motion } from "framer-motion";
@@ -9,6 +9,7 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import Notice from "@components/notice";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
+import getSellList from "./apis/sellList";
 interface SellListData {
   id: number;
   code: string;
@@ -23,21 +24,36 @@ interface SellListData {
 
 const Sell = () => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
+  const [sellList, setSellList] = useState<SellListData[]>([]);
   const navigate = useNavigate();
 
-  const sellList: SellListData[] = [
-    {
-      id: 2,
-      code: "240107f84892a35ed5",
-      image: "https://via.placeholder.com/100x100",
-      accommodationName: "춘천세종호텔",
-      roomName: "스탠다드 룸",
-      checkInDate: "2024-01-15",
-      checkOutDate: "2024-01-18",
-      checkInTime: "17:00",
-      checkOutTime: "12:00"
-    }
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const sellListData = await getSellList();
+        console.log("성공!", sellListData);
+        setSellList(sellListData.data);
+      } catch (error) {
+        console.error("Error fetching sell list:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // const sellList: SellListData[] = [
+  //   {
+  //     id: 2,
+  //     code: "240107f84892a35ed5",
+  //     image: "https://via.placeholder.com/100x100",
+  //     accommodationName: "춘천세종호텔",
+  //     roomName: "스탠다드 룸",
+  //     checkInDate: "2024-01-15",
+  //     checkOutDate: "2024-01-18",
+  //     checkInTime: "17:00",
+  //     checkOutTime: "12:00"
+  //   }
+  // ];
 
   const handleRadioChange = (index: number) => {
     setSelectedCard(index);
@@ -63,6 +79,7 @@ const Sell = () => {
           {sellList.length > 0 ? (
             sellList.map((sellItem) => (
               <S.ListCard
+                key={`index-${sellItem}`}
                 initial={{
                   border: "1px solid #ddd"
                 }}
