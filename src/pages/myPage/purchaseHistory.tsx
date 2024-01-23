@@ -54,8 +54,6 @@ const PurchaseHistory = ({ width }: PurchaseHistoryProps) => {
     console.log(error);
   }
 
-  console.log(data);
-
   const [currentTab, setCurrentTab] = useState("all");
   const [filteredData, setFilteredData] = useState<TradeData[]>();
 

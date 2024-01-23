@@ -227,7 +227,11 @@ const ListCard = ({
         )}
         {cardType === "purchased" && (
           <>
-            <BaseButton buttonType="gray" width="48%">
+            <BaseButton
+              buttonType="gray"
+              width="48%"
+              onClick={() => navigate(`/mypage/transactionStatement/purchase?tradeId=${tradeId}`)}
+            >
               거래내역서 확인
             </BaseButton>
             <BaseButton buttonType="gray" width="48%">
