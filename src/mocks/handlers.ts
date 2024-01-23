@@ -263,5 +263,13 @@ export const handlers = [
       isFirst: true,
       isLast: true
     });
+  }),
+  http.post("/trades/:tradeId/cancel", async () => {
+    return HttpResponse.json({
+      status: "SUCCESS",
+      data: {
+        tradeId: 1
+      }
+    });
   })
 ];
