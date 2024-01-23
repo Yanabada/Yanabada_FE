@@ -12,7 +12,7 @@ const Review = () => {
       <S.Text>후기</S.Text>
       <S.ReviewContainer>
         {reviewList.map((review) => (
-          <S.ReviewItemContainer>
+          <S.ReviewItemContainer key={review.id}>
             <S.NickNameContainer>
               <S.NickName>{review.nickName}</S.NickName>
               <S.StarContainer>
