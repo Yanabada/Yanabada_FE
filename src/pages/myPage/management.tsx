@@ -1,7 +1,7 @@
 import * as S from "./styles/history.styles";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import ListCard from "@components/card/ListCard";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
 import useManagement from "./hooks/useManagement";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
@@ -75,7 +75,7 @@ const Management = ({ width }: ManagementProps) => {
   }, [data, currentTab]);
 
   return (
-    <Suspense>
+    <>
       <UpperNavBar title="승인요청관리" type="back" />
       <S.PointsMiddleContainer width={width}>
         <S.MiddleWrapper onClick={() => setCurrentTab("all")}>
@@ -147,7 +147,7 @@ const Management = ({ width }: ManagementProps) => {
           </div>
         ))}
       </S.ListCardWrapper>
-    </Suspense>
+    </>
   );
 };
 

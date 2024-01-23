@@ -3,7 +3,7 @@ import * as S from "./styles/styles";
 import ArrowForwardIcon from "@assets/icons/arrowForwardIcon.svg?react";
 import CardSectionButton from "@components/buttons/CardSectionButton";
 import ListButton from "@components/buttons/ListButton";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "@components/modal";
 import { useNavigate } from "react-router-dom";
@@ -64,7 +64,7 @@ const MyPage = ({ width }: MyPageProps) => {
   };
 
   return isLoginned ? (
-    <Suspense>
+    <>
       <UpperNavBar
         title="MY 야나바다"
         type="back"
@@ -132,9 +132,9 @@ const MyPage = ({ width }: MyPageProps) => {
         </ListButton>
         <Modal {...logoutModalProps} />
       </S.MyPageContainer>
-    </Suspense>
+    </>
   ) : (
-    <Suspense>
+    <>
       <UpperNavBar title="MY 야나바다" type="back" />
       <S.MyPageContainer>
         <S.LoginButtonWrapper>
@@ -159,7 +159,7 @@ const MyPage = ({ width }: MyPageProps) => {
         <ListButton width={width}>이용가이드</ListButton>
         <ListButton width={width}>이용약관</ListButton>
       </S.MyPageContainer>
-    </Suspense>
+    </>
   );
 };
 
