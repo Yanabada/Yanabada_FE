@@ -1,10 +1,10 @@
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 export const putChangeNickname = async (nickname: string) => {
   const putChangeNicknameURL = "/member/nickname";
 
-  return await axios.put(putChangeNicknameURL, {
-    nickname: nickname
+  return await instance.put(putChangeNicknameURL, {
+    nickName: nickname
   });
 };
 
