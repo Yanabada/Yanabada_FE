@@ -198,7 +198,7 @@ const router = createBrowserRouter([
             element: <Account />
           },
           {
-            path: "confirm",
+            path: "confirm/:id",
             element: <ChargeConfirm />
           },
           {
