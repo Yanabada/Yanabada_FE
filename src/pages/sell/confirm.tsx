@@ -1,51 +1,25 @@
 import * as S from "./styles/confirm";
 import * as CS from "./styles/register";
 
-import UpperNavBar from "@components/navBar/upperNavBar";
-import { FaCheck } from "react-icons/fa6";
-import DateChangeButton from "@components/buttons/DateChangeButton";
-import InfoBox from "./components/InfoBox";
-import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
-// import SellerSay from "@pages/productDetail/components/SellerSay";
-// import { useEffect, useState } from "react";
-import getSellResult from "./apis/sellResult";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { FaCheck } from "react-icons/fa6";
+
+import UpperNavBar from "@components/navBar/upperNavBar";
+import DateChangeButton from "@components/buttons/DateChangeButton";
 import { numberFormat } from "@utils/numberFormat";
-import { calculateAndFormatPrice } from "./utils/getFivePercentage";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
-import SellerSay from "@pages/productDetail/components/SellerSay";
 import calculateFee from "@utils/calcCancelFee";
+import SellerSay from "@pages/productDetail/components/SellerSay";
+import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
+
+import initialConfirmData from "./constants/initialConfirmData";
+import InfoBox from "./components/InfoBox";
+import getSellResult from "./apis/getSellResult";
+import { getFivePercentage } from "./utils/getFivePercentage";
 
 const SellConfirm = () => {
-  const [confirmData, setConfirmData] = useState({
-    id: 13,
-    seller: {
-      id: 5,
-      nickname: "nick1",
-      imageUrl: "https://yanabada-image.s3.ap-northeast-2.amazonaws.com/5profile.png"
-    },
-    description: "여기 정말 좋아요~1",
-    canNegotiate: false,
-    saleEndDate: "2024-01-24",
-    checkInDate: "2024-01-26",
-    checkOutDate: "2024-01-29",
-    sellingPrice: 36500,
-    purchasePrice: 200000,
-    orderCode: "2401222f57ffb5438e",
-    isAutoCancel: true,
-    accommodationInfo: {
-      name: "평창 코뿔소글랭핑",
-      image: "https://yanabada-image.s3.ap-northeast-2.amazonaws.com/camping_09.jpg"
-    },
-    roomInfo: {
-      name: "코뿔소방-2",
-      checkInTime: "15:00",
-      checkOutTime: "11:00",
-      cancelPolicy: "YNBD_2"
-    }
-  });
-
+  const [confirmData, setConfirmData] = useState(initialConfirmData);
   const { id } = useParams();
   const today = new Date();
 
@@ -56,13 +30,11 @@ const SellConfirm = () => {
           return;
         }
         const sellDetailData = await getSellResult({ id });
-        console.log("성공!", sellDetailData.data);
         setConfirmData(sellDetailData.data);
       } catch (error) {
         console.error("Error fetching sell list:", error);
       }
     };
-
     fetchData();
   }, []);
 
@@ -91,9 +63,7 @@ const SellConfirm = () => {
             <div className="inner">
               <p className="name">판매가</p>
               <p className="value">
-                <span className="text-black">
-                  {calculateAndFormatPrice(confirmData.sellingPrice)}원
-                </span>
+                <span className="text-black">{getFivePercentage(confirmData.sellingPrice)}원</span>
               </p>
             </div>
             <div className="inner">

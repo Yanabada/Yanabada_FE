@@ -1,47 +1,27 @@
 import * as S from "./styles/detail";
 
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { IoPersonOutline } from "react-icons/io5";
+import { format } from "date-fns";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
-import InfoBox from "./components/InfoBox";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
 import { numberFormat } from "@utils/numberFormat";
 import translatePayment from "@utils/translatePayment";
-import { format } from "date-fns";
+
+import InfoBox from "./components/InfoBox";
 import { getPercentage } from "./utils/getPercentage";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import getSellDetail from "./apis/sellDetail";
+import getSellDetail from "./apis/getSellDetail";
 import { DetailProps } from "./types/sellDetail";
+import initialDetailData from "./constants/initialDetailData";
 
 const Sell = () => {
   const { id } = useParams();
-  console.log(id);
-
   const today = new Date();
   const isToday = format(today, "yyyy.MM.dd");
-  const [sellDetailData, setSellDetailData] = useState<DetailProps>({
-    orderId: 0,
-    code: "",
-    orderDate: "",
-    accommodationName: "",
-    accommodationImage: "",
-    roomName: "",
-    cancelPolicy: "",
-    checkInDate: "",
-    checkOutDate: "",
-    checkInTime: "",
-    checkOutTime: "",
-    price: 0,
-    minHeadCount: 0,
-    maxHeadCount: 0,
-    reservationPersonName: "",
-    reservationPersonPhoneNumber: "",
-    userPersonName: "",
-    userPersonPhoneNumber: "",
-    totalPayment: 0,
-    paymentMethod: ""
-  });
+
+  const [sellDetailData, setSellDetailData] = useState<DetailProps>(initialDetailData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +30,6 @@ const Sell = () => {
           return;
         }
         const sellDetailData = await getSellDetail({ id });
-        console.log("성공!", sellDetailData.data);
         setSellDetailData(sellDetailData.data);
       } catch (error) {
         console.error("Error fetching sell list:", error);
