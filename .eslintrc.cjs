@@ -4,7 +4,7 @@ module.exports = {
 
   extends: [
     "eslint:recommended", // ESLint의 기본 권장 규칙 사용
-    "plugin:@typescript-eslint/recommended", // TypeScript 관련 권장 규칙 사용
+    "plugin:@typescript-eslint/recommended" // TypeScript 관련 권장 규칙 사용
     // "plugin:react-hooks/recommended" // React Hooks 규칙 사용
   ],
 
@@ -12,7 +12,7 @@ module.exports = {
 
   parser: "@typescript-eslint/parser", // TypeScript 구문 분석기 사용
 
-  plugins: ["react-refresh", "html"], // React Refresh 플러그인 사용
+  plugins: ["react-refresh", "html", "@typescript-eslint"], // TypeScript 플러그인 추가
 
   rules: {
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }], // React 컴포넌트는 오직 컴포넌트만 내보내야 합니다.
@@ -26,6 +26,8 @@ module.exports = {
 
     "no-empty": "warn", // 빈 블록문에 대한 경고 설정
 
-    semi: ["error", "always"] // 세미콜론(;) 사용 강제 설정
+    semi: ["error", "always"], // 세미콜론(;) 사용 강제 설정
+
+    "@typescript-eslint/no-explicit-any": "off" // 'any' 타입 사용 허용
   }
 };
