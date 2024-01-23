@@ -4,9 +4,10 @@ import TrashCanIcon from "@assets/icons/bin.svg?react";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import Modal from "@components/modal";
-import { Notification } from "./type";
 import { useNavigate } from "react-router-dom";
 import { NOTI_TYPE_TO_TEXT } from "./constants";
+import useNotifications from "./queries";
+import { deleteNotifications } from "./api";
 
 const variants = {
   initial: {
@@ -17,60 +18,26 @@ const variants = {
   }
 };
 
-const notifications: Notification[] = [
-  {
-    notificationId: 1,
-    senderNickname: "에디팍",
-    accommodationName: "춘천세종호텔",
-    image: "1profile.png",
-    registeredDate: new Date("2024-01-18 00:10:10"),
-    type: "CHAT",
-    isRead: false
-  },
-  {
-    notificationId: 2,
-    accommodationName: "춘천세종호텔 아닙니다",
-    image: "trade_request.png",
-    registeredDate: new Date("2024-01-18 00:09:10"),
-    type: "TRADE_REQUEST",
-    isRead: false
-  },
-  {
-    notificationId: 3,
-    accommodationName: "춘천세종호텔 맞을 수도 있습니다",
-    image: "trade_request.png",
-    registeredDate: new Date("2024-01-18 00:09:10"),
-    type: "TRADE_CANCELED",
-    isRead: false
-  },
-  {
-    notificationId: 4,
-    accommodationName: "이건 무슨 호텔일까요",
-    image: "trade_request.png",
-    registeredDate: new Date("2024-01-18 00:09:10"),
-    type: "TRADE_APPROVAL",
-    isRead: false
-  },
-  {
-    notificationId: 5,
-    accommodationName: "이번엔 거절하겠습니다",
-    image: "trade_request.png",
-    registeredDate: new Date("2024-01-18 00:09:10"),
-    type: "TRADE_REJECTED",
-    isRead: false
-  }
-];
-
 const Notice = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [isRadioChecked, setRadioChecked] = useState(false);
+  const [notiIds, setNotiIds] = useState<number[]>([]);
   const navigate = useNavigate();
+  const { data, isLoading, error } = useNotifications();
 
-  const handleRadioChange = () => {
-    const isChecked = document.querySelector('input[type="checkbox"]:checked') !== null;
-    setRadioChecked(isChecked);
+  const handleChange = (id: number) => {
+    if (notiIds.includes(id)) {
+      const newList = notiIds.filter((notiId) => notiId !== id);
+      setNotiIds(newList);
+    } else {
+      setNotiIds((prev) => [...prev, id]);
+    }
   };
+
+  // UI 수정
+  if (error) return <p>error {error.message}</p>;
+  if (!data || isLoading) return <p>Loading...</p>;
+  if (data.data.notifications.length === 0) return <p>알림이 없습니다.</p>;
 
   return (
     <>
@@ -82,7 +49,7 @@ const Notice = () => {
         }
       />
       <S.Container>
-        {notifications.map((noti) => (
+        {data.data.notifications.map((noti) => (
           <AnimatePresence key={noti.notificationId} custom={isEditing}>
             <S.NoticeContainer
               custom={isEditing}
@@ -90,7 +57,9 @@ const Notice = () => {
               initial="initial"
               animate="animate"
             >
-              <S.ImageContainer />
+              <S.ImageContainer>
+                <img src={noti.image} alt="" />
+              </S.ImageContainer>
               <S.ContentWrapper onClick={() => navigate(NOTI_TYPE_TO_TEXT[noti.type].path)}>
                 <div className="description">
                   {NOTI_TYPE_TO_TEXT[noti.type].type}
@@ -109,7 +78,7 @@ const Notice = () => {
                 </div>
               </S.ContentWrapper>
               <S.EditButton>
-                <input type="checkbox" onChange={handleRadioChange} />
+                <input type="checkbox" onChange={() => handleChange(noti.notificationId)} />
               </S.EditButton>
             </S.NoticeContainer>
           </AnimatePresence>
@@ -121,7 +90,7 @@ const Notice = () => {
         </button>
         <button
           onClick={() => setModalVisible(true)}
-          className={`${isRadioChecked ? "active" : "disabled"}`}
+          className={`${notiIds.length > 0 ? "active" : "disabled"}`}
         >
           선택한 항목 삭제
         </button>
@@ -132,6 +101,7 @@ const Notice = () => {
         leftBtnText="아니오"
         leftAction={() => setModalVisible(false)}
         rightBtnText="삭제하기"
+        rightAction={() => deleteNotifications(notiIds)}
         isVisible={isModalVisible}
         setIsVisible={setModalVisible}
       />

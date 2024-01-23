@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
 import useEmailAuth from "@pages/signIn/hooks/useEmailAuth";
+import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
 
 interface CheckEmailProps {
   type: "back" | "close" | "backClose";
@@ -28,6 +29,7 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
   const [btnText, setBtnText] = useState("인증번호 전송");
   const [openInput, setOpenInput] = useState(false);
   const [isNumCorrect, setIsNumCorrect] = useState(false);
+  const { setEmail } = SignInDataStore();
 
   const {
     register,
@@ -42,7 +44,7 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
   // 최초 렌더링 시에도 유효성 검사 적용
   useEffect(() => {
     trigger("email");
-  }, [trigger]);
+  }, []);
 
   useEffect(() => {
     if (!errors.email && email) {
@@ -155,6 +157,7 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
           if (!isSuccess || !isNumCorrect) {
             return;
           }
+          setEmail(email);
           navigate(to);
         }}
       >

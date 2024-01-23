@@ -7,7 +7,8 @@ import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
+import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
+import compareNicknameApi from "@pages/signIn/apis/compareNicknameApi";
 interface FormData {
   nickname: string;
 }
@@ -21,6 +22,7 @@ const CheckNickname = ({ title, to }: CheckNicknameProps) => {
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
   const [isMultiple, setIsMultiple] = useState(true);
+  const { setNickname } = SignInDataStore();
 
   const {
     register,
@@ -38,15 +40,21 @@ const CheckNickname = ({ title, to }: CheckNicknameProps) => {
     }
   }, [nickname, errors.nickname]);
 
-  const handleCheckMultiple = () => {
-    // TODO - 이미 존재하는 닉네밍인지 체크하는 로직
-    // 실패시 early return;
-    setError("nickname", {
-      type: "manual",
-      message: "이미 사용중인 닉네임입니다."
-    });
-    // 성공시
-    setIsMultiple(false);
+  // 닉네임 중복 확인
+  const handleCheckMultiple = async (): Promise<void> => {
+    try {
+      const isDuplication = await compareNicknameApi(nickname);
+      if (isDuplication) {
+        setError("nickname", {
+          type: "manual",
+          message: "이미 사용중인 닉네임입니다."
+        });
+      } else {
+        setIsMultiple(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -88,6 +96,7 @@ const CheckNickname = ({ title, to }: CheckNicknameProps) => {
           if (isMultiple) {
             return;
           }
+          setNickname(nickname);
           navigate(to);
         }}
       >
