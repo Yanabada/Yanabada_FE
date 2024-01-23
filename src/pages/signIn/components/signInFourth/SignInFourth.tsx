@@ -23,7 +23,6 @@ const SignInFourth = () => {
         customHandleClick={() => {
           navigate(`/purchase?name=${name}&phonenumber=${phoneNumber}`);
         }}
-        phoneNum={phoneNumber}
       />
     );
   } else if (fromParams === "changePhoneNumber") {
@@ -32,10 +31,7 @@ const SignInFourth = () => {
         width="100%"
         upperNavBarText="예약자 정보 수정"
         buttonText="확인"
-        phoneNum={phoneNumber}
-        customHandleClick={async () => {
-          await mutate(phoneNumber);
-        }}
+        mutationFn={mutate}
       />
     );
   } else {
