@@ -152,7 +152,12 @@ const ListCard = ({
       <S.ButtonWrapper>
         {cardType === "approval_sale" && (
           <>
-            <AuthenticationButton buttonType="disabled" width={width} height="28px">
+            <AuthenticationButton
+              buttonType="disabled"
+              width={width}
+              height="28px"
+              onClick={() => navigate("/mypage/management")}
+            >
               승인요청 페이지로 이동
             </AuthenticationButton>
           </>
