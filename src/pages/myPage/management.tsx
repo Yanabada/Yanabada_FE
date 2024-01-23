@@ -134,7 +134,7 @@ const Management = ({ width }: ManagementProps) => {
               saleDate={product.tradeRegisteredTime}
               timerText={formatTimeUntilSaleEnd(product.tradeRegisteredTime)}
               roomName={product.roomName}
-              price={formatNumberWithCommas(product.sellingPrice.toString())}
+              price={formatNumberWithCommas(product.sellingPrice)}
               badgeText={determineBadgeText(determineCardType(product.status))}
               productId={product.tradeId}
             />
