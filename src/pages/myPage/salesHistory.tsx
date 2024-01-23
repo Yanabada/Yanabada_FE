@@ -18,7 +18,7 @@ interface SaleProduct {
   roomName: string;
   saleEnd: string;
   sellingPrice: number;
-  status: "ON_SALE" | "SOLD_OUT" | "BOOKING" | "COMPLETED" | "CANCELLED";
+  status: "ON_SALE" | "SOLD_OUT" | "BOOKING" | "TIMEOUT";
   tradeId: number;
 }
 

@@ -178,5 +178,36 @@ export const handlers = [
     return HttpResponse.json({
       productId: 1
     });
+  }),
+  http.get(`/trades/approvals`, () => {
+    return HttpResponse.json({
+      approvalTrades: [
+        {
+          tradeId: 2,
+          accommodationName: "춘천세종호텔",
+          accommodationImage: "1.jpg",
+          buyerNickname: "nick2",
+          tradeRegisteredTime: "2024-01-24 00:09",
+          roomName: "스탠다드 룸",
+          sellingPrice: 80000,
+          status: "WAITING"
+        },
+        {
+          tradeId: 1,
+          accommodationName: "춘천세종호텔",
+          accommodationImage: "1.jpg",
+          buyerNickname: "nick2",
+          tradeRegisteredTime: "2024-01-24 00:08",
+          roomName: "스탠다드 룸",
+          sellingPrice: 80000,
+          status: "WAITING"
+        }
+      ],
+      pageNum: 0,
+      pageSize: 10,
+      totalPages: 1,
+      isFirst: true,
+      isLast: true
+    });
   })
 ];
