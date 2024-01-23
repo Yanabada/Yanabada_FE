@@ -1,7 +1,7 @@
 import * as S from "./styles/history.styles";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import ListCard from "@components/card/ListCard";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
 import usePurchaseHistory from "./hooks/usePurchaseHistory";
@@ -75,7 +75,7 @@ const PurchaseHistory = ({ width }: PurchaseHistoryProps) => {
   }, [data, currentTab]);
 
   return (
-    <>
+    <Suspense>
       <UpperNavBar title="구매내역" type="back" />
       <S.PointsMiddleContainer width={width}>
         <S.MiddleWrapper onClick={() => setCurrentTab("all")}>
@@ -147,7 +147,7 @@ const PurchaseHistory = ({ width }: PurchaseHistoryProps) => {
           </div>
         ))}
       </S.ListCardWrapper>
-    </>
+    </Suspense>
   );
 };
 

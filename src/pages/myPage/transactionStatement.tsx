@@ -10,6 +10,7 @@ import formatDate from "./utils/formatDate";
 import formatNumberWithCommas from "./utils/formatNumberWithCommas";
 import usePurchaseTransactionHistory from "./hooks/usePurchaseTransactionHistory";
 import useTradeHistory from "./hooks/useTradeHistory";
+import { Suspense } from "react";
 
 interface TransactionStatementProps {
   width?: string;
@@ -54,7 +55,7 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
   switch (from) {
     case "sale":
       return (
-        <>
+        <Suspense>
           <UpperNavBar title="거래내역서" type="back" />
           <S.ListCardWrapper width={width}>
             <TransactionStatementNotice from="sale" />
@@ -92,11 +93,11 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
               거래내역 삭제
             </BaseButton>
           </S.ListCardWrapper>
-        </>
+        </Suspense>
       );
     case "purchase":
       return (
-        <>
+        <Suspense>
           <UpperNavBar title="거래내역서" type="back" />
           <S.ListCardWrapper width={width}>
             <TransactionStatementNotice from="purchase" />
@@ -138,11 +139,11 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
               거래내역 삭제
             </BaseButton>
           </S.ListCardWrapper>
-        </>
+        </Suspense>
       );
     case "cancel":
       return (
-        <>
+        <Suspense>
           <UpperNavBar title="거래내역서" type="back" />
           <S.ListCardWrapper width={width}>
             <TransactionStatementNotice from="cancel" />
@@ -184,7 +185,7 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
               거래내역 삭제
             </BaseButton>
           </S.ListCardWrapper>
-        </>
+        </Suspense>
       );
   }
 };
