@@ -271,5 +271,20 @@ export const handlers = [
         tradeId: 1
       }
     });
+  }),
+  http.get(`/trades/approvals/:tradeId`, () => {
+    return HttpResponse.json({
+      productId: 1,
+      tradeId: 1,
+      status: "COMPLETED",
+      price: 100000,
+      sellingPrice: 80000,
+      accommodationName: "춘천세종호텔",
+      accommodationImage: "1.jpg",
+      roomName: "스탠다드 룸",
+      tradeCode: "24011787dd61bbe57d",
+      buyerName: "nick2",
+      registeredDate: "2024-01-17T01:58:47.291674"
+    });
   })
 ];
