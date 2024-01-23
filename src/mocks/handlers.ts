@@ -155,6 +155,16 @@ export const handlers = [
           saleEnd: "2024-01-24",
           sellingPrice: 80000,
           status: "BOOKING"
+        },
+        {
+          productId: 4,
+          tradeId: 4,
+          image: "1.jpg",
+          accommodationName: "춘천세종호텔",
+          roomName: "스탠다드 룸",
+          saleEnd: "2024-01-24",
+          sellingPrice: 80000,
+          status: "TIMEOUT"
         }
       ],
       pageNum: 0,
