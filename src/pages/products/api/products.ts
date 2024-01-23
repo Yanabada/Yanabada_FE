@@ -36,8 +36,7 @@ export interface GetProductsRequestParams {
 }
 
 const getProducts = async (params: Partial<GetProductsRequestParams> = { size: 20 }) => {
-const response = await instance.get<GetProductResponseData>("/products", {
-
+  const response = await instance.get<GetProductResponseData>("/products", {
     params,
     paramsSerializer: (params) => {
       return qs.stringify(params, { arrayFormat: "repeat" });
