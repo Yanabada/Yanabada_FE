@@ -9,20 +9,20 @@ import { feePolicy1, feePolicy2 } from "@constants/feePolicys";
 interface TableRowProps {
   cancellationDate: Date;
   daysBefore: number;
-  originalPrice: number;
+  purchasePrice: number;
   percentage: number;
 }
 
 interface PolicyTableProps {
   checkInDate: string;
-  originalPrice: number;
+  purchasePrice: number;
   policyNumber: string;
 }
 
 const CancellationTableRow = ({
   cancellationDate,
   daysBefore,
-  originalPrice,
+  purchasePrice,
   percentage
 }: TableRowProps) => {
   const today = new Date();
@@ -36,7 +36,7 @@ const CancellationTableRow = ({
   const cancellationFeeText =
     daysBefore === 0
       ? "취소 및 환불 불가"
-      : `총 판매가의 ${percentage}% ${numberFormat(originalPrice * percentage * 0.01)}원`;
+      : `총 판매가의 ${percentage}% ${numberFormat(purchasePrice * percentage * 0.01)}원`;
   return (
     <tr className={isToday ? "today-row" : ""}>
       <td>{cancellationText}</td>
@@ -47,7 +47,7 @@ const CancellationTableRow = ({
 
 const CancellationPolicyTable = ({
   checkInDate,
-  originalPrice,
+  purchasePrice,
   policyNumber
 }: PolicyTableProps) => {
   const [tableData, setTableData] = useState<JSX.Element[]>([]);
@@ -72,14 +72,14 @@ const CancellationPolicyTable = ({
           key={cancellationDate.toString()}
           cancellationDate={cancellationDate}
           daysBefore={daysBefore}
-          originalPrice={originalPrice}
+          purchasePrice={purchasePrice}
           percentage={percentage}
         />
       );
     });
 
     setTableData(rows);
-  }, [checkInDate, originalPrice, policyNumber]);
+  }, [checkInDate, purchasePrice, policyNumber]);
 
   return (
     <S.PriceTable>

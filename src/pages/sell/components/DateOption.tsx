@@ -28,7 +28,6 @@ interface DateOptionProps {
   productData: {
     checkInDate: string;
   };
-  originalPrice: number;
   purchasePrice: number;
   price: number;
   endDate: string | undefined;
@@ -47,13 +46,11 @@ const DateOption = ({
   bottomSheetVisible,
   setBottomSheetVisible,
   productData,
-  originalPrice,
   purchasePrice,
   price,
   endDate,
   endDateInfo,
   policyNumber
-  // policyNumber
 }: DateOptionProps) => {
   const bottomSheetProps = {
     title: "판매기한 선택",
@@ -140,7 +137,7 @@ const DateOption = ({
     }
 
     const calculatedFee =
-      selectedPolicy !== feePolicy3 ? originalPrice - (originalPrice * feePercentage) / 100 : 0;
+      selectedPolicy !== feePolicy3 ? purchasePrice - (purchasePrice * feePercentage) / 100 : 0;
 
     return (
       <div>
@@ -160,8 +157,8 @@ const DateOption = ({
   };
 
   // 구매가 대비 판매가격의 수수료% 계산
-  function calculateDiscount(originalPrice: number, price: number) {
-    const discountPercentage = ((originalPrice - price) / originalPrice) * 100;
+  function calculateDiscount(purchasePrice: number, price: number) {
+    const discountPercentage = ((purchasePrice - price) / purchasePrice) * 100;
     return Math.floor(discountPercentage);
   }
 
@@ -227,7 +224,7 @@ const DateOption = ({
                 </p>
               </div>
               <div className="discount">
-                <span>{numberFormat(originalPrice)}</span>원
+                <span>{numberFormat(purchasePrice)}</span>원
               </div>
               <div className="inner">
                 <div>
@@ -237,9 +234,7 @@ const DateOption = ({
                         <span className="price">취소불가상품</span>
                       ) : (
                         <>
-                          <span className="percentage text-orange">
-                            {endDateInfo.feePercentage}%
-                          </span>
+                          <span className="percentage text-orange"></span>
                           &nbsp;
                           <span className="price">입실일 취소 불가</span>
                         </>
@@ -260,7 +255,7 @@ const DateOption = ({
                           &nbsp;
                           <span className="price">
                             {numberFormat(
-                              calculateOriginDiscount(originalPrice, endDateInfo.feePercentage)
+                              calculateOriginDiscount(purchasePrice, endDateInfo.feePercentage)
                             )}
                             원
                           </span>

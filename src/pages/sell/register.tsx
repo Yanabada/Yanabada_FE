@@ -48,22 +48,21 @@ const SellRegister = () => {
   // API 연결 전, 데이터 상수
   const originalPrice = 1500000;
   const purchasePrice = 1200000;
-  const cancelFee = 600000;
 
   const productData = {
     code: "240107f84892a35ed5",
     image: "http://via.placeholder.com/300x300",
     accommodationName: "춘천세종호텔",
     roomName: "스탠다드 룸",
-    checkInDate: "2024-01-25",
-    checkOutDate: "2024-01-26",
-    policyNumber: "YNBD_1"
+    checkInDate: "2024-01-29",
+    checkOutDate: "2024-01-30",
+    policyNumber: "YNBD_2"
   };
 
   // 시작일과 종료일 쿼리스트링으로 등록
   useEffect(() => {
-    const startParam = searchParams.get("start");
-    const endParam = searchParams.get("end");
+    const startParam = searchParams.get("checkInDate");
+    const endParam = searchParams.get("checkOutDate");
 
     setStartDate(String(startParam));
     setEndDate(String(endParam));
@@ -105,20 +104,22 @@ const SellRegister = () => {
           <PriceTable
             originalPrice={originalPrice}
             purchasePrice={purchasePrice}
-            cancelFee={cancelFee}
+            policyNumber={productData.policyNumber}
             productData={productData}
+            checkInDate={productData.checkInDate}
           />
           <PriceArea
             title="판매가격"
             placeholder="￦ 판매 가격을 입력해주세요"
             originalPrice={originalPrice}
             purchasePrice={purchasePrice}
-            cancelFee={cancelFee}
+            policyNumber={productData.policyNumber}
             resetPrice={purchasePrice}
             isAlert
             charge={false}
             price={price}
             setPrice={setPrice}
+            checkInDate={productData.checkInDate}
           />
         </S.RegisterInner>
         <CS.DetailBlank />
@@ -127,7 +128,6 @@ const SellRegister = () => {
           bottomSheetVisible={bottomSheetVisible}
           setBottomSheetVisible={setBottomSheetVisible}
           productData={productData}
-          originalPrice={originalPrice}
           purchasePrice={purchasePrice}
           price={price}
           endDate={endDate}

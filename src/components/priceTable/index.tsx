@@ -10,15 +10,23 @@ import Notice from "@components/notice";
 import CancellationPolicyTable from "@components/priceModal";
 import { checkDayOfFee } from "@utils/checkDayOfFee";
 import { productData } from "@/types/priceTable";
+import calculateFee from "@utils/calcCancelFee";
 
 interface PriceTableProps {
   originalPrice: number;
   purchasePrice: number;
-  cancelFee: number;
+  policyNumber: string;
   productData: productData;
+  checkInDate: string;
 }
 
-const PriceTable = ({ originalPrice, purchasePrice, cancelFee, productData }: PriceTableProps) => {
+const PriceTable = ({
+  originalPrice,
+  purchasePrice,
+  policyNumber,
+  productData,
+  checkInDate
+}: PriceTableProps) => {
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
 
   const bottomSheetProps = {
@@ -26,6 +34,15 @@ const PriceTable = ({ originalPrice, purchasePrice, cancelFee, productData }: Pr
     isVisible: bottomSheetVisible,
     setIsVisible: setBottomSheetVisible
   };
+  const today = new Date();
+
+  // TODO : 오늘기준 수수료계산
+  console.log("테이블 계산하기", policyNumber, checkInDate);
+  const cancelFee: React.ReactNode = (
+    <span>{numberFormat(calculateFee(policyNumber, checkInDate, today, purchasePrice))} 원</span>
+  );
+
+  console.log(calculateFee(policyNumber, checkInDate, today, purchasePrice));
 
   return (
     <>
@@ -77,15 +94,13 @@ const PriceTable = ({ originalPrice, purchasePrice, cancelFee, productData }: Pr
                   <AiFillQuestionCircle />
                 </button>
               </p>
-              <p className="price">
-                <span>{numberFormat(cancelFee)}</span>원
-              </p>
+              <p className="price">{cancelFee}</p>
               <BottomSheet {...bottomSheetProps}>
                 <S.PolicyInner>
                   <Notice
                     type="default"
                     title={checkDayOfFee({
-                      originalPrice,
+                      purchasePrice,
                       policyNumber: productData.policyNumber,
                       checkInDate: productData.checkInDate
                     })}
@@ -94,7 +109,7 @@ const PriceTable = ({ originalPrice, purchasePrice, cancelFee, productData }: Pr
                   />
                   <CancellationPolicyTable
                     checkInDate={productData.checkInDate}
-                    originalPrice={originalPrice}
+                    purchasePrice={purchasePrice}
                     policyNumber={productData.policyNumber}
                   />
                 </S.PolicyInner>
