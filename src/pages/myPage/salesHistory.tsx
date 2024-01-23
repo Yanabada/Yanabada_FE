@@ -37,6 +37,8 @@ const SalesHistory = ({ width }: SalesHistoryProps) => {
         return "saleEnd";
       case "BOOKING":
         return "approval_sale";
+      case "TIMEOUT":
+        return "saleCanceled";
     }
   };
 
@@ -48,6 +50,8 @@ const SalesHistory = ({ width }: SalesHistoryProps) => {
         return "판매완료";
       case "approval_sale":
         return "판매대기";
+      case "saleCanceled":
+        return "판매취소";
     }
   };
 
@@ -69,7 +73,7 @@ const SalesHistory = ({ width }: SalesHistoryProps) => {
         setFilteredData(data.filter((product) => product.status === "SOLD_OUT"));
         break;
       case "saleCanceled":
-        setFilteredData(data.filter((product) => product.status === "SOLD_OUT"));
+        setFilteredData(data.filter((product) => product.status === "TIMEOUT"));
         break;
     }
   }, [data, currentTab]);
