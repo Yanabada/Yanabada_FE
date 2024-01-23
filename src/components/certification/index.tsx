@@ -8,6 +8,8 @@ import Modal from "@components/modal";
 import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import BottomSheet from "@components/bottomSheet";
 import { useNavigate } from "react-router-dom";
+import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
+import { signInApi } from "@pages/signIn/apis/signInApi";
 
 interface CertificationProps {
   width?: string;
@@ -19,6 +21,7 @@ interface CertificationProps {
   bottomSheetChildren?: string | ReactNode;
   bottomSheetNavigate?: string;
   phoneNum?: string | null;
+  isSignInFlow?: boolean;
 }
 
 interface FormData {
@@ -35,21 +38,29 @@ const Certification = ({
   bottomSheetTitle,
   bottomSheetChildren,
   bottomSheetNavigate,
-  phoneNum
+  phoneNum,
+  isSignInFlow = false
 }: CertificationProps) => {
   const navigate = useNavigate();
-  // const [isSendValid, setIsSendValid] = useState(false);
+  const [isSendValid, setIsSendValid] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [openInput, setOpenInput] = useState(false);
   const [isNumCorrect, setIsNumCorrect] = useState(false);
   const [sentCount, setSentCount] = useState(5);
   const [btnText, setBtnText] = useState("인증번호 전송");
   const [isSheetVisible, setIsSheetVisible] = useState(false);
+  const {
+    email,
+    password,
+    nickName,
+    phoneNumber: phoneNumberSignin,
+    setPhoneNumber
+  } = SignInDataStore();
 
   const {
     register,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
     getValues,
     trigger
   } = useForm<FormData>({
@@ -79,20 +90,30 @@ const Certification = ({
   // 인증번호 전송 남은 횟수
   const handleAuthenticationBtnClick = () => {
     // TODO - 인증번호 재전송 5회 소진시 동작 기획에 맞게 수정
-    if (!isValid || sentCount < 0) {
+    if (!isSendValid || sentCount < 0) {
       return;
     }
-    setSentCount(sentCount - 1);
     setIsModalVisible(true);
   };
 
   useEffect(() => {
+    if (sentCount === 5) {
+      return;
+    }
     setBtnText(`인증번호 재전송(남은 횟수 ${sentCount}회)`);
   }, [sentCount]);
 
+  useEffect(() => {
+    if (!errors.phoneNumber && phoneNumber) {
+      setIsSendValid(true);
+      return;
+    }
+    setIsSendValid(false);
+  }, [phoneNumber, phoneNumber]);
+
   // 인증번호 유효성검사
   const isCodeValid = (value: number | null) => {
-    //  TODO - 인증번호 같은지 비교하는 로직 추가
+    //  TODO - 인증번호 같은지 비교하는 로직 추가 (6자리가 됐을 때 검사)
     if (value?.toString().length === 6) {
       setIsNumCorrect(true);
       return true;
@@ -101,18 +122,35 @@ const Certification = ({
     return false;
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!isNumCorrect) {
       return;
     }
+    // 회원가입 플로우일 때 동작
+    if (isSignInFlow) {
+      setPhoneNumber(phoneNumber);
+      return;
+    }
+
     hasBottomSheet && setIsSheetVisible(true);
     customHandleClick && customHandleClick();
   };
 
   useEffect(() => {
+    const performSignIn = async () => {
+      if (isSignInFlow && email && password && nickName && phoneNumberSignin) {
+        await signInApi({ email, password, nickName, phoneNumberSignin, setIsSheetVisible });
+      }
+    };
+
+    performSignIn();
+  }, [phoneNumberSignin]);
+
+  useEffect(() => {
+    trigger("phoneNumber");
+    trigger("code");
     if (phoneNum) {
       setValue("phoneNumber", phoneNum);
-      trigger("phoneNumber");
     }
   }, []);
 
@@ -124,6 +162,7 @@ const Certification = ({
           <TextInput
             variant="move"
             label="휴대폰 번호"
+            isSuccess={isSendValid}
             {...register("phoneNumber", {
               required: true,
               pattern: {
@@ -135,7 +174,7 @@ const Certification = ({
             errorMessage={errors.phoneNumber && `${errors.phoneNumber?.message}`}
           />
           <AuthenticationButton
-            buttonType={isValid ? "disabled" : "abled"}
+            buttonType={isSendValid ? "disabled" : "abled"}
             width={width}
             onClick={handleAuthenticationBtnClick}
           >
@@ -180,6 +219,7 @@ const Certification = ({
           </ColoredButtonForm>
         </S.ButtonWrapper>
       </S.CertificationContainer>
+
       <Modal
         isVisible={isModalVisible}
         setIsVisible={setIsModalVisible}
@@ -192,6 +232,7 @@ const Certification = ({
         }}
         rightAction={() => {
           // TODO - 전송하기 클릭 시 문자 전송 로직 함수 & 따로 handle 함수로 분리하기
+          setSentCount(sentCount - 1);
           setIsModalVisible(false);
           setOpenInput(true);
           setValue("code", null);
