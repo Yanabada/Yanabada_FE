@@ -8,6 +8,8 @@ import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import Modal from "@components/modal";
 import { useState } from "react";
+import useProducts from "@pages/myPage/hooks/useProducts";
+import { useNavigate } from "react-router-dom";
 
 interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string;
@@ -30,6 +32,7 @@ interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   roomName: string;
   price: string;
   badgeText: string | undefined;
+  productId: number;
 }
 
 const ListCard = ({
@@ -43,7 +46,8 @@ const ListCard = ({
   statusText,
   roomName,
   price,
-  badgeText
+  badgeText,
+  productId
 }: ListCardProps) => {
   const getTimerIconColor = (cardType: ListCardProps["cardType"]) => {
     switch (cardType) {
@@ -90,6 +94,10 @@ const ListCard = ({
     leftAction: () => setIsVisible(false),
     rightAction: () => {}
   };
+
+  const { mutate } = useProducts();
+
+  const navigate = useNavigate();
 
   return (
     <S.ListCardContainer width={width}>
@@ -163,10 +171,14 @@ const ListCard = ({
         )}
         {cardType === "sale" && (
           <>
-            <BaseButton buttonType="gray" width="48%">
+            <BaseButton buttonType="gray" width="48%" onClick={() => mutate(productId)}>
               게시글 삭제
             </BaseButton>
-            <BaseButton buttonType="default" width="48%">
+            <BaseButton
+              buttonType="default"
+              width="48%"
+              onClick={() => navigate(`/sell/register/${productId}?registration=true`)}
+            >
               게시글 수정
             </BaseButton>
           </>
