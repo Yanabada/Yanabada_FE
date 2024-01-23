@@ -5,7 +5,7 @@ interface AuthenticationButtonProps extends React.ButtonHTMLAttributes<HTMLButto
   width?: string;
   height?: string;
   className?: string | undefined;
-  onClick?: () => void | undefined;
+  onClick?: () => void | undefined | Promise<void>;
 }
 
 const AuthenticationButton = ({ buttonType, children, ...props }: AuthenticationButtonProps) => {
