@@ -8,6 +8,7 @@ import SpecialServices from "./components/SpecialServices";
 import CategoryList from "./components/CategoryList";
 import SubServices from "./components/SubServices";
 import Footer from "./components/Footer";
+import { Suspense } from "react";
 
 const Home = () => {
   return (
@@ -26,9 +27,13 @@ const Home = () => {
         link="/products?order=SALES_PERCENTAGE_DESC"
         rowCardProps="높안할인율"
       />
-      <SpecialServices />
+      <Suspense fallback={<p>Loading...</p>}>
+        <SpecialServices />
+      </Suspense>
       <CategoryList />
-      <SubServices />
+      <Suspense fallback={<p>Loading...</p>}>
+        <SubServices />
+      </Suspense>
       <Footer />
     </S.Container>
   );

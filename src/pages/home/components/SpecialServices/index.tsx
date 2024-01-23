@@ -4,6 +4,7 @@ import { ProductType } from "@pages/products/types/productsType";
 import * as S from "./styles";
 
 import ArrowRight from "@assets/icons/arrowRight.svg?react";
+import useProducts from "@pages/products/api/queries";
 
 type Picked =
   | "id"
@@ -16,40 +17,10 @@ type Picked =
   | "sellingPrice";
 export type OptionCardType = Pick<ProductType, Picked>;
 
-const products: OptionCardType[] = [
-  {
-    id: 1,
-    image: "https://bit.ly/2Z4KKcF",
-    accommodationName: "파라스파라 서울 더 그레이트 현대 런던1",
-    roomName: "Forest Tower Deluxe King1",
-    checkIn: new Date("2024-01-15"),
-    checkOut: new Date("2024-01-16"),
-    price: 1029000,
-    sellingPrice: 264000
-  },
-  {
-    id: 2,
-    image: "https://bit.ly/2Z4KKcF",
-    accommodationName: "파라스파라 서울 더 그레이트 현대 런던2",
-    roomName: "Forest Tower Deluxe King2",
-    checkIn: new Date("2024-01-12"),
-    checkOut: new Date("2024-01-13"),
-    price: 2000000,
-    sellingPrice: 1500000
-  },
-  {
-    id: 3,
-    image: "https://bit.ly/2Z4KKcF",
-    accommodationName: "파라스파라 서울 더 그레이트 현대 런던2",
-    roomName: "Forest Tower Deluxe King2",
-    checkIn: new Date("2024-01-12"),
-    checkOut: new Date("2024-01-13"),
-    price: 2000000,
-    sellingPrice: 1500000
-  }
-];
-
 const SpecialServices = () => {
+  // 어떤 옵션을 줘야할지?
+  const { data: products } = useProducts({ size: 10 });
+
   return (
     <S.Container>
       <S.TitleWrapper>
