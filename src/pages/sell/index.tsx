@@ -9,7 +9,8 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import Notice from "@components/notice";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
-import getSellList from "./apis/sellList";
+
+import getSellList from "./apis/getSellList";
 interface SellListData {
   id: number;
   code: string;
@@ -31,7 +32,6 @@ const Sell = () => {
     const fetchData = async () => {
       try {
         const sellListData = await getSellList();
-        console.log("성공!", sellListData);
         setSellList(sellListData.data);
       } catch (error) {
         console.error("Error fetching sell list:", error);
@@ -40,20 +40,6 @@ const Sell = () => {
 
     fetchData();
   }, []);
-
-  // const sellList: SellListData[] = [
-  //   {
-  //     id: 2,
-  //     code: "240107f84892a35ed5",
-  //     image: "https://via.placeholder.com/100x100",
-  //     accommodationName: "춘천세종호텔",
-  //     roomName: "스탠다드 룸",
-  //     checkInDate: "2024-01-15",
-  //     checkOutDate: "2024-01-18",
-  //     checkInTime: "17:00",
-  //     checkOutTime: "12:00"
-  //   }
-  // ];
 
   const handleRadioChange = (index: number) => {
     setSelectedCard(index);
