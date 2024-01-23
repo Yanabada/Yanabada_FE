@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { getAccessToken, refreshAccessToken } from "@utils/getCookie";
 import Cookies from "js-cookie";
 
-const instance: AxiosInstance = axios.create({
+export const instance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 5000
 });
