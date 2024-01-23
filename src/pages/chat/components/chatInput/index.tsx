@@ -4,7 +4,6 @@ import SendIcon from "@assets/icons/send_button.svg?react";
 
 const ChatInput = () => {
   const [value, setValue] = useState("");
-
   const handleSendMessage = () => {
     if (!value) {
       return;

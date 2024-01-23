@@ -6,6 +6,7 @@ import { ChatRoom } from "@pages/chat/types/chatRoom";
 interface ChatListProps {
   room: ChatRoom;
 }
+
 const ChatList = ({ room }: ChatListProps) => {
   const navigate = useNavigate();
 
