@@ -81,7 +81,7 @@ const PriceArea = ({
       const discountPercentage = ((originalPrice - price) / originalPrice) * 100;
       const savingsAmount = originalPrice - price;
 
-      if (price > cancelFee && price < purchasePrice) {
+      if (price >= cancelFee && price < purchasePrice) {
         return (
           <S.SalesMessage>
             원가 대비 {discountPercentage.toFixed(0)}% 할인! ({numberFormat(savingsAmount)}원 절약)

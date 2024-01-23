@@ -25,9 +25,7 @@ import calculateOriginDiscount from "../utils/calcEndFee";
 interface DateOptionProps {
   bottomSheetVisible: boolean;
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  productData: {
-    checkInDate: string;
-  };
+  checkInDate: string;
   purchasePrice: number;
   price: number;
   endDate: string | undefined;
@@ -45,7 +43,7 @@ interface FeeProps {
 const DateOption = ({
   bottomSheetVisible,
   setBottomSheetVisible,
-  productData,
+  checkInDate,
   purchasePrice,
   price,
   endDate,
@@ -64,11 +62,11 @@ const DateOption = ({
   switch (policyNumber) {
     case "YNBD_1":
       selectedPolicy = feePolicy1;
-      minDay = subDays(new Date(productData.checkInDate), 7);
+      minDay = subDays(new Date(checkInDate), 7);
       break;
     case "YNBD_2":
       selectedPolicy = feePolicy2;
-      minDay = subDays(new Date(productData.checkInDate), 6);
+      minDay = subDays(new Date(checkInDate), 6);
       break;
     case "YNBD_3":
       selectedPolicy = feePolicy3;
@@ -79,7 +77,7 @@ const DateOption = ({
   }
 
   // Calendar 날짜 범위 설정
-  const currentMonth = new Date(productData.checkInDate);
+  const currentMonth = new Date(checkInDate);
   const nextYear = new Date(currentMonth);
   const prevYear = subMonths(new Date(currentMonth), 12);
   nextYear.setFullYear(currentMonth.getFullYear() + 1);
@@ -90,7 +88,7 @@ const DateOption = ({
     end: endOfMonth(nextYear)
   });
 
-  const maxDay = addDays(new Date(productData.checkInDate), 0);
+  const maxDay = addDays(new Date(checkInDate), 0);
 
   const excludeDates = seletedDates.filter((date) => {
     const dateMonth = date.getMonth();
@@ -115,7 +113,7 @@ const DateOption = ({
       excludeDates.some((excludedDate) => excludedDate.getTime() === date.getTime());
 
     const currentDate = date instanceof Date ? date : new Date();
-    const daysBefore = differenceInDays(new Date(productData.checkInDate), currentDate);
+    const daysBefore = differenceInDays(new Date(checkInDate), currentDate);
 
     // 날짜에 따른 원금 - 수수료 계산
     let feePolicyWithoutFirst;

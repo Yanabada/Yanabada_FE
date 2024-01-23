@@ -101,7 +101,7 @@ const router = createBrowserRouter([
             element: <SellResult />
           },
           {
-            path: "confirm",
+            path: "confirm/:id",
             element: <SellConfirm />
           }
         ]

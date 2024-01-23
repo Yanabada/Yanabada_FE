@@ -72,7 +72,16 @@ const Sell = () => {
         <S.DetailBlank />
         <S.DetailBox>
           <p className="title">상품 및 이용 정보</p>
-          <InfoBox infoProps={sellDetailData} />
+          <InfoBox
+            code={sellDetailData.code}
+            accommodationImage={sellDetailData.accommodationImage}
+            accommodationName={sellDetailData.accommodationName}
+            roomName={sellDetailData.roomName}
+            checkInDate={sellDetailData.checkInDate}
+            checkOutDate={sellDetailData.checkOutDate}
+            checkInTime={sellDetailData.checkInTime}
+            checkOutTime={sellDetailData.checkOutTime}
+          />
           <div className="info-box__right">
             <p className="option">
               <IoPersonOutline /> 기준 {sellDetailData.minHeadCount}명 / 최대{" "}
