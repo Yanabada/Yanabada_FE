@@ -4,7 +4,7 @@ import ListCard from "@components/card/ListCard";
 import useSalesHistory from "./hooks/useSalesHistory";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useIntersect from "@pages/products/hooks/useIntersect";
 
 // FIXME: 모듈화
@@ -86,7 +86,7 @@ const SalesHistory = ({ width }: SalesHistoryProps) => {
   }, [data, currentTab]);
 
   return (
-    <Suspense>
+    <>
       <UpperNavBar title="판매내역" type="back" />
       <S.PointsMiddleContainer width={width}>
         <S.MiddleWrapper onClick={() => setCurrentTab("all")}>
@@ -165,7 +165,7 @@ const SalesHistory = ({ width }: SalesHistoryProps) => {
           </div>
         ))}
       </S.ListCardWrapper>
-    </Suspense>
+    </>
   );
 };
 

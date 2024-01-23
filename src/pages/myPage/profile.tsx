@@ -6,7 +6,7 @@ import CheckIcon from "@assets/icons/checkbox_Check.svg?react";
 import { Input, Icon } from "@components/input/Checkbox/allConsentCheckbox.style";
 // import SwitchButton from "@components/buttons/SwitchButton";
 import ArrowForwardIcon from "@assets/icons/arrowForwardIconLight.svg?react";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import TextInput from "@components/input/TextInput";
 import ManipulationChip from "@components/chips/ManipulationChip";
 import CancelIcon from "@assets/icons/cancelIcon.svg?react";
@@ -74,7 +74,7 @@ const Profile = ({ width }: ProfileProps) => {
   }, [isSuccess]);
 
   return (
-    <Suspense>
+    <>
       <UpperNavBar title="내 정보 관리" type="back" />
       <S.ProfileContainer width={width}>
         <S.ProfileWrapper gap="16px">
@@ -240,7 +240,7 @@ const Profile = ({ width }: ProfileProps) => {
         </S.PersonalInfoWrapper>
       </S.ProfileContainer>
       <Modal {...modalProps} />
-    </Suspense>
+    </>
   );
 };
 
