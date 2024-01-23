@@ -135,7 +135,7 @@ const Management = ({ width }: ManagementProps) => {
               roomName={product.roomName}
               price={formatNumberWithCommas(product.sellingPrice)}
               badgeText={determineBadgeText(determineCardType(product.status))}
-              productId={product.tradeId}
+              tradeId={product.tradeId}
               statusText={
                 product.status === "REJECTED"
                   ? "판매 승인을 거절했어요"

@@ -5,8 +5,6 @@ const getManagement = async ({ page = 0 }) => {
 
   const response = await axios.get(getManagementURL);
 
-  console.log(response.data);
-
   return response.data;
 };
 

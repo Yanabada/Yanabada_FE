@@ -176,7 +176,10 @@ export const handlers = [
   }),
   http.delete(`/products/:productId`, async () => {
     return HttpResponse.json({
-      productId: 1
+      status: "SUCCESS",
+      data: {
+        productId: 1
+      }
     });
   }),
   http.get(`/trades/approvals`, () => {
@@ -208,6 +211,14 @@ export const handlers = [
       totalPages: 1,
       isFirst: true,
       isLast: true
+    });
+  }),
+  http.post("/trades/:tradeid/approve", async () => {
+    return HttpResponse.json({
+      status: "SUCCESS",
+      data: {
+        tradeId: 1
+      }
     });
   })
 ];
