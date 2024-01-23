@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import getDetail from "../api/detail";
 
-const useProductDetail = () => {
+const useProductDetail = (productId: number) => {
   const getDetailQuery = useQuery({
-    queryKey: ["productDetail"],
-    queryFn: getDetail
+    queryKey: ["productDetail", productId],
+    queryFn: () => getDetail(productId)
   });
 
   return { getDetailQuery };

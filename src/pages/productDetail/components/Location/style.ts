@@ -22,7 +22,8 @@ export const AddressContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
+  white-space: nowrap;
 `;
 
 export const Address = styled.p`
@@ -35,9 +36,11 @@ export const CopyButton = styled.button`
   justify-content: center;
   align-items: center;
   gap: 0.25rem;
+  width: 4.5rem;
   padding: 0.4375rem 0.75rem;
   border-radius: 30px;
   background: ${({ theme }) => theme.colors.gray[100]};
+  white-space: nowrap;
 `;
 
 export const Line = styled.div`

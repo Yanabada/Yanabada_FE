@@ -1,9 +1,9 @@
-import axios from "axios";
+import instance from "@apis/instance";
 
-const getDetail = async () => {
+const getDetail = async (productId: number) => {
   try {
-    const response = await axios.get("/api/products/:id");
-    return response.data[0].data;
+    const response = await instance.get(`/products/${productId}`);
+    return response.data.data;
   } catch (err) {
     console.error("getProducts: ", err);
   }
