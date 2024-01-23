@@ -132,7 +132,7 @@ export const handlers = [
           image: "1.jpg",
           accommodationName: "춘천세종호텔",
           roomName: "스탠다드 룸",
-          saleEnd: "2024-01-24",
+          saleEnd: "2024-01-31",
           sellingPrice: 80000,
           status: "ON_SALE"
         },
@@ -142,7 +142,7 @@ export const handlers = [
           image: "1.jpg",
           accommodationName: "춘천세종호텔",
           roomName: "스탠다드 룸",
-          saleEnd: "2024-01-24",
+          saleEnd: "2024-01-31",
           sellingPrice: 80000,
           status: "SOLD_OUT"
         },
@@ -152,7 +152,7 @@ export const handlers = [
           image: "1.jpg",
           accommodationName: "춘천세종호텔",
           roomName: "스탠다드 룸",
-          saleEnd: "2024-01-24",
+          saleEnd: "2024-01-31",
           sellingPrice: 80000,
           status: "BOOKING"
         },
@@ -162,7 +162,7 @@ export const handlers = [
           image: "1.jpg",
           accommodationName: "춘천세종호텔",
           roomName: "스탠다드 룸",
-          saleEnd: "2024-01-24",
+          saleEnd: "2024-01-23",
           sellingPrice: 80000,
           status: "TIMEOUT"
         }
@@ -190,7 +190,7 @@ export const handlers = [
           accommodationName: "춘천세종호텔",
           accommodationImage: "1.jpg",
           buyerNickname: "nick2",
-          tradeRegisteredTime: "2024-01-24 00:09",
+          tradeRegisteredTime: "2024-01-31 00:09",
           roomName: "스탠다드 룸",
           sellingPrice: 80000,
           status: "WAITING"
@@ -200,7 +200,7 @@ export const handlers = [
           accommodationName: "춘천세종호텔",
           accommodationImage: "1.jpg",
           buyerNickname: "nick2",
-          tradeRegisteredTime: "2024-01-24 00:08",
+          tradeRegisteredTime: "2024-01-31 00:08",
           roomName: "스탠다드 룸",
           sellingPrice: 80000,
           status: "WAITING"
@@ -227,6 +227,41 @@ export const handlers = [
       data: {
         tradeId: 1
       }
+    });
+  }),
+  http.get(`/trades/purchases`, () => {
+    return HttpResponse.json({
+      purchaseTrades: [
+        {
+          tradeId: 2,
+          productId: 2,
+          accommodationName: "춘천세종호텔",
+          accommodationImage: "1.jpg",
+          sellerNickname: "nick1",
+          tradeRegisteredTime: "2024-01-18 00:09",
+          saleEndDate: "2024-01-31",
+          roomName: "스탠다드 룸",
+          price: 84000,
+          status: "COMPLETED"
+        },
+        {
+          tradeId: 1,
+          productId: 1,
+          accommodationName: "춘천세종호텔",
+          accommodationImage: "1.jpg",
+          sellerNickname: "nick1",
+          tradeRegisteredTime: "2024-01-18 00:08",
+          saleEndDate: "2024-01-31",
+          roomName: "스탠다드 룸",
+          price: 84000,
+          status: "WAITING"
+        }
+      ],
+      pageNum: 0,
+      pageSize: 10,
+      totalPages: 1,
+      isFirst: true,
+      isLast: true
     });
   })
 ];

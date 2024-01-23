@@ -1,7 +1,7 @@
 import * as S from "./styles/history.styles";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import ListCard from "@components/card/ListCard";
-import usePurchaseHistory from "./hooks/usePurchaseHistory";
+import useSalesHistory from "./hooks/useSalesHistory";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
 import { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ interface SaleProduct {
 }
 
 const SalesHistory = ({ width }: SalesHistoryProps) => {
-  const { data, error } = usePurchaseHistory();
+  const { data, error } = useSalesHistory();
 
   if (error) {
     console.log(error);
