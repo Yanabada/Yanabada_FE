@@ -4,7 +4,7 @@ import EditIcon from "@assets/icons/editIcon.svg?react";
 import { Spacer } from "@pages/purchase/styles/styles";
 import CheckIcon from "@assets/icons/checkbox_Check.svg?react";
 import { Input, Icon } from "@components/input/Checkbox/allConsentCheckbox.style";
-import SwitchButton from "@components/buttons/SwitchButton";
+// import SwitchButton from "@components/buttons/SwitchButton";
 import ArrowForwardIcon from "@assets/icons/arrowForwardIconLight.svg?react";
 import { useState, useEffect } from "react";
 import TextInput from "@components/input/TextInput";
@@ -218,7 +218,7 @@ const Profile = ({ width }: ProfileProps) => {
           </S.CheckBoxContainer>
         </S.PersonalInfoWrapper>
 
-        <Spacer width={width} />
+        {/* <Spacer width={width} />
 
         <S.PersonalInfoWrapper gap="16px">
           <S.SwitchLabel>
@@ -228,7 +228,7 @@ const Profile = ({ width }: ProfileProps) => {
             </S.LabelLeftWrapper>
             <SwitchButton />
           </S.SwitchLabel>
-        </S.PersonalInfoWrapper>
+        </S.PersonalInfoWrapper> */}
 
         <Spacer width={width} />
 
