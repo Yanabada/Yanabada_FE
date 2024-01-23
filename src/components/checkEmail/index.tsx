@@ -7,6 +7,7 @@ import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import { useNavigate } from "react-router-dom";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
+import useEmailAuth from "@pages/signIn/hooks/useEmailAuth";
 import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
 
 interface CheckEmailProps {
@@ -53,13 +54,15 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
     setIsSuccess(false);
   }, [email, errors.email]);
 
+  const { mutate, isSuccess: isMutateSuccess, data } = useEmailAuth();
+
   // 인증번호 유효성검사
   const isCodeValid = (value: number) => {
-    //  TODO - 인증번호 같은지 비교하는 로직 추가
-    if (value.toString().length === 6) {
+    if (data && value === data.code.toString()) {
       setIsNumCorrect(true);
       return true;
     }
+
     setIsNumCorrect(false);
     return false;
   };
@@ -70,10 +73,18 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
       return;
     }
     setSentCount(sentCount - 1);
-    setBtnText(`인증번호 재전송(남은 횟수 ${sentCount}회)`);
-    // TODO - 인증번호 전송 로직
-    setOpenInput(true);
+
+    mutate(email);
   };
+
+  useEffect(() => {
+    setBtnText(`인증번호 재전송(남은 횟수 ${sentCount}회)`);
+  }, [sentCount]);
+
+  useEffect(() => {
+    // TODO - 인증번호 전송 로직
+    isMutateSuccess && setOpenInput(true);
+  }, [isMutateSuccess]);
 
   return (
     <>
