@@ -23,6 +23,15 @@ export const MapContainer = styled.div`
 export const ProductCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 3rem;
+  padding-bottom: 3rem;
   background-color: #fff;
+
+  .observer {
+    height: 1rem;
+    width: 100%;
+  }
+`;
+
+export const OptionWrapper = styled.div`
+  margin-top: 82px;
 `;

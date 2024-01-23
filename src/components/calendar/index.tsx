@@ -25,15 +25,15 @@ const Calendar = ({ excludeDates, renderDayContents }: calendarProp) => {
 
   useEffect(() => {
     if (startDate) {
-      searchParams.set("start", startDate.toISOString());
+      searchParams.set("checkInDate", startDate.toISOString());
     } else {
-      searchParams.delete("start");
+      searchParams.delete("checkInDate");
     }
 
     if (endDate) {
-      searchParams.set("end", endDate.toISOString());
+      searchParams.set("checkOutDate", endDate.toISOString());
     } else {
-      searchParams.delete("end");
+      searchParams.delete("checkOutDate");
     }
 
     setSearchParams(searchParams);

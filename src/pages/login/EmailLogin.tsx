@@ -4,10 +4,12 @@ import BaseButton from "@components/buttons/BaseButton";
 import { IoChevronForwardSharp } from "react-icons/io5";
 import * as S from "./styles/emailLogin.styles";
 import * as C from "./styles/login.styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignInBottomSheet from "./components/signInBottomSheet/SignInBottomSheet";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import instance from "@apis/instance";
+import Cookies from "js-cookie";
 
 const EmailLogin = () => {
   const navigate = useNavigate();
@@ -16,22 +18,43 @@ const EmailLogin = () => {
   const {
     register,
     formState: { errors },
-    getValues
+    getValues,
+    trigger
   } = useForm({
     mode: "onBlur"
   });
 
   const email = getValues("email");
   const password = getValues("password");
-  console.log("email", email);
-  console.log("password", password);
   console.log("errors.email", errors.email);
+  useEffect(() => {
+    trigger("email");
+    trigger("password");
+  }, []);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (errors.email || errors.password) return;
-    // TODO - API 연동
-    console.log("submit");
+    if (errors.email || errors.password) {
+      return;
+    }
+    const requestBody = { email, password };
+    try {
+      const res = await instance.post("/auth/login", requestBody);
+      // 로컬스토리지에 담는 용도 (백엔드분 코드 제대로 작동하는지 확인할 때 필요)
+      // localStorage.setItem("accessToken", res.data.data.tokenIssue.accessToken);
+      // localStorage.setItem("refreshToken", res.data.data.tokenIssue.refreshToken);
+
+      localStorage.setItem("member", JSON.stringify(res.data.data.member));
+      const accessTokenCookie = res.data.data.tokenIssue.accessToken;
+      const refreshTokenCookie = res.data.data.tokenIssue.refreshToken;
+
+      Cookies.set("accessToken", accessTokenCookie);
+      Cookies.set("refreshToken", refreshTokenCookie);
+
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
