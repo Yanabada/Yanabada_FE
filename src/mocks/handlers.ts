@@ -220,5 +220,13 @@ export const handlers = [
         tradeId: 1
       }
     });
+  }),
+  http.post("/trades/:tradeid/reject", async () => {
+    return HttpResponse.json({
+      status: "SUCCESS",
+      data: {
+        tradeId: 1
+      }
+    });
   })
 ];
