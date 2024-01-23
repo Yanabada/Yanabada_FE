@@ -7,14 +7,15 @@ import ChatText from "./components/chatText";
 import * as S from "./styles/styles";
 import useMessages from "./hooks/useMessages";
 import { useSearchParams } from "react-router-dom";
+import useUpdateChatRoom from "./hooks/useUpdateChatRoom";
+import useDeleteRoom from "./hooks/useDeleteRoom";
 
 const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [searchParams] = useSearchParams();
   // 챗룸으로 왔을 때, 코드는 무조건 있어야 함
   const code = searchParams.get("chatRoomCode")!;
-  const codeToNumber = parseInt(code);
-  const { data } = useMessages({ code: codeToNumber });
+  const { data } = useMessages({ code });
 
   const productData = {
     code: "240107f84892a35ed5",
@@ -43,6 +44,10 @@ const ChatRoom = () => {
     <>
       <UpperNavBar
         type="back"
+        isCustom
+        customBack={() => {
+          useUpdateChatRoom({ code });
+        }}
         title="강쥐사랑해진짜로"
         rightElement={
           <button
@@ -70,8 +75,6 @@ const ChatRoom = () => {
       />
       <S.ChatContainer ref={bottom} status={status}>
         <ChatText message={data.data.messages[data.data.messages.length - 1]} isNotice />
-        {/* FIXME - 테스트 화면 녹화 후 삭제 예정 */}
-        {/* <ChatText senderId={2} /> */}
         {data.data.messages.map((message) => (
           <ChatText key={message.sendDateTime.toString()} message={message} />
         ))}
@@ -90,7 +93,9 @@ const ChatRoom = () => {
           setIsVisible(false);
         }}
         rightBtnText="나가기"
-        // TODO - rightAction={} 추가하기
+        rightAction={() => {
+          useDeleteRoom({ code });
+        }}
       />
     </>
   );

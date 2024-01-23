@@ -16,3 +16,19 @@ export const getMessages = async (params: MessageRequestParam) => {
 
   return response.data as MessageResponseData;
 };
+
+export const updateChatRoom = async (params: MessageRequestParam) => {
+  await instance.put(`/chats`, {
+    params: {
+      chatRoomCode: params.code
+    }
+  });
+};
+
+export const deleteChatRoom = async (params: MessageRequestParam) => {
+  await instance.delete(`/chats`, {
+    params: {
+      chatRoomCode: params.code
+    }
+  });
+};
