@@ -20,7 +20,7 @@ export interface MessageResponseData {
 }
 
 export interface MessageRequestParam {
-  code: number;
+  code: string;
   page?: number;
 }
 

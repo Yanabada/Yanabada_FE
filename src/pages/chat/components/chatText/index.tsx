@@ -9,8 +9,8 @@ interface ChatTextProps {
 }
 
 const ChatText = ({ message, isNotice = false }: ChatTextProps) => {
-  // FIXME - 나중에 로그인 구현되면 userId를 받아와야함
-  const userId = 1;
+  const userData = localStorage.getItem("member");
+  const userId = JSON.parse(userData!).id;
   const isMe = message.senderId === userId;
 
   if (isNotice) {
@@ -31,7 +31,6 @@ const ChatText = ({ message, isNotice = false }: ChatTextProps) => {
           alt="프로필"
         />
       )}
-      {/* TODO - 테스트 화면 녹화 후 {content}로 변경하기 */}
       <S.Content className={isMe ? "right" : ""}>{message.content}</S.Content>
       <S.Time>{message.sendDateTime.toISOString()}</S.Time>
     </S.Chat>
