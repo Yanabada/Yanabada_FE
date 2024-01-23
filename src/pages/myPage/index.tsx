@@ -56,6 +56,7 @@ const MyPage = ({ width }: MyPageProps) => {
     leftAction: () => {
       // FIXME: localStorage에서 member 삭제 로직 추가
       mutate();
+      localStorage.removeItem("member");
       setIsLoginned(false);
       navigate("/mypage");
     },
