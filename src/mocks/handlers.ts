@@ -333,5 +333,13 @@ export const handlers = [
       sellerName: "nick1",
       registeredDate: "2024-01-18T22:52:59.579402"
     });
+  }),
+  http.delete(`/trades/:tradeId`, async () => {
+    return HttpResponse.json({
+      status: "SUCCESS",
+      data: {
+        tradeId: 1
+      }
+    });
   })
 ];

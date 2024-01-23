@@ -9,6 +9,7 @@ import calculateDiscountRate from "./utils/calculateDiscountRate";
 import formatDate from "./utils/formatDate";
 import formatNumberWithCommas from "./utils/formatNumberWithCommas";
 import usePurchaseTransactionHistory from "./hooks/usePurchaseTransactionHistory";
+import useTradeHistory from "./hooks/useTradeHistory";
 
 interface TransactionStatementProps {
   width?: string;
@@ -39,6 +40,8 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
 
   const { data: purchaseTransactionHistoryData, error: purchaseTransactionHistoryError } =
     usePurchaseTransactionHistory(Number(tradeId));
+
+  const { mutate } = useTradeHistory();
 
   if (sellTransactionHistoryError) {
     console.log(sellTransactionHistoryError);
@@ -81,7 +84,11 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
               orderDate={formatDate(sellTransactionHistoryData.registeredDate)}
               from={from}
             />
-            <BaseButton buttonType="transparent-red" width={width}>
+            <BaseButton
+              buttonType="transparent-red"
+              width={width}
+              onClick={() => mutate(Number(tradeId))}
+            >
               거래내역 삭제
             </BaseButton>
           </S.ListCardWrapper>
@@ -123,7 +130,11 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
               orderDate={formatDate(purchaseTransactionHistoryData.registeredDate)}
               from={from}
             />
-            <BaseButton buttonType="transparent-red" width={width}>
+            <BaseButton
+              buttonType="transparent-red"
+              width={width}
+              onClick={() => mutate(Number(tradeId))}
+            >
               거래내역 삭제
             </BaseButton>
           </S.ListCardWrapper>
@@ -165,7 +176,11 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
               orderDate={formatDate(purchaseTransactionHistoryData.registeredDate)}
               from={from}
             />
-            <BaseButton buttonType="transparent-red" width={width}>
+            <BaseButton
+              buttonType="transparent-red"
+              width={width}
+              onClick={() => mutate(Number(tradeId))}
+            >
               거래내역 삭제
             </BaseButton>
           </S.ListCardWrapper>
