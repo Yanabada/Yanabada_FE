@@ -2,7 +2,7 @@ import { Client } from "@stomp/stompjs";
 
 const useSocket = () => {
   const client = new Client({
-    brokerURL: `wss://${import.meta.env.VITE_API_BASE_URL}/ws-stomp`,
+    brokerURL: `ws://${import.meta.env.VITE_API_BASE_URL}/ws-stomp`,
     debug: function (str) {
       console.log(str);
     },
