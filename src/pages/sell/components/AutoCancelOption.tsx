@@ -54,10 +54,13 @@ const AutoCancelOption = ({
           야놀자에서 취소 시 환불금
         </p>
         <p className="price">
-          <span>
-            {numberFormat(calculateOriginDiscount(originalPrice, endDateInfo.feePercentage))}
-          </span>{" "}
-          원
+          {endDateInfo.feePercentage == 0 ? (
+            <span>입실일 취소 불가</span>
+          ) : (
+            <span>
+              {numberFormat(calculateOriginDiscount(originalPrice, endDateInfo.feePercentage))} 원
+            </span>
+          )}
         </p>
       </CS.RefundText>
     </CS.RegisterInner>

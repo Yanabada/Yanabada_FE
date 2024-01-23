@@ -2,22 +2,20 @@ import * as S from "@components/priceArea/styles";
 
 import { getDayOfWeek } from "@utils/getDayOfWeek";
 interface InfoBoxProps {
-  infoProps: {
-    code: string;
-    accommodationImage: string;
-    accommodationName: string;
-    roomName: string;
-    checkInDate: string;
-    checkOutDate: string;
-    checkInTime: string;
-    checkOutTime: string;
-  };
+  code: string;
+  accommodationImage: string;
+  accommodationName: string;
+  roomName: string;
+  checkInDate: string;
+  checkOutDate: string;
+  checkInTime: string;
+  checkOutTime: string;
 }
 
-const InfoBox = ({ infoProps }: InfoBoxProps) => {
+const InfoBox = (infoProps: InfoBoxProps) => {
   const {
-    accommodationImage,
     code,
+    accommodationImage,
     accommodationName,
     roomName,
     checkInDate,
