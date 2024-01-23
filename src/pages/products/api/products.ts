@@ -1,6 +1,6 @@
-import axios from "axios";
 import qs from "qs";
 import { GetProductResponseData } from "../types/productsType";
+import instance from "@apis/instance";
 
 export type OrderState =
   | "RECENT"
@@ -36,12 +36,7 @@ export interface GetProductsRequestParams {
 }
 
 const getProducts = async (params: Partial<GetProductsRequestParams> = { size: 20 }) => {
-  // FIXME: 나중에 instance로 연결 필요
-  const response = await axios.get<GetProductResponseData>("http://test.yanabada.com/products", {
-    headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbDIyMkBlbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwicHJvdmlkZXIiOiJFTUFJTCIsImlhdCI6MTcwNTkwMzE1OSwiZXhwIjoxNzA1OTA0OTU5fQ.JTKudbFCzwt05uY-DEwnYFRRrLqBDRpatHdo3BWvIrQ"
-    },
+  const response = await instance.get<GetProductResponseData>("/products", {
     params,
     paramsSerializer: (params) => {
       return qs.stringify(params, { arrayFormat: "repeat" });
