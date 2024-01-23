@@ -233,8 +233,8 @@ export const handlers = [
     return HttpResponse.json({
       purchaseTrades: [
         {
-          tradeId: 2,
-          productId: 2,
+          tradeId: 1,
+          productId: 1,
           accommodationName: "춘천세종호텔",
           accommodationImage: "1.jpg",
           sellerNickname: "nick1",
@@ -245,8 +245,8 @@ export const handlers = [
           status: "COMPLETED"
         },
         {
-          tradeId: 1,
-          productId: 1,
+          tradeId: 2,
+          productId: 2,
           accommodationName: "춘천세종호텔",
           accommodationImage: "1.jpg",
           sellerNickname: "nick1",
@@ -255,6 +255,18 @@ export const handlers = [
           roomName: "스탠다드 룸",
           price: 84000,
           status: "WAITING"
+        },
+        {
+          tradeId: 3,
+          productId: 3,
+          accommodationName: "춘천세종호텔",
+          accommodationImage: "1.jpg",
+          sellerNickname: "nick1",
+          tradeRegisteredTime: "2024-01-18 00:08",
+          saleEndDate: "2024-01-31",
+          roomName: "스탠다드 룸",
+          price: 84000,
+          status: "CANCELED"
         }
       ],
       pageNum: 0,
@@ -272,7 +284,7 @@ export const handlers = [
       }
     });
   }),
-  http.get(`/trades/approvals/:tradeId`, () => {
+  http.get("/trades/approvals/:tradeId", () => {
     return HttpResponse.json({
       productId: 1,
       tradeId: 1,
@@ -285,6 +297,41 @@ export const handlers = [
       tradeCode: "24011787dd61bbe57d",
       buyerName: "nick2",
       registeredDate: "2024-01-17T01:58:47.291674"
+    });
+  }),
+  http.get("/trades/purchases/:tradeId", () => {
+    return HttpResponse.json({
+      tradeId: 1,
+      status: "WAITING",
+      price: 100000,
+      sellingPrice: 65000,
+      fee: 0,
+      point: 0,
+      paymentType: "TOSS_PAY",
+      product: {
+        id: 1,
+        image: "1.jpg",
+        accommodationName: "춘천세종호텔",
+        roomName: "스탠다드 룸",
+        address: "강원특별자치도 춘천시 봉의산길 31",
+        checkIn: "2024-01-26",
+        checkOut: "2024-01-30",
+        min: 2,
+        max: 4,
+        saleEnd: "2024-01-20",
+        rating: 0.0,
+        salesPercentage: 35,
+        canNegotiate: true,
+        price: 65000,
+        sellingPrice: 65000,
+        purchasePrice: 100000,
+        latitude: 35.1631049574,
+        longitude: 126.9882125981,
+        status: "BOOKING"
+      },
+      tradeCode: "2401189c09b54825ad",
+      sellerName: "nick1",
+      registeredDate: "2024-01-18T22:52:59.579402"
     });
   })
 ];
