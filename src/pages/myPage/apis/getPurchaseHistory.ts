@@ -5,8 +5,6 @@ const getPurchaseHistory = async ({ page = 0 }) => {
 
   const response = await axios.get(getPurchaseHistoryURL);
 
-  console.log(response.data);
-
   return response.data;
 };
 

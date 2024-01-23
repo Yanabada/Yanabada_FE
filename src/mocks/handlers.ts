@@ -163,5 +163,10 @@ export const handlers = [
       isFirst: true,
       isLast: true
     });
+  }),
+  http.delete(`/products/:productId`, async () => {
+    return HttpResponse.json({
+      productId: 1
+    });
   })
 ];
