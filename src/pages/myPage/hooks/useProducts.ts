@@ -4,7 +4,7 @@ import deleteProduct from "../apis/deleteProduct";
 
 export const useProducts = () => {
   return useMutation({
-    mutationFn: (productId: number) => deleteProduct(productId),
+    mutationFn: (productId: number | undefined) => deleteProduct(productId),
     onSuccess: (data: number) => {
       console.log(data);
       toast.success("게시글이 삭제되었습니다.");

@@ -10,6 +10,7 @@ import Modal from "@components/modal";
 import { useState } from "react";
 import useProducts from "@pages/myPage/hooks/useProducts";
 import { useNavigate } from "react-router-dom";
+import useSaleApprove from "@pages/myPage/hooks/useSaleApprove";
 
 interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string;
@@ -32,7 +33,8 @@ interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   roomName: string;
   price: string;
   badgeText: string | undefined;
-  productId: number;
+  productId?: number;
+  tradeId?: number;
 }
 
 const ListCard = ({
@@ -47,7 +49,8 @@ const ListCard = ({
   roomName,
   price,
   badgeText,
-  productId
+  productId,
+  tradeId
 }: ListCardProps) => {
   const getTimerIconColor = (cardType: ListCardProps["cardType"]) => {
     switch (cardType) {
@@ -81,6 +84,9 @@ const ListCard = ({
 
   const badgeType = getBadgeType(cardType);
 
+  const { mutate: productsMutate } = useProducts();
+  const { mutate: saleApproveMutate, isSuccess: isSaleApproved } = useSaleApprove();
+
   const [isVisible, setIsVisible] = useState(false);
 
   const ModalProps = {
@@ -91,11 +97,13 @@ const ListCard = ({
     rightBtnText: "취소",
     isVisible: isVisible,
     setIsVisible: setIsVisible,
-    leftAction: () => setIsVisible(false),
-    rightAction: () => {}
-  };
+    leftAction: () => {
+      saleApproveMutate(tradeId);
 
-  const { mutate } = useProducts();
+      isSaleApproved && setIsVisible(false);
+    },
+    rightAction: () => setIsVisible(false)
+  };
 
   const navigate = useNavigate();
 
@@ -171,7 +179,7 @@ const ListCard = ({
         )}
         {cardType === "sale" && (
           <>
-            <BaseButton buttonType="gray" width="48%" onClick={() => mutate(productId)}>
+            <BaseButton buttonType="gray" width="48%" onClick={() => productsMutate(productId)}>
               게시글 삭제
             </BaseButton>
             <BaseButton
