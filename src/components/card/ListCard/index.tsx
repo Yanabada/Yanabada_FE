@@ -8,6 +8,11 @@ import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import Modal from "@components/modal";
 import { useState } from "react";
+import useProducts from "@pages/myPage/hooks/useProducts";
+import { useNavigate } from "react-router-dom";
+import useSaleApprove from "@pages/myPage/hooks/useSaleApprove";
+import useApporvalDeny from "@pages/myPage/hooks/useApporvalDeny";
+import usePurchaseCancel from "@pages/myPage/hooks/usePurchaseCancel";
 
 interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string;
@@ -29,7 +34,9 @@ interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   statusText?: string;
   roomName: string;
   price: string;
-  badgeText: string;
+  badgeText: string | undefined;
+  productId?: number;
+  tradeId?: number;
 }
 
 const ListCard = ({
@@ -43,7 +50,9 @@ const ListCard = ({
   statusText,
   roomName,
   price,
-  badgeText
+  badgeText,
+  productId,
+  tradeId
 }: ListCardProps) => {
   const getTimerIconColor = (cardType: ListCardProps["cardType"]) => {
     switch (cardType) {
@@ -77,6 +86,11 @@ const ListCard = ({
 
   const badgeType = getBadgeType(cardType);
 
+  const { mutate: productsMutate } = useProducts();
+  const { mutate: saleApproveMutate, isSuccess: isSaleApproved } = useSaleApprove();
+  const { mutate: approvalDenyMutate } = useApporvalDeny();
+  const { mutate: purchaseCancelMutate } = usePurchaseCancel();
+
   const [isVisible, setIsVisible] = useState(false);
 
   const ModalProps = {
@@ -87,9 +101,15 @@ const ListCard = ({
     rightBtnText: "취소",
     isVisible: isVisible,
     setIsVisible: setIsVisible,
-    leftAction: () => setIsVisible(false),
-    rightAction: () => {}
+    leftAction: () => {
+      saleApproveMutate(tradeId);
+
+      isSaleApproved && setIsVisible(false);
+    },
+    rightAction: () => setIsVisible(false)
   };
+
+  const navigate = useNavigate();
 
   return (
     <S.ListCardContainer width={width}>
@@ -134,14 +154,19 @@ const ListCard = ({
       <S.ButtonWrapper>
         {cardType === "approval_sale" && (
           <>
-            <AuthenticationButton buttonType="disabled" width={width} height="28px">
+            <AuthenticationButton
+              buttonType="disabled"
+              width={width}
+              height="28px"
+              onClick={() => navigate("/mypage/management")}
+            >
               승인요청 페이지로 이동
             </AuthenticationButton>
           </>
         )}
         {cardType === "approval_request" && (
           <>
-            <BaseButton buttonType="gray" width="48%">
+            <BaseButton buttonType="gray" width="48%" onClick={() => approvalDenyMutate(tradeId)}>
               승인 거절
             </BaseButton>
             <BaseButton buttonType="default" width="48%" onClick={() => setIsVisible(true)}>
@@ -152,7 +177,7 @@ const ListCard = ({
         )}
         {cardType === "approval_wait" && (
           <>
-            <BaseButton buttonType="gray" width="48%">
+            <BaseButton buttonType="gray" width="48%" onClick={() => purchaseCancelMutate(tradeId)}>
               구매취소
             </BaseButton>
             <AuthenticationButton buttonType="disabled" width="48%" height="40px">
@@ -163,10 +188,14 @@ const ListCard = ({
         )}
         {cardType === "sale" && (
           <>
-            <BaseButton buttonType="gray" width="48%">
+            <BaseButton buttonType="gray" width="48%" onClick={() => productsMutate(productId)}>
               게시글 삭제
             </BaseButton>
-            <BaseButton buttonType="default" width="48%">
+            <BaseButton
+              buttonType="default"
+              width="48%"
+              onClick={() => navigate(`/sell/register/${productId}?registration=true`)}
+            >
               게시글 수정
             </BaseButton>
           </>
@@ -175,7 +204,15 @@ const ListCard = ({
           cardType === "saleEnd" ||
           cardType === "approved") && (
           <>
-            <BaseButton buttonType="gray" width={width}>
+            <BaseButton
+              buttonType="gray"
+              width={width}
+              onClick={
+                cardType === "purchasedCanceled"
+                  ? () => navigate(`/mypage/transactionStatement/cancel?tradeId=${tradeId}`)
+                  : () => navigate(`/mypage/transactionStatement/sale?tradeId=${tradeId}`)
+              }
+            >
               거래내역서 확인
             </BaseButton>
           </>
@@ -190,7 +227,11 @@ const ListCard = ({
         )}
         {cardType === "purchased" && (
           <>
-            <BaseButton buttonType="gray" width="48%">
+            <BaseButton
+              buttonType="gray"
+              width="48%"
+              onClick={() => navigate(`/mypage/transactionStatement/purchase?tradeId=${tradeId}`)}
+            >
               거래내역서 확인
             </BaseButton>
             <BaseButton buttonType="gray" width="48%">

@@ -9,12 +9,13 @@ interface PayInfoProps {
   yanabadaPurchasePrice?: string;
   discountRate?: number;
   discountPrice?: string;
-  from?: string;
+  from: string;
   payMethod?: string;
   accommodationName?: string;
   roomName?: string;
   orderNumber?: string;
   buyer?: string;
+  seller?: string;
   orderDate?: string;
   charge?: string;
 }
@@ -25,6 +26,13 @@ const Info = ({ ...props }: PayInfoProps) => {
       ? "야나바다 판매가"
       : props.from === "purchase" || props.from === "cancel"
         ? "야나바다 구매가"
+        : "";
+
+  const buyerOrSeller =
+    props.from === "sale"
+      ? "구매자"
+      : props.from === "purchase" || props.from === "cancel"
+        ? "판매자"
         : "";
 
   switch (props.divType) {
@@ -94,8 +102,10 @@ const Info = ({ ...props }: PayInfoProps) => {
             <S.FormRightText>{props.orderNumber}</S.FormRightText>
           </S.SeperationForm>
           <S.SeperationForm>
-            <S.FormLeftText>구매자</S.FormLeftText>
-            <S.FormRightText>{props.buyer}</S.FormRightText>
+            <S.FormLeftText>{buyerOrSeller}</S.FormLeftText>
+            <S.FormRightText>
+              {props.from === "purchase" || props.from === "cancel" ? props.seller : props.buyer}
+            </S.FormRightText>
           </S.SeperationForm>
           <S.SeperationForm>
             <S.FormLeftText>주문일시</S.FormLeftText>

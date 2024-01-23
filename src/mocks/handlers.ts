@@ -89,5 +89,257 @@ export const handlers = [
         }
       }
     ]);
+  }),
+  http.get("/api/member", () => {
+    return HttpResponse.json({
+      id: 1,
+      email: "example1@example.com",
+      phoneNumber: "123-456-7890",
+      imageUrl: "https://example.com/image1.jpg",
+      point: 100,
+      provider: "EMAIL",
+      nickName: "꿀을핥는사람"
+    });
+  }),
+  http.get("/payments/summary", () => {
+    return HttpResponse.json({
+      balance: 350000,
+      hasJoinedYanoljaPay: false
+    });
+  }),
+  http.put("/member/phone-number", async ({ request }) => {
+    const newPut = await request.json();
+
+    return HttpResponse.json(newPut, { status: 200 });
+  }),
+  http.post("/auth/logout", async () => {
+    return HttpResponse.json({ status: 200 });
+  }),
+  http.post("/auth/verification/email", async () => {
+    return HttpResponse.json({ status: 200, code: 111111 });
+  }),
+  http.put("/member/password", async ({ request }) => {
+    const newPut = await request.json();
+
+    return HttpResponse.json(newPut, { status: 200 });
+  }),
+  http.get(`products/own`, () => {
+    return HttpResponse.json({
+      products: [
+        {
+          productId: 1,
+          tradeId: 1,
+          image: "1.jpg",
+          accommodationName: "춘천세종호텔",
+          roomName: "스탠다드 룸",
+          saleEnd: "2024-01-31",
+          sellingPrice: 80000,
+          status: "ON_SALE"
+        },
+        {
+          productId: 2,
+          tradeId: 2,
+          image: "1.jpg",
+          accommodationName: "춘천세종호텔",
+          roomName: "스탠다드 룸",
+          saleEnd: "2024-01-31",
+          sellingPrice: 80000,
+          status: "SOLD_OUT"
+        },
+        {
+          productId: 3,
+          tradeId: 3,
+          image: "1.jpg",
+          accommodationName: "춘천세종호텔",
+          roomName: "스탠다드 룸",
+          saleEnd: "2024-01-31",
+          sellingPrice: 80000,
+          status: "BOOKING"
+        },
+        {
+          productId: 4,
+          tradeId: 4,
+          image: "1.jpg",
+          accommodationName: "춘천세종호텔",
+          roomName: "스탠다드 룸",
+          saleEnd: "2024-01-23",
+          sellingPrice: 80000,
+          status: "TIMEOUT"
+        }
+      ],
+      pageNum: 0,
+      pageSize: 10,
+      totalPages: 1,
+      isFirst: true,
+      isLast: true
+    });
+  }),
+  http.delete(`/products/:productId`, async () => {
+    return HttpResponse.json({
+      status: "SUCCESS",
+      data: {
+        productId: 1
+      }
+    });
+  }),
+  http.get(`/trades/approvals`, () => {
+    return HttpResponse.json({
+      approvalTrades: [
+        {
+          tradeId: 2,
+          accommodationName: "춘천세종호텔",
+          accommodationImage: "1.jpg",
+          buyerNickname: "nick2",
+          tradeRegisteredTime: "2024-01-31 00:09",
+          roomName: "스탠다드 룸",
+          sellingPrice: 80000,
+          status: "WAITING"
+        },
+        {
+          tradeId: 1,
+          accommodationName: "춘천세종호텔",
+          accommodationImage: "1.jpg",
+          buyerNickname: "nick2",
+          tradeRegisteredTime: "2024-01-31 00:08",
+          roomName: "스탠다드 룸",
+          sellingPrice: 80000,
+          status: "WAITING"
+        }
+      ],
+      pageNum: 0,
+      pageSize: 10,
+      totalPages: 1,
+      isFirst: true,
+      isLast: true
+    });
+  }),
+  http.post("/trades/:tradeid/approve", async () => {
+    return HttpResponse.json({
+      status: "SUCCESS",
+      data: {
+        tradeId: 1
+      }
+    });
+  }),
+  http.post("/trades/:tradeid/reject", async () => {
+    return HttpResponse.json({
+      status: "SUCCESS",
+      data: {
+        tradeId: 1
+      }
+    });
+  }),
+  http.get(`/trades/purchases`, () => {
+    return HttpResponse.json({
+      purchaseTrades: [
+        {
+          tradeId: 1,
+          productId: 1,
+          accommodationName: "춘천세종호텔",
+          accommodationImage: "1.jpg",
+          sellerNickname: "nick1",
+          tradeRegisteredTime: "2024-01-18 00:09",
+          saleEndDate: "2024-01-31",
+          roomName: "스탠다드 룸",
+          price: 84000,
+          status: "COMPLETED"
+        },
+        {
+          tradeId: 2,
+          productId: 2,
+          accommodationName: "춘천세종호텔",
+          accommodationImage: "1.jpg",
+          sellerNickname: "nick1",
+          tradeRegisteredTime: "2024-01-18 00:08",
+          saleEndDate: "2024-01-31",
+          roomName: "스탠다드 룸",
+          price: 84000,
+          status: "WAITING"
+        },
+        {
+          tradeId: 3,
+          productId: 3,
+          accommodationName: "춘천세종호텔",
+          accommodationImage: "1.jpg",
+          sellerNickname: "nick1",
+          tradeRegisteredTime: "2024-01-18 00:08",
+          saleEndDate: "2024-01-31",
+          roomName: "스탠다드 룸",
+          price: 84000,
+          status: "CANCELED"
+        }
+      ],
+      pageNum: 0,
+      pageSize: 10,
+      totalPages: 1,
+      isFirst: true,
+      isLast: true
+    });
+  }),
+  http.post("/trades/:tradeId/cancel", async () => {
+    return HttpResponse.json({
+      status: "SUCCESS",
+      data: {
+        tradeId: 1
+      }
+    });
+  }),
+  http.get("/trades/approvals/:tradeId", () => {
+    return HttpResponse.json({
+      productId: 1,
+      tradeId: 1,
+      status: "COMPLETED",
+      price: 100000,
+      sellingPrice: 80000,
+      accommodationName: "춘천세종호텔",
+      accommodationImage: "1.jpg",
+      roomName: "스탠다드 룸",
+      tradeCode: "24011787dd61bbe57d",
+      buyerName: "nick2",
+      registeredDate: "2024-01-17T01:58:47.291674"
+    });
+  }),
+  http.get("/trades/purchases/:tradeId", () => {
+    return HttpResponse.json({
+      tradeId: 1,
+      status: "WAITING",
+      price: 100000,
+      sellingPrice: 65000,
+      fee: 0,
+      point: 0,
+      paymentType: "TOSS_PAY",
+      product: {
+        id: 1,
+        image: "1.jpg",
+        accommodationName: "춘천세종호텔",
+        roomName: "스탠다드 룸",
+        address: "강원특별자치도 춘천시 봉의산길 31",
+        checkIn: "2024-01-26",
+        checkOut: "2024-01-30",
+        min: 2,
+        max: 4,
+        saleEnd: "2024-01-20",
+        rating: 0.0,
+        salesPercentage: 35,
+        canNegotiate: true,
+        price: 65000,
+        sellingPrice: 65000,
+        purchasePrice: 100000,
+        latitude: 35.1631049574,
+        longitude: 126.9882125981,
+        status: "BOOKING"
+      },
+      tradeCode: "2401189c09b54825ad",
+      sellerName: "nick1",
+      registeredDate: "2024-01-18T22:52:59.579402"
+    });
+  }),
+  http.delete(`/trades/:tradeId`, async () => {
+    return HttpResponse.json({
+      status: "SUCCESS",
+      data: {
+        tradeId: 1
+      }
+    });
   })
 ];
