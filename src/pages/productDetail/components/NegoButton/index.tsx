@@ -2,12 +2,14 @@ import { DetailType } from "@pages/productDetail/types/detailType";
 import * as S from "./style";
 import { numberFormat } from "@utils/numberFormat";
 import BaseButton from "@components/buttons/BaseButton";
+import { useNavigate } from "react-router-dom";
 
 interface DetailProps {
   data: DetailType;
 }
 
 const NegoButton = ({ data }: DetailProps) => {
+  const navigate = useNavigate();
   return (
     <S.Container>
       <S.LeftContainer>
@@ -37,7 +39,12 @@ const NegoButton = ({ data }: DetailProps) => {
                 buttonType="default"
                 children={data.canNegotiate ? "가격 제안하기" : "가격제안불가"}
               />
-              <BaseButton width="50%" buttonType="default" children="결제하기" />
+              <BaseButton
+                width="50%"
+                buttonType="default"
+                children="결제하기"
+                onClick={() => navigate(`/purchase?productId=${data.id}`)}
+              />
             </S.ButtonContainer>
           </>
         )}
