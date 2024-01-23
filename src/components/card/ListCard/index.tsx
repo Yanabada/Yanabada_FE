@@ -12,6 +12,7 @@ import useProducts from "@pages/myPage/hooks/useProducts";
 import { useNavigate } from "react-router-dom";
 import useSaleApprove from "@pages/myPage/hooks/useSaleApprove";
 import useApporvalDeny from "@pages/myPage/hooks/useApporvalDeny";
+import usePurchaseCancel from "@pages/myPage/hooks/usePurchaseCancel";
 
 interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string;
@@ -88,6 +89,7 @@ const ListCard = ({
   const { mutate: productsMutate } = useProducts();
   const { mutate: saleApproveMutate, isSuccess: isSaleApproved } = useSaleApprove();
   const { mutate: approvalDenyMutate } = useApporvalDeny();
+  const { mutate: purchaseCancelMutate } = usePurchaseCancel();
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -175,7 +177,7 @@ const ListCard = ({
         )}
         {cardType === "approval_wait" && (
           <>
-            <BaseButton buttonType="gray" width="48%">
+            <BaseButton buttonType="gray" width="48%" onClick={() => purchaseCancelMutate(tradeId)}>
               구매취소
             </BaseButton>
             <AuthenticationButton buttonType="disabled" width="48%" height="40px">
