@@ -5,6 +5,7 @@ const getSalesHistory = async ({ page = 0 }) => {
 
   const response = await instance.get(getSalesHistoryURL);
 
+  console.log(page);
   console.log(response.data.data);
 
   return response.data.data;
