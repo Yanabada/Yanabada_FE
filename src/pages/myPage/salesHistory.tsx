@@ -149,8 +149,9 @@ const SalesHistory = ({ width }: SalesHistoryProps) => {
               roomName={product.roomName}
               price={formatNumberWithCommas(product.sellingPrice)}
               badgeText={determineBadgeText(determineCardType(product.status))}
-              statusText="판매 완료되었어요."
               productId={product.productId}
+              tradeId={product.tradeId}
+              statusText="판매 완료되었어요."
             />
           </div>
         ))}

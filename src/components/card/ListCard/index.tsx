@@ -204,7 +204,15 @@ const ListCard = ({
           cardType === "saleEnd" ||
           cardType === "approved") && (
           <>
-            <BaseButton buttonType="gray" width={width}>
+            <BaseButton
+              buttonType="gray"
+              width={width}
+              onClick={
+                cardType === "purchasedCanceled"
+                  ? () => navigate(`/mypage/transactionStatement/cancel?tradeId=${tradeId}`)
+                  : () => navigate(`/mypage/transactionStatement/sale?tradeId=${tradeId}`)
+              }
+            >
               거래내역서 확인
             </BaseButton>
           </>

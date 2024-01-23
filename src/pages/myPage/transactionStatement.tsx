@@ -3,6 +3,11 @@ import * as S from "./styles/transactionStatement.styles";
 import Info from "./components/Info";
 import BaseButton from "@components/buttons/BaseButton";
 import TransactionStatementNotice from "./components/TransactionStatementNotice";
+import useSellTransactionHistory from "./hooks/useSellTransactionHistory";
+import { useSearchParams } from "react-router-dom";
+import calculateDiscountRate from "./utils/calculateDiscountRate";
+import formatDate from "./utils/formatDate";
+import formatNumberWithCommas from "./utils/formatNumberWithCommas";
 
 interface TransactionStatementProps {
   width?: string;
@@ -10,6 +15,15 @@ interface TransactionStatementProps {
 }
 
 const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
+  const [searchParams] = useSearchParams();
+  const tradeId = searchParams.get("tradeId");
+
+  const { data, error } = useSellTransactionHistory(Number(tradeId));
+
+  if (error) {
+    console.log(error);
+  }
+
   switch (from) {
     case "sale":
       return (
@@ -20,22 +34,24 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
             <Info
               divType="payInfo"
               width={width}
-              yanoljaPurchasePrice="1,200,000"
-              yanabadaPurchasePrice="600,000"
-              discountRate={50}
-              discountPrice="600,000"
+              yanoljaPurchasePrice={formatNumberWithCommas(data.price)}
+              yanabadaPurchasePrice={formatNumberWithCommas(
+                data.price - data.sellingPrice
+              ).toString()}
+              discountRate={calculateDiscountRate(data.price, data.sellingPrice)}
+              discountPrice={formatNumberWithCommas(data.sellingPrice)}
               from="sale"
-              payMethod="야놀자페이"
+              payMethod="야놀자페이" // FIXME: 결제 수단 받아오기
             />
             <Info
               divType="transactionInfo"
               width={width}
-              imageURL="https://s3-alpha-sig.figma.com/img/36c2/822d/857605b4a76677c08f70ec465ea3025b?Expires=1705881600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TnWMooKbyWdNbRJ2LqPUd2wwxWSoyaeca-ZOnAQvkWzxGDGf8XmHfm8kXvpCIkuKwQszL6M58aoRVsHIiTA-Rdj5SkGexDQk6UtpqUMHr-Lj9UfZ~4PqUrVthW5DSVksw~oG465CJJMmTHFKDIsI~kj~uMwLWWS8MKkuqCDzgfZFBHjcRxcj57rO8uGvqQ526PqhKgwqkQlf2Fubf4b2qWOG75VV9M1xbd4fje4e2yiEKkwwTcPXQ3PCKR--M55PrB2b0ysG-QLjE-fY5SsH-pFgpoEXLXZFQKl65hSAlAsrcglFhJmK-8m-bltje-4aQSR1FkseHjsPl49KtCkfjw__"
-              accommodationName="파라스파라 서울 더 그레이트 현대..."
-              roomName="Forest Tower Deluxe King"
-              orderNumber="00000000"
-              buyer="USER12345"
-              orderDate="2024.01.06(토) 00:00"
+              imageURL={data.accommodationImage}
+              accommodationName={data.accommodationName}
+              roomName={data.roomName}
+              orderNumber={data.tradeCode}
+              buyer={data.buyerName}
+              orderDate={formatDate(data.registeredDate)}
             />
             <BaseButton buttonType="transparent-red" width={width}>
               거래내역 삭제
@@ -52,23 +68,25 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
             <Info
               divType="payInfo-tall"
               width={width}
-              yanoljaPurchasePrice="1,200,000"
-              yanabadaPurchasePrice="600,000"
-              discountRate={50}
-              discountPrice="600,000"
+              yanoljaPurchasePrice={formatNumberWithCommas(data.price)}
+              yanabadaPurchasePrice={formatNumberWithCommas(
+                data.price - data.sellingPrice
+              ).toString()}
+              discountRate={calculateDiscountRate(data.price, data.sellingPrice)}
+              discountPrice={formatNumberWithCommas(data.sellingPrice)}
               from="purchase"
-              payMethod="야놀자페이"
+              payMethod="야놀자페이" // FIXME: 결제 수단 받아오기
               charge="0"
             />
             <Info
               divType="transactionInfo"
               width={width}
-              imageURL="https://s3-alpha-sig.figma.com/img/36c2/822d/857605b4a76677c08f70ec465ea3025b?Expires=1705881600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TnWMooKbyWdNbRJ2LqPUd2wwxWSoyaeca-ZOnAQvkWzxGDGf8XmHfm8kXvpCIkuKwQszL6M58aoRVsHIiTA-Rdj5SkGexDQk6UtpqUMHr-Lj9UfZ~4PqUrVthW5DSVksw~oG465CJJMmTHFKDIsI~kj~uMwLWWS8MKkuqCDzgfZFBHjcRxcj57rO8uGvqQ526PqhKgwqkQlf2Fubf4b2qWOG75VV9M1xbd4fje4e2yiEKkwwTcPXQ3PCKR--M55PrB2b0ysG-QLjE-fY5SsH-pFgpoEXLXZFQKl65hSAlAsrcglFhJmK-8m-bltje-4aQSR1FkseHjsPl49KtCkfjw__"
-              accommodationName="파라스파라 서울 더 그레이트 현대..."
-              roomName="Forest Tower Deluxe King"
-              orderNumber="00000000"
-              buyer="USER12345"
-              orderDate="2024.01.06(토) 00:00"
+              imageURL={data.accommodationImage}
+              accommodationName={data.accommodationName}
+              roomName={data.roomName}
+              orderNumber={data.tradeCode}
+              buyer={data.buyerName}
+              orderDate={formatDate(data.registeredDate)}
               from="purchase"
             />
             <BaseButton buttonType="transparent-red" width={width}>
@@ -86,23 +104,25 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
             <Info
               divType="payInfo-tall"
               width={width}
-              yanoljaPurchasePrice="1,200,000"
-              yanabadaPurchasePrice="600,000"
-              discountRate={50}
-              discountPrice="600,000"
+              yanoljaPurchasePrice={formatNumberWithCommas(data.price)}
+              yanabadaPurchasePrice={formatNumberWithCommas(
+                data.price - data.sellingPrice
+              ).toString()}
+              discountRate={calculateDiscountRate(data.price, data.sellingPrice)}
+              discountPrice={formatNumberWithCommas(data.sellingPrice)}
               from="purchase"
-              payMethod="야놀자페이"
+              payMethod="야놀자페이" // FIXME: 결제 수단 받아오기
               charge="0"
             />
             <Info
               divType="transactionInfo"
               width={width}
-              imageURL="https://s3-alpha-sig.figma.com/img/36c2/822d/857605b4a76677c08f70ec465ea3025b?Expires=1705881600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TnWMooKbyWdNbRJ2LqPUd2wwxWSoyaeca-ZOnAQvkWzxGDGf8XmHfm8kXvpCIkuKwQszL6M58aoRVsHIiTA-Rdj5SkGexDQk6UtpqUMHr-Lj9UfZ~4PqUrVthW5DSVksw~oG465CJJMmTHFKDIsI~kj~uMwLWWS8MKkuqCDzgfZFBHjcRxcj57rO8uGvqQ526PqhKgwqkQlf2Fubf4b2qWOG75VV9M1xbd4fje4e2yiEKkwwTcPXQ3PCKR--M55PrB2b0ysG-QLjE-fY5SsH-pFgpoEXLXZFQKl65hSAlAsrcglFhJmK-8m-bltje-4aQSR1FkseHjsPl49KtCkfjw__"
-              accommodationName="파라스파라 서울 더 그레이트 현대..."
-              roomName="Forest Tower Deluxe King"
-              orderNumber="00000000"
-              buyer="USER12345"
-              orderDate="2024.01.06(토) 00:00"
+              imageURL={data.accommodationImage}
+              accommodationName={data.accommodationName}
+              roomName={data.roomName}
+              orderNumber={data.tradeCode}
+              buyer={data.buyerName}
+              orderDate={formatDate(data.registeredDate)}
               from="purchase"
             />
             <BaseButton buttonType="transparent-red" width={width}>
