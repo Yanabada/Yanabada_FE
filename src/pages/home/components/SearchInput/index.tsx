@@ -5,12 +5,10 @@ import { numberFormat } from "@utils/numberFormat";
 
 const SearchInput = () => {
   const {
-    getAccumulateQuery: { data }
+    getAccumulateQuery: {
+      data = { accumulatedProductCount: 0, accumulatedUsageAmount: 0, accumulatedDiscountAmount: 0 }
+    }
   } = useAccumulate();
-
-  const accumulatedProductCount = data.accumulatedProductCount || 0;
-  const accumulatedUsageAmount = data.accumulatedUsageAmount || 0;
-  const accumulatedDiscountAmount = data.accumulatedDiscountAmount || 0;
 
   return (
     <S.Container>
@@ -29,17 +27,17 @@ const SearchInput = () => {
       <S.AccumulateContainer>
         <S.AccumulateTextContainer>
           <S.AccumulateTitle>누적 매물</S.AccumulateTitle>
-          <S.AccumulateNumber>{accumulatedProductCount}개</S.AccumulateNumber>
+          <S.AccumulateNumber>{data.accumulatedProductCount}개</S.AccumulateNumber>
         </S.AccumulateTextContainer>
         <S.Line></S.Line>
         <S.AccumulateTextContainer>
           <S.AccumulateTitle>누적 이용금액</S.AccumulateTitle>
-          <S.AccumulateNumber>{numberFormat(accumulatedUsageAmount)}</S.AccumulateNumber>
+          <S.AccumulateNumber>{numberFormat(data.accumulatedUsageAmount)}</S.AccumulateNumber>
         </S.AccumulateTextContainer>
         <S.Line></S.Line>
         <S.AccumulateTextContainer>
           <S.AccumulateTitle>누적 할인액</S.AccumulateTitle>
-          <S.AccumulateNumber>{numberFormat(accumulatedDiscountAmount)}</S.AccumulateNumber>
+          <S.AccumulateNumber>{numberFormat(data.accumulatedDiscountAmount)}</S.AccumulateNumber>
         </S.AccumulateTextContainer>
       </S.AccumulateContainer>
     </S.Container>
