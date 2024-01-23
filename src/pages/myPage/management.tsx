@@ -136,6 +136,13 @@ const Management = ({ width }: ManagementProps) => {
               price={formatNumberWithCommas(product.sellingPrice)}
               badgeText={determineBadgeText(determineCardType(product.status))}
               productId={product.tradeId}
+              statusText={
+                product.status === "REJECTED"
+                  ? "판매 승인을 거절했어요"
+                  : product.status === "CANCELED"
+                    ? "구매자가 구매를 취소했어요"
+                    : ""
+              }
             />
           </div>
         ))}
