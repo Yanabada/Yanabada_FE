@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
 
 interface FormData {
   password: string;
@@ -23,14 +24,21 @@ const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
   const {
     register,
     formState: { errors },
-    getValues
+    getValues,
+    trigger
   } = useForm<FormData>({
     mode: "onBlur"
   });
+  const { setPassword } = SignInDataStore();
 
   const [isPassed, setIsPassed] = useState(false);
 
   const password = getValues("password");
+
+  useEffect(() => {
+    trigger("password");
+    trigger("secondPassword");
+  }, []);
 
   const isCodeValid = (value: string) => {
     console.log(value, "value");
@@ -84,6 +92,7 @@ const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
           if (!isPassed) {
             return;
           }
+          setPassword(password); // 회원가입용
           navigate(to);
         }}
       >
