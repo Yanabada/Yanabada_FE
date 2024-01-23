@@ -1,11 +1,13 @@
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 export const postApprovalDeny = async (tradeId: number | undefined) => {
   const postApprovalDenyURL = `/trades/${tradeId}/reject`;
 
-  const response = await axios.post(postApprovalDenyURL);
+  const response = await instance.post(postApprovalDenyURL);
 
-  return response.data;
+  console.log(response.data.data);
+
+  return response.data.data;
 };
 
 export default postApprovalDeny;

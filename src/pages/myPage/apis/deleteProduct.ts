@@ -1,11 +1,13 @@
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 const deleteProduct = async (productId: number | undefined) => {
   const deleteProductURL = `/products/${productId}`;
 
-  const response = await axios.delete(deleteProductURL);
+  const response = await instance.delete(deleteProductURL);
 
-  return response.data;
+  console.log(response.data.data);
+
+  return response.data.data;
 };
 
 export default deleteProduct;

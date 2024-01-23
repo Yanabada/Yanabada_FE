@@ -1,9 +1,9 @@
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 export const postLogout = async () => {
   const postLogoutURL = "/auth/logout";
 
-  return await axios.post(postLogoutURL);
+  return await instance.post(postLogoutURL);
 };
 
 export default postLogout;

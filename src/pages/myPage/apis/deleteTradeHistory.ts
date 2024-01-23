@@ -1,11 +1,13 @@
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 const deleteTradeHistory = async (tradeId: number | null) => {
   const deleteTradeHistoryURL = `/trades/${tradeId}`;
 
-  const response = await axios.delete(deleteTradeHistoryURL);
+  const response = await instance.delete(deleteTradeHistoryURL);
 
-  return response.data;
+  console.log(response.data.data);
+
+  return response.data.data;
 };
 
 export default deleteTradeHistory;
