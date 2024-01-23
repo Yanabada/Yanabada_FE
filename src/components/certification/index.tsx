@@ -109,7 +109,7 @@ const Certification = ({
       return;
     }
     setIsSendValid(false);
-  }, [phoneNumber, phoneNumber]);
+  }, [phoneNumber]);
 
   // 인증번호 유효성검사
   const isCodeValid = (value: number | null) => {
