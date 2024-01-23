@@ -30,7 +30,6 @@ const Management = ({ width }: ManagementProps) => {
       case "COMPLETED":
         return "approved";
       case "REJECTED":
-        return "purchasedCanceled";
       case "CANCELED":
         return "purchasedCanceled";
     }
