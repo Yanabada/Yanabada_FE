@@ -4,7 +4,7 @@ import ListCard from "@components/card/ListCard";
 import useSalesHistory from "./hooks/useSalesHistory";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 // FIXME: 모듈화
 interface SalesHistoryProps {
@@ -23,7 +23,7 @@ interface SaleProduct {
 }
 
 const SalesHistory = ({ width }: SalesHistoryProps) => {
-  const { data, error } = useSalesHistory();
+  const { data, error, refetch } = useSalesHistory();
 
   if (error) {
     console.log(error);
@@ -79,7 +79,7 @@ const SalesHistory = ({ width }: SalesHistoryProps) => {
   }, [data, currentTab]);
 
   return (
-    <>
+    <Suspense>
       <UpperNavBar title="판매내역" type="back" />
       <S.PointsMiddleContainer width={width}>
         <S.MiddleWrapper onClick={() => setCurrentTab("all")}>
@@ -152,11 +152,12 @@ const SalesHistory = ({ width }: SalesHistoryProps) => {
               productId={product.productId}
               tradeId={product.tradeId}
               statusText="판매 완료되었어요."
+              refetch={refetch}
             />
           </div>
         ))}
       </S.ListCardWrapper>
-    </>
+    </Suspense>
   );
 };
 
