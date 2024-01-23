@@ -55,8 +55,8 @@ const ListCard = forwardRef(
       price,
       badgeText,
       productId,
-      tradeId,
-      refetch
+      tradeId
+      // refetch
     }: ListCardProps,
     ref
   ) => {
