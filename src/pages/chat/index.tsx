@@ -4,17 +4,9 @@ import * as S from "./styles/styles";
 import ChatList from "./components/chatList";
 import useChatRooms from "./hooks/useChatRooms";
 import NoChatList from "./components/noChatList";
-import useSocket from "./hooks/useSocket";
-import { useEffect } from "react";
 
 const Chat = () => {
   const { data, isLoading, error } = useChatRooms();
-  const client = useSocket();
-
-  useEffect(() => {
-    console.log("connected");
-    client.activate();
-  }, []);
 
   // UI 작업 필요 (스켈레톤 등)
   if (error) return <p>Error: {error.message}</p>;

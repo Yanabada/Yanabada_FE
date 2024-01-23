@@ -6,16 +6,30 @@ import Modal from "@components/modal";
 import ChatText from "./components/chatText";
 import * as S from "./styles/styles";
 import useMessages from "./hooks/useMessages";
-import { useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useUpdateChatRoom from "./hooks/useUpdateChatRoom";
 import useDeleteRoom from "./hooks/useDeleteRoom";
+import useSocket from "./hooks/useSocket";
+import ChatInput from "./components/chatInput";
+import { Message } from "./types/chatRoom";
+import subscribeApi from "./hooks/subscribeApi";
 
 const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [searchParams] = useSearchParams();
+  const [chatMessages, setChatMessages] = useState<Message[]>([]);
+  const { roomId } = useParams();
   // 챗룸으로 왔을 때, 코드는 무조건 있어야 함
-  const code = searchParams.get("chatRoomCode")!;
-  const { data } = useMessages({ code });
+  const { data } = useMessages({ code: roomId! });
+
+  const client = useSocket();
+
+  useEffect(() => {
+    client.activate();
+  }, []);
+
+  useSocket().onConnect = () => {
+    subscribeApi({ chatRoomCode: roomId!, setChatMessages });
+  };
 
   const productData = {
     code: "240107f84892a35ed5",
@@ -38,15 +52,13 @@ const ChatRoom = () => {
     scrollToBottom();
   }, [data?.data.messages]);
 
-  if (!data || data.data.messages.length === 0) return <p>메시지가 없습니다.</p>;
-
   return (
     <>
       <UpperNavBar
         type="back"
         isCustom
         customBack={() => {
-          useUpdateChatRoom({ code });
+          useUpdateChatRoom({ code: roomId! });
         }}
         title="강쥐사랑해진짜로"
         rightElement={
@@ -74,14 +86,22 @@ const ChatRoom = () => {
         productData={productData}
       />
       <S.ChatContainer ref={bottom} status={status}>
-        <ChatText message={data.data.messages[data.data.messages.length - 1]} isNotice />
-        {data.data.messages.map((message) => (
-          <ChatText key={message.sendDateTime.toString()} message={message} />
-        ))}
+        {!data || data.data.messages.length === 0 ? (
+          <p>메시지가 없습니다.</p>
+        ) : (
+          <>
+            <ChatText message={data.data.messages[data.data.messages.length - 1]} isNotice />
+            {data.data.messages.map((message) => (
+              <ChatText key={message.sendDateTime.toString()} message={message} />
+            ))}
+            {chatMessages.map((message) => (
+              <ChatText key={message.sendDateTime.toString()} message={message} />
+            ))}
+          </>
+        )}
       </S.ChatContainer>
 
-      {/* TODO: 소켓으로 구현(?) */}
-      {/* <ChatInput chatRoomCode={code} senderId={1} setMessages={setMessages} /> */}
+      <ChatInput chatRoomCode={roomId!} senderId={1} />
 
       <Modal
         title="이 채팅방을 나가시겠어요?"
@@ -94,7 +114,7 @@ const ChatRoom = () => {
         }}
         rightBtnText="나가기"
         rightAction={() => {
-          useDeleteRoom({ code });
+          useDeleteRoom({ code: roomId! });
         }}
       />
     </>
