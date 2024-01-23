@@ -15,18 +15,19 @@ const SignInBottomSheet = ({ sheetVisible, setSheetVisible }: BottomSheetProps) 
 
   // 체크박스
   const [isAllChecked, setIsAllChecked] = useState(false);
+  const [isChecked0, setIsChecked0] = useState(false);
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isChecked3, setIsChecked3] = useState(false);
   const [isChecked4, setIsChecked4] = useState(false);
 
   useEffect(() => {
-    if (isChecked1 && isChecked2 && isChecked3 && isChecked4) {
+    if (isChecked0 && isChecked1 && isChecked2 && isChecked3 && isChecked4) {
       setIsAllChecked(true);
     } else {
       setIsAllChecked(false);
     }
-  }, [isChecked1, isChecked2, isChecked3, isChecked4]);
+  }, [isChecked0, isChecked1, isChecked2, isChecked3, isChecked4]);
 
   return (
     <BottomSheet title="약관 동의" isVisible={sheetVisible} setIsVisible={setSheetVisible}>
@@ -35,11 +36,19 @@ const SignInBottomSheet = ({ sheetVisible, setSheetVisible }: BottomSheetProps) 
           checked={isAllChecked}
           setChecked={setIsAllChecked}
           variant="all"
-          setList={[setIsChecked1, setIsChecked2, setIsChecked3, setIsChecked4]}
+          setList={[setIsChecked0, setIsChecked1, setIsChecked2, setIsChecked3, setIsChecked4]}
         />
         <Checkbox
           variant="individual"
-          title="만 14세 이상 이용, 서비스 이용약관, 개인정보 수집 및 이용 동의 (필수)"
+          title="만 14세 이상입니다 (필수)"
+          content=""
+          hasMoreContent={true}
+          checked={isChecked0}
+          setChecked={setIsChecked0}
+        />
+        <Checkbox
+          variant="individual"
+          title="서비스 이용약관, 개인정보 수집 및 이용 동의 (필수)"
           content=""
           hasMoreContent={true}
           checked={isChecked1}
@@ -71,7 +80,7 @@ const SignInBottomSheet = ({ sheetVisible, setSheetVisible }: BottomSheetProps) 
         />
         <S.SheetBtnWrapper>
           <BaseButton
-            buttonType={isAllChecked || isChecked1 ? "default" : "disabled-default"}
+            buttonType={isAllChecked || (isChecked1 && isChecked0) ? "default" : "disabled-default"}
             width="100%"
             onClick={() => {
               if (isAllChecked) {
