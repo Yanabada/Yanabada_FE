@@ -14,9 +14,9 @@ const categoryList = [
   { id: "MOTEL", name: "모텔" },
   { id: "PENSION", name: "펜션" },
   { id: "GUESTHOUSE", name: "게스트하우스" },
-  { id: "POOL_VILLA", name: "풀빌라" }
+  { id: "POOL_VILLA", name: "풀빌라" },
+  { id: "CAMPING", name: "캠핑" }
 ];
-
 const DetailInfo = ({ data }: DetailProps) => {
   const accommodationInfo = data.accommodationInfo;
   const roomInfo = data.roomInfo;
