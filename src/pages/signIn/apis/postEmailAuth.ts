@@ -1,11 +1,13 @@
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 export const postEmailAuth = async (email: string) => {
   const postEmailURL = "/auth/verification/email";
 
-  const response = await axios.post(postEmailURL, { email: email });
+  const response = await instance.post(postEmailURL, { email: email });
 
-  return response.data;
+  console.log(response.data.data);
+
+  return response.data.data;
 };
 
 export default postEmailAuth;

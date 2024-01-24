@@ -5,11 +5,11 @@ const useSalesHistory = () => {
   return useSuspenseInfiniteQuery({
     queryKey: ["salesHistory"],
     queryFn: ({ pageParam }) => getSalesHistory({ page: pageParam }),
-    initialPageParam: 1,
+    initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
       const isLastPage = allPages.length === lastPage.totalPages;
       if (isLastPage) return undefined;
-      return allPages.length + 1;
+      return allPages.length;
     },
     select: (data) => data?.pages.flatMap((page) => page.products)
   });

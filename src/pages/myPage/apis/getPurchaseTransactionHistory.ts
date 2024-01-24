@@ -1,11 +1,13 @@
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 const getPurchaseTransactionHistory = async (tradeId: number | undefined) => {
   const getPurchaseTransactionHistoryURL = `/trades/purchases/${tradeId}`;
 
-  const response = await axios.get(getPurchaseTransactionHistoryURL);
+  const response = await instance.get(getPurchaseTransactionHistoryURL);
 
-  return response.data;
+  console.log(response.data.data);
+
+  return response.data.data;
 };
 
 export default getPurchaseTransactionHistory;

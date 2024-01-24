@@ -4,9 +4,9 @@ import EditIcon from "@assets/icons/editIcon.svg?react";
 import { Spacer } from "@pages/purchase/styles/styles";
 import CheckIcon from "@assets/icons/checkbox_Check.svg?react";
 import { Input, Icon } from "@components/input/Checkbox/allConsentCheckbox.style";
-import SwitchButton from "@components/buttons/SwitchButton";
+// import SwitchButton from "@components/buttons/SwitchButton";
 import ArrowForwardIcon from "@assets/icons/arrowForwardIconLight.svg?react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextInput from "@components/input/TextInput";
 import ManipulationChip from "@components/chips/ManipulationChip";
 import CancelIcon from "@assets/icons/cancelIcon.svg?react";
@@ -16,7 +16,7 @@ import formatPhoneNumber from "./utils/formatPhoneNumber";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import Modal from "@components/modal";
-import usePhoneNumber from "./hooks/useChangeNickName";
+import useChangeNickName from "./hooks/useChangeNickName";
 
 interface ProfileProps {
   width?: string;
@@ -46,8 +46,8 @@ const Profile = ({ width }: ProfileProps) => {
     mode: "onBlur"
   });
 
-  const { data, error } = useProfileDetail();
-  const { mutate } = usePhoneNumber();
+  const { data, error, refetch } = useProfileDetail();
+  const { mutate, isSuccess } = useChangeNickName();
 
   if (error) {
     console.log(error);
@@ -67,6 +67,11 @@ const Profile = ({ width }: ProfileProps) => {
     leftAction: () => (location.href = "https://www.yanolja.com"),
     rightAction: () => setIsModalVisible(false)
   };
+
+  useEffect(() => {
+    setIsEditIconClicked(false);
+    refetch();
+  }, [isSuccess]);
 
   return (
     <>
@@ -99,7 +104,6 @@ const Profile = ({ width }: ProfileProps) => {
                     type="submit"
                     onClick={() => {
                       mutate(getValues("nickName"));
-                      setIsEditIconClicked(false);
                     }}
                   >
                     확인
@@ -176,7 +180,9 @@ const Profile = ({ width }: ProfileProps) => {
             <S.ButtonWrapper>
               <S.ButtonText
                 onClick={() =>
-                  navigate(`/signin/3?from=changePhoneNumber&redirect=/mypage/profile`)
+                  navigate(
+                    `/signin/3?phonenumber=${data.phoneNumber}&from=changePhoneNumber&redirect=/mypage/profile`
+                  )
                 }
               >
                 수정하기
@@ -212,7 +218,7 @@ const Profile = ({ width }: ProfileProps) => {
           </S.CheckBoxContainer>
         </S.PersonalInfoWrapper>
 
-        <Spacer width={width} />
+        {/* <Spacer width={width} />
 
         <S.PersonalInfoWrapper gap="16px">
           <S.SwitchLabel>
@@ -222,7 +228,7 @@ const Profile = ({ width }: ProfileProps) => {
             </S.LabelLeftWrapper>
             <SwitchButton />
           </S.SwitchLabel>
-        </S.PersonalInfoWrapper>
+        </S.PersonalInfoWrapper> */}
 
         <Spacer width={width} />
 

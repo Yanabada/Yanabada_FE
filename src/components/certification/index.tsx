@@ -16,11 +16,11 @@ interface CertificationProps {
   upperNavBarText: string;
   buttonText: string;
   customHandleClick?: () => void; // 화면 하단 버튼 동작
+  mutationFn?: any;
   hasBottomSheet?: boolean;
   bottomSheetTitle?: string;
   bottomSheetChildren?: string | ReactNode;
   bottomSheetNavigate?: string;
-  phoneNum?: string | null;
   isSignInFlow?: boolean;
 }
 
@@ -38,8 +38,8 @@ const Certification = ({
   bottomSheetTitle,
   bottomSheetChildren,
   bottomSheetNavigate,
-  phoneNum,
-  isSignInFlow = false
+  isSignInFlow = false,
+  mutationFn
 }: CertificationProps) => {
   const navigate = useNavigate();
   const [isSendValid, setIsSendValid] = useState(false);
@@ -134,6 +134,7 @@ const Certification = ({
 
     hasBottomSheet && setIsSheetVisible(true);
     customHandleClick && customHandleClick();
+    mutationFn && mutationFn(phoneNumber);
   };
 
   useEffect(() => {
@@ -149,9 +150,9 @@ const Certification = ({
   useEffect(() => {
     trigger("phoneNumber");
     trigger("code");
-    if (phoneNum) {
-      setValue("phoneNumber", phoneNum);
-    }
+    // if (phoneNum) {
+    //   setValue("phoneNumber", phoneNum);
+    // }
   }, []);
 
   return (
