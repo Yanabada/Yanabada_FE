@@ -23,43 +23,17 @@ const ChatRoom = () => {
   const { data } = useMessages({ code: roomId! });
   const client = useRef<Client>();
 
-  const { mutate } = useUpdateChatRoom();
-
-  // const connectHandler = (roomId: string) => {
-  //   const socket = new SockJS("http://test.yanabada.com/ws-stomp");
-  //   const stompClient = Stomp.over(socket);
-  //   stompClient.connect(
-  //     {
-  //       Authorization: `Bearer ${Cookies.get("accessToken")}`
-  //     },
-  //     () => {
-  //       console.log("연결 성공쓰");
-  //       stompClient.subscribe(`/pub/chats/${roomId}`, ({ body }) => {
-  //         const bodyObj = JSON.parse(body) as MessageSubType;
-  //         setChatMessages((prev) => [...prev, bodyObj]);
-  //       });
-  //     }
-  //   );
-  // };
+  const { mutate: updateRoom } = useUpdateChatRoom();
+  const { mutate: deleteRoom } = useDeleteRoom();
 
   useEffect(() => {
     connect();
-    // stompClient.connect({}, () => {
-    //   console.log("connected");
-    // });
-
-    // connectHandler(roomId!);
     return () => disconnect();
   }, []);
-
-  // const client = useSocket();
 
   const connect = () => {
     client.current = new Client({
       brokerURL: `ws://test.yanabada.com/ws-stomp`,
-      // connectHeaders: {
-      //   Authorization: `Bearer ${Cookies.get("accessToken")}`
-      // },
       debug: function (str) {
         console.log(str);
       },
@@ -108,10 +82,6 @@ const ChatRoom = () => {
     });
   };
 
-  // client.current.onConnect = () => {
-  //   subscribeApi({ chatRoomCode: roomId!, setChatMessages });
-  // };
-
   const productData = {
     code: "240107f84892a35ed5",
     image: "http://via.placeholder.com/300x300",
@@ -139,7 +109,7 @@ const ChatRoom = () => {
         type="back"
         isCustom
         customBack={() => {
-          mutate({ code: roomId! });
+          updateRoom({ code: roomId! });
         }}
         title="강쥐사랑해진짜로"
         rightElement={
@@ -172,9 +142,9 @@ const ChatRoom = () => {
         ) : (
           <>
             <ChatText message={data.data.messages[data.data.messages.length - 1]} isNotice />
-            {data.data.messages.map((message) => (
-              <ChatText key={message.sendTime.toString()} message={message} />
-            ))}
+            {data.data.messages
+              .map((message) => <ChatText key={message.sendTime.toString()} message={message} />)
+              .reverse()}
             {chatMessages.map((message) => (
               <ChatText key={message.sendTime.toString()} message={message} />
             ))}
@@ -200,7 +170,7 @@ const ChatRoom = () => {
         rightBtnText="나가기"
         rightAction={() => {
           disconnect();
-          useDeleteRoom({ code: roomId! });
+          deleteRoom({ code: roomId! });
         }}
       />
     </>

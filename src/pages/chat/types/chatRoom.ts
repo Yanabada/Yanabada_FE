@@ -1,7 +1,7 @@
 export interface Message {
   sendTime: Date;
   senderId: number;
-  senderImage: string;
+  senderProfileImage: string;
   senderNickname: string;
   content?: string;
 }

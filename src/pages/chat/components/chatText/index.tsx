@@ -3,7 +3,6 @@ import * as CS from "../chatList/styles";
 import { Message } from "@pages/chat/types/chatRoom";
 
 interface ChatTextProps {
-  // TODO- 명세서 맞춰서 내용 추가 필요
   message: Message;
   isNotice?: boolean;
 }
@@ -27,7 +26,7 @@ const ChatText = ({ message, isNotice = false }: ChatTextProps) => {
       {!isMe && (
         <CS.ProfileImg
           style={{ height: "35px", width: "35px" }}
-          src={message.senderImage}
+          src={message.senderProfileImage}
           alt="프로필"
         />
       )}
