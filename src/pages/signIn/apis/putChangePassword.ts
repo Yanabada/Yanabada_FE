@@ -1,9 +1,9 @@
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 export const putChangePassword = async (password: string) => {
   const putChangePasswordURL = "/member/password";
 
-  return await axios.put(putChangePasswordURL, { password: password });
+  return await instance.put(putChangePasswordURL, { password: password });
 };
 
 export default putChangePassword;

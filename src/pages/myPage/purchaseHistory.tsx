@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
 import usePurchaseHistory from "./hooks/usePurchaseHistory";
+import useIntersect from "@pages/products/hooks/useIntersect";
 
 // FIXME: 모듈화
 interface PurchaseHistoryProps {
@@ -48,7 +49,13 @@ const PurchaseHistory = ({ width }: PurchaseHistoryProps) => {
     }
   };
 
-  const { data, error } = usePurchaseHistory();
+  const { data, error, refetch, hasNextPage, isFetching, fetchNextPage } = usePurchaseHistory();
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching && data.length > 0) {
+      fetchNextPage();
+    }
+  });
 
   if (error) {
     console.log(error);
@@ -122,7 +129,7 @@ const PurchaseHistory = ({ width }: PurchaseHistoryProps) => {
         </S.MiddleWrapper>
       </S.PointsMiddleContainer>
       <S.ListCardWrapper width={width}>
-        {filteredData?.map((product) => (
+        {filteredData?.map((product, index) => (
           <div key={product.tradeId}>
             <ListCard
               cardType={determineCardType(product.status)}
@@ -143,6 +150,8 @@ const PurchaseHistory = ({ width }: PurchaseHistoryProps) => {
                     ? "판매자가 승인을 거절했어요"
                     : ""
               }
+              refetch={refetch}
+              ref={(index + 1) % 10 === 0 ? ref : null}
             />
           </div>
         ))}

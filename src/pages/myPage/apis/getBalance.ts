@@ -1,12 +1,13 @@
-// import { instance } from "@apis/instance";
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 const getBalance = async () => {
   const getBalanceURL = "/payments/summary";
 
-  const response = await axios.get(getBalanceURL);
+  const response = await instance.get(getBalanceURL);
 
-  return response.data;
+  console.log(response.data.data);
+
+  return response.data.data;
 };
 
 export default getBalance;

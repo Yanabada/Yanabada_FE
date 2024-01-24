@@ -1,11 +1,13 @@
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 export const postPurchaseCancel = async (tradeId: number | undefined) => {
   const postPurchaseCancelURL = `/trades/${tradeId}/cancel`;
 
-  const response = await axios.post(postPurchaseCancelURL);
+  const response = await instance.post(postPurchaseCancelURL);
 
-  return response.data;
+  console.log(response.data.data);
+
+  return response.data.data;
 };
 
 export default postPurchaseCancel;

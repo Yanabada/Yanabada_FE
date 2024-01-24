@@ -1,9 +1,9 @@
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 export const putPhoneNumber = async (phoneNumber: string | null) => {
   const putPhoneNumberURL = "/member/phone-number";
 
-  return await axios.put(putPhoneNumberURL, {
+  return await instance.put(putPhoneNumberURL, {
     phoneNumber: phoneNumber
   });
 };

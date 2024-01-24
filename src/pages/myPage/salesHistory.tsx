@@ -5,6 +5,7 @@ import useSalesHistory from "./hooks/useSalesHistory";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
 import { useEffect, useState } from "react";
+import useIntersect from "@pages/products/hooks/useIntersect";
 
 // FIXME: 모듈화
 interface SalesHistoryProps {
@@ -23,7 +24,13 @@ interface SaleProduct {
 }
 
 const SalesHistory = ({ width }: SalesHistoryProps) => {
-  const { data, error } = useSalesHistory();
+  const { data, error, refetch, hasNextPage, isFetching, fetchNextPage } = useSalesHistory();
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching && data.length > 0) {
+      fetchNextPage();
+    }
+  });
 
   if (error) {
     console.log(error);
@@ -138,7 +145,7 @@ const SalesHistory = ({ width }: SalesHistoryProps) => {
       </S.PointsMiddleContainer>
 
       <S.ListCardWrapper width={width}>
-        {filteredData?.map((product) => (
+        {filteredData?.map((product, index) => (
           <div key={product.productId}>
             <ListCard
               cardType={determineCardType(product.status)}
@@ -152,6 +159,8 @@ const SalesHistory = ({ width }: SalesHistoryProps) => {
               productId={product.productId}
               tradeId={product.tradeId}
               statusText="판매 완료되었어요."
+              refetch={refetch}
+              ref={(index + 1) % 10 === 0 ? ref : null}
             />
           </div>
         ))}

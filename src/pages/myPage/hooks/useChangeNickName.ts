@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import putChangeNickname from "../apis/putChangeNickname";
 
-export const usePhoneNumber = () => {
+export const useChangeNickName = () => {
   return useMutation({
     mutationFn: (nickname: string) => putChangeNickname(nickname),
     onSuccess: () => {
@@ -15,4 +15,4 @@ export const usePhoneNumber = () => {
   });
 };
 
-export default usePhoneNumber;
+export default useChangeNickName;

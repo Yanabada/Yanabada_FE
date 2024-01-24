@@ -1,12 +1,13 @@
-// import { instance } from "@apis/instance";
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 const getProfileDetail = async () => {
-  const getProfileDetailURL = `/api/member`;
+  const getProfileDetailURL = `/member`;
 
-  const response = await axios.get(getProfileDetailURL);
+  const response = await instance.get(getProfileDetailURL);
 
-  return response.data;
+  console.log(response.data.data);
+
+  return response.data.data;
 };
 
 export default getProfileDetail;

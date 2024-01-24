@@ -1,11 +1,13 @@
-import axios from "axios";
+import { instance } from "@apis/instance";
 
 const getManagement = async ({ page = 0 }) => {
   const getManagementURL = `/trades/approvals?page=${page}`;
 
-  const response = await axios.get(getManagementURL);
+  const response = await instance.get(getManagementURL);
 
-  return response.data;
+  console.log(response.data.data);
+
+  return response.data.data;
 };
 
 export default getManagement;
