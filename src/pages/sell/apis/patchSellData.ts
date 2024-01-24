@@ -18,16 +18,13 @@ const patchSellData = async ({
   description
 }: RequestProp) => {
   try {
-    const response = await instance.patch(
-      `${import.meta.env.VITE_API_BASE_URL}/products/${productId}`,
-      {
-        price,
-        isAutoCancel,
-        canNegotiate,
-        saleEndDate,
-        description
-      }
-    );
+    const response = await instance.patch(`/products/${productId}`, {
+      price,
+      isAutoCancel,
+      canNegotiate,
+      saleEndDate,
+      description
+    });
 
     const responseData = response.data;
     return responseData;
