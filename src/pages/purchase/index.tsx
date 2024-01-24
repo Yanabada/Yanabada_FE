@@ -33,7 +33,7 @@ import calculateDiscountRate from "@pages/myPage/utils/calculateDiscountRate";
 import useProfileDetail from "@pages/myPage/hooks/useProfileDetail";
 import useBuyProduct from "./hooks/useBuyProduct";
 import convertString from "./utils/convertString";
-import onClickPayment from "./utils/onClickPayment";
+import { onClickTossPayment, onClickPGPayment } from "./utils/onClickPayment";
 
 interface PurchaseProps {
   width?: string;
@@ -105,7 +105,8 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [nameState, setNameState] = useState("");
   const [phoneNumberState, setPhoneNumberState] = useState("");
   const [pointToUse, setPointToUse] = useState("0");
-  const [toggleButtonActive, setToggleButtonActive] = useState<number>();
+  const [toggleButtonActive, setToggleButtonActive] = useState(0);
+  const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
 
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
   const [isYanoljaPaySubscribed] = useState(false);
@@ -178,9 +179,24 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   }, [isChecked1]);
 
   useEffect(() => {
+    if (isPaymentSuccess) {
+      buyProductMutate({
+        productId: Number(productId),
+        reservationPersonName: nameState,
+        reservationPersonPhoneNumber: phoneNumberState,
+        userPersonName: name,
+        userPersonPhoneNumber: phoneNumber,
+        point: Number(pointToUse),
+        paymentType: convertString(paymentMethod),
+        // FIXME: 야놀자페이 등록시 등록한 비밀번호로 변경
+        simplePassword: paymentMethod === "yanoljaPay" ? "123456" : ""
+      });
+    }
+  }, [isPaymentSuccess]);
+
+  useEffect(() => {
     if (buyProductSuccess) {
-      console.log("buySuccess");
-      onClickPayment(productData.accommodationInfo.name, nameState, phoneNumberState, productId);
+      navigate("/purchase/confirm");
     }
   }, [buyProductSuccess]);
 
@@ -741,18 +757,40 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             <BaseButton
               width="100%"
               buttonType="default"
-              onClick={() =>
-                buyProductMutate({
-                  productId: Number(productId),
-                  reservationPersonName: nameState,
-                  reservationPersonPhoneNumber: phoneNumberState,
-                  userPersonName: name,
-                  userPersonPhoneNumber: phoneNumber,
-                  point: Number(pointToUse),
-                  paymentType: convertString(paymentMethod),
-                  simplePassword: paymentMethod === "yanoljaPay" ? "123456" : ""
-                })
-              }
+              onClick={() => {
+                if (paymentMethod === "tossPay") {
+                  setIsPaymentSuccess(
+                    onClickTossPayment(
+                      productData.accommodationInfo.name,
+                      nameState,
+                      phoneNumberState,
+                      productData.sellingPrice + fee - Number(pointToUse)
+                    )
+                  );
+                } else if (paymentMethod === "accountTransfer") {
+                  setIsPaymentSuccess(
+                    onClickPGPayment(
+                      productData.accommodationInfo.name,
+                      nameState,
+                      phoneNumberState,
+                      productData.sellingPrice + fee - Number(pointToUse),
+                      "trans"
+                    )
+                  );
+                } else if (paymentMethod === "card") {
+                  setIsPaymentSuccess(
+                    onClickPGPayment(
+                      productData.accommodationInfo.name,
+                      nameState,
+                      phoneNumberState,
+                      productData.sellingPrice + fee - Number(pointToUse),
+                      "card"
+                    )
+                  );
+                } else {
+                  // FIXME: 야놀자페이 결제 페이지로 navigate 로직 추가
+                }
+              }}
             >
               {formatNumberWithCommas(productData.sellingPrice + fee - Number(pointToUse))}원
               결제하기
@@ -768,5 +806,4 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     </>
   );
 };
-
 export default Purchase;
