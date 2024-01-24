@@ -34,7 +34,7 @@ interface ListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   timerText?: string;
   statusText?: string;
   roomName: string;
-  price: string;
+  price: string | null;
   badgeText: string | undefined;
   productId?: number;
   tradeId?: number;
@@ -186,11 +186,20 @@ const ListCard = forwardRef(
               <BaseButton
                 buttonType="gray"
                 width="48%"
-                onClick={() => purchaseCancelMutate(tradeId)}
+                onClick={() => {
+                  purchaseCancelMutate(tradeId);
+                  // FIXME: refetch시 data가 업데이트되지 않음
+                  location.reload();
+                }}
               >
                 구매취소
               </BaseButton>
-              <AuthenticationButton buttonType="disabled" width="48%" height="40px">
+              <AuthenticationButton
+                buttonType="disabled"
+                width="48%"
+                height="40px"
+                onClick={() => navigate(`/products/${productId}`)}
+              >
                 판매게시글 확인
               </AuthenticationButton>
               <Modal {...ModalProps} />
