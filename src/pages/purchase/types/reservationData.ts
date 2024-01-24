@@ -6,7 +6,7 @@ interface ReservationData {
   userPersonPhoneNumber: string | null;
   point: number;
   paymentType: string;
-  simplePassword?: string;
+  simplePassword?: string | null;
 }
 
 export default ReservationData;
