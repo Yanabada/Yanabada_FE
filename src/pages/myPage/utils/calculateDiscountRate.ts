@@ -8,7 +8,7 @@ export const calculateDiscountRate = (originalPrice: number, discountedPrice: nu
   }
 
   const discountAmount = originalPrice - discountedPrice;
-  const discountRate = (discountAmount / originalPrice) * 100;
+  const discountRate = Math.floor((discountAmount / originalPrice) * 100);
 
   return discountRate;
 };
