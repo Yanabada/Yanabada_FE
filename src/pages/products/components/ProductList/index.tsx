@@ -6,6 +6,7 @@ import useProducts from "@pages/products/api/queries";
 import { useMapOpen } from "@pages/products/stores/mapStore";
 import { useSearchParams } from "react-router-dom";
 import { Category, Option, OrderState } from "@pages/products/api/products";
+import { useEffect } from "react";
 
 const ProductList = () => {
   const [searchParams] = useSearchParams();
@@ -28,7 +29,12 @@ const ProductList = () => {
     size: 3
   });
 
-  const { isMapOpen } = useMapOpen();
+  const { isMapOpen, setHasProducts } = useMapOpen();
+
+  useEffect(() => {
+    setHasProducts(products.length);
+  }, [products]);
+
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
     if (hasNextPage && !isFetching && products.length > 0) {
