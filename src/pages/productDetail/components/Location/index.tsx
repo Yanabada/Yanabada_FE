@@ -5,25 +5,29 @@ import { CustomOverlayMap, Map } from "react-kakao-maps-sdk";
 import PositionIcon from "@assets/icons/product_position_mark.svg?react";
 import Modal from "@components/modal";
 import { useState } from "react";
+import { useMapState } from "@pages/products/stores/mapStore";
 
 interface AccommodationInfoProps {
   accommodationInfo: AccommodationInfoType;
 }
 
 const Location = ({ accommodationInfo }: AccommodationInfoProps) => {
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isClipModalVisible, setClipModalVisible] = useState(false);
+  const { setMapOpen } = useMapState();
+
   const copyClick = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      setModalVisible(true);
+      setClipModalVisible(true);
     } catch (e) {
       console.error(e);
     }
   };
+
   return (
     <S.Container>
       <S.Text>위치 / 교통</S.Text>
-      <S.MapContainer>
+      <S.MapContainer onClick={setMapOpen}>
         <Map
           style={{ width: "100%", height: "100%" }}
           center={{ lat: accommodationInfo.latitude, lng: accommodationInfo.longitude }}
@@ -40,9 +44,9 @@ const Location = ({ accommodationInfo }: AccommodationInfoProps) => {
           title="주소가 클립보드에 복사되었습니다."
           content={accommodationInfo.address}
           leftBtnText="확인"
-          leftAction={() => setModalVisible(false)}
-          isVisible={isModalVisible}
-          setIsVisible={setModalVisible}
+          leftAction={() => setClipModalVisible(false)}
+          isVisible={isClipModalVisible}
+          setIsVisible={setClipModalVisible}
         />
         <S.Address>{accommodationInfo.address}</S.Address>
         <S.CopyButton
