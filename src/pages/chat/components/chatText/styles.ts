@@ -21,7 +21,7 @@ export const Chat = styled.div`
 
   &[data-type="right"] {
     flex-direction: row-reverse;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 `;
 
