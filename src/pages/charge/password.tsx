@@ -6,6 +6,8 @@ import { motion, useAnimation } from "framer-motion";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
 import Keypads from "./components/Keypads";
+import AmountStore from "./stores/amountStore";
+import { postPassword } from "./apis/charge";
 
 import LockIcon from "assets/icons/lockIcon.svg?react";
 
@@ -23,6 +25,8 @@ const PasswordConfirm = () => {
       ? "야놀자 페이에서 사용할 비밀번호를 등록해주세요."
       : "간편결제 비밀번호 6자리를 입력해주세요"
   );
+
+  const { amount } = AmountStore();
 
   const shakeOnMismatch = () => {
     keyInputControls.start({
@@ -77,17 +81,27 @@ const PasswordConfirm = () => {
 
   // 등록이 아닌 비밀번호 확인
   useEffect(() => {
-    if (!isRegistration && enteredDigits.length === 6) {
-      // API 호출 자리
-      // 호출 응답이 success
-      navigate("/charge/confirm");
+    const checkPassword = async () => {
+      if (!isRegistration && enteredDigits.length === 6) {
+        const requestData = {
+          amount: amount,
+          simplePassword: enteredDigits.join("")
+        };
 
-      // 호출 응답이 failed
-      setIsMatched(false);
-      shakeOnMismatch();
-
-      setEnteredDigits([]);
-    }
+        try {
+          const response = await postPassword(requestData);
+          if (response.yanoljaPayHistoryId) {
+            navigate(`/charge/confirm/${response.yanoljaPayHistoryId}`);
+          }
+        } catch (error) {
+          console.error("비밀번호 불일치: ", error);
+          setIsMatched(false);
+          shakeOnMismatch();
+          setEnteredDigits([]);
+        }
+      }
+    };
+    checkPassword();
   }, [enteredDigits, isRegistration]);
 
   return (
