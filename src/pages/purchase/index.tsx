@@ -440,7 +440,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                   lineHeight: "21px"
                 }}
               >
-                사용가능 : {profileData.point}P
+                사용가능 : {profileData?.point && profileData.point}P
               </span>
             }
             value={pointToUse.toString()}
@@ -448,7 +448,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
           />
         </S.PersonInfoWrapper>
         <S.ChipWrapper>
-          {profileData.point > 0 ? (
+          {profileData?.point && profileData.point > 0 ? (
             <ManipulationChip
               buttonType="abledDefault"
               onClick={() => {
