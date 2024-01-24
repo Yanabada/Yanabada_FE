@@ -2,7 +2,7 @@ import * as S from "./styles/confirm";
 import * as CS from "./styles/register";
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaCheck } from "react-icons/fa6";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
@@ -17,10 +17,12 @@ import initialConfirmData from "./constants/initialConfirmData";
 import InfoBox from "./components/InfoBox";
 import getSellResult from "./apis/getSellResult";
 import { getFivePercentage } from "./utils/getFivePercentage";
+import BaseButton from "@components/buttons/BaseButton";
 
 const SellConfirm = () => {
   const [confirmData, setConfirmData] = useState(initialConfirmData);
   const { id } = useParams();
+  const navigate = useNavigate();
   const today = new Date();
 
   useEffect(() => {
@@ -40,10 +42,14 @@ const SellConfirm = () => {
 
   return (
     <>
-      <UpperNavBar title="상품 등록" type="back" />
+      <UpperNavBar title="상품 등록 완료" type="back" />
       <CS.RegisterWrap>
         <CS.RegisterInner>
-          <CS.RegisterTitle>입력한 상품 정보가 정확한지 확인하세요.</CS.RegisterTitle>
+          <CS.RegisterTitle>상품 등록이 정상적으로 완료되었습니다.</CS.RegisterTitle>
+          <CS.RegisterGrayTitle>입력한 상품 정보가 정확한지 확인하세요.</CS.RegisterGrayTitle>
+        </CS.RegisterInner>
+        <S.ConfirmBlank />
+        <CS.RegisterInner>
           <CS.RegisterSubTitle>숙소 정보</CS.RegisterSubTitle>
           <InfoBox
             code={confirmData.orderCode}
@@ -89,13 +95,13 @@ const SellConfirm = () => {
           <S.ConfirmWrapper>
             <div>
               <S.SelectButton className={confirmData.canNegotiate ? "selected" : ""}>
-                <FaCheck />
+                {confirmData.canNegotiate && <FaCheck />}
                 가격제안 가능
               </S.SelectButton>
             </div>
             <div>
               <S.SelectButton className={confirmData.canNegotiate ? "" : "selected"}>
-                가격제안 불가
+                {!confirmData.canNegotiate && <FaCheck />}가격제안 불가
               </S.SelectButton>
             </div>
           </S.ConfirmWrapper>
@@ -112,12 +118,12 @@ const SellConfirm = () => {
           <S.ConfirmWrapper>
             <div>
               <S.SelectButton className={confirmData.isAutoCancel ? "selected" : ""}>
-                <FaCheck />예
+                {confirmData.isAutoCancel && <FaCheck />}예
               </S.SelectButton>
             </div>
             <div>
               <S.SelectButton className={confirmData.isAutoCancel ? "" : "selected"}>
-                아니오
+                {!confirmData.isAutoCancel && <FaCheck />}아니오
               </S.SelectButton>
             </div>
           </S.ConfirmWrapper>
@@ -181,6 +187,30 @@ const SellConfirm = () => {
           <CS.RegisterTitle>판매자 한마디</CS.RegisterTitle>
           <SellerSay seller={confirmData.seller} description={confirmData.description} />
         </CS.RegisterInner>
+        <CS.ConfirmWrap>
+          <S.ButtonWrap>
+            <div>
+              <BaseButton
+                type="submit"
+                buttonType="disabled-light"
+                width="100%"
+                onClick={() => navigate(`/sell/correct/${id}?redirect=/sell/confirm/${id}`)}
+              >
+                수정하기
+              </BaseButton>
+            </div>
+            <div>
+              <BaseButton
+                type="submit"
+                buttonType="default"
+                width="100%"
+                onClick={() => navigate("/mypage/salesHistory")}
+              >
+                판매내역으로 이동
+              </BaseButton>
+            </div>
+          </S.ButtonWrap>
+        </CS.ConfirmWrap>
       </CS.RegisterWrap>
     </>
   );

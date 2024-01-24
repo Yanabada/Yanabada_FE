@@ -11,7 +11,7 @@ import YanoljaIcon from "assets/icons/yanolja_Icon.svg?react";
 interface AutoCancelOptionProps {
   isAutoCancel: boolean;
   setIsAutoCancel: Dispatch<SetStateAction<boolean>>;
-  originalPrice: number;
+  purchasePrice: number;
   endDateInfo: {
     feePercentage: number;
   };
@@ -20,7 +20,7 @@ interface AutoCancelOptionProps {
 const AutoCancelOption = ({
   isAutoCancel,
   setIsAutoCancel,
-  originalPrice,
+  purchasePrice,
   endDateInfo
 }: AutoCancelOptionProps) => {
   return (
@@ -58,7 +58,7 @@ const AutoCancelOption = ({
             <span>입실일 취소 불가</span>
           ) : (
             <span>
-              {numberFormat(calculateOriginDiscount(originalPrice, endDateInfo.feePercentage))} 원
+              {numberFormat(calculateOriginDiscount(purchasePrice, endDateInfo.feePercentage))} 원
             </span>
           )}
         </p>
