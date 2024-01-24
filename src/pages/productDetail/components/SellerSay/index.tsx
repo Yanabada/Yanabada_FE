@@ -14,7 +14,10 @@ const SellerSay = ({ seller, description }: SellerProps) => {
         <S.Text>판매자 한마디</S.Text>
         <S.NickName>{seller.nickname} 님</S.NickName>
       </S.NickNameContainer>
-      <Say seller={seller} description={description} />
+      <Say
+        seller={seller}
+        description={description.length > 0 ? description : "작성된 판매자 한마디가 없습니다."}
+      />
     </S.Container>
   );
 };
