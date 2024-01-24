@@ -32,7 +32,7 @@ const ChatText = ({ message, isNotice = false }: ChatTextProps) => {
         />
       )}
       <S.Content className={isMe ? "right" : ""}>{message.content}</S.Content>
-      <S.Time>{message.sendDateTime.toISOString()}</S.Time>
+      <S.Time>{message.sendTime.toString()}</S.Time>
     </S.Chat>
   );
 };

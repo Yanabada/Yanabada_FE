@@ -19,9 +19,9 @@ export const getMessages = async (params: MessageRequestParam) => {
 
 export const updateChatRoom = async (params: MessageRequestParam) => {
   await instance.put(`/chats`, {
-    params: {
-      chatRoomCode: params.code
-    }
+    // params: {
+    chatRoomCode: params.code
+    // }
   });
 };
 
