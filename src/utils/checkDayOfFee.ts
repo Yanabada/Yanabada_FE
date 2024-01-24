@@ -9,13 +9,13 @@ interface FeePhraseProps {
   percentage: number;
 }
 
-interface checkDayProps {
-  originalPrice: number;
-  policyNumber: number;
+interface CheckDayProps {
+  purchasePrice: number;
+  policyNumber: string;
   checkInDate: string;
 }
 
-export function checkDayOfFee({ originalPrice, policyNumber, checkInDate }: checkDayProps): string {
+export function checkDayOfFee({ purchasePrice, policyNumber, checkInDate }: CheckDayProps): string {
   const today = new Date();
   const formattedToday = format(today, "yyyy.MM.dd");
   const formattedCheckIn = new Date(checkInDate);
@@ -25,13 +25,12 @@ export function checkDayOfFee({ originalPrice, policyNumber, checkInDate }: chec
       (formattedCheckIn.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
     );
 
-    const feePhrase: FeePhraseProps[] = policyNumber === 1 ? feePolicy1 : feePolicy2;
+    const feePhrase: FeePhraseProps[] = policyNumber === "YNBD_1" ? feePolicy1 : feePolicy2;
 
     for (const phrase of feePhrase) {
-      if (daysBeforeCheckIn == phrase.daysBefore) {
-        return `${formattedToday} 기준 취소 수수료는 ${numberFormat(
-          originalPrice * (phrase.percentage / 100)
-        )}원입니다.`;
+      if (daysBeforeCheckIn + 1 === phrase.daysBefore) {
+        return `${formattedToday} 기준 취소 수수료는 
+        ${numberFormat((purchasePrice * phrase.percentage) / 100)}원 입니다`;
       }
     }
 

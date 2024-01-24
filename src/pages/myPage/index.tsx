@@ -9,13 +9,16 @@ import Modal from "@components/modal";
 import { useNavigate } from "react-router-dom";
 import NumberBadge from "@components/numberBadge";
 import { FaRegBell } from "react-icons/fa";
+import useProfileDetail from "./hooks/useProfileDetail";
+import usePutPhoneNumber from "./hooks/useLogout";
+import useBalance from "./hooks/useBalance";
 
 interface MyPageProps {
   width?: string;
 }
 
 const MyPage = ({ width }: MyPageProps) => {
-  // FIXME: 추후 로그인 여부에 따라 상태 변경 예정
+  // FIXME: 추후 로그인 여부에 따라 상태 변경 예정(localstorage member이용)
   const [isLoginned, setIsLoginned] = useState(true);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
@@ -32,6 +35,18 @@ const MyPage = ({ width }: MyPageProps) => {
     rightAction: () => setIsLoginModalVisible(false)
   };
 
+  const { data: profileData, error: profileError } = useProfileDetail();
+  const { data: balanceData, error: balanceError } = useBalance();
+  const { mutate } = usePutPhoneNumber();
+
+  if (profileError) {
+    console.log(profileError);
+  }
+
+  if (balanceError) {
+    console.log(balanceError);
+  }
+
   const logoutModalProps = {
     title: "로그아웃 하시겠습니까?",
     leftBtnText: "확인",
@@ -39,6 +54,9 @@ const MyPage = ({ width }: MyPageProps) => {
     isVisible: isLogoutModalVisible,
     setIsVisible: setIsLogoutModalVisible,
     leftAction: () => {
+      // FIXME: localStorage에서 member 삭제 로직 추가
+      mutate();
+      localStorage.removeItem("member");
       setIsLoginned(false);
       navigate("/mypage");
     },
@@ -63,13 +81,18 @@ const MyPage = ({ width }: MyPageProps) => {
         <S.LoginButtonWrapper>
           <Link to="/mypage/profile">
             <S.LoginButton>
-              {/* FIXME: 추후 변수값으로 대체 예정 */}
-              USER123456 <ArrowForwardIcon />
+              {profileData.id}
+              <ArrowForwardIcon />
             </S.LoginButton>
           </Link>
         </S.LoginButtonWrapper>
 
-        <CardSectionButton buttonType="abledPay" width={width} />
+        {balanceData.hasJoinedYanoljaPay ? (
+          <CardSectionButton buttonType="abledPay" width={width} />
+        ) : (
+          <CardSectionButton buttonType="abledPay_notRegistered" width={width} />
+        )}
+
         <Link to="/points/list">
           <CardSectionButton buttonType="abledPoint" width={width} />
         </Link>

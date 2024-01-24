@@ -1,6 +1,7 @@
 import Certification from "@components/certification";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import usePhoneNumber from "@pages/signIn/hooks/usePhoneNumber";
 
 const SignInFourth = () => {
   const [searchParams] = useSearchParams();
@@ -11,6 +12,8 @@ const SignInFourth = () => {
 
   const navigate = useNavigate();
 
+  const { mutate } = usePhoneNumber();
+
   if (fromParams === "changeReservationInfo") {
     return (
       <Certification
@@ -20,7 +23,15 @@ const SignInFourth = () => {
         customHandleClick={() => {
           navigate(`/purchase?name=${name}&phonenumber=${phoneNumber}`);
         }}
-        phoneNum={phoneNumber}
+      />
+    );
+  } else if (fromParams === "changePhoneNumber") {
+    return (
+      <Certification
+        width="100%"
+        upperNavBarText="예약자 정보 수정"
+        buttonText="확인"
+        mutationFn={mutate}
       />
     );
   } else {

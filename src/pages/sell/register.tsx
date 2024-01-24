@@ -2,7 +2,7 @@ import * as S from "./styles/register";
 import * as CS from "./styles/detail";
 
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { differenceInDays } from "date-fns";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
@@ -16,6 +16,10 @@ import { feePolicy2 } from "@constants/feePolicys";
 import NegoOption from "./components/NegoOption";
 import AutoCancelOption from "./components/AutoCancelOption";
 import DateOption from "./components/DateOption";
+import getSellDetail from "./apis/getSellDetail";
+import { formatDate } from "./utils/formatDate";
+import { callSellApi } from "./apis/callSellApi";
+import initialDetailData from "./constants/initialDetailData";
 
 interface EndDateInfo {
   endDate: string;
@@ -32,31 +36,32 @@ const SellRegister = () => {
   const [price, setPrice] = useState(0);
   const [isNego, setIsNego] = useState(false);
   const [isAutoCancel, setIsAutoCancel] = useState(false);
+  const [sellerComment, setSellerComment] = useState<string>("");
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
 
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const [endDate, setEndDate] = useState<string | undefined>();
+  const [searchParams] = useSearchParams();
+  const { id } = useParams();
   const [, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | undefined>();
   const [endDateInfo, setEndDateInfo] = useState<EndDateInfo>({
     endDate: "",
     daysBefore: 0,
     feePercentage: 0
   });
 
+  const [sellDetailData, setSellDetailData] = useState(initialDetailData);
+
   // 시작일과 종료일 쿼리스트링으로 등록
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const startParam = searchParams.get("start");
-    const endParam = searchParams.get("end");
+    const startParam = searchParams.get("checkInDate");
+    const endParam = searchParams.get("checkOutDate");
 
     setStartDate(String(startParam));
     setEndDate(String(endParam));
 
     if (endParam) {
       const currentDate = new Date(endParam);
-      const daysBefore = differenceInDays(new Date(productData.checkInDate), currentDate);
+      const daysBefore = differenceInDays(new Date(sellDetailData.checkInDate), currentDate);
       const feePercentage =
         feePolicy2.find((policy) => policy.daysBefore === daysBefore)?.percentage || 0;
 
@@ -66,21 +71,36 @@ const SellRegister = () => {
         feePercentage: feePercentage
       });
     }
-  }, [location.search]);
+  }, [searchParams, sellDetailData.checkInDate]);
 
-  // API 연결 전, 데이터 상수
-  const originalPrice = 1200000;
-  const purchasePrice = 1200000;
-  const cancelFee = 600000;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!id) {
+          return;
+        }
+        const sellDetailData = await getSellDetail({ id });
+        console.log("성공!", sellDetailData.data);
+        setSellDetailData(sellDetailData.data);
+      } catch (error) {
+        console.error("Error fetching sell list:", error);
+      }
+    };
 
-  const productData = {
-    code: "240107f84892a35ed5",
-    image: "http://via.placeholder.com/300x300",
-    accommodationName: "춘천세종호텔",
-    roomName: "스탠다드 룸",
-    checkInDate: "2024-01-25",
-    checkOutDate: "2024-01-26",
-    policyNumber: 2
+    fetchData();
+  }, []);
+
+  const onSubmit = () => {
+    const requestData = {
+      orderId: parseInt(id!),
+      price: price,
+      isAutoCancel: isAutoCancel,
+      canNegotiate: isNego,
+      saleEndDate: formatDate(endDate!),
+      description: sellerComment
+    };
+
+    callSellApi(requestData);
   };
 
   return (
@@ -97,22 +117,28 @@ const SellRegister = () => {
           <S.SmallSpace />
           <S.SmallSpace />
           <PriceTable
-            originalPrice={originalPrice}
-            purchasePrice={purchasePrice}
-            cancelFee={cancelFee}
-            productData={productData}
+            originalPrice={sellDetailData.price}
+            purchasePrice={sellDetailData.totalPayment}
+            policyNumber={sellDetailData.cancelPolicy}
+            code={sellDetailData.code}
+            image={sellDetailData.accommodationImage}
+            accommodationName={sellDetailData.accommodationName}
+            roomName={sellDetailData.roomName}
+            checkInDate={sellDetailData.checkInDate}
+            checkOutDate={sellDetailData.checkOutDate}
           />
           <PriceArea
             title="판매가격"
             placeholder="￦ 판매 가격을 입력해주세요"
-            originalPrice={originalPrice}
-            purchasePrice={purchasePrice}
-            cancelFee={cancelFee}
-            resetPrice={purchasePrice}
+            originalPrice={sellDetailData.price}
+            purchasePrice={sellDetailData.totalPayment}
+            policyNumber={sellDetailData.cancelPolicy}
+            resetPrice={sellDetailData.totalPayment}
             isAlert
             charge={false}
             price={price}
             setPrice={setPrice}
+            checkInDate={sellDetailData.checkInDate}
           />
         </S.RegisterInner>
         <CS.DetailBlank />
@@ -120,23 +146,29 @@ const SellRegister = () => {
         <DateOption
           bottomSheetVisible={bottomSheetVisible}
           setBottomSheetVisible={setBottomSheetVisible}
-          productData={productData}
-          originalPrice={originalPrice}
-          purchasePrice={purchasePrice}
+          checkInDate={sellDetailData.checkInDate}
+          purchasePrice={sellDetailData.totalPayment}
           price={price}
           endDate={endDate}
           endDateInfo={endDateInfo}
+          policyNumber={sellDetailData.cancelPolicy}
         />
-        <AutoCancelOption
-          isAutoCancel={isAutoCancel}
-          setIsAutoCancel={setIsAutoCancel}
-          originalPrice={originalPrice}
-          endDateInfo={endDateInfo}
-        />
+        {sellDetailData.cancelPolicy === "YNBD_3" ? null : (
+          <AutoCancelOption
+            isAutoCancel={isAutoCancel}
+            setIsAutoCancel={setIsAutoCancel}
+            originalPrice={sellDetailData.price}
+            endDateInfo={endDateInfo}
+          />
+        )}
         <CS.DetailBlank />
         <S.RegisterInner>
           <S.RegisterTitle>판매자 한마디</S.RegisterTitle>
-          <S.RegisterComment placeholder="안전한 거래를 위해 개인정보를 작성하지 않도록 주의해주세요." />
+          <S.RegisterComment
+            value={sellerComment}
+            onChange={(e) => setSellerComment(e.target.value)}
+            placeholder="안전한 거래를 위해 개인정보를 작성하지 않도록 주의해주세요."
+          />
         </S.RegisterInner>
         <CS.DetailBlank />
         <S.RegisterInner>
@@ -177,11 +209,12 @@ const SellRegister = () => {
               <Link to="/">이용규칙</Link>에 동의하실 경우 상품 등록하기를 클릭해주세요
             </p>
             <BaseButton
-              buttonType="default"
+              type="submit"
+              buttonType={allCheck ? "default" : "disabled-default"}
               width="100%"
               onClick={() => {
                 if (allCheck) {
-                  navigate("/sell/result");
+                  onSubmit();
                 }
               }}
             >

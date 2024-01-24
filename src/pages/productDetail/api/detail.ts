@@ -1,11 +1,10 @@
 import instance from "@apis/instance";
-import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 
-const getDetail = async () => {
+const getDetail = async (productId: number) => {
   try {
-    const response = await axios.get("/api/products/:id");
-    return response.data[0].data;
+    const response = await instance.get(`/products/${productId}`);
+    return response.data.data;
   } catch (err) {
     console.error("getProducts: ", err);
   }
@@ -22,7 +21,8 @@ export const createChatRoom = async (productId: number, buyerId: number) => {
     return response.data;
   } catch (error) {
     console.error("Error", error);
-    if (error instanceof AxiosError) {
+    if (error instanceof 
+        Error) {
       if (
         error.response?.data.errorMessage ===
         ("네고 불가능한 상품입니다." || "이미 채팅방이 존재합니다.")

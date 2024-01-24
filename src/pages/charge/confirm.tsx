@@ -1,13 +1,30 @@
 import * as S from "./styles/confirm";
 import * as CS from "./styles/password";
 
+import { numberFormat } from "@utils/numberFormat";
 import BaseButton from "@components/buttons/BaseButton";
 import UpperNavBar from "@components/navBar/upperNavBar";
+import usePaymentHistory from "./hooks/usePaymentHistory";
+import { useParams } from "react-router-dom";
+
+const typeMap = new Map([
+  ["DISBURSEMENT", "인출"],
+  ["CHARGE", "충전"],
+  ["DEPOSIT", "입금"],
+  ["WITHDRAW", "출금"]
+]);
 
 const ChargeConfirm = () => {
+  const { id } = useParams();
+  const { data: historyData, isLoading, error } = usePaymentHistory(Number(id));
+
+  if (isLoading) return <p>Loading...</p>;
+
+  if (error) return <p>error</p>;
+
   return (
     <>
-      <UpperNavBar title="충전완료" type="close" />
+      <UpperNavBar title={typeMap.get(historyData.type) + "완료"} type="close" />
       <CS.ConfirmWrapper>
         <img src="/src/assets/check-ico.png" alt="체크아이콘" />
         <CS.ConfirmTit>야놀자페이 충전이 완료되었습니다!</CS.ConfirmTit>
@@ -15,20 +32,20 @@ const ChargeConfirm = () => {
           <p className="tit">결제 정보</p>
           <div className="inner">
             <p className="name">충전 금액</p>
-            <p className="price">10,000원</p>
+            <p className="price">{numberFormat(historyData.amount)}원</p>
           </div>
           <div className="inner">
             <p className="name">충전 계좌</p>
-            <p className="bank">국민은행</p>
+            <p className="bank">{historyData.bankName}</p>
           </div>
-          <p className="bank-number">000000-00-000000</p>
+          <p className="bank-number">{historyData.bankAccount}</p>
           <div className="stripe"></div>
           <div className="inner">
             <p className="name">
               <span className="text-black">충전 후 잔액</span>
             </p>
             <p className="price">
-              <span className="text-red">10,000원</span>
+              <span className="text-red">{numberFormat(historyData.balance)}원</span>
             </p>
           </div>
         </S.ChargeBox>

@@ -104,6 +104,9 @@ export const LocationContainer = styled.div`
 `;
 
 export const Location = styled.p`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: #fff;
   ${({ theme }) => theme.text.overline};
 `;

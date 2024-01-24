@@ -4,17 +4,19 @@ import { ChangeEvent } from "react";
 import { GrPowerReset } from "react-icons/gr";
 
 import { numberFormat } from "@utils/numberFormat";
+import calculateFee from "@utils/calcCancelFee";
 interface PriceAreaProps {
   title: string;
   placeholder: string;
   originalPrice?: number;
-  purchasePrice?: number;
+  purchasePrice: number;
   resetPrice: number;
-  cancelFee?: number;
+  policyNumber: string;
   isAlert: boolean;
   charge: boolean;
   price: number;
-  setPrice: React.Dispatch<React.SetStateAction<number>>;
+  setPrice: React.Dispatch<React.SetStateAction<number>> | ((price: number) => void);
+  checkInDate: string;
 }
 
 const PriceArea = ({
@@ -23,11 +25,12 @@ const PriceArea = ({
   originalPrice,
   purchasePrice,
   resetPrice,
-  cancelFee,
+  policyNumber,
   isAlert,
   charge,
   price,
-  setPrice
+  setPrice,
+  checkInDate
 }: PriceAreaProps) => {
   const plusAmountData: [number, string, string][] = [
     [10000, "1만", "plus"],
@@ -43,6 +46,10 @@ const PriceArea = ({
   ];
 
   const amountData = charge ? plusAmountData : minusAmountData;
+
+  // TODO : 오늘기준 수수료계산
+  const today = new Date();
+  const cancelFee = calculateFee(policyNumber, checkInDate, today, purchasePrice);
 
   const handlePriceChange = (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = parseInt(event.target.value.replace(/[^\d]/g, ""), 10);
@@ -74,7 +81,7 @@ const PriceArea = ({
       const discountPercentage = ((originalPrice - price) / originalPrice) * 100;
       const savingsAmount = originalPrice - price;
 
-      if (price > cancelFee && price < purchasePrice) {
+      if (price >= cancelFee && price < purchasePrice) {
         return (
           <S.SalesMessage>
             원가 대비 {discountPercentage.toFixed(0)}% 할인! ({numberFormat(savingsAmount)}원 절약)

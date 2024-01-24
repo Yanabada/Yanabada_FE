@@ -9,16 +9,31 @@ import BottomSheet from "@components/bottomSheet";
 import Notice from "@components/notice";
 import CancellationPolicyTable from "@components/priceModal";
 import { checkDayOfFee } from "@utils/checkDayOfFee";
-import { productData } from "@/types/priceTable";
+import calculateFee from "@utils/calcCancelFee";
 
 interface PriceTableProps {
   originalPrice: number;
   purchasePrice: number;
-  cancelFee: number;
-  productData: productData;
+  policyNumber: string;
+  checkInDate: string;
+  checkOutDate: string;
+  code: string;
+  image: string;
+  accommodationName: string;
+  roomName: string;
 }
 
-const PriceTable = ({ originalPrice, purchasePrice, cancelFee, productData }: PriceTableProps) => {
+const PriceTable = ({
+  originalPrice,
+  purchasePrice,
+  policyNumber,
+  code,
+  image,
+  accommodationName,
+  roomName,
+  checkInDate,
+  checkOutDate
+}: PriceTableProps) => {
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
 
   const bottomSheetProps = {
@@ -26,6 +41,15 @@ const PriceTable = ({ originalPrice, purchasePrice, cancelFee, productData }: Pr
     isVisible: bottomSheetVisible,
     setIsVisible: setBottomSheetVisible
   };
+  const today = new Date();
+
+  // TODO : 오늘기준 수수료계산
+  console.log("테이블 계산하기", policyNumber, checkInDate);
+  const cancelFee: React.ReactNode = (
+    <span>{numberFormat(calculateFee(policyNumber, checkInDate, today, purchasePrice))} 원</span>
+  );
+
+  console.log(calculateFee(policyNumber, checkInDate, today, purchasePrice));
 
   return (
     <>
@@ -34,15 +58,15 @@ const PriceTable = ({ originalPrice, purchasePrice, cancelFee, productData }: Pr
         <S.PriceInfoBox>
           <div className="info-box__detail">
             <div className="img-bx">
-              <img src={productData.image} alt="숙소이미지" />
+              <img src={image} alt="숙소이미지" />
             </div>
             <div className="txt-bx">
-              <p className="number">숙소 예약 번호 {productData.code}</p>
-              <p className="tit">{productData.accommodationName}</p>
-              <p className="room">{productData.roomName}</p>
+              <p className="number">숙소 예약 번호 {code}</p>
+              <p className="tit">{accommodationName}</p>
+              <p className="room">{roomName}</p>
               <p className="date">
-                {productData.checkInDate} ({getDayOfWeek(productData.checkInDate)}) -
-                {productData.checkOutDate} ({getDayOfWeek(productData.checkOutDate)})
+                {checkInDate} ({getDayOfWeek(checkInDate)}) -{checkOutDate} (
+                {getDayOfWeek(checkOutDate)})
               </p>
             </div>
           </div>
@@ -62,7 +86,7 @@ const PriceTable = ({ originalPrice, purchasePrice, cancelFee, productData }: Pr
               <span>{numberFormat(purchasePrice)}</span>원
             </p>
           </S.PriceTableData>
-          {productData.policyNumber === 3 ? (
+          {policyNumber === "YNBD_3" ? (
             <S.PriceTableData>
               <p className="tit">취소 수수료</p>
               <p className="price">
@@ -77,25 +101,23 @@ const PriceTable = ({ originalPrice, purchasePrice, cancelFee, productData }: Pr
                   <AiFillQuestionCircle />
                 </button>
               </p>
-              <p className="price">
-                <span>{numberFormat(cancelFee)}</span>원
-              </p>
+              <p className="price">{cancelFee}</p>
               <BottomSheet {...bottomSheetProps}>
                 <S.PolicyInner>
                   <Notice
                     type="default"
                     title={checkDayOfFee({
-                      originalPrice,
-                      policyNumber: productData.policyNumber,
-                      checkInDate: productData.checkInDate
+                      purchasePrice,
+                      policyNumber: policyNumber,
+                      checkInDate: checkInDate
                     })}
                     content="아래는 날짜별로 변화하는 취소 수수료이며 정책은 숙소별로 상이합니다."
                     shape="line"
                   />
                   <CancellationPolicyTable
-                    checkInDate={productData.checkInDate}
-                    originalPrice={originalPrice}
-                    policyNumber={productData.policyNumber}
+                    checkInDate={checkInDate}
+                    purchasePrice={purchasePrice}
+                    policyNumber={policyNumber}
                   />
                 </S.PolicyInner>
               </BottomSheet>
