@@ -1,20 +1,21 @@
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
-
 import MyPositionIcon from "@assets/icons/myPosition.svg?react";
-import { StateType } from ".";
+import { UserPositionType } from ".";
 
 interface MyPositionMarkerProps {
-  state: StateType;
+  position: UserPositionType;
 }
 
-export const MyPositionMarker = ({ state: { center, isLoading } }: MyPositionMarkerProps) => {
-  return (
-    <div>
-      {!isLoading && (
-        <CustomOverlayMap position={center}>
-          <MyPositionIcon />
-        </CustomOverlayMap>
-      )}
-    </div>
-  );
+export const MyPositionMarker = ({ position: { lat, lng, isLoading } }: MyPositionMarkerProps) => {
+  if (lat && lng) {
+    return (
+      <div>
+        {!isLoading && (
+          <CustomOverlayMap position={{ lat, lng }}>
+            <MyPositionIcon />
+          </CustomOverlayMap>
+        )}
+      </div>
+    );
+  }
 };
