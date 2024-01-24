@@ -8,27 +8,35 @@ import useProducts from "@pages/products/api/queries";
 import { MyPositionMarker } from "./MyPositionMarker";
 import Research from "./Research";
 
-export interface StateType {
-  center: {
-    lat: number;
-    lng: number;
-  };
+export interface UserPositionType {
+  lat: number | null;
+  lng: number | null;
   errorMessage: string;
   isLoading: boolean;
+}
+
+export interface MapCenter {
+  lat: number;
+  lng: number;
 }
 
 const KakaoMap = () => {
   const { data: products } = useProducts();
   // FIXME: 검색 시 숙소 리스트 없을 때 처리
-  const [selectedProductId, setSelectedProductId] = useState<number>(products[0].id);
-  const [state, setState] = useState<StateType>({
-    center: {
-      lat: 33.450701,
-      lng: 126.570667
-    },
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(
+    products.length > 0 ? products[0].id : 0
+  );
+  const [mapCenter, setMapCenter] = useState<MapCenter>({
+    lat: products.length > 0 ? products[0].latitude : 33.450701,
+    lng: products.length > 0 ? products[0].longitude : 126.570667
+  });
+  const [userPosition, setUserPosition] = useState<UserPositionType>({
+    lat: null,
+    lng: null,
     errorMessage: "",
     isLoading: true
   });
+
   // TODO: 숙소 리스트의 위도 경도 배열을 positions에 담고 MapMarkers에 props로 넘겨주기
   const mapRef = useRef<kakao.maps.Map>(null);
 
@@ -36,12 +44,15 @@ const KakaoMap = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setState((prev) => ({
+          const newPosition = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          setMapCenter(newPosition);
+          setUserPosition((prev) => ({
             ...prev,
-            center: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            },
+            lat: newPosition.lat,
+            lng: newPosition.lng,
             isLoading: false
           }));
           mapRef.current?.setLevel(5);
@@ -50,7 +61,7 @@ const KakaoMap = () => {
           );
         },
         (err) => {
-          setState((prev) => ({
+          setUserPosition((prev) => ({
             ...prev,
             errorMessage: err.message,
             isLoading: false
@@ -58,7 +69,7 @@ const KakaoMap = () => {
         }
       );
     } else {
-      setState((prev) => ({
+      setUserPosition((prev) => ({
         ...prev,
         errorMessage: "현재 위치를 사용할 수 없습니다.",
         isLoading: false
@@ -71,15 +82,16 @@ const KakaoMap = () => {
   return (
     <>
       <Map
-        center={{ lat: products[0].latitude, lng: products[0].longitude }}
+        center={mapCenter}
         style={{
           position: "relative",
           width: "100%",
           height: "100%"
         }}
+        level={5}
         ref={mapRef}
       >
-        <MyPositionMarker state={state} />
+        {userPosition.lat && userPosition.lng ? <MyPositionMarker position={userPosition} /> : null}
         <MarkerClusterer averageCenter={true} minLevel={10} styles={[S.clustererStyles]}>
           <ProductsMarkers products={products} setSelectedProductId={setSelectedProductId} />
         </MarkerClusterer>

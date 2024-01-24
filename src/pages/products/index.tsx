@@ -11,7 +11,7 @@ import OptionTab from "./components/OptionTap";
 import Order from "./components/Order";
 
 const Products = () => {
-  const { isMapOpen, setMapOpen } = useMapOpen();
+  const { isMapOpen, setMapOpen, hasProducts } = useMapOpen();
 
   return (
     <>
@@ -28,14 +28,16 @@ const Products = () => {
         </Link>
         {!isMapOpen && <CategoryTab />}
       </S.Container>
-      <S.OptionWrapper>
-        <OptionTab />
-        <Order />
-      </S.OptionWrapper>
+      {!isMapOpen && (
+        <S.OptionWrapper>
+          <OptionTab />
+          <Order />
+        </S.OptionWrapper>
+      )}
       <Suspense fallback={<p>Loading...</p>}>
         <ProductList />
       </Suspense>
-      {!isMapOpen && <GoToMapButton handleClick={setMapOpen} />}
+      {!isMapOpen && hasProducts && <GoToMapButton handleClick={setMapOpen} />}
     </>
   );
 };
