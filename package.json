@@ -39,6 +39,7 @@
     "react-kakao-maps-sdk": "^1.1.24",
     "react-router-dom": "^6.21.1",
     "styled-components": "^6.1.6",
+    "terser": "^5.27.0",
     "vite-plugin-pwa": "^0.17.4",
     "vite-tsconfig-paths": "^4.2.3",
     "zustand": "^4.4.7"

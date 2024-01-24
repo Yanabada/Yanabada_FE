@@ -39,6 +39,7 @@ import ReservationComplete from "@pages/purchase/reservationComplete";
 import Notice from "@pages/notice";
 import ChargeLists from "@pages/charge/list";
 import { Suspense } from "react";
+import SellCorrect from "@pages/sell/correct";
 
 const router = createBrowserRouter([
   {
@@ -89,11 +90,15 @@ const router = createBrowserRouter([
             )
           },
           {
-            path: "register",
+            path: "register/:id",
             element: <SellRegister />
           },
           {
-            path: "detail",
+            path: "correct/:id",
+            element: <SellCorrect />
+          },
+          {
+            path: "detail/:id",
             element: <SellDetail />
           },
           {
@@ -101,7 +106,7 @@ const router = createBrowserRouter([
             element: <SellResult />
           },
           {
-            path: "confirm",
+            path: "confirm/:id",
             element: <SellConfirm />
           }
         ]
