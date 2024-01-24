@@ -7,7 +7,7 @@ export const OptionContainer = styled.ul`
   gap: 0.5rem;
   height: 3rem;
   padding: 0 0.5rem;
-  margin-bottom: 0.3rem;
+  margin: 0.3rem 0;
   overflow-x: auto;
 
   ::-webkit-scrollbar {
