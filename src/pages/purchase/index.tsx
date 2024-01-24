@@ -33,6 +33,7 @@ import calculateDiscountRate from "@pages/myPage/utils/calculateDiscountRate";
 import useProfileDetail from "@pages/myPage/hooks/useProfileDetail";
 import useBuyProduct from "./hooks/useBuyProduct";
 import convertString from "./utils/convertString";
+import onClickPayment from "./utils/onClickPayment";
 
 interface PurchaseProps {
   width?: string;
@@ -58,7 +59,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     error: profileError,
     refetch: profileRefetch
   } = useProfileDetail(true);
-  const { mutate: buyProductMutate } = useBuyProduct();
+  const { mutate: buyProductMutate, isSuccess: buyProductSuccess } = useBuyProduct();
 
   if (productError) {
     console.log(productError);
@@ -69,9 +70,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   }
 
   // profileData 안불러와지면 살리기
-  useEffect(() => {
-    profileRefetch();
-  }, []);
+  profileRefetch();
 
   const {
     register,
@@ -106,6 +105,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [nameState, setNameState] = useState("");
   const [phoneNumberState, setPhoneNumberState] = useState("");
   const [pointToUse, setPointToUse] = useState("0");
+  const [toggleButtonActive, setToggleButtonActive] = useState<number>();
 
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
   const [isYanoljaPaySubscribed] = useState(false);
@@ -176,6 +176,13 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
       setPhoneNumberState("");
     }
   }, [isChecked1]);
+
+  useEffect(() => {
+    if (buyProductSuccess) {
+      console.log("buySuccess");
+      onClickPayment(productData.accommodationInfo.name, nameState, phoneNumberState, productId);
+    }
+  }, [buyProductSuccess]);
 
   return (
     <>
@@ -458,14 +465,22 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             buttonType="yanolja"
             subText="*40,000원 할인"
             width="48%"
-            onClick={() => handlePaymentMethodChange(PaymentMethod.YanoljaPay)}
+            onClick={() => {
+              handlePaymentMethodChange(PaymentMethod.YanoljaPay);
+              setToggleButtonActive(1);
+            }}
+            toggleButtonActive={toggleButtonActive}
           >
             야놀자 페이
           </ToggleButton>
           <ToggleButton
             buttonType="toss"
             width="48%"
-            onClick={() => handlePaymentMethodChange(PaymentMethod.TossPay)}
+            onClick={() => {
+              handlePaymentMethodChange(PaymentMethod.TossPay);
+              setToggleButtonActive(2);
+            }}
+            toggleButtonActive={toggleButtonActive}
           >
             토스 페이
           </ToggleButton>
@@ -474,14 +489,22 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
           <ToggleButton
             buttonType="default"
             width="48%"
-            onClick={() => handlePaymentMethodChange(PaymentMethod.AccountTransfer)}
+            onClick={() => {
+              handlePaymentMethodChange(PaymentMethod.AccountTransfer);
+              setToggleButtonActive(3);
+            }}
+            toggleButtonActive={toggleButtonActive}
           >
             무통장 입금
           </ToggleButton>
           <ToggleButton
-            buttonType="default"
+            buttonType="default2"
             width="48%"
-            onClick={() => handlePaymentMethodChange(PaymentMethod.Card)}
+            onClick={() => {
+              handlePaymentMethodChange(PaymentMethod.Card);
+              setToggleButtonActive(4);
+            }}
+            toggleButtonActive={toggleButtonActive}
           >
             카드
           </ToggleButton>

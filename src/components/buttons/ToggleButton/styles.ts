@@ -19,8 +19,16 @@ export const ToggleButton = styled.button<ToggleButtonProps>`
 
   ${({ theme }) => theme.text.button2};
   text-align: center;
+  outline: none;
 
   &:hover {
+    border: 1px solid ${({ theme }) => theme.colors.blue[200]};
+    background: ${({ theme }) => theme.colors.gray[200]};
+
+    ${({ theme }) => theme.text.button1};
+  }
+
+  &.active {
     border: 1px solid ${({ theme }) => theme.colors.blue[200]};
     background: ${({ theme }) => theme.colors.gray[200]};
 
