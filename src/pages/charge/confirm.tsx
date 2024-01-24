@@ -15,15 +15,15 @@ const typeMap = new Map([
 ]);
 
 const ChargeConfirm = () => {
-  const { id } = useParams();
-  const { data: historyData, isLoading, error } = usePaymentHistory(Number(id));
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get("type");
   const typeText = typeParam == "charging" ? "충전" : "인출";
 
-  if (isLoading) return <p>Loading...</p>;
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { data: historyData, isLoading, error } = usePaymentHistory(Number(id));
 
+  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>error</p>;
 
   return (

@@ -7,19 +7,21 @@ import { GoCheck } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useSearchParams } from "react-router-dom";
 
-import { numberFormat } from "@utils/numberFormat";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import Notice from "@components/notice";
 import BaseButton from "@components/buttons/BaseButton";
 import PriceArea from "@components/priceArea";
+import { numberFormat } from "@utils/numberFormat";
+import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
+
 import usePaymentDetail from "./hooks/usePaymentDetail";
 import AmountStore from "./stores/amountStore";
-import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
 
 const Charge = () => {
   const [isOptionVisible, setIsOptionVisible] = useState(false);
   const [bankMessage, setBankMessage] = useState("계좌선택");
   const { amount, setAmount } = AmountStore();
+
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get("type");
   const priceParam = searchParams.get("price");
@@ -107,13 +109,15 @@ const Charge = () => {
           price={amount}
           setPrice={setAmount}
         />
-        {/* <S.AlertBanner>
-          <p className="text">
-            야놀자페이 잔액이 부족합니다.
-            <br />
-            충전을 진행해주세요!
-          </p>
-        </S.AlertBanner> */}
+        {priceParam ? (
+          <S.AlertBanner>
+            <p className="text">
+              야놀자페이 잔액이 부족합니다.
+              <br />
+              충전을 진행해주세요!
+            </p>
+          </S.AlertBanner>
+        ) : null}
         <S.ButtonWrapper>
           {amount < 10000 || amount > 2000000 ? (
             <BaseButton buttonType="disabled-default" width="100%">

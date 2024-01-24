@@ -1,14 +1,16 @@
 import * as S from "./styles/list";
 
-import NoPointIcon from "@assets/icons/noPointIcon.svg?react";
+import { useState } from "react";
+
 import UpperNavBar from "@components/navBar/upperNavBar";
 import CardSectionButton from "@components/buttons/CardSectionButton";
+import NoPointIcon from "@assets/icons/noPointIcon.svg?react";
+import { numberFormat } from "@utils/numberFormat";
+
 import translateType from "./utils/translateType";
 import transContentType from "./utils/transContentType";
 import formatDateTime from "./utils/transDateTime";
-import { numberFormat } from "@utils/numberFormat";
 import { usePaymentList } from "./hooks/usePaymentList";
-import { useState } from "react";
 
 interface PaymentItem {
   amount: number;
@@ -22,6 +24,7 @@ interface PaymentItem {
 const PointsMiddleTabList = () => {
   const [selectedTab, setSelectedTab] = useState("all");
   const { data: paymentList, isLoading, isError, error } = usePaymentList(selectedTab);
+  const payData = paymentList?.histories ?? [];
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -34,8 +37,6 @@ const PointsMiddleTabList = () => {
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
   };
-
-  const realData = paymentList?.histories ?? [];
 
   return (
     <>
@@ -59,9 +60,9 @@ const PointsMiddleTabList = () => {
           </S.MiddleTextWrapper>
         </S.MiddleWrapper>
       </S.PointsMiddleContainer>
-      {realData.length > 0 ? (
+      {payData.length > 0 ? (
         <S.PointsBottomContainer>
-          {realData.map((item: PaymentItem, index: number) => (
+          {payData.map((item: PaymentItem, index: number) => (
             <S.PointList key={`list-${index}`}>
               <S.PointListRow>
                 <S.PlusReason>
