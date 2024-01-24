@@ -66,7 +66,7 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
               </S.ListButtonTextWrapper>
               <S.RightSectionWrapper>
                 <S.RightSectionText>
-                  {formatNumberWithCommas(balanceData.balance)}원
+                  {formatNumberWithCommas(balanceData?.balance)}원
                 </S.RightSectionText>
                 <IoIosArrowForward size="18px" color="#616161" />
               </S.RightSectionWrapper>
@@ -92,7 +92,7 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
             <S.ListButtonWrapper>
               <S.ListButton
                 onClick={() => {
-                  if (balanceData.balance === 0) {
+                  if (balanceData?.balance === 0) {
                     setIsFirstModalVisible(true);
                   } else {
                     setIsSecondModalVisible(true);
@@ -105,7 +105,7 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
                 </S.ListButtonTextWrapper>
                 <S.RightSectionWrapper>
                   <S.RightSectionText>
-                    {formatNumberWithCommas(balanceData.balance)}원
+                    {formatNumberWithCommas(balanceData?.balance)}원
                   </S.RightSectionText>
                   <IoIosArrowForward size="18px" color="#616161" />
                 </S.RightSectionWrapper>

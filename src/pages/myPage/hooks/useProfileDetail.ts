@@ -1,10 +1,11 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import getProfileDetail from "../apis/getProfileDetail";
 
 const useProfileDetail = () => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ["profileDetail"],
-    queryFn: () => getProfileDetail()
+    queryFn: () => getProfileDetail(),
+    enabled: false
   });
 };
 
