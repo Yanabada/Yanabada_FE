@@ -18,7 +18,7 @@ export const callSellApi = async ({
   description
 }: RequestProp) => {
   try {
-    const response = await instance.post(`${import.meta.env.VITE_API_BASE_URL}/products`, {
+    const response = await instance.post("/products", {
       orderId,
       price,
       isAutoCancel,
