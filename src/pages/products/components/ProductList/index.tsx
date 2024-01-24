@@ -3,10 +3,11 @@ import * as S from "../../styles/style";
 import KakaoMap from "../KakaoMap";
 import ProductCard from "../ProductCard";
 import useProducts from "@pages/products/api/queries";
-import { useMapOpen } from "@pages/products/stores/mapStore";
+import { useMapState } from "@pages/products/stores/mapStore";
 import { useSearchParams } from "react-router-dom";
 import { Category, Option, OrderState } from "@pages/products/api/products";
 import { useEffect } from "react";
+import NoProduct from "../NoProduct";
 
 const ProductList = () => {
   const [searchParams] = useSearchParams();
@@ -29,7 +30,7 @@ const ProductList = () => {
     size: 3
   });
 
-  const { isMapOpen, setHasProducts } = useMapOpen();
+  const { isMapOpen, setHasProducts, hasProducts } = useMapState();
 
   useEffect(() => {
     setHasProducts(products.length);
@@ -50,6 +51,8 @@ const ProductList = () => {
         <S.MapContainer>
           <KakaoMap />
         </S.MapContainer>
+      ) : !hasProducts ? (
+        <NoProduct />
       ) : (
         <S.ProductCardWrapper>
           {products.map((product) => (

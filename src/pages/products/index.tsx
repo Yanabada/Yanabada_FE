@@ -6,12 +6,12 @@ import GoToMapButton from "./components/ToMapButton";
 import { Suspense } from "react";
 import { Link } from "react-router-dom";
 import ProductList from "./components/ProductList";
-import { useMapOpen } from "./stores/mapStore";
+import { useMapState } from "./stores/mapStore";
 import OptionTab from "./components/OptionTap";
 import Order from "./components/Order";
 
 const Products = () => {
-  const { isMapOpen, setMapOpen, hasProducts } = useMapOpen();
+  const { isMapOpen, setMapOpen, hasProducts } = useMapState();
 
   return (
     <>
