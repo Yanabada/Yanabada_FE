@@ -1,7 +1,7 @@
 import useSocket from "./useSocket";
 import { Message } from "../types/chatRoom";
 
-type MessagePubType = Pick<Message, "content" | "senderId"> & {
+export type MessagePubType = Pick<Message, "content" | "senderId"> & {
   chatRoomCode: string;
 };
 

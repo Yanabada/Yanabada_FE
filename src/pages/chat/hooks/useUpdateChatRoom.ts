@@ -3,10 +3,10 @@ import { updateChatRoom } from "../apis/api";
 import { MessageRequestParam } from "../types/chatRoom";
 import { useNavigate } from "react-router-dom";
 
-const useUpdateChatRoom = (params: MessageRequestParam) => {
+const useUpdateChatRoom = () => {
   const navigate = useNavigate();
   const mutation = useMutation({
-    mutationFn: () => updateChatRoom({ code: params.code }),
+    mutationFn: (params: MessageRequestParam) => updateChatRoom({ code: params.code }),
     onSuccess: (data) => {
       navigate("/chat");
       console.log("데이터 전송 성공", data);

@@ -1,7 +1,7 @@
 import useSocket from "./useSocket";
 import { SubscribeData, Message } from "../types/chatRoom";
 
-interface MessageSubType extends Message {
+export interface MessageSubType extends Message {
   chatRoomCode: string;
 }
 

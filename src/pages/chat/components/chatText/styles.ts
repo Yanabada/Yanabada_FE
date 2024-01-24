@@ -19,7 +19,7 @@ export const Chat = styled.div`
   align-items: flex-end;
   margin: 10px 0 20px;
 
-  [data-type="right"] {
+  &[data-type="right"] {
     flex-direction: row-reverse;
     justify-content: flex-end;
   }

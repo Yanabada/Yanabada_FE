@@ -21,9 +21,9 @@ const NegoButton = ({ data }: DetailProps) => {
       return;
     }
     const buyerId = JSON.parse(member).id;
-    const response = await createChatRoom(8, buyerId);
+    const response = await createChatRoom(data.id, buyerId);
     const chatRoomCode = response.data.chatRoomCode;
-    navigate(`/chat/${chatRoomCode}?productId=${8}`);
+    navigate(`/chat/${chatRoomCode}?productId=${data.id}`);
   };
 
   return (

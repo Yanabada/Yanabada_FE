@@ -9,10 +9,11 @@ import useMessages from "./hooks/useMessages";
 import { useParams } from "react-router-dom";
 import useUpdateChatRoom from "./hooks/useUpdateChatRoom";
 import useDeleteRoom from "./hooks/useDeleteRoom";
-import useSocket from "./hooks/useSocket";
 import ChatInput from "./components/chatInput";
 import { Message } from "./types/chatRoom";
-import subscribeApi from "./hooks/subscribeApi";
+import { Client } from "@stomp/stompjs";
+import { MessageSubType } from "./hooks/subscribeApi";
+import { MessagePubType } from "./hooks/publishApi";
 
 const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,16 +21,96 @@ const ChatRoom = () => {
   const { roomId } = useParams();
   // 챗룸으로 왔을 때, 코드는 무조건 있어야 함
   const { data } = useMessages({ code: roomId! });
+  const client = useRef<Client>();
 
-  const client = useSocket();
+  const { mutate } = useUpdateChatRoom();
+
+  // const connectHandler = (roomId: string) => {
+  //   const socket = new SockJS("http://test.yanabada.com/ws-stomp");
+  //   const stompClient = Stomp.over(socket);
+  //   stompClient.connect(
+  //     {
+  //       Authorization: `Bearer ${Cookies.get("accessToken")}`
+  //     },
+  //     () => {
+  //       console.log("연결 성공쓰");
+  //       stompClient.subscribe(`/pub/chats/${roomId}`, ({ body }) => {
+  //         const bodyObj = JSON.parse(body) as MessageSubType;
+  //         setChatMessages((prev) => [...prev, bodyObj]);
+  //       });
+  //     }
+  //   );
+  // };
 
   useEffect(() => {
-    client.activate();
+    connect();
+    // stompClient.connect({}, () => {
+    //   console.log("connected");
+    // });
+
+    // connectHandler(roomId!);
+    return () => disconnect();
   }, []);
 
-  useSocket().onConnect = () => {
-    subscribeApi({ chatRoomCode: roomId!, setChatMessages });
+  // const client = useSocket();
+
+  const connect = () => {
+    client.current = new Client({
+      brokerURL: `ws://test.yanabada.com/ws-stomp`,
+      // connectHeaders: {
+      //   Authorization: `Bearer ${Cookies.get("accessToken")}`
+      // },
+      debug: function (str) {
+        console.log(str);
+      },
+      reconnectDelay: 500000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+      onConnect: () => {
+        console.log("onConnect 들어옴");
+        subscribe();
+      },
+      onStompError: (frame) => {
+        console.error("Stomp Error:", frame);
+      }
+    });
+
+    client.current.activate();
+    console.log("activated?");
   };
+
+  const disconnect = () => {
+    console.log("연결끊겼당");
+    client.current?.deactivate();
+  };
+
+  const subscribe = () => {
+    client.current?.subscribe(`/sub/chatroom/${roomId}`, ({ body }) => {
+      const bodyObj = JSON.parse(body) as MessageSubType;
+      setChatMessages((prev) => [...prev, bodyObj]);
+    });
+  };
+
+  const publish = (params: MessagePubType) => {
+    if (!client.current?.connected) return;
+    if (!params.content?.trim()) return;
+    if (params.content?.length > 255) return;
+
+    console.log(client.current);
+
+    client.current.publish({
+      destination: `/pub/message`,
+      body: JSON.stringify({
+        chatRoomCode: params.chatRoomCode,
+        senderId: params.senderId,
+        content: params.content
+      })
+    });
+  };
+
+  // client.current.onConnect = () => {
+  //   subscribeApi({ chatRoomCode: roomId!, setChatMessages });
+  // };
 
   const productData = {
     code: "240107f84892a35ed5",
@@ -58,7 +139,7 @@ const ChatRoom = () => {
         type="back"
         isCustom
         customBack={() => {
-          useUpdateChatRoom({ code: roomId! });
+          mutate({ code: roomId! });
         }}
         title="강쥐사랑해진짜로"
         rightElement={
@@ -92,16 +173,20 @@ const ChatRoom = () => {
           <>
             <ChatText message={data.data.messages[data.data.messages.length - 1]} isNotice />
             {data.data.messages.map((message) => (
-              <ChatText key={message.sendDateTime.toString()} message={message} />
+              <ChatText key={message.sendTime.toString()} message={message} />
             ))}
             {chatMessages.map((message) => (
-              <ChatText key={message.sendDateTime.toString()} message={message} />
+              <ChatText key={message.sendTime.toString()} message={message} />
             ))}
           </>
         )}
       </S.ChatContainer>
 
-      <ChatInput chatRoomCode={roomId!} senderId={1} />
+      <ChatInput
+        chatRoomCode={roomId!}
+        senderId={JSON.parse(localStorage.getItem("member")!).id}
+        publish={publish}
+      />
 
       <Modal
         title="이 채팅방을 나가시겠어요?"
@@ -114,6 +199,7 @@ const ChatRoom = () => {
         }}
         rightBtnText="나가기"
         rightAction={() => {
+          disconnect();
           useDeleteRoom({ code: roomId! });
         }}
       />
