@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import getProfileDetail from "../apis/getProfileDetail";
 
-const useProfileDetail = () => {
+const useProfileDetail = (isFromPurchase?: boolean) => {
   return useQuery({
     queryKey: ["profileDetail"],
     queryFn: () => getProfileDetail(),
-    enabled: false
+    enabled: isFromPurchase ? true : false
   });
 };
 

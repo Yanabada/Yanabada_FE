@@ -31,6 +31,8 @@ import formatDate from "./utils/formatDate";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import calculateDiscountRate from "@pages/myPage/utils/calculateDiscountRate";
 import useProfileDetail from "@pages/myPage/hooks/useProfileDetail";
+import useBuyProduct from "./hooks/useBuyProduct";
+import convertString from "./utils/convertString";
 
 interface PurchaseProps {
   width?: string;
@@ -43,6 +45,41 @@ interface PurchaseProps {
 }
 
 const Purchase = ({ width, divType }: PurchaseProps) => {
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get("name");
+  const phoneNumber = searchParams.get("phonenumber");
+  const productId = searchParams.get("productId");
+
+  const {
+    getDetailQuery: { data: productData, error: productError }
+  } = useProductDetail(Number(productId));
+  const {
+    data: profileData,
+    error: profileError,
+    refetch: profileRefetch
+  } = useProfileDetail(true);
+  const { mutate: buyProductMutate } = useBuyProduct();
+
+  if (productError) {
+    console.log(productError);
+  }
+
+  if (profileError) {
+    console.log(profileError);
+  }
+
+  // profileData 안불러와지면 살리기
+  profileRefetch();
+
+  const {
+    register,
+    formState: { errors },
+    getValues,
+    trigger
+  } = useForm({
+    mode: "onBlur"
+  });
+
   const PaymentMethod = {
     None: "none",
     YanoljaPay: "yanoljaPay",
@@ -66,7 +103,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [isChangeButtonClicked, setIsChangeButtonClicked] = useState(false);
   const [nameState, setNameState] = useState("");
   const [phoneNumberState, setPhoneNumberState] = useState("");
-  const [pointToUse, setPointToUse] = useState("");
+  const [pointToUse, setPointToUse] = useState("0");
 
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
   const [isYanoljaPaySubscribed] = useState(false);
@@ -107,45 +144,11 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     e.preventDefault();
 
     if (errors.name1 || errors.phoneNumber1) return;
-    // FIXME: API 연동
-    console.log("submit");
-
-    const name1 = getValues("name1");
-    const phoneNumber1 = getValues("phoneNumber1");
-    console.log("name1", name1);
-    console.log("phoneNumber1", phoneNumber1);
 
     navigate(
-      `/signin/3?from=changeReservationInfo&name=${name1}&phonenumber=${phoneNumber1}&productId=${productId}&redirect=/purchase`
+      `/signin/3?from=changeReservationInfo&name=${getValues("name1")}&phonenumber=${getValues("phoneNumber1")}&productId=${productId}&redirect=/purchase`
     );
   };
-
-  const {
-    register,
-    formState: { errors },
-    getValues,
-    trigger
-  } = useForm({
-    mode: "onBlur"
-  });
-
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const phoneNumber = searchParams.get("phonenumber");
-  const productId = searchParams.get("productId");
-
-  const {
-    getDetailQuery: { data: productData, error: productError }
-  } = useProductDetail(Number(productId));
-  const { data: profileData, error: profileError, refetch: profileRefetch } = useProfileDetail();
-
-  if (productError) {
-    console.log(productError);
-  }
-
-  if (profileError) {
-    console.log(profileError);
-  }
 
   useEffect(() => {
     if (isChecked3 && isChecked4) {
@@ -171,10 +174,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
       setPhoneNumberState("");
     }
   }, [isChecked1]);
-
-  useEffect(() => {
-    profileRefetch();
-  }, []);
 
   return (
     <>
@@ -344,6 +343,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                   })}
                   errorMessage={errors.name2 && `${errors.name2?.message}`}
                   value={nameState}
+                  onChange={(e) => setNameState(e.target.value)}
                 />
                 <S.TextInputSpacer />
                 <TextInput
@@ -363,6 +363,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                   })}
                   errorMessage={errors.phoneNumber2 && `${errors.phoneNumber2?.message}`}
                   value={phoneNumberState}
+                  onChange={(e) => setPhoneNumberState(e.target.value)}
                 />
               </S.TextInputWrapper>
             </form>
@@ -389,17 +390,22 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
               </span>
             }
             value={pointToUse.toString()}
+            onChange={(e) => setPointToUse(e.target.value)}
           />
         </S.PersonInfoWrapper>
         <S.ChipWrapper>
-          <ManipulationChip
-            buttonType="abledDefault"
-            onClick={() => {
-              setPointToUse(profileData.point);
-            }}
-          >
-            전액 사용
-          </ManipulationChip>
+          {profileData.point > 0 ? (
+            <ManipulationChip
+              buttonType="abledDefault"
+              onClick={() => {
+                setPointToUse(profileData.point);
+              }}
+            >
+              전액 사용
+            </ManipulationChip>
+          ) : (
+            <ManipulationChip buttonType="disabledDefault">전액 사용</ManipulationChip>
+          )}
         </S.ChipWrapper>
       </S.ReservationContainer>
       <CS.InfoWrapper divType={divType} width={width}>
@@ -417,7 +423,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             <CS.FormLeftText color="gray">수수료</CS.FormLeftText>
           </CS.FormTextWrapper>
           <CS.FormRightPrice color="darkGray">
-            {paymentMethod === "yanojaPay" ? "야놀자 페이 사용 무료" : fee}
+            {paymentMethod === "yanoljaPay" ? "야놀자 페이 사용 무료" : fee}
           </CS.FormRightPrice>
         </CS.SeperationForm>
         <CS.SeperationForm>
@@ -627,7 +633,11 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
               shape="fill"
               color="red"
             />
-            <AuthenticationButton buttonType="default" onClick={() => setIsModalVisible(true)}>
+            <AuthenticationButton
+              buttonType="default"
+              width={width}
+              onClick={() => setIsModalVisible(true)}
+            >
               야놀자 페이 가입하러 가기
             </AuthenticationButton>
             <Modal {...modalProps} />
@@ -698,12 +708,29 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             </S.BottomDetailText>
           </S.ButtonFormWrapper>
           {isAllChecked ? (
-            <BaseButton width="100%" buttonType="default">
-              630,000원 결제하기
+            <BaseButton
+              width="100%"
+              buttonType="default"
+              onClick={() =>
+                buyProductMutate({
+                  productId: Number(productId),
+                  reservationPersonName: nameState,
+                  reservationPersonPhoneNumber: phoneNumberState,
+                  userPersonName: name,
+                  userPersonPhoneNumber: phoneNumber,
+                  point: Number(pointToUse),
+                  paymentType: convertString(paymentMethod),
+                  simplePassword: paymentMethod === "yanoljaPay" ? "123456" : ""
+                })
+              }
+            >
+              {formatNumberWithCommas(productData.sellingPrice + fee - Number(pointToUse))}원
+              결제하기
             </BaseButton>
           ) : (
             <BaseButton width="100%" buttonType="disabled-default">
-              630,000원 결제하기
+              {formatNumberWithCommas(productData.sellingPrice + fee - Number(pointToUse))}원
+              결제하기
             </BaseButton>
           )}
         </S.ReservationBottomWrapper>
