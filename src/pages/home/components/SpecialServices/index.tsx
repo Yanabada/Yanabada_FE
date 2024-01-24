@@ -14,7 +14,9 @@ type Picked =
   | "checkIn"
   | "checkOut"
   | "price"
-  | "sellingPrice";
+  | "sellingPrice"
+  | "address"
+  | "saleEnd";
 export type OptionCardType = Pick<ProductType, Picked>;
 
 const SpecialServices = () => {

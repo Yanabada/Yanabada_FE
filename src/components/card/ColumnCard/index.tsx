@@ -16,16 +16,16 @@ const ColumnCard = ({ product }: ColumnCardProps) => {
           <S.DiscountRate>
             {Math.floor(((product.price - product.sellingPrice) / product.price) * 100)}%
           </S.DiscountRate>
-          <S.Image src="https://bit.ly/2Z4KKcF'" alt="숙소 이미지" />
+          <S.Image src={product.image} alt="숙소 이미지" />
           <S.LocationContainer>
             <MapIcon />
-            <S.Location>강원도 강릉시</S.Location>
+            <S.Location>{product.address.split(" ").slice(0, 2).join(" ")}</S.Location>
           </S.LocationContainer>
         </S.ImageContainer>
         <S.InformationContainer>
           <S.TimerContainer>
             <RiTimerLine className="TimeIcon" />
-            <S.TimerText>3일 15시간 23분</S.TimerText>
+            <S.TimerText>{formatDateTo(product.saleEnd, "d일 HH시간 mm분")}</S.TimerText>
           </S.TimerContainer>
           <S.ProductContainer>
             <S.ProductName>{product.accommodationName}</S.ProductName>
