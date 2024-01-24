@@ -7,7 +7,7 @@ interface MapState {
   setHasProducts: (products: number) => void;
 }
 
-export const useMapOpen = create<MapState>()((set) => ({
+export const useMapState = create<MapState>()((set) => ({
   isMapOpen: false,
   hasProducts: false,
   setMapOpen: () => set((state) => ({ isMapOpen: !state.isMapOpen })),
