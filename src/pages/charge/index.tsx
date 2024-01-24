@@ -90,6 +90,10 @@ const Charge = () => {
         <PriceArea
           title="충전 금액을 입력해 주세요"
           placeholder="￦ 금액을 입력해주세요"
+          originalPrice={paymentData.originalPrice}
+          purchasePrice={paymentData.purchasePrice}
+          policyNumber={paymentData.policyNumber}
+          checkInDate={paymentData.checkInDate}
           resetPrice={0}
           isAlert={false}
           charge
