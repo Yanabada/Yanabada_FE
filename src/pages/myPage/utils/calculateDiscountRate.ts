@@ -1,4 +1,8 @@
 export const calculateDiscountRate = (originalPrice: number, discountedPrice: number): number => {
+  if (originalPrice < discountedPrice) {
+    return 0;
+  }
+
   if (originalPrice <= 0 || discountedPrice < 0) {
     return 0;
   }

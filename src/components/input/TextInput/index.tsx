@@ -11,6 +11,7 @@ interface InputProps extends Pick<ComponentProps<"input">, Picked> {
   isSuccess?: boolean;
   rightElement?: ReactNode | null;
   onRightElementClick?: VoidFunction;
+  id?: string;
 }
 
 const TextInput = forwardRef<HTMLInputElement, InputProps>(
