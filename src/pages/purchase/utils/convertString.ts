@@ -1,4 +1,4 @@
-function convertString(inputStr: string): string {
+export function convertString(inputStr: string): string {
   switch (inputStr) {
     case "yanoljaPay":
       return "YANOLJA_PAY";
@@ -9,8 +9,21 @@ function convertString(inputStr: string): string {
     case "card":
       return "CREDIT";
     default:
-      return "Unknown";
+      return "";
   }
 }
 
-export default convertString;
+export function convertStringToKR(inputStr: string): string {
+  switch (inputStr) {
+    case "yanoljaPay":
+      return "야놀자 페이";
+    case "tossPay":
+      return "토스 페이";
+    case "accountTransfer":
+      return "무통장 입금";
+    case "card":
+      return "카드";
+    default:
+      return "";
+  }
+}

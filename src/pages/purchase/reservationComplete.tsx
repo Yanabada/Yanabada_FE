@@ -1,12 +1,42 @@
 import UpperNavBar from "@components/navBar/upperNavBar";
 import * as S from "./reservationComplete.style";
-
 import PaperIcon from "@assets/icons/payment_confirm.svg?react";
 import ProfileIconGray from "@assets/icons/profileIcon_gray.svg?react";
 import Notice from "@components/notice";
 import { Link } from "react-router-dom";
+import formatDate from "@pages/purchase/utils/formatDate";
+import { getDayOfWeek } from "@utils/getDayOfWeek";
+import usePurchaseHistory from "@pages/myPage/hooks/usePurchaseHistory";
+
+interface TradeData {
+  tradeId: number;
+  productId: number;
+  accommodationName: string;
+  accommodationImage: string;
+  sellerNickname: string;
+  tradeRegisteredTime: string;
+  saleEndDate: string;
+  roomName: string;
+  price: number;
+  status: string;
+}
 
 const ReservationComplete = () => {
+  const purchaseInfo = JSON.parse(localStorage.getItem("purchaseInfo") as string);
+  const { productId } = purchaseInfo;
+
+  const { data, error } = usePurchaseHistory();
+
+  if (error) {
+    console.log(error);
+  }
+
+  const filteredTrades: TradeData[] = data.filter(
+    (trade: TradeData) => trade.productId === Number(productId)
+  );
+
+  console.log(productId);
+
   return (
     <S.Container>
       <UpperNavBar type="close" title="결제 완료" />
@@ -26,15 +56,22 @@ const ReservationComplete = () => {
             />
           </S.ImageWarpper>
           <div className="info">
-            <p className="product">파라스파라 서울 더 그레이트 현대 런던 </p>
-            <p className="room">Forest Tower Deluxe King</p>
-            <p className="date">2023.12.25 (월) - 2023.12.16 (화)</p>
-            <p className="check">체크인 14:00 | 체크아웃 11:00</p>
+            <p className="product">{purchaseInfo.accommodationName}</p>
+            <p className="room">{purchaseInfo.roomName}</p>
+            <p className="date">
+              {formatDate(purchaseInfo.checkInDate)} ({getDayOfWeek(purchaseInfo.checkInDate)}) -
+              {formatDate(purchaseInfo.checkOutDate)} ({getDayOfWeek(purchaseInfo.checkOutDate)})
+            </p>
+            <p className="check">
+              체크인 {purchaseInfo.checkInTime} | 체크아웃 {purchaseInfo.checkOutTime}
+            </p>
           </div>
         </div>
         <div className="bottom">
           <ProfileIconGray />
-          <p className="guest">기준 2명 / 최대 2명</p>
+          <p className="guest">
+            기준 {purchaseInfo.minHeadCount}명 / 최대 {purchaseInfo.maxHeadCount}명
+          </p>
         </div>
       </S.CardWrapper>
       <S.Spacer height="2rem" />
@@ -42,11 +79,11 @@ const ReservationComplete = () => {
       <S.Title>예약자 정보</S.Title>
       <S.Flex>
         <S.SubTitle>이름</S.SubTitle>
-        <S.Text>김개똥</S.Text>
+        <S.Text>{purchaseInfo.reservationPersonName}</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>휴대폰 번호</S.SubTitle>
-        <S.Text>010-1234-5678</S.Text>
+        <S.Text>{purchaseInfo.reservationPersonPhoneNumber}</S.Text>
       </S.Flex>
 
       <S.Spacer className="border-bottom" height="1.5rem" />
@@ -54,11 +91,11 @@ const ReservationComplete = () => {
       <S.Title>이용자 정보</S.Title>
       <S.Flex>
         <S.SubTitle>이름</S.SubTitle>
-        <S.Text>김개똥</S.Text>
+        <S.Text>{purchaseInfo.userPersonName}</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>휴대폰 번호</S.SubTitle>
-        <S.Text>010-1234-5678</S.Text>
+        <S.Text>{purchaseInfo.userPersonPhoneNumber}</S.Text>
       </S.Flex>
       <S.Spacer />
 
@@ -73,38 +110,38 @@ const ReservationComplete = () => {
       </S.NoticeWrapper>
       <S.Flex>
         <S.SubTitle>주문번호</S.SubTitle>
-        <S.Text>00000000</S.Text>
+        <S.Text>{filteredTrades[0].tradeId}</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>판매자</S.SubTitle>
-        <S.Text>강쥐사랑해</S.Text>
+        <S.Text>{filteredTrades[0].sellerNickname}</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>주문일시</S.SubTitle>
-        <S.Text>2024.01.06(토) 00:00</S.Text>
+        <S.Text>{filteredTrades[0].tradeRegisteredTime}</S.Text>
       </S.Flex>
       <S.Spacer />
 
       <S.Title>결제 정보</S.Title>
       <S.Flex>
         <S.SubTitle>상품금액</S.SubTitle>
-        <S.Text className="bold">1,200,000원</S.Text>
+        <S.Text className="bold">{purchaseInfo.productPrice}원</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>수수료</S.SubTitle>
-        <S.Text className="bold gray-600">0원</S.Text>
+        <S.Text className="bold gray-600">{purchaseInfo.fee}원</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>야놀자 포인트</S.SubTitle>
-        <S.Text className="bold gray-500">-0P</S.Text>
+        <S.Text className="bold gray-500">-{purchaseInfo.point}P</S.Text>
       </S.Flex>
       <S.Flex>
         <S.Title>총 결제 금액</S.Title>
-        <S.Text className="blue bold">1,200,000원</S.Text>
+        <S.Text className="blue bold">{purchaseInfo.totalPrice}원</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>결제 수단</S.SubTitle>
-        <S.Text>야놀자 페이</S.Text>
+        <S.Text>{purchaseInfo.paymentType}</S.Text>
       </S.Flex>
 
       <S.Footer>
