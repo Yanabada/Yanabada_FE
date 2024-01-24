@@ -3,10 +3,10 @@ import { MessageRequestParam } from "../types/chatRoom";
 import { deleteChatRoom } from "../apis/api";
 import { useNavigate } from "react-router-dom";
 
-const useDeleteRoom = (params: MessageRequestParam) => {
+const useDeleteRoom = () => {
   const navigate = useNavigate();
   const mutation = useMutation({
-    mutationFn: () => deleteChatRoom({ code: params.code }),
+    mutationFn: (params: MessageRequestParam) => deleteChatRoom({ code: params.code }),
     onSuccess: (data) => {
       navigate("/chat");
       console.log("삭제 성공", data);

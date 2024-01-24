@@ -11,9 +11,7 @@ const ChatList = ({ room }: ChatListProps) => {
   const navigate = useNavigate();
 
   return (
-    <S.List
-      onClick={() => navigate(`/chat?productId=${room.productId}&chatRoomCode=${room.productId}`)}
-    >
+    <S.List onClick={() => navigate(`/chat/${room.chatRoomCode}?productId=${room.productId}`)}>
       <S.ProfileImg src={room.partnerImage} alt="프로필" />
       <S.DetailContainer>
         <S.LeftContainer>
@@ -24,7 +22,7 @@ const ChatList = ({ room }: ChatListProps) => {
           <S.ChatText>{room.lastChatMessage}</S.ChatText>
         </S.LeftContainer>
         <S.RightContainer>
-          <S.TimeText>{room.lastSentMessageTime.toISOString()}</S.TimeText>
+          <S.TimeText>{room.lastSentMessageTime.toString()}</S.TimeText>
           <NumberBadge number={3} isChatPage={true} />
         </S.RightContainer>
       </S.DetailContainer>
