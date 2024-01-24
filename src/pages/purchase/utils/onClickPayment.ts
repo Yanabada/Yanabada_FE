@@ -21,6 +21,7 @@ export const onClickTossPayment = (
       amount: amount,
       buyer_name: name,
       buyer_tel: phoneNumber
+      // FIXME: 배포 도메인 나오면 redirect url 넣기
       // m_redirect_url: "", // 모바일에서 결제시, 페이지 주소가 바뀜, 따라서 결제 끝나고 돌아갈 주소 입력해야됨
     },
     (rsp: any) => {
@@ -57,6 +58,7 @@ export const onClickPGPayment = (
       amount: amount,
       buyer_name: name,
       buyer_tel: phoneNumber
+      // FIXME: 배포 도메인 나오면 redirect url 넣기
       // m_redirect_url: "", // 모바일에서 결제시, 페이지 주소가 바뀜, 따라서 결제 끝나고 돌아갈 주소 입력해야됨
     },
     (rsp: any) => {
