@@ -69,7 +69,9 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   }
 
   // profileData 안불러와지면 살리기
-  profileRefetch();
+  useEffect(() => {
+    profileRefetch();
+  }, []);
 
   const {
     register,
@@ -288,7 +290,12 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                   {/* FIXME: 휴대폰 인증 페이지(H-2) 라우터 추가 후 이동 로직 추가 */}
                   <ManipulationChip
                     buttonType={
-                      !errors.name1 && !errors.phoneNumber1 ? "abledDefault" : "disabledDefault"
+                      getValues("name1") &&
+                      getValues("phoneNumber1") &&
+                      !errors.name1 &&
+                      !errors.phoneNumber1
+                        ? "abledDefault"
+                        : "disabledDefault"
                     }
                     type="submit"
                   >

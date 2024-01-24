@@ -9,7 +9,7 @@ interface AuthenticationButtonProps {
 
 const ButtonLayout = css`
   display: flex;
-  height: 28px !important;
+  height: 28px;
   justify-content: center;
   align-items: center;
   gap: 8px;
