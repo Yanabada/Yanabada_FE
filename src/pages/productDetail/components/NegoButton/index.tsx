@@ -58,7 +58,12 @@ const NegoButton = ({ data }: DetailProps) => {
                   children={data.canNegotiate ? "가격 제안하기" : "가격제안불가"}
                   onClick={handleClick}
                 />
-                <BaseButton width="50%" buttonType="default" children="결제하기" />
+                <BaseButton
+                  width="50%"
+                  buttonType="default"
+                  children="결제하기"
+                  onClick={() => navigate(`/purchase?productId=${data.id}`)}
+                />
               </S.ButtonContainer>
             </>
           )}

@@ -6,7 +6,6 @@ import BottomSheet from "@components/bottomSheet";
 import { useState } from "react";
 import PriceArea from "@components/priceArea";
 import PriceTable from "@components/priceTable";
-import { productData } from "@/types/priceTable";
 import UpperNavBar from "@components/navBar/upperNavBar";
 
 interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -19,8 +18,12 @@ interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   saleEndDate: string;
   sellerId: number;
   purchasePrice: number;
-  cancelFee: number;
-  productData: productData;
+  code: string;
+  image: string;
+  accommodationName: string;
+  checkInDate: string;
+  checkOutDate: string;
+  policyNumber: string;
 }
 interface CommonContent {
   badgeText: string;
@@ -38,8 +41,12 @@ const ChatRoomBanner = ({
   saleEndDate,
   sellerId,
   purchasePrice,
-  cancelFee,
-  productData
+  code,
+  image,
+  accommodationName,
+  checkInDate,
+  checkOutDate,
+  policyNumber
 }: ChatRoomBannerProps) => {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [price, setPrice] = useState(0);
@@ -163,16 +170,22 @@ const ChatRoomBanner = ({
           <PriceTable
             originalPrice={originalPrice}
             purchasePrice={purchasePrice}
-            cancelFee={cancelFee}
-            productData={productData}
+            policyNumber={policyNumber}
+            code={code}
+            image={image}
+            accommodationName={accommodationName}
+            roomName={roomName}
+            checkInDate={checkInDate}
+            checkOutDate={checkOutDate}
           />
           <PriceArea
             title="판매 가격"
             placeholder="￦ 판매 가격을 입력해주세요"
             originalPrice={originalPrice}
             purchasePrice={purchasePrice}
-            cancelFee={cancelFee}
+            policyNumber={policyNumber}
             resetPrice={purchasePrice}
+            checkInDate={checkInDate}
             isAlert
             charge={false}
             price={price}

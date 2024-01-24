@@ -38,6 +38,8 @@ import SignInFourth from "@pages/signIn/components/signInFourth/SignInFourth";
 import ReservationComplete from "@pages/purchase/reservationComplete";
 import Notice from "@pages/notice";
 import ChargeLists from "@pages/charge/list";
+import { Suspense } from "react";
+import SellCorrect from "@pages/sell/correct";
 
 const router = createBrowserRouter([
   {
@@ -88,11 +90,15 @@ const router = createBrowserRouter([
             )
           },
           {
-            path: "register",
+            path: "register/:id",
             element: <SellRegister />
           },
           {
-            path: "detail",
+            path: "correct/:id",
+            element: <SellCorrect />
+          },
+          {
+            path: "detail/:id",
             element: <SellDetail />
           },
           {
@@ -100,7 +106,7 @@ const router = createBrowserRouter([
             element: <SellResult />
           },
           {
-            path: "confirm",
+            path: "confirm/:id",
             element: <SellConfirm />
           }
         ]
@@ -115,11 +121,19 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <MyPage width="100%" />
+            element: (
+              <Suspense>
+                <MyPage width="100%" />
+              </Suspense>
+            )
           },
           {
             path: "profile",
-            element: <Profile width="100%" />
+            element: (
+              <Suspense>
+                <Profile width="100%" />
+              </Suspense>
+            )
           },
           {
             path: "points/list",
@@ -141,27 +155,52 @@ const router = createBrowserRouter([
           },
           {
             path: "salesHistory",
-            element: <SalesHistory width="100%" />
+            element: (
+              <Suspense>
+                <SalesHistory width="100%" />
+              </Suspense>
+            )
           },
           {
             path: "management",
-            element: <Management width="100%" />
+            element: (
+              <Suspense>
+                <Management width="100%" />
+              </Suspense>
+            )
           },
           {
             path: "transactionStatement/sale",
-            element: <TransactionStatement width="100%" from="sale" />
+
+            element: (
+              <Suspense>
+                <TransactionStatement width="100%" from="sale" />
+              </Suspense>
+            )
           },
           {
             path: "transactionStatement/purchase",
-            element: <TransactionStatement width="100%" from="purchase" />
+            element: (
+              <Suspense>
+                <TransactionStatement width="100%" from="purchase" />
+              </Suspense>
+            )
           },
           {
             path: "transactionStatement/cancel",
-            element: <TransactionStatement width="100%" from="cancel" />
+            element: (
+              <Suspense>
+                <TransactionStatement width="100%" from="cancel" />
+              </Suspense>
+            )
           },
           {
             path: "purchaseHistory",
-            element: <PurchaseHistory width="100%" />
+            element: (
+              <Suspense>
+                <PurchaseHistory width="100%" />
+              </Suspense>
+            )
           }
         ]
       },
@@ -187,7 +226,11 @@ const router = createBrowserRouter([
           },
           {
             path: "lists",
-            element: <ChargeLists />
+            element: (
+              <Suspense>
+                <ChargeLists />
+              </Suspense>
+            )
           },
           {
             path: "password",
@@ -198,7 +241,7 @@ const router = createBrowserRouter([
             element: <Account />
           },
           {
-            path: "confirm",
+            path: "confirm/:id",
             element: <ChargeConfirm />
           },
           {
@@ -214,7 +257,7 @@ const router = createBrowserRouter([
     element: <Search />
   },
   {
-    path: "/products/:id",
+    path: "/products/:productId",
     element: <ProductDetail />
   },
   {

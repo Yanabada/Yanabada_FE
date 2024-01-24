@@ -18,3 +18,5 @@ export const feePolicy2 = [
   { daysBefore: 1, percentage: 70 },
   { daysBefore: 0, percentage: 0 }
 ];
+
+export const feePolicy3 = [];

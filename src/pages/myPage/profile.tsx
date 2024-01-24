@@ -1,17 +1,22 @@
 import UpperNavBar from "@components/navBar/upperNavBar";
 import * as S from "./styles/profile.styles";
-import ProfileImg from "@assets/icons/profileImg.svg?react";
 import EditIcon from "@assets/icons/editIcon.svg?react";
 import { Spacer } from "@pages/purchase/styles/styles";
 import CheckIcon from "@assets/icons/checkbox_Check.svg?react";
 import { Input, Icon } from "@components/input/Checkbox/allConsentCheckbox.style";
-import SwitchButton from "@components/buttons/SwitchButton";
+// import SwitchButton from "@components/buttons/SwitchButton";
 import ArrowForwardIcon from "@assets/icons/arrowForwardIconLight.svg?react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextInput from "@components/input/TextInput";
 import ManipulationChip from "@components/chips/ManipulationChip";
 import CancelIcon from "@assets/icons/cancelIcon.svg?react";
 import { useForm } from "react-hook-form";
+import useProfileDetail from "./hooks/useProfileDetail";
+import formatPhoneNumber from "./utils/formatPhoneNumber";
+import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import Modal from "@components/modal";
+import useChangeNickName from "./hooks/useChangeNickName";
 
 interface ProfileProps {
   width?: string;
@@ -20,7 +25,7 @@ interface ProfileProps {
 
 const Profile = ({ width }: ProfileProps) => {
   const [isEditIconClicked, setIsEditIconClicked] = useState(false);
-  const [nickName, setNickName] = useState("강쥐사랑해");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,14 +46,39 @@ const Profile = ({ width }: ProfileProps) => {
     mode: "onBlur"
   });
 
+  const { data, error, refetch } = useProfileDetail();
+  const { mutate, isSuccess } = useChangeNickName();
+
+  if (error) {
+    console.log(error);
+  }
+
+  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const phoneNumber = searchParams.get("phonenumber");
+
+  const modalProps = {
+    title: `회원탈퇴는 야놀자에서 \n가능합니다`,
+    leftBtnText: "야놀자로 이동",
+    rightBtnText: "아니오",
+    isVisible: isModalVisible,
+    setIsVisible: setIsModalVisible,
+    leftAction: () => (location.href = "https://www.yanolja.com"),
+    rightAction: () => setIsModalVisible(false)
+  };
+
+  useEffect(() => {
+    setIsEditIconClicked(false);
+    refetch();
+  }, [isSuccess]);
+
   return (
     <>
       <UpperNavBar title="내 정보 관리" type="back" />
       <S.ProfileContainer width={width}>
         <S.ProfileWrapper gap="16px">
-          {/* FIXME: 추후 DB에서 받아온 이미지로 변경 예정 */}
-          {/* <S.ProfileImage imageURL={imageURL} /> */}
-          <ProfileImg />
+          <S.ProfileImage imageURL={data.imageURL} />
           {isEditIconClicked ? (
             <S.FormWrapper width={width}>
               <form onSubmit={onSubmit}>
@@ -73,8 +103,7 @@ const Profile = ({ width }: ProfileProps) => {
                     buttonType={!errors.nickName ? "abledDefault" : "disabledDefault"}
                     type="submit"
                     onClick={() => {
-                      setNickName(getValues("nickName"));
-                      setIsEditIconClicked(false);
+                      mutate(getValues("nickName"));
                     }}
                   >
                     확인
@@ -91,12 +120,12 @@ const Profile = ({ width }: ProfileProps) => {
           ) : (
             <>
               <S.ProfileTextWrapper>
-                <S.ProfileText>{nickName}</S.ProfileText>
+                <S.ProfileText>{data.nickName}</S.ProfileText>
                 <S.EditIconWrapper onClick={() => setIsEditIconClicked(true)}>
                   <EditIcon />
                 </S.EditIconWrapper>
               </S.ProfileTextWrapper>
-              <S.EmailText>email*****@gmail.com</S.EmailText>
+              <S.EmailText>{data.email}</S.EmailText>
             </>
           )}
         </S.ProfileWrapper>
@@ -110,7 +139,7 @@ const Profile = ({ width }: ProfileProps) => {
               <S.LeftText>아이디</S.LeftText>
             </S.LeftTextWrapper>
             <S.RightTextWrapper>
-              <S.RightText>email*****@gmail.com</S.RightText>
+              <S.RightText>{data.id}</S.RightText>
             </S.RightTextWrapper>
           </S.PersonalInfoTextWrapper>
 
@@ -119,7 +148,7 @@ const Profile = ({ width }: ProfileProps) => {
               <S.LeftText>이메일</S.LeftText>
             </S.LeftTextWrapper>
             <S.RightTextWrapper>
-              <S.RightText>email*****@gmail.com</S.RightText>
+              <S.RightText>{data.email}</S.RightText>
             </S.RightTextWrapper>
           </S.PersonalInfoTextWrapper>
 
@@ -131,7 +160,11 @@ const Profile = ({ width }: ProfileProps) => {
               <S.RightText>**********</S.RightText>
             </S.RightTextWrapper>
             <S.ButtonWrapper>
-              <S.ButtonText>수정하기</S.ButtonText>
+              <S.ButtonText
+                onClick={() => navigate(`/signin?from=changePassword&redirect=/mypage/profile`)}
+              >
+                수정하기
+              </S.ButtonText>
             </S.ButtonWrapper>
           </S.PersonalInfoTextWrapper>
 
@@ -140,10 +173,20 @@ const Profile = ({ width }: ProfileProps) => {
               <S.LeftText>휴대폰번호</S.LeftText>
             </S.PhoneNumberWrapper>
             <S.RightTextWrapper>
-              <S.RightText>010****1234</S.RightText>
+              <S.RightText>
+                {phoneNumber ? phoneNumber : formatPhoneNumber(data.phoneNumber)}
+              </S.RightText>
             </S.RightTextWrapper>
             <S.ButtonWrapper>
-              <S.ButtonText>수정하기</S.ButtonText>
+              <S.ButtonText
+                onClick={() =>
+                  navigate(
+                    `/signin/3?phonenumber=${data.phoneNumber}&from=changePhoneNumber&redirect=/mypage/profile`
+                  )
+                }
+              >
+                수정하기
+              </S.ButtonText>
             </S.ButtonWrapper>
           </S.PersonalInfoTextWrapper>
         </S.PersonalInfoWrapper>
@@ -175,7 +218,7 @@ const Profile = ({ width }: ProfileProps) => {
           </S.CheckBoxContainer>
         </S.PersonalInfoWrapper>
 
-        <Spacer width={width} />
+        {/* <Spacer width={width} />
 
         <S.PersonalInfoWrapper gap="16px">
           <S.SwitchLabel>
@@ -185,17 +228,18 @@ const Profile = ({ width }: ProfileProps) => {
             </S.LabelLeftWrapper>
             <SwitchButton />
           </S.SwitchLabel>
-        </S.PersonalInfoWrapper>
+        </S.PersonalInfoWrapper> */}
 
         <Spacer width={width} />
 
-        <S.PersonalInfoWrapper gap="16px">
+        <S.PersonalInfoWrapper gap="16px" onClick={() => setIsModalVisible(true)}>
           <S.WithdrawalWrapper>
             <S.Label>회원탈퇴</S.Label>
             <ArrowForwardIcon />
           </S.WithdrawalWrapper>
         </S.PersonalInfoWrapper>
       </S.ProfileContainer>
+      <Modal {...modalProps} />
     </>
   );
 };

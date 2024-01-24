@@ -41,6 +41,7 @@
     "react-router-dom": "^6.21.1",
     "sockjs-client": "^1.6.1",
     "styled-components": "^6.1.6",
+    "terser": "^5.27.0",
     "vite-plugin-pwa": "^0.17.4",
     "vite-tsconfig-paths": "^4.2.3",
     "ws": "^8.16.0",

@@ -9,20 +9,20 @@ import { feePolicy1, feePolicy2 } from "@constants/feePolicys";
 interface TableRowProps {
   cancellationDate: Date;
   daysBefore: number;
-  originalPrice: number;
+  purchasePrice: number;
   percentage: number;
 }
 
 interface PolicyTableProps {
   checkInDate: string;
-  originalPrice: number;
-  policyNumber: number;
+  purchasePrice: number;
+  policyNumber: string;
 }
 
 const CancellationTableRow = ({
   cancellationDate,
   daysBefore,
-  originalPrice,
+  purchasePrice,
   percentage
 }: TableRowProps) => {
   const today = new Date();
@@ -31,12 +31,12 @@ const CancellationTableRow = ({
   const cancellationText =
     daysBefore === 0
       ? "체크인 당일 및 No-show"
-      : `${format(cancellationDate, "yyyy.MM.dd")} 24:00 전 까지`;
+      : `${format(cancellationDate, "yyyy.MM.dd")} 23:59 전 까지`;
 
   const cancellationFeeText =
     daysBefore === 0
       ? "취소 및 환불 불가"
-      : `총 판매가의 ${percentage}% ${numberFormat(originalPrice * percentage * 0.01)}원`;
+      : `총 판매가의 ${percentage}% ${numberFormat(purchasePrice * percentage * 0.01)}원`;
   return (
     <tr className={isToday ? "today-row" : ""}>
       <td>{cancellationText}</td>
@@ -47,16 +47,16 @@ const CancellationTableRow = ({
 
 const CancellationPolicyTable = ({
   checkInDate,
-  originalPrice,
+  purchasePrice,
   policyNumber
 }: PolicyTableProps) => {
   const [tableData, setTableData] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
-    const getFeePercentage = (policyNumber: number) => {
-      if (policyNumber === 1) {
+    const getFeePercentage = (policyNumber: string) => {
+      if (policyNumber === "YNBD_1") {
         return feePolicy1;
-      } else if (policyNumber === 2) {
+      } else if (policyNumber === "YNBD_2") {
         return feePolicy2;
       }
       return [];
@@ -72,14 +72,14 @@ const CancellationPolicyTable = ({
           key={cancellationDate.toString()}
           cancellationDate={cancellationDate}
           daysBefore={daysBefore}
-          originalPrice={originalPrice}
+          purchasePrice={purchasePrice}
           percentage={percentage}
         />
       );
     });
 
     setTableData(rows);
-  }, [checkInDate, originalPrice, policyNumber]);
+  }, [checkInDate, purchasePrice, policyNumber]);
 
   return (
     <S.PriceTable>

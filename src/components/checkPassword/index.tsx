@@ -6,6 +6,7 @@ import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import useChangePassword from "@pages/signIn/hooks/useChangePassword";
 import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
 
 interface FormData {
@@ -48,6 +49,12 @@ const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
     }
     return false;
   };
+
+  const { mutate, isSuccess } = useChangePassword();
+
+  useEffect(() => {
+    isSuccess && navigate(to);
+  }, [isSuccess]);
 
   return (
     <>
@@ -92,6 +99,7 @@ const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
           if (!isPassed) {
             return;
           }
+          mutate(password);
           setPassword(password); // 회원가입용
           navigate(to);
         }}
