@@ -1,7 +1,7 @@
 import { instance } from "@apis/instance";
 
 const getProfileDetail = async () => {
-  const getProfileDetailURL = `/member`;
+  const getProfileDetailURL = "/members";
 
   const response = await instance.get(getProfileDetailURL);
 
