@@ -17,7 +17,10 @@ const PasswordConfirm = () => {
   const isRegistration = searchParams.get("registration") === "true";
   const typeParam = searchParams.get("type");
   const redirectParam = searchParams.get("redirect");
+
   const navigate = useNavigate();
+
+  const { amount } = AmountStore();
 
   const [enteredDigits, setEnteredDigits] = useState<number[]>([]);
   const [savedDigits, setSavedDigits] = useState<number[]>([]);
@@ -28,7 +31,6 @@ const PasswordConfirm = () => {
       : "간편결제 비밀번호 6자리를 입력해주세요"
   );
 
-  const { amount } = AmountStore();
   const { setPassword } = PasswordStore();
 
   const shakeOnMismatch = () => {

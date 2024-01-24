@@ -11,7 +11,6 @@ const getPaymentDetail = async () => {
 };
 
 const postPassword = async (requestData: RequestPassword) => {
-  console.log("충전비번");
   try {
     const response = await instance.post("/payments/charge", requestData);
     return response.data.data;
@@ -21,7 +20,6 @@ const postPassword = async (requestData: RequestPassword) => {
 };
 
 const withdrawAmount = async (requestData: RequestPassword) => {
-  console.log("인출비번");
   try {
     const response = await instance.post("/payments/disburse", requestData);
     return response.data.data;
