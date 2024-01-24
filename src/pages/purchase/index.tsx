@@ -32,7 +32,7 @@ import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import calculateDiscountRate from "@pages/myPage/utils/calculateDiscountRate";
 import useProfileDetail from "@pages/myPage/hooks/useProfileDetail";
 import useBuyProduct from "./hooks/useBuyProduct";
-import convertString from "./utils/convertString";
+import { convertString, convertStringToKR } from "./utils/convertString";
 import { onClickTossPayment, onClickPGPayment } from "./utils/onClickPayment";
 
 interface PurchaseProps {
@@ -181,7 +181,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   useEffect(() => {
     if (isPaymentSuccess) {
       const simplePassword = localStorage.getItem("simplePW");
-
       buyProductMutate({
         productId: Number(productId),
         reservationPersonName: nameState,
@@ -190,10 +189,13 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         userPersonPhoneNumber: phoneNumber,
         point: Number(pointToUse),
         paymentType: convertString(paymentMethod),
-        // FIXME: 야놀자페이 등록시 등록한 비밀번호로 변경
         simplePassword: simplePassword
       });
+    }
+  }, [isPaymentSuccess]);
 
+  useEffect(() => {
+    if (buyProductSuccess) {
       const purchaseInfo = {
         accommodationName: productData?.accommodationInfo.name,
         roomName: productData?.roomInfo.name,
@@ -212,17 +214,12 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         fee: fee,
         point: pointToUse,
         totalPrice: formatNumberWithCommas(productData?.sellingPrice + fee - Number(pointToUse)),
-        paymentType: paymentMethod
+        paymentType: convertStringToKR(paymentMethod),
+        productId: productId
       };
 
       localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
 
-      navigate("/purchase/confirm");
-    }
-  }, [isPaymentSuccess]);
-
-  useEffect(() => {
-    if (buyProductSuccess) {
       navigate("/purchase/confirm");
     }
   }, [buyProductSuccess]);
@@ -480,7 +477,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             <CS.FormLeftText color="gray">수수료</CS.FormLeftText>
           </CS.FormTextWrapper>
           <CS.FormRightPrice color="darkGray">
-            {paymentMethod === "yanoljaPay" ? "야놀자 페이 사용 무료" : fee}
+            {paymentMethod === "yanoljaPay" ? "야놀자 페이 사용 무료" : `${fee}원`}
           </CS.FormRightPrice>
         </CS.SeperationForm>
         <CS.SeperationForm>
