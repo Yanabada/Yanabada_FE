@@ -12,15 +12,6 @@ const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const productData = {
-    code: "240107f84892a35ed5",
-    image: "http://via.placeholder.com/300x300",
-    accommodationName: "춘천세종호텔",
-    roomName: "스탠다드 룸",
-    checkInDate: "2024-01-16",
-    checkOutDate: "2024-01-19",
-    policyNumber: 2
-  };
   const status = "ON_SALE";
 
   // 채팅 왔을 때 아래로 스크롤
@@ -32,6 +23,16 @@ const ChatRoom = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // TODO : API 호출로 연결 예정
+  const productData = {
+    code: "1",
+    image: "1.jpg",
+    accommodationName: "호텔이름이야",
+    checkInDate: "2024-02-01",
+    checkOutDate: "2024-02-02",
+    policyNumber: "YNBD_1"
+  };
 
   return (
     <>
@@ -59,8 +60,12 @@ const ChatRoom = () => {
         saleEndDate="2021-09-30"
         sellerId={1}
         purchasePrice={600000}
-        cancelFee={300000}
-        productData={productData}
+        code={productData.code}
+        image={productData.image}
+        accommodationName={productData.accommodationName}
+        checkInDate={productData.checkInDate}
+        checkOutDate={productData.checkOutDate}
+        policyNumber={productData.policyNumber}
       />
       <S.ChatContainer ref={bottom} status={status}>
         <ChatText isNotice />

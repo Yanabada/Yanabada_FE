@@ -1,30 +1,42 @@
 import * as S from "./styles/confirm";
 import * as CS from "./styles/register";
 
-import UpperNavBar from "@components/navBar/upperNavBar";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { FaCheck } from "react-icons/fa6";
+
+import UpperNavBar from "@components/navBar/upperNavBar";
 import DateChangeButton from "@components/buttons/DateChangeButton";
-import InfoBox from "./components/InfoBox";
-import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
+import { numberFormat } from "@utils/numberFormat";
+import { getDayOfWeek } from "@utils/getDayOfWeek";
+import calculateFee from "@utils/calcCancelFee";
 import SellerSay from "@pages/productDetail/components/SellerSay";
+import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
+
+import initialConfirmData from "./constants/initialConfirmData";
+import InfoBox from "./components/InfoBox";
+import getSellResult from "./apis/getSellResult";
+import { getFivePercentage } from "./utils/getFivePercentage";
 
 const SellConfirm = () => {
-  const InfoProps = {
-    imgUrl: "http://via.placeholder.com/300x300",
-    number: "20231219186542325",
-    title: "파라스파라 서울 더 그레이트 현대 런던 ",
-    room: "Forest Tower Deluxe King",
-    checkInDate: "2024-01-15",
-    checkOutDate: "2024-01-18",
-    checkInTime: "17:00",
-    checkOutTime: "12:00"
-  };
+  const [confirmData, setConfirmData] = useState(initialConfirmData);
+  const { id } = useParams();
+  const today = new Date();
 
-  const sellerProp = {
-    id: 1,
-    nickname: "나나라나",
-    imageUrl: "http://via.placeholder.com/300x300"
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!id) {
+          return;
+        }
+        const sellDetailData = await getSellResult({ id });
+        setConfirmData(sellDetailData.data);
+      } catch (error) {
+        console.error("Error fetching sell list:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -33,7 +45,16 @@ const SellConfirm = () => {
         <CS.RegisterInner>
           <CS.RegisterTitle>입력한 상품 정보가 정확한지 확인하세요.</CS.RegisterTitle>
           <CS.RegisterSubTitle>숙소 정보</CS.RegisterSubTitle>
-          <InfoBox infoProps={InfoProps} />
+          <InfoBox
+            code={confirmData.orderCode}
+            accommodationImage={confirmData.accommodationInfo.image}
+            accommodationName={confirmData.accommodationInfo.name}
+            roomName={confirmData.roomInfo.name}
+            checkInDate={confirmData.checkInDate}
+            checkOutDate={confirmData.checkOutDate}
+            checkInTime={confirmData.roomInfo.checkInTime}
+            checkOutTime={confirmData.roomInfo.checkOutTime}
+          />
         </CS.RegisterInner>
         <S.ConfirmBlank />
         <CS.RegisterInner>
@@ -42,20 +63,20 @@ const SellConfirm = () => {
             <div className="inner">
               <p className="name">판매가</p>
               <p className="value">
-                <span className="text-black">800,000원</span>
+                <span className="text-black">{getFivePercentage(confirmData.sellingPrice)}원</span>
               </p>
             </div>
             <div className="inner">
               <p className="name">
                 결제 수수료 <span>(구매자 부담)</span>
               </p>
-              <p className="value">40,000원</p>
+              <p className="value">{numberFormat((confirmData.sellingPrice * 5) / 100)} 원</p>
             </div>
             <div className="stripe"></div>
             <div className="inner">
               <p className="name">최종 판매가</p>
               <p className="value">
-                <span className="text-blue">840,000원</span>
+                <span className="text-blue">{numberFormat(confirmData.sellingPrice)} 원</span>
               </p>
             </div>
           </S.ConfirmBox>
@@ -67,28 +88,37 @@ const SellConfirm = () => {
           <CS.RegisterSubTitle>가격제안 가능여부</CS.RegisterSubTitle>
           <S.ConfirmWrapper>
             <div>
-              <S.SelectButton className="selected">
+              <S.SelectButton className={confirmData.canNegotiate ? "selected" : ""}>
                 <FaCheck />
                 가격제안 가능
               </S.SelectButton>
             </div>
             <div>
-              <S.SelectButton className="">가격제안 불가</S.SelectButton>
+              <S.SelectButton className={confirmData.canNegotiate ? "" : "selected"}>
+                가격제안 불가
+              </S.SelectButton>
             </div>
           </S.ConfirmWrapper>
           <S.InnerBlank />
           <CS.RegisterSubTitle>판매 중단 날짜</CS.RegisterSubTitle>
-          <DateChangeButton endDate={"2024.01.06"} width="100%" disabled />
+          <DateChangeButton
+            endDate={confirmData.saleEndDate}
+            week={getDayOfWeek(confirmData.saleEndDate)}
+            width="100%"
+            disabled
+          />
           <S.InnerBlank />
           <CS.RegisterSubTitle>야놀자 자동 예약 취소</CS.RegisterSubTitle>
           <S.ConfirmWrapper>
             <div>
-              <S.SelectButton className="selected">
+              <S.SelectButton className={confirmData.isAutoCancel ? "selected" : ""}>
                 <FaCheck />예
               </S.SelectButton>
             </div>
             <div>
-              <S.SelectButton className="">아니오</S.SelectButton>
+              <S.SelectButton className={confirmData.isAutoCancel ? "" : "selected"}>
+                아니오
+              </S.SelectButton>
             </div>
           </S.ConfirmWrapper>
           <CS.RefundText>
@@ -97,10 +127,22 @@ const SellConfirm = () => {
               야놀자에서 취소 시 환불금
             </p>
             <p className="price">
-              <span>700,000</span>원
+              <span>
+                {numberFormat(
+                  calculateFee(
+                    confirmData.roomInfo.cancelPolicy,
+                    confirmData.checkInDate,
+                    today,
+                    confirmData.purchasePrice
+                  )
+                )}
+              </span>
+              원
             </p>
           </CS.RefundText>
         </CS.RegisterInner>
+        {/* ⚠️ 보류 ⚠️ */}
+        {/* 
         <S.ConfirmBlank />
         <CS.RegisterInner>
           <CS.RegisterTitle>받을 수 있는 금액을 확인하세요</CS.RegisterTitle>
@@ -118,11 +160,6 @@ const SellConfirm = () => {
                   <span className="percentage text-blue">90%</span>
                   <span className="price">926,1000원</span>
                 </p>
-                {/* startDate 입력 전 */}
-                {/* <p className="tit no-text">
-                    판매 가격이
-                    <br /> 설정되지 않았어요
-                  </p> */}
               </div>
             </div>
             <div className="inner">
@@ -139,9 +176,10 @@ const SellConfirm = () => {
             </div>
           </S.ConfirmInner>
         </CS.RegisterInner>
+         */}
         <CS.RegisterInner className="gray-bg">
           <CS.RegisterTitle>판매자 한마디</CS.RegisterTitle>
-          <SellerSay seller={sellerProp} description="갑자기 개인사정이 생겨서 싸게 내놓습니다~" />
+          <SellerSay seller={confirmData.seller} description={confirmData.description} />
         </CS.RegisterInner>
       </CS.RegisterWrap>
     </>

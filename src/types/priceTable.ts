@@ -5,5 +5,5 @@ export interface productData {
   roomName: string;
   checkInDate: string;
   checkOutDate: string;
-  policyNumber: number;
+  policyNumber: string;
 }
