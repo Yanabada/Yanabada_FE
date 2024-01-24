@@ -64,6 +64,7 @@ export const ListCard = styled(motion.div)`
   margin-bottom: 16px;
 
   .list-card {
+    background-color: white;
     &__title {
       ${({ theme }) => theme.text.subtitle5};
 
