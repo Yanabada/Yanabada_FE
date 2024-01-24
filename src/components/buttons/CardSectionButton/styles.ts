@@ -23,7 +23,7 @@ const ButtonLayout = css`
   border-radius: 5px;
 `;
 
-export const CardSectionWrapper = styled.button<CardSectionProps>`
+export const CardSectionWrapper = styled.div<CardSectionProps>`
   display: flex;
   width: ${({ width }) => width || "100%"};
   padding: ${({ buttonType }) =>

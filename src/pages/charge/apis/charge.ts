@@ -11,11 +11,22 @@ const getPaymentDetail = async () => {
 };
 
 const postPassword = async (requestData: RequestPassword) => {
+  console.log("충전비번");
   try {
     const response = await instance.post("/payments/charge", requestData);
     return response.data.data;
   } catch (err) {
     console.error("postPassword: ", err);
+  }
+};
+
+const withdrawAmount = async (requestData: RequestPassword) => {
+  console.log("인출비번");
+  try {
+    const response = await instance.post("/payments/disburse", requestData);
+    return response.data.data;
+  } catch (err) {
+    console.error("withdrawAmount: ", err);
   }
 };
 
@@ -28,4 +39,13 @@ const getPaymentHistory = async (historyId: number) => {
   }
 };
 
-export { getPaymentDetail, postPassword, getPaymentHistory };
+const getPaymentsLists = async (path: string) => {
+  try {
+    const response = await instance.get(path);
+    return response.data.data || [];
+  } catch (err) {
+    console.error("getPaymentsLists: ", err);
+  }
+};
+
+export { getPaymentDetail, postPassword, getPaymentHistory, getPaymentsLists, withdrawAmount };

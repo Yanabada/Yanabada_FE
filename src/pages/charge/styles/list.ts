@@ -35,7 +35,6 @@ export const MessageText = styled.p`
 
 export const PointsBottomContainer = styled.div`
   padding: 0 14px;
-  height: 536px;
 
   display: flex;
   flex-direction: column;
@@ -97,13 +96,6 @@ export const EventName = styled.p`
   margin-right: 10px;
 `;
 
-export const Date = styled.p`
-  ${({ theme }) => theme.text.caption1}
-  color: ${({ theme }) => theme.colors.gray[600]};
-
-  flex: 1 0 0;
-`;
-
 export const DueDate = styled.p`
   ${({ theme }) => theme.text.caption1}
   color: ${({ theme }) => theme.colors.gray[600]};
@@ -152,9 +144,11 @@ export const MiddleTextWrapper = styled.div`
   gap: 8px;
 `;
 
-export const UnderLine = styled.div`
+export const UnderLine = styled.span`
+  width: 30%;
   height: 3px;
   align-self: stretch;
+  margin: 0 auto;
 
   background: ${({ theme }) => theme.colors.gray[900]};
 `;

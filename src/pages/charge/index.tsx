@@ -5,7 +5,7 @@ import { IoMdArrowDropup } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { GoCheck } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { numberFormat } from "@utils/numberFormat";
 import UpperNavBar from "@components/navBar/upperNavBar";
@@ -20,12 +20,16 @@ const Charge = () => {
   const [isOptionVisible, setIsOptionVisible] = useState(false);
   const [bankMessage, setBankMessage] = useState("계좌선택");
   const { amount, setAmount } = AmountStore();
+  const [searchParams] = useSearchParams();
+  const typeParam = searchParams.get("type");
+  const priceParam = searchParams.get("price");
 
   const toggleOption = () => {
     setIsOptionVisible((prev) => !prev);
   };
 
   const { data: paymentData, isLoading, error } = usePaymentDetail();
+  const typeText = typeParam == "charging" ? "충전" : "인출";
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -33,14 +37,17 @@ const Charge = () => {
 
   return (
     <>
-      <UpperNavBar title="충전" type="back" />
+      <UpperNavBar title={typeText} type="back" />
       <S.ChargeWrapper>
-        {/* <S.PayBalance className="product-balance">
-          <div>
-            <span className="text">₩ 상품가격</span>
-          </div>
-          <span className="price">623,000원</span>
-        </S.PayBalance> */}
+        {priceParam ? (
+          <S.PayBalance className="product-balance">
+            <div>
+              <span className="text">₩ 상품가격</span>
+            </div>
+            <span className="price">{numberFormat(parseInt(priceParam))} 원</span>
+          </S.PayBalance>
+        ) : null}
+
         <S.PayBalance>
           <div>
             <YanoljaIcon />
@@ -49,11 +56,11 @@ const Charge = () => {
           <span className="price">{numberFormat(paymentData.balance)}원</span>
         </S.PayBalance>
         <S.PaySpace />
-        <S.PayTitle>페이를 충전하실 계좌를 선택해 주세요</S.PayTitle>
+        <S.PayTitle>페이를 {typeText}하실 계좌를 선택해 주세요</S.PayTitle>
         <Notice
           type="info"
           color="blue"
-          content="잔액 충전은 야놀자 페이에 등록된 본인 명의 계좌로만 가능합니다."
+          content={`잔액 ${typeText}은 야놀자 페이에 등록된 본인 명의 계좌로만 가능합니다.`}
           shape="lineFill"
         />
         <S.PaySpace />
@@ -110,12 +117,12 @@ const Charge = () => {
         <S.ButtonWrapper>
           {amount < 10000 || amount > 2000000 ? (
             <BaseButton buttonType="disabled-default" width="100%">
-              ₩ 충전하기
+              ₩ {typeText}하기
             </BaseButton>
           ) : (
-            <Link to="/charge/password?registration=false">
+            <Link to={`/charge/password?registration=false&type=${typeParam}`}>
               <BaseButton buttonType="default" width="100%">
-                ₩ 충전하기
+                ₩ {typeText}하기
               </BaseButton>
             </Link>
           )}
