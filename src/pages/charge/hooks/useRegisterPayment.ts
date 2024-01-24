@@ -17,9 +17,10 @@ const useRegisterForPayment = () => {
 
     try {
       const response = await instance.post("/payments", requestData);
-      navigate("/charge/success");
+
       return response.data.data;
     } catch (err) {
+      navigate("/charge/success");
       console.error("registerForPayment: ", err);
     }
   };
