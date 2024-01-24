@@ -7,8 +7,9 @@ export const onClickTossPayment = (
   name: string,
   phoneNumber: string,
   amount: number
-): boolean => {
+) => {
   const IMP = window.IMP;
+
   IMP.init("imp15200254"); // 예: 'imp00000000a'
   IMP.request_pay(
     {
@@ -27,15 +28,14 @@ export const onClickTossPayment = (
       if (rsp) {
         // 결제 성공 시 로직
         console.log(rsp);
-        return true;
+
+        localStorage.setItem("tossPayment", "true");
       } else {
         // 결제 실패 시 로직,
-        return false;
+        localStorage.setItem("tossPayment", "false");
       }
     }
   );
-
-  return false;
 };
 
 export const onClickPGPayment = (
@@ -44,7 +44,7 @@ export const onClickPGPayment = (
   phoneNumber: string,
   amount: number,
   payMethod: string
-): boolean => {
+) => {
   const IMP = window.IMP;
   IMP.init("imp15200254"); // 예: 'imp00000000a'
   IMP.request_pay(
@@ -64,10 +64,11 @@ export const onClickPGPayment = (
       if (rsp) {
         // 결제 성공 시 로직
         console.log(rsp);
-        return true;
+
+        localStorage.setItem(payMethod, "true");
       } else {
         // 결제 실패 시 로직,
-        return false;
+        localStorage.setItem(payMethod, "false");
       }
     }
   );

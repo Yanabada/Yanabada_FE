@@ -180,6 +180,8 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
 
   useEffect(() => {
     if (isPaymentSuccess) {
+      const simplePassword = localStorage.getItem("simplePW");
+
       buyProductMutate({
         productId: Number(productId),
         reservationPersonName: nameState,
@@ -189,8 +191,33 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         point: Number(pointToUse),
         paymentType: convertString(paymentMethod),
         // FIXME: 야놀자페이 등록시 등록한 비밀번호로 변경
-        simplePassword: paymentMethod === "yanoljaPay" ? "123456" : ""
+        simplePassword: simplePassword
       });
+
+      const purchaseInfo = {
+        accommodationName: productData?.accommodationInfo.name,
+        roomName: productData?.roomInfo.name,
+        checkInDate: productData?.checkInDate,
+        checkOutDate: productData?.checkOutDate,
+        checkInTime: productData?.roomInfo.checkInTime,
+        checkOutTime: productData?.roomInfo.checkOutTime,
+        minHeadCount: productData?.roomInfo.minHeadCount,
+        maxHeadCount: productData?.roomInfo.maxHeadCount,
+        reservationPersonName: nameState,
+        reservationPersonPhoneNumber: phoneNumberState,
+        userPersonName: name,
+        userPersonPhoneNumber: phoneNumber,
+        tradeId: productData?.tradeId,
+        productPrice: formatNumberWithCommas(productData.price),
+        fee: fee,
+        point: pointToUse,
+        totalPrice: formatNumberWithCommas(productData?.sellingPrice + fee - Number(pointToUse)),
+        paymentType: paymentMethod
+      };
+
+      localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
+
+      navigate("/purchase/confirm");
     }
   }, [isPaymentSuccess]);
 
@@ -759,36 +786,47 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
               buttonType="default"
               onClick={() => {
                 if (paymentMethod === "tossPay") {
-                  setIsPaymentSuccess(
-                    onClickTossPayment(
-                      productData.accommodationInfo.name,
-                      nameState,
-                      phoneNumberState,
-                      productData.sellingPrice + fee - Number(pointToUse)
-                    )
+                  onClickTossPayment(
+                    productData.accommodationInfo.name,
+                    nameState,
+                    phoneNumberState,
+                    productData.sellingPrice + fee - Number(pointToUse)
                   );
+
+                  // FIXME: onClickPayment 함수에서 return 값을 받아올 수 없음
+                  localStorage.getItem("tossPayment") === "true"
+                    ? setIsPaymentSuccess(true)
+                    : setIsPaymentSuccess(false);
                 } else if (paymentMethod === "accountTransfer") {
-                  setIsPaymentSuccess(
-                    onClickPGPayment(
-                      productData.accommodationInfo.name,
-                      nameState,
-                      phoneNumberState,
-                      productData.sellingPrice + fee - Number(pointToUse),
-                      "trans"
-                    )
+                  onClickPGPayment(
+                    productData.accommodationInfo.name,
+                    nameState,
+                    phoneNumberState,
+                    productData.sellingPrice + fee - Number(pointToUse),
+                    "trans"
                   );
+
+                  // FIXME: onClickPayment 함수에서 return 값을 받아올 수 없음
+                  localStorage.getItem("trans") === "true"
+                    ? setIsPaymentSuccess(true)
+                    : setIsPaymentSuccess(false);
                 } else if (paymentMethod === "card") {
-                  setIsPaymentSuccess(
-                    onClickPGPayment(
-                      productData.accommodationInfo.name,
-                      nameState,
-                      phoneNumberState,
-                      productData.sellingPrice + fee - Number(pointToUse),
-                      "card"
-                    )
+                  onClickPGPayment(
+                    productData.accommodationInfo.name,
+                    nameState,
+                    phoneNumberState,
+                    productData.sellingPrice + fee - Number(pointToUse),
+                    "card"
                   );
+
+                  // FIXME: onClickPayment 함수에서 return 값을 받아올 수 없음
+                  localStorage.getItem("card") === "true"
+                    ? setIsPaymentSuccess(true)
+                    : setIsPaymentSuccess(false);
                 } else {
-                  // FIXME: 야놀자페이 결제 페이지로 navigate 로직 추가
+                  navigate(
+                    `charge?type=charging&price=${productData.sellingPrice + fee - Number(pointToUse)}&redirect=/purchase/confirm`
+                  );
                 }
               }}
             >
