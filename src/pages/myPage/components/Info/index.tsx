@@ -5,10 +5,10 @@ interface PayInfoProps {
   divType: "payInfo" | "transactionInfo" | "payInfo-tall";
   width?: string;
   imageURL?: string;
-  yanoljaPurchasePrice?: string;
-  yanabadaPurchasePrice?: string;
+  yanoljaPurchasePrice?: string | null;
+  yanabadaPurchasePrice?: string | null;
   discountRate?: number;
-  discountPrice?: string;
+  discountPrice?: string | null;
   from: string;
   payMethod?: string;
   accommodationName?: string;
