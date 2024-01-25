@@ -1,12 +1,24 @@
 import UpperNavBar from "@components/navBar/upperNavBar";
-// import NoChatList from "./components/noChatList";
 import * as S from "./styles/styles";
 import ChatList from "./components/chatList";
 import useChatRooms from "./hooks/useChatRooms";
 import NoChatList from "./components/noChatList";
+import Cookies from "js-cookie";
 
 const Chat = () => {
-  const { data, isLoading, error } = useChatRooms();
+  const isLoggedIn = Cookies.get("isLoggedIn");
+  const { data, isLoading, error } = useChatRooms(isLoggedIn);
+
+  if (!isLoggedIn || isLoggedIn === "no") {
+    return (
+      <>
+        <UpperNavBar title="채팅" type="back" hasBorder />
+        <S.ChatListContainer>
+          <NoChatList type="noLogin" />
+        </S.ChatListContainer>
+      </>
+    );
+  }
 
   // UI 작업 필요 (스켈레톤 등)
   if (error) return <p>Error: {error.message}</p>;
