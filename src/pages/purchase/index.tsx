@@ -895,7 +895,33 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
 
                   setIsPaymentDone(3);
                 } else {
-                  navigate(`charge?type=charging&price=${totalPrice}&redirect=/purchase/confirm`);
+                  const purchaseInfo = {
+                    accommodationName: productData?.accommodationInfo.name,
+                    roomName: productData?.roomInfo.name,
+                    checkInDate: productData?.checkInDate,
+                    checkOutDate: productData?.checkOutDate,
+                    checkInTime: productData?.roomInfo.checkInTime,
+                    checkOutTime: productData?.roomInfo.checkOutTime,
+                    minHeadCount: productData?.roomInfo.minHeadCount.toString(),
+                    maxHeadCount: productData?.roomInfo.maxHeadCount.toString(),
+                    reservationPersonName: nameState,
+                    reservationPersonPhoneNumber: phoneNumberState,
+                    userPersonName: name,
+                    userPersonPhoneNumber: phoneNumber,
+                    productPrice: formatNumberWithCommas(productData.price),
+                    fee: (productData.sellingPrice * 0.05).toString(),
+                    point: pointToUse,
+                    totalPrice: formatNumberWithCommas(totalPrice),
+                    paymentType: convertStringToKR(paymentMethod),
+                    productId: productId
+                  };
+
+                  const queryStr = new URLSearchParams(purchaseInfo).toString();
+                  navigate(
+                    `/charge?type=charging&price=${totalPrice}&redirect=/purchase/confirm&${queryStr}`
+                  );
+
+                  navigate(`/charge?type=charging&price=${totalPrice}&redirect=/purchase/confirm`);
                 }
               }}
             >
