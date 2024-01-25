@@ -4,14 +4,17 @@ import * as S from "./styles";
 import { FlexCenter } from "@styles/base";
 import { useEffect, useState } from "react";
 import Modal from "@components/modal";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import HistoryStore from "@pages/search/stores/historyStore";
 import { HistoryType } from "@pages/search/types/history";
+// import { useGuest } from "@pages/search/stores/guestStore";
 
 const BottomActions = () => {
   const [isResetModalOpen, setResetModalOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { search } = useLocation();
+  // const { adult, child } = useGuest();
 
   const keyword = searchParams.get("keyword");
   const checkInDate = searchParams.get("checkInDate");
@@ -23,6 +26,7 @@ const BottomActions = () => {
   const handleReset = () => {
     setResetModalOpen(false);
     navigate(location.pathname);
+    // store 리셋하는거 추가!
   };
 
   const { history, setHistory } = HistoryStore();
@@ -41,6 +45,7 @@ const BottomActions = () => {
       child
     };
     setHistory([searchHistory, ...history]);
+    navigate(`/products/${search}`);
   };
 
   return (
