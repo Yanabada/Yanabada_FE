@@ -5,14 +5,20 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import GuestCounterTab from "./components/GuestCounterTab";
 import CalendarTab from "./components/CalendarTab";
 import KeywordTab from "./components/KeywordTab";
+import HistoryStore from "./stores/historyStore";
 
 const Search = () => {
+  const { history } = HistoryStore();
   return (
     <>
       <UpperNavBar type="back" title="검색" />
       <S.Container>
-        <S.RecentSearchText>최근 검색 기록</S.RecentSearchText>
-        <SearchHistory />
+        {history.length > 0 && (
+          <>
+            <S.RecentSearchText>최근 검색 기록</S.RecentSearchText>
+            <SearchHistory />
+          </>
+        )}
         <S.FilterText>검색 필터</S.FilterText>
         <KeywordTab />
         <CalendarTab />

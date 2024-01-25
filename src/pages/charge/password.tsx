@@ -1,21 +1,26 @@
 import * as S from "./styles/password";
 
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion, useAnimation } from "framer-motion";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
+
 import Keypads from "./components/Keypads";
 import AmountStore from "./stores/amountStore";
-import { postPassword } from "./apis/charge";
-
+import { postPassword, withdrawAmount } from "./apis/charge";
+import PasswordStore from "./stores/passwordStore";
 import LockIcon from "assets/icons/lockIcon.svg?react";
 
 const PasswordConfirm = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const isRegistration = queryParams.get("registration") === "true";
+  const [searchParams] = useSearchParams();
+  const isRegistration = searchParams.get("registration") === "true";
+  const typeParam = searchParams.get("type");
+  const redirectParam = searchParams.get("redirect");
+
   const navigate = useNavigate();
+
+  const { amount } = AmountStore();
 
   const [enteredDigits, setEnteredDigits] = useState<number[]>([]);
   const [savedDigits, setSavedDigits] = useState<number[]>([]);
@@ -26,7 +31,7 @@ const PasswordConfirm = () => {
       : "간편결제 비밀번호 6자리를 입력해주세요"
   );
 
-  const { amount } = AmountStore();
+  const { setPassword } = PasswordStore();
 
   const shakeOnMismatch = () => {
     keyInputControls.start({
@@ -45,6 +50,8 @@ const PasswordConfirm = () => {
       if (!matched) {
         shakeOnMismatch();
       } else {
+        setPassword(savedDigits);
+        localStorage.setItem("simplePW", enteredDigits.join(""));
         navigate("/charge/account");
       }
     }
@@ -89,9 +96,17 @@ const PasswordConfirm = () => {
         };
 
         try {
-          const response = await postPassword(requestData);
+          let response;
+
+          if (typeParam === "charging") {
+            response = await postPassword(requestData);
+          } else if (typeParam === "withdrawal") {
+            response = await withdrawAmount(requestData);
+          }
+
+          successPassword(response);
           if (response.yanoljaPayHistoryId) {
-            navigate(`/charge/confirm/${response.yanoljaPayHistoryId}`);
+            navigate(`/charge/confirm/${response.yanoljaPayHistoryId}?type=${typeParam}`);
           }
         } catch (error) {
           console.error("비밀번호 불일치: ", error);
@@ -102,7 +117,16 @@ const PasswordConfirm = () => {
       }
     };
     checkPassword();
-  }, [enteredDigits, isRegistration]);
+  }, [enteredDigits, isRegistration, typeParam]);
+
+  const successPassword = (response: any) => {
+    if (response.yanoljaPayHistoryId) {
+      const newPath = redirectParam
+        ? "/purchase/confirm"
+        : `/charge/confirm/${response.yanoljaPayHistoryId}?type=${typeParam}`;
+      navigate(newPath);
+    }
+  };
 
   return (
     <>

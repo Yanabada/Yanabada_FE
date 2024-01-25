@@ -7,7 +7,7 @@ import ArrowDown from "@assets/icons/search_arrowDown.svg?react";
 import { useEffect, useState } from "react";
 
 interface ProductCardProps {
-  selectedProduct: ProductType;
+  selectedProduct?: ProductType;
 }
 
 const variants = {
@@ -52,6 +52,8 @@ const ProductCardForMap = ({ selectedProduct }: ProductCardProps) => {
       cardControls.start("down");
     }
   }, [isOpen, cardControls]);
+
+  if (!selectedProduct) return;
 
   return (
     <AnimatePresence custom={isOpen}>

@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   display: flex;
   gap: 1rem;
+  background-color: #fff;
+  z-index: 2;
 `;
 
 export const Container = styled.div`
@@ -42,7 +44,7 @@ export const Image = styled.img`
 export const LocationContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.2rem;
   padding: 0 0.3rem;
   width: 100%;
   height: 1.125rem;
@@ -55,6 +57,9 @@ export const Location = styled.p`
   font-size: 0.6875rem;
   font-weight: 500;
   line-height: 0.9375rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const InformationContainer = styled.div`

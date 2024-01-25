@@ -11,25 +11,26 @@ import BaseButton from "@components/buttons/BaseButton";
 import TextInput from "@components/input/TextInput";
 import BottomSheet from "@components/bottomSheet";
 import Checkbox from "@components/input/Checkbox";
-import { useNavigate } from "react-router-dom";
+
+import PasswordStore from "./stores/passwordStore";
+import useRegisterForPayment from "./hooks/useRegisterPayment";
 
 const Account = () => {
   const [isOptionVisible, setIsOptionVisible] = useState(false);
-  const [bankMessage, setBankMessage] = useState("은행/증권사 선택");
-  const [number, setNumber] = useState<number>();
+  const [bankName, setBankName] = useState("은행/증권사 선택");
+  const [bankNumber, setBankNumber] = useState<number>();
+  const { password } = PasswordStore();
   const [isSuccess, setIsSuccess] = useState<boolean>();
 
-  const navigate = useNavigate();
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [allCheck, setAllCheck] = useState(false);
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
+  const numberPattern = /^[0-9]{10,14}$/;
 
   const toggleOption = () => {
     setIsOptionVisible((prev) => !prev);
   };
-
-  const numberPattern = /^[0-9]{10,14}$/;
 
   const validateNumber = (value: number) => {
     const isValid = numberPattern.test(String(value));
@@ -42,10 +43,17 @@ const Account = () => {
     setIsVisible: setBottomSheetVisible
   };
 
+  const isFormValid = isSuccess && bankName !== "은행/증권사 선택";
+
+  const registerForPayment = useRegisterForPayment();
+
   const completeAccount = () => {
     setBottomSheetVisible(true);
     if (allCheck) {
-      navigate("/charge/success");
+      const simplePassword = password.join("");
+      const accountNumber = String(bankNumber);
+
+      registerForPayment(simplePassword, bankName, accountNumber);
     }
   };
 
@@ -58,14 +66,14 @@ const Account = () => {
         <TextInput
           variant="move"
           label="계좌번호 입력"
-          value={number}
+          value={bankNumber}
           isSuccess={isSuccess}
           errorMessage={
             isSuccess === false ? "10~14자리의 숫자를 하이픈 ‘-’ 없이 입력하세요." : null
           }
           onChange={(e) => {
             const numberValue = parseInt(e.target.value, 10);
-            setNumber(numberValue);
+            setBankNumber(numberValue);
             validateNumber(numberValue);
           }}
         />
@@ -73,7 +81,7 @@ const Account = () => {
         <CS.PaySpace />
         <CS.InputWrapper>
           <motion.p className="select" onClick={toggleOption}>
-            <span>{bankMessage}</span>
+            <span>{bankName}</span>
             {isOptionVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
           </motion.p>
           <AnimatePresence>
@@ -83,7 +91,7 @@ const Account = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 onClick={() => {
-                  setBankMessage("국민은행");
+                  setBankName("국민은행");
                   setIsOptionVisible(false);
                 }}
               >
@@ -92,7 +100,7 @@ const Account = () => {
                   <span className="bank">국민은행</span>
                 </motion.div>
                 <motion.div className="inner">
-                  {bankMessage !== "은행/증권사 선택" && <GoCheck style={{ color: "#028161" }} />}
+                  {bankName !== "은행/증권사 선택" && <GoCheck style={{ color: "#028161" }} />}
                 </motion.div>
               </motion.div>
             )}
@@ -129,14 +137,22 @@ const Account = () => {
               checked={check2}
             />
             <CS.ButtonInner>
-              <BaseButton buttonType="default" width="100%" onClick={() => completeAccount()}>
+              <BaseButton
+                buttonType={allCheck ? "default" : "disabled-default"}
+                width="100%"
+                onClick={() => completeAccount()}
+              >
                 다음
               </BaseButton>
             </CS.ButtonInner>
           </CS.BottomInner>
         </BottomSheet>
         <CS.ButtonWrapper>
-          <BaseButton buttonType="default" width="100%" onClick={() => completeAccount()}>
+          <BaseButton
+            buttonType={isFormValid ? "default" : "disabled-default"}
+            width="100%"
+            onClick={() => completeAccount()}
+          >
             계좌 입력 완료
           </BaseButton>
         </CS.ButtonWrapper>
