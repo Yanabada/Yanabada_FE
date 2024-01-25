@@ -15,26 +15,18 @@ import { requestPermission } from "../../firebase-messaging-sw";
 import Cookie from "js-cookie";
 
 const Home = () => {
-  const [isLoginned, setIsLoginned] = useState(false);
+  const isLoggedIn = Cookie.get("isLoggedIn") === "yes";
   const [FCMToken, setFCMToken] = useState<string | null | undefined>("");
   const [tokenFromCookie, setTokenFromCookie] = useState<string | undefined>("");
 
   const { mutate } = useFCMToken();
 
   useEffect(() => {
-    const id = Cookie.get("id");
-    console.log("id", id);
-    if (id) {
-      setIsLoginned(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isLoginned) {
+    if (isLoggedIn) {
       requestPermission();
-      setFCMToken(localStorage.get("FCMToken"));
+      setFCMToken(localStorage.getItem("FCMToken"));
     }
-  }, [isLoginned]);
+  }, [isLoggedIn]);
 
   const in60Minutes = 1 / 24;
 
