@@ -114,6 +114,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [toggleButtonActive, setToggleButtonActive] = useState(0);
   const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
   const [isPaymentDone, setIsPaymentDone] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
   const [isYanoljaPaySubscribed] = useState(false);
@@ -231,9 +232,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         productPrice: formatNumberWithCommas(productData.price),
         fee: productData.sellingPrice * 0.05,
         point: pointToUse,
-        totalPrice: formatNumberWithCommas(
-          productData?.sellingPrice + productData.sellingPrice * 0.05 - Number(pointToUse)
-        ),
+        totalPrice: formatNumberWithCommas(totalPrice),
         paymentType: convertStringToKR(paymentMethod),
         productId: productId
       };
@@ -253,8 +252,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   }, []);
 
   useEffect(() => {
-    console.log("called");
-
     // FIXME: onClickPayment 함수에서 return 값을 받아올 수 없음
     if (isPaymentDone === 1) {
       localStorage.getItem("tossPayment") === "true"
@@ -270,6 +267,16 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         : setIsPaymentSuccess(false);
     }
   }, [isPaymentDone]);
+
+  useEffect(() => {
+    if (paymentMethod === "yanoljaPay")
+      setTotalPrice(productData?.sellingPrice - Number(pointToUse));
+    else {
+      setTotalPrice(
+        productData?.sellingPrice + productData.sellingPrice * 0.05 - Number(pointToUse)
+      );
+    }
+  }, [paymentMethod, pointToUse]);
 
   return (
     <>
@@ -538,12 +545,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         </CS.SeperationForm>
         <CS.SeperationForm isBorder={true}>
           <CS.FormLeftTextBold>총 결제 금액</CS.FormLeftTextBold>
-          <CS.FormRightPrice color="blue">
-            {formatNumberWithCommas(
-              productData.sellingPrice + productData.sellingPrice * 0.05 - Number(pointToUse)
-            )}
-            원
-          </CS.FormRightPrice>
+          <CS.FormRightPrice color="blue">{formatNumberWithCommas(totalPrice)}원</CS.FormRightPrice>
         </CS.SeperationForm>
       </CS.InfoWrapper>
       <S.Spacer width={width} />
@@ -840,7 +842,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     productData.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
-                    productData.sellingPrice + productData.sellingPrice * 0.05 - Number(pointToUse),
+                    totalPrice,
                     setIsPaymentDone
                   );
                 } else if (paymentMethod === "accountTransfer") {
@@ -848,7 +850,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     productData.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
-                    productData.sellingPrice + productData.sellingPrice * 0.05 - Number(pointToUse),
+                    totalPrice,
                     "trans",
                     setIsPaymentDone
                   );
@@ -859,30 +861,22 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     productData.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
-                    productData.sellingPrice + productData.sellingPrice * 0.05 - Number(pointToUse),
+                    totalPrice,
                     "card",
                     setIsPaymentDone
                   );
 
                   setIsPaymentDone(3);
                 } else {
-                  navigate(
-                    `charge?type=charging&price=${productData.sellingPrice + productData.sellingPrice * 0.05 - Number(pointToUse)}&redirect=/purchase/confirm`
-                  );
+                  navigate(`charge?type=charging&price=${totalPrice}&redirect=/purchase/confirm`);
                 }
               }}
             >
-              {formatNumberWithCommas(
-                productData.sellingPrice + productData.sellingPrice * 0.05 - Number(pointToUse)
-              )}
-              원 결제하기
+              {formatNumberWithCommas(totalPrice)}원 결제하기
             </BaseButton>
           ) : (
             <BaseButton width="100%" buttonType="disabled-default">
-              {formatNumberWithCommas(
-                productData.sellingPrice + productData.sellingPrice * 0.05 - Number(pointToUse)
-              )}
-              원 결제하기
+              {formatNumberWithCommas(totalPrice)}원 결제하기
             </BaseButton>
           )}
         </S.ReservationBottomWrapper>
