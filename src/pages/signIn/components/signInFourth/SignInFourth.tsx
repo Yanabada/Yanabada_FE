@@ -9,6 +9,7 @@ const SignInFourth = () => {
   const fromParams = searchParams.get("from");
   const name = searchParams.get("name");
   const phoneNumber = searchParams.get("phonenumber");
+  const productId = searchParams.get("productId");
 
   const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ const SignInFourth = () => {
         upperNavBarText="예약자 정보 수정"
         buttonText="확인"
         customHandleClick={() => {
-          navigate(`/purchase?name=${name}&phonenumber=${phoneNumber}`);
+          navigate(`/purchase?name=${name}&phonenumber=${phoneNumber}&productId=${productId}`);
         }}
       />
     );
