@@ -13,6 +13,7 @@ import BaseButton from "@components/buttons/BaseButton";
 import PriceArea from "@components/priceArea";
 import { numberFormat } from "@utils/numberFormat";
 import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
+import BankIcoLogo from "@assets/bankIcon.png";
 
 import usePaymentDetail from "./hooks/usePaymentDetail";
 import AmountStore from "./stores/amountStore";
@@ -83,7 +84,7 @@ const Charge = () => {
                 }}
               >
                 <motion.div className="inner">
-                  <motion.img src="/src/assets/bankIcon.png" />
+                  <motion.img src={BankIcoLogo} />
                   <span className="bank">{paymentData.bankName}</span>
                 </motion.div>
                 <motion.div className="inner">
