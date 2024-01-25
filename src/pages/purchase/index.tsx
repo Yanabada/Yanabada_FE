@@ -107,6 +107,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [pointToUse, setPointToUse] = useState("0");
   const [toggleButtonActive, setToggleButtonActive] = useState(0);
   const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
+  const [isPaymentDone, setIsPaymentDone] = useState(0);
 
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
   const [isYanoljaPaySubscribed] = useState(false);
@@ -223,6 +224,33 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
       navigate("/purchase/confirm");
     }
   }, [buyProductSuccess]);
+
+  useEffect(() => {
+    localStorage.removeItem("tossPayment");
+    localStorage.removeItem("trans");
+    localStorage.removeItem("card");
+    localStorage.removeItem("simplePW");
+    localStorage.removeItem("purchaseInfo");
+  }, []);
+
+  useEffect(() => {
+    console.log("called");
+
+    // FIXME: onClickPayment 함수에서 return 값을 받아올 수 없음
+    if (isPaymentDone === 1) {
+      localStorage.getItem("tossPayment") === "true"
+        ? setIsPaymentSuccess(true)
+        : setIsPaymentSuccess(false);
+    } else if (isPaymentDone === 2) {
+      localStorage.getItem("trans") === "true"
+        ? setIsPaymentSuccess(true)
+        : setIsPaymentSuccess(false);
+    } else if (isPaymentDone === 3) {
+      localStorage.getItem("card") === "true"
+        ? setIsPaymentSuccess(true)
+        : setIsPaymentSuccess(false);
+    }
+  }, [isPaymentDone]);
 
   return (
     <>
@@ -787,39 +815,31 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     productData.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
-                    productData.sellingPrice + fee - Number(pointToUse)
+                    productData.sellingPrice + fee - Number(pointToUse),
+                    setIsPaymentDone
                   );
-
-                  // FIXME: onClickPayment 함수에서 return 값을 받아올 수 없음
-                  localStorage.getItem("tossPayment") === "true"
-                    ? setIsPaymentSuccess(true)
-                    : setIsPaymentSuccess(false);
                 } else if (paymentMethod === "accountTransfer") {
                   onClickPGPayment(
                     productData.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
                     productData.sellingPrice + fee - Number(pointToUse),
-                    "trans"
+                    "trans",
+                    setIsPaymentDone
                   );
 
-                  // FIXME: onClickPayment 함수에서 return 값을 받아올 수 없음
-                  localStorage.getItem("trans") === "true"
-                    ? setIsPaymentSuccess(true)
-                    : setIsPaymentSuccess(false);
+                  setIsPaymentDone(2);
                 } else if (paymentMethod === "card") {
                   onClickPGPayment(
                     productData.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
                     productData.sellingPrice + fee - Number(pointToUse),
-                    "card"
+                    "card",
+                    setIsPaymentDone
                   );
 
-                  // FIXME: onClickPayment 함수에서 return 값을 받아올 수 없음
-                  localStorage.getItem("card") === "true"
-                    ? setIsPaymentSuccess(true)
-                    : setIsPaymentSuccess(false);
+                  setIsPaymentDone(3);
                 } else {
                   navigate(
                     `charge?type=charging&price=${productData.sellingPrice + fee - Number(pointToUse)}&redirect=/purchase/confirm`
