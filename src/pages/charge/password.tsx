@@ -5,11 +5,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { motion, useAnimation } from "framer-motion";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
-import Keypads from "./components/Keypads";
-import AmountStore from "./stores/amountStore";
-import { postPassword } from "./apis/charge";
 
 import LockIcon from "assets/icons/lockIcon.svg?react";
+import Keypads from "./components/Keypads";
+import { postPassword } from "./apis/charge";
+import AmountStore from "./stores/amountStore";
+import PasswordStore from "./stores/passwordStore";
 
 const PasswordConfirm = () => {
   const location = useLocation();
@@ -27,6 +28,7 @@ const PasswordConfirm = () => {
   );
 
   const { amount } = AmountStore();
+  const { setPassword } = PasswordStore();
 
   const shakeOnMismatch = () => {
     keyInputControls.start({
@@ -45,6 +47,7 @@ const PasswordConfirm = () => {
       if (!matched) {
         shakeOnMismatch();
       } else {
+        setPassword(savedDigits);
         navigate("/charge/account");
       }
     }

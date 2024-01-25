@@ -100,7 +100,8 @@ export const NaverButton = styled.button<BaseButtonProps>`
 `;
 
 export const DisabledLightColoredButton = styled.button<BaseButtonProps>`
-  ${DisabledButtonLayout}
+  ${ButtonLayout}
+
   ${({ theme }) => theme.text.button1};
   width: ${({ width }) => width || "332px"};
   border-radius: 5px;
