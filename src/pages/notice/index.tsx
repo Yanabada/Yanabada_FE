@@ -7,6 +7,7 @@ import Modal from "@components/modal";
 import { useNavigate } from "react-router-dom";
 import { NOTI_TYPE_TO_TEXT } from "./constants";
 import useNotifications from "./queries";
+import { Toaster } from "react-hot-toast";
 
 const variants = {
   initial: {
@@ -43,6 +44,7 @@ const Notice = () => {
 
   return (
     <>
+      <Toaster />
       <UpperNavBar
         type="back"
         title="알림"
