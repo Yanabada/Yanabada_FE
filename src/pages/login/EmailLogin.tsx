@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import SignInBottomSheet from "./components/signInBottomSheet/SignInBottomSheet";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import instance from "@apis/instance";
+import { authInstance } from "@apis/instance";
 import Cookies from "js-cookie";
 
 const EmailLogin = () => {
@@ -39,7 +39,7 @@ const EmailLogin = () => {
     }
     const requestBody = { email, password };
     try {
-      const res = await instance.post("/auth/login", requestBody);
+      const res = await authInstance.post("/auth/login", requestBody);
       // 로컬스토리지에 담는 용도 (백엔드분 코드 제대로 작동하는지 확인할 때 필요)
       // localStorage.setItem("accessToken", res.data.data.tokenIssue.accessToken);
       // localStorage.setItem("refreshToken", res.data.data.tokenIssue.refreshToken);
