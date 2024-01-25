@@ -19,7 +19,6 @@ interface MyPageProps {
 }
 
 const MyPage = ({ width }: MyPageProps) => {
-  // FIXME: 추후 로그인 여부에 따라 상태 변경 예정(localstorage member이용)
   const [isLoginned, setIsLoginned] = useState(false);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
@@ -55,9 +54,14 @@ const MyPage = ({ width }: MyPageProps) => {
     isVisible: isLogoutModalVisible,
     setIsVisible: setIsLogoutModalVisible,
     leftAction: () => {
-      // FIXME: localStorage에서 member 삭제 로직 추가
       mutate();
-      localStorage.removeItem("member");
+      Cookie.remove("image");
+      Cookie.remove("email");
+      Cookie.remove("id");
+      Cookie.remove("refreshToken");
+      Cookie.remove("nickName");
+      Cookie.remove("provider");
+
       setIsLoginned(false);
       navigate("/mypage");
     },
@@ -65,9 +69,9 @@ const MyPage = ({ width }: MyPageProps) => {
   };
 
   useEffect(() => {
-    const token = Cookie.get("accessToken");
-    console.log("token", token);
-    if (token) {
+    const id = Cookie.get("id");
+    console.log("id", id);
+    if (id) {
       setIsLoginned(true);
     }
   }, []);
