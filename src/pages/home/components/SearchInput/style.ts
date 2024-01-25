@@ -58,7 +58,7 @@ export const LocationInputIcon = styled(IoIosSearch)`
 
 export const AccumulateContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 100%;
   padding: 1.5rem 2rem 1rem 2rem;
   border-radius: 19px 19px 0 0;

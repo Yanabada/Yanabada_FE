@@ -12,11 +12,15 @@ export const ImageContainer = styled.div`
   width: 100%;
   height: 15rem;
   position: relative;
+  padding-bottom: 50%;
 `;
 
 export const Image = styled.img`
   width: 100%;
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 export const ImageCounterContainer = styled.div`
