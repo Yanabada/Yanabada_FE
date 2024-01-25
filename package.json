@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky install",
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/cat.png"
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/favicon.png"
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --fix"
