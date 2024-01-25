@@ -53,8 +53,6 @@ const PointsMiddleTabList = () => {
     setSelectedTab(tab);
   };
 
-  console.log("안되니?", paymentList);
-
   return (
     <>
       <UpperNavBar title={"야놀자 페이 이용내역"} type="back" />
