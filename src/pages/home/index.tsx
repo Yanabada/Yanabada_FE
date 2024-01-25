@@ -14,16 +14,10 @@ import useFCMToken from "./hooks/useFCMToken";
 import { requestPermission } from "../../firebase-messaging-sw";
 
 const Home = () => {
-  let FCMToken: string | null = "";
+  requestPermission();
+  const FCMToken = localStorage.getItem("FCMToken");
 
   const { mutate } = useFCMToken();
-
-  useEffect(() => {
-    async () => {
-      await requestPermission();
-      FCMToken = localStorage.getItem("FCMToken");
-    };
-  }, []);
 
   useEffect(() => {
     if (FCMToken) {
