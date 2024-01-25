@@ -34,6 +34,7 @@ import useProfileDetail from "@pages/myPage/hooks/useProfileDetail";
 import useBuyProduct from "./hooks/useBuyProduct";
 import { convertString, convertStringToKR } from "./utils/convertString";
 import { onClickTossPayment, onClickPGPayment } from "./utils/onClickPayment";
+import BankIcoLogo from "@assets/bankIcon.png";
 
 interface PurchaseProps {
   width?: string;
@@ -618,7 +619,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     }}
                   >
                     <motion.div className="inner">
-                      <motion.img src="/src/assets/bankIcon.png" />
+                      <motion.img src={BankIcoLogo} />
                       <span className="card">국민카드</span>
                     </motion.div>
                   </motion.div>
@@ -712,7 +713,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     }}
                   >
                     <motion.div className="inner">
-                      <motion.img src="/src/assets/bankIcon.png" />
+                      <motion.img src={BankIcoLogo} />
                       <span className="card">국민은행</span>
                     </motion.div>
                   </motion.div>

@@ -9,6 +9,7 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import Notice from "@components/notice";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
+import NoItemsLogo from "@assets/noitems-logo.png";
 
 import getSellList from "./apis/getSellList";
 interface SellListData {
@@ -120,7 +121,7 @@ const Sell = () => {
           ) : (
             <S.NoListWrap>
               <div className="no-list">
-                <img src="/src/assets/noitems-logo.png" />
+                <img src={NoItemsLogo} alt="로고" />
                 <p className="no-list__tit">양도 가능한 상품이 없어요.</p>
                 <p className="no-list__desc">
                   야나바다에서는 야놀자에서 구매하신 숙소 중<br />
