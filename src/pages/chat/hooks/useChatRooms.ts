@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { getChatRooms } from "../apis/api";
 
-const useChatRooms = () => {
+const useChatRooms = (isLoggedIn?: string) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["chatRooms"],
-    queryFn: getChatRooms
+    queryFn: getChatRooms,
+    enabled: !!isLoggedIn
   });
 
   return { data, isLoading, error };

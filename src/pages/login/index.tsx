@@ -21,7 +21,7 @@ const Login = () => {
       </S.LogoWrapper>
       야나바다는 야놀자 계정으로 이용하실 수 있습니다.
       <S.BtnWrapper>
-        <Link to="http://test.yanabada.com/oauth2/authorization/kakao">
+        <Link to="http://ec2-3-38-93-125.ap-northeast-2.compute.amazonaws.com/oauth2/authorization/kakao">
           <BaseButton buttonType="kakao">카카오로 시작하기</BaseButton>
         </Link>
         <BaseButton buttonType="naver" style={{ color: "#fff" }}>

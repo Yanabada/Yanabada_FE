@@ -10,6 +10,7 @@ export const useEmailAuth = () => {
     },
     onError: (err) => {
       toast.error("회원정보를 찾을 수 없습니다.");
+      // TODO - 에러 메세지 분리하기
       console.log(err);
     }
   });

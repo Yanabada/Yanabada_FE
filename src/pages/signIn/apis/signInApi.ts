@@ -1,4 +1,4 @@
-import instance from "@apis/instance";
+import { authInstance } from "@apis/instance";
 
 interface signInApiProps {
   email: string;
@@ -16,7 +16,12 @@ export const signInApi = async ({
   setIsSheetVisible
 }: signInApiProps) => {
   try {
-    const res = await instance.post("/auth/sign-up", { email, password, nickName, phoneNumber });
+    const res = await authInstance.post("/auth/sign-up", {
+      email,
+      password,
+      nickName,
+      phoneNumber
+    });
     setIsSheetVisible(true);
     console.log(res);
   } catch (error) {
