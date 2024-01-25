@@ -33,13 +33,13 @@ const EmailLogin = () => {
   }, []);
 
   const { mutate } = useLogin();
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (errors.email || errors.password) {
       return;
     }
     const requestBody = { email, password };
-    await mutate(requestBody);
+    mutate(requestBody);
   };
 
   return (
