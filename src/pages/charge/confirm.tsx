@@ -6,6 +6,7 @@ import BaseButton from "@components/buttons/BaseButton";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import usePaymentHistory from "./hooks/usePaymentHistory";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import CheckIcoLogo from "@assets/check-ico.png";
 
 const typeMap = new Map([
   ["DISBURSEMENT", "인출"],
@@ -30,7 +31,7 @@ const ChargeConfirm = () => {
     <>
       <UpperNavBar title={typeMap.get(historyData.type) + "완료"} type="close" />
       <CS.ConfirmWrapper>
-        <img src="/src/assets/check-ico.png" alt="체크아이콘" />
+        <img src={CheckIcoLogo} alt="체크아이콘" />
         <CS.ConfirmTit>야놀자페이 {typeText}이 완료되었습니다!</CS.ConfirmTit>
         <S.ChargeBox>
           <p className="tit">결제 정보</p>

@@ -47,16 +47,18 @@ const PointsMiddleTabList = () => {
       <S.PointsMiddleContainer>
         <S.MiddleWrapper onClick={() => handleTabChange("all")}>
           <S.MiddleLeftText>전체내역</S.MiddleLeftText>
-          <S.UnderLine />
+          {selectedTab === "all" && <S.UnderLine />}
         </S.MiddleWrapper>
         <S.MiddleWrapper>
           <S.MiddleTextWrapper onClick={() => handleTabChange("transactions")}>
             <S.MiddleRightText>거래내역</S.MiddleRightText>
+            {selectedTab === "transactions" && <S.UnderLine />}
           </S.MiddleTextWrapper>
         </S.MiddleWrapper>
         <S.MiddleWrapper>
           <S.MiddleTextWrapper onClick={() => handleTabChange("charges")}>
             <S.MiddleRightText>충전/인출내역</S.MiddleRightText>
+            {selectedTab === "charges" && <S.UnderLine />}
           </S.MiddleTextWrapper>
         </S.MiddleWrapper>
       </S.PointsMiddleContainer>

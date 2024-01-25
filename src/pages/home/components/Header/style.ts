@@ -9,7 +9,7 @@ export const Container = styled(motion.div)`
   z-index: 999;
   width: 100%;
   height: 3.5rem;
-  background: linear-gradient(231deg, #5d99f2 35.76%, #5ed8ff 83.56%);
+  background: linear-gradient(266deg, rgb(88, 145, 230), rgb(94 205 253));
 
   &.isHeaderActive {
     .bell {
