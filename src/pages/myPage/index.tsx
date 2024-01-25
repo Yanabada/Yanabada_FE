@@ -105,9 +105,9 @@ const MyPage = ({ width }: MyPageProps) => {
           <CardSectionButton buttonType="abledPay_notRegistered" width={width} />
         )}
 
-        <Link to="/points/list">
+        {/* <Link to="/points/list">
           <CardSectionButton buttonType="abledPoint" width={width} />
-        </Link>
+        </Link> */}
         {/* FIXME: 승인요청관리 페이지(G-10)으로 이동 */}
         <Link to="/mypage/management">
           <CardSectionButton buttonType="management" width={width} />
