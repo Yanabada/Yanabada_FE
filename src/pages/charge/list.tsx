@@ -10,7 +10,8 @@ import { numberFormat } from "@utils/numberFormat";
 import translateType from "./utils/translateType";
 import transContentType from "./utils/transContentType";
 import formatDateTime from "./utils/transDateTime";
-import { usePaymentList } from "./hooks/usePaymentList";
+import useIntersect from "@pages/products/hooks/useIntersect";
+import usePaymentQuery from "./hooks/usePaymentQuery";
 
 interface PaymentItem {
   amount: number;
@@ -23,20 +24,36 @@ interface PaymentItem {
 
 const PointsMiddleTabList = () => {
   const [selectedTab, setSelectedTab] = useState("all");
-  const { data: paymentList, isLoading, isError, error } = usePaymentList(selectedTab);
-  const payData = paymentList?.histories ?? [];
+
+  const {
+    data: paymentList,
+    error,
+    isLoading,
+    hasNextPage,
+    isFetching,
+    fetchNextPage
+  } = usePaymentQuery(selectedTab);
+
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching && paymentList.length > 0) {
+      await fetchNextPage();
+    }
+  });
+
+  if (error) {
+    console.log(error);
+  }
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
-    return <div>Error: {error.message}</div>;
-  }
-
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
   };
+
+  console.log("안되니?", paymentList);
 
   return (
     <>
@@ -45,26 +62,28 @@ const PointsMiddleTabList = () => {
         <CardSectionButton buttonType="abledPay" width={"100%"} />
       </S.CardWrapper>
       <S.PointsMiddleContainer>
-        <S.MiddleWrapper onClick={() => handleTabChange("all")}>
-          <S.MiddleLeftText>전체내역</S.MiddleLeftText>
+        <S.MiddleWrapper>
+          <S.MiddleTextWrapper onClick={() => handleTabChange("all")}>
+            <S.MiddleLeftText>전체내역</S.MiddleLeftText>
+          </S.MiddleTextWrapper>
           {selectedTab === "all" && <S.UnderLine />}
         </S.MiddleWrapper>
         <S.MiddleWrapper>
           <S.MiddleTextWrapper onClick={() => handleTabChange("transactions")}>
             <S.MiddleRightText>거래내역</S.MiddleRightText>
-            {selectedTab === "transactions" && <S.UnderLine />}
           </S.MiddleTextWrapper>
+          {selectedTab === "transactions" && <S.UnderLine />}
         </S.MiddleWrapper>
         <S.MiddleWrapper>
           <S.MiddleTextWrapper onClick={() => handleTabChange("charges")}>
             <S.MiddleRightText>충전/인출내역</S.MiddleRightText>
-            {selectedTab === "charges" && <S.UnderLine />}
           </S.MiddleTextWrapper>
+          {selectedTab === "charges" && <S.UnderLine />}
         </S.MiddleWrapper>
       </S.PointsMiddleContainer>
-      {payData.length > 0 ? (
+      {paymentList && paymentList.length > 0 ? (
         <S.PointsBottomContainer>
-          {payData.map((item: PaymentItem, index: number) => (
+          {paymentList.map((item: PaymentItem, index: number) => (
             <S.PointList key={`list-${index}`}>
               <S.PointListRow>
                 <S.PlusReason>
@@ -89,6 +108,7 @@ const PointsMiddleTabList = () => {
               </S.PointListRow>
             </S.PointList>
           ))}
+          <div ref={ref}></div>
         </S.PointsBottomContainer>
       ) : (
         <S.PointsBottomContainer>
