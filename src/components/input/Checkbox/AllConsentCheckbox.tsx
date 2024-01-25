@@ -12,7 +12,6 @@ export interface AllConsentCheckboxProps {
   checked: boolean;
   setChecked: React.Dispatch<React.SetStateAction<boolean>>;
   setList: React.Dispatch<React.SetStateAction<boolean>>[];
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const AllConsentCheckbox = ({
@@ -21,7 +20,6 @@ const AllConsentCheckbox = ({
   checked,
   setChecked,
   setList,
-  onChange,
   ...props
 }: AllConsentCheckboxProps) => {
   const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,9 +30,6 @@ const AllConsentCheckbox = ({
       });
     }
   };
-
-  // FIXME: onChange unused 해결하기 위한 임시 조치
-  onChange && onChange;
 
   return (
     <S.Wrapper transparent={transparent}>
