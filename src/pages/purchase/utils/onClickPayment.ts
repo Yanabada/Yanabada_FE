@@ -7,7 +7,8 @@ export const onClickTossPayment = (
   name: string,
   phoneNumber: string,
   amount: number,
-  setIsPaymentDone: React.Dispatch<React.SetStateAction<number>>
+  setIsPaymentDone: React.Dispatch<React.SetStateAction<number>>,
+  redirectUrl: string
 ) => {
   const IMP = window.IMP;
 
@@ -22,8 +23,7 @@ export const onClickTossPayment = (
       amount: amount,
       buyer_name: name,
       buyer_tel: phoneNumber,
-      // FIXME: 배포 도메인 나오면 redirect url 넣기
-      m_redirect_url: "" // 모바일에서 결제시, 페이지 주소가 바뀜, 따라서 결제 끝나고 돌아갈 주소 입력해야됨
+      m_redirect_url: redirectUrl // 모바일에서 결제시, 페이지 주소가 바뀜, 따라서 결제 끝나고 돌아갈 주소 입력해야됨
     },
     (rsp: any) => {
       // callback
@@ -47,7 +47,8 @@ export const onClickPGPayment = (
   phoneNumber: string,
   amount: number,
   payMethod: string,
-  setIsPaymentDone: React.Dispatch<React.SetStateAction<number>>
+  setIsPaymentDone: React.Dispatch<React.SetStateAction<number>>,
+  redirectUrl: string
 ) => {
   const IMP = window.IMP;
   IMP.init("imp15200254"); // 예: 'imp00000000a'
@@ -61,8 +62,7 @@ export const onClickPGPayment = (
       amount: amount,
       buyer_name: name,
       buyer_tel: phoneNumber,
-      // FIXME: 배포 도메인 나오면 redirect url 넣기
-      m_redirect_url: "" // 모바일에서 결제시, 페이지 주소가 바뀜, 따라서 결제 끝나고 돌아갈 주소 입력해야됨
+      m_redirect_url: redirectUrl // 모바일에서 결제시, 페이지 주소가 바뀜, 따라서 결제 끝나고 돌아갈 주소 입력해야됨
     },
     (rsp: any) => {
       // callback

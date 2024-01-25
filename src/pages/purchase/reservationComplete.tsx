@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import formatDate from "@pages/purchase/utils/formatDate";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
 import usePurchaseHistory from "@pages/myPage/hooks/usePurchaseHistory";
+import { useEffect } from "react";
 
 interface TradeData {
   tradeId: number;
@@ -22,6 +23,10 @@ interface TradeData {
 }
 
 const ReservationComplete = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const purchaseInfo = JSON.parse(localStorage.getItem("purchaseInfo") as string);
   const { productId } = purchaseInfo;
 
