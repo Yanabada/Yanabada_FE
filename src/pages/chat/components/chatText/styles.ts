@@ -19,8 +19,9 @@ export const Chat = styled.div`
   align-items: flex-end;
   margin: 10px 0 20px;
 
-  &.right {
-    justify-content: flex-end;
+  &[data-type="right"] {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
   }
 `;
 
