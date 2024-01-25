@@ -95,8 +95,7 @@ const MyPage = ({ width }: MyPageProps) => {
         <S.LoginButtonWrapper>
           <Link to="/mypage/profile">
             <S.LoginButton>
-              {profileData?.id}
-              <ArrowForwardIcon />
+              {profileData?.nickName} <ArrowForwardIcon />
             </S.LoginButton>
           </Link>
         </S.LoginButtonWrapper>
