@@ -58,6 +58,7 @@ const MyPage = ({ width }: MyPageProps) => {
       Cookies.remove("image");
       Cookies.remove("email");
       Cookies.remove("id");
+      Cookies.remove("accessToken");
       Cookies.remove("refreshToken");
       Cookies.remove("nickName");
       Cookies.remove("provider");

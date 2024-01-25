@@ -1,6 +1,7 @@
 import { authInstance } from "@apis/instance";
 import Cookie from "js-cookie";
 
+
 export const postLogout = async () => {
   const postLogoutURL = "/auth/logout";
 

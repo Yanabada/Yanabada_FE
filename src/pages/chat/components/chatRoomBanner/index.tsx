@@ -7,6 +7,7 @@ import { useState } from "react";
 import PriceArea from "@components/priceArea";
 import PriceTable from "@components/priceTable";
 import UpperNavBar from "@components/navBar/upperNavBar";
+import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 
 interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -58,8 +59,8 @@ const ChatRoomBanner = ({
         <>
           <S.PriceContainer>
             <S.DiscountText>{salesPercentage}%</S.DiscountText>
-            <S.PriceText>{sellingPrice}원</S.PriceText>
-            <S.OriginalPriceText>{price}원</S.OriginalPriceText>
+            <S.PriceText>{formatNumberWithCommas(sellingPrice)}원</S.PriceText>
+            <S.OriginalPriceText>{price ? formatNumberWithCommas(price) : 0}원</S.OriginalPriceText>
           </S.PriceContainer>
           <S.TimeContainer>
             <TimerIcon />
