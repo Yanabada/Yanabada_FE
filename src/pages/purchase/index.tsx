@@ -866,6 +866,8 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                       ? "http://localhost:5173/purchase/confirm"
                       : "https://www.yanabada.com/purchase/confirm"
                   );
+
+                  setIsPaymentDone(1);
                 } else if (paymentMethod === "accountTransfer") {
                   onClickPGPayment(
                     productData.accommodationInfo.name,
