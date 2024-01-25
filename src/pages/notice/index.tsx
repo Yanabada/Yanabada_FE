@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { NOTI_TYPE_TO_TEXT } from "./constants";
 import useNotifications from "./queries";
 import { Toaster } from "react-hot-toast";
+import NoNotice from "./components/NoNotice";
 
 const variants = {
   initial: {
@@ -40,7 +41,6 @@ const Notice = () => {
   // UI 수정
   if (error) return <p>error {error.message}</p>;
   if (!data || isLoading) return <p>Loading...</p>;
-  if (data.data.notifications.length === 0) return <p>알림이 없습니다.</p>;
 
   return (
     <>
@@ -53,40 +53,44 @@ const Notice = () => {
         }
       />
       <S.Container>
-        {data.data.notifications.map((noti) => (
-          <AnimatePresence key={noti.notificationId} custom={isEditing}>
-            <S.NoticeContainer
-              custom={isEditing}
-              variants={variants}
-              initial="initial"
-              animate="animate"
-            >
-              <S.ImageContainer>
-                <img src={noti.image} alt="" />
-              </S.ImageContainer>
-              <S.ContentWrapper onClick={() => navigate(NOTI_TYPE_TO_TEXT[noti.type].path)}>
-                <div className="description">
-                  {NOTI_TYPE_TO_TEXT[noti.type].type}
-                  <span className="date">2023.12.31</span>
-                </div>
-                <div className="title">
-                  {noti.type === "CHAT" && (
-                    <span>
-                      <span className="user-name">{noti.senderNickname} </span>님이{" "}
-                    </span>
-                  )}
-                  {noti.type === "TRADE_REQUEST" && <span>등록하신 </span>}
-                  {noti.type === "TRADE_CANCELED" && <span>구매자가 </span>}
-                  <span className="product-name">{noti.accommodationName} </span>
-                  {NOTI_TYPE_TO_TEXT[noti.type].text}
-                </div>
-              </S.ContentWrapper>
-              <S.EditButton>
-                <input type="checkbox" onChange={() => handleChange(noti.notificationId)} />
-              </S.EditButton>
-            </S.NoticeContainer>
-          </AnimatePresence>
-        ))}
+        {data.data.notifications.length === 0 ? (
+          <NoNotice />
+        ) : (
+          data.data.notifications.map((noti) => (
+            <AnimatePresence key={noti.notificationId} custom={isEditing}>
+              <S.NoticeContainer
+                custom={isEditing}
+                variants={variants}
+                initial="initial"
+                animate="animate"
+              >
+                <S.ImageContainer>
+                  <img src={noti.image} alt="" />
+                </S.ImageContainer>
+                <S.ContentWrapper onClick={() => navigate(NOTI_TYPE_TO_TEXT[noti.type].path)}>
+                  <div className="description">
+                    {NOTI_TYPE_TO_TEXT[noti.type].type}
+                    <span className="date">2023.12.31</span>
+                  </div>
+                  <div className="title">
+                    {noti.type === "CHAT" && (
+                      <span>
+                        <span className="user-name">{noti.senderNickname} </span>님이{" "}
+                      </span>
+                    )}
+                    {noti.type === "TRADE_REQUEST" && <span>등록하신 </span>}
+                    {noti.type === "TRADE_CANCELED" && <span>구매자가 </span>}
+                    <span className="product-name">{noti.accommodationName} </span>
+                    {NOTI_TYPE_TO_TEXT[noti.type].text}
+                  </div>
+                </S.ContentWrapper>
+                <S.EditButton>
+                  <input type="checkbox" onChange={() => handleChange(noti.notificationId)} />
+                </S.EditButton>
+              </S.NoticeContainer>
+            </AnimatePresence>
+          ))
+        )}
       </S.Container>
       <S.BottomWrapper>
         <button onClick={() => deleteAllNotification.mutate()}>
