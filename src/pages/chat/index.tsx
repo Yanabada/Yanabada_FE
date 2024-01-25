@@ -6,10 +6,11 @@ import NoChatList from "./components/noChatList";
 import Cookies from "js-cookie";
 
 const Chat = () => {
-  const isLoggedIn = Cookies.get("isLoggedIn");
+  const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
+  // const isLoggedIn = Cookies.get("isLoggedIn") === "no";
   const { data, isLoading, error } = useChatRooms(isLoggedIn);
 
-  if (!isLoggedIn || isLoggedIn === "no") {
+  if (!isLoggedIn) {
     return (
       <>
         <UpperNavBar title="채팅" type="back" hasBorder />

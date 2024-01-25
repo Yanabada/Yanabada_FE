@@ -5,24 +5,22 @@ import BaseButton from "@components/buttons/BaseButton";
 import { useNavigate } from "react-router-dom";
 import { createChatRoom } from "@pages/productDetail/api/detail";
 import { Toaster } from "react-hot-toast";
-
+import Cookies from "js-cookie";
 interface DetailProps {
   data: DetailType;
 }
 
 const NegoButton = ({ data }: DetailProps) => {
-  const member = localStorage.getItem("member");
-  const memberId = member ? JSON.parse(member).id : null;
+  const memberId = JSON.parse(Cookies.get("id")!);
 
   const handleClick = async () => {
-    const member = localStorage.getItem("member");
-    if (!member) {
+    const isLoggedIn = Cookies.get("isLoggedIn");
+    if (isLoggedIn !== "yes") {
       navigate("/login");
       alert("로그인이 필요한 서비스입니다.");
       return;
     }
-    const buyerId = JSON.parse(member).id;
-    const response = await createChatRoom(data.id, buyerId);
+    const response = await createChatRoom(data.id, memberId);
     const chatRoomCode = response.data.chatRoomCode;
     navigate(`/chat/${chatRoomCode}?productId=${data.id}`);
   };

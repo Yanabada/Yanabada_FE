@@ -14,13 +14,19 @@ import { Message } from "./types/chatRoom";
 import { Client } from "@stomp/stompjs";
 import { MessageSubType } from "./hooks/subscribeApi";
 import { MessagePubType } from "./hooks/publishApi";
+import Cookies from "js-cookie";
+// import useProductDetail from "@pages/productDetail/hooks/useProductDetail";
+// import { useSearchParams } from "react-router-dom";
 
 const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const { roomId } = useParams();
+  // const [searchParams] = useSearchParams();
+  // const productId = parseInt(searchParams.get("productId")!);
   // 챗룸으로 왔을 때, 코드는 무조건 있어야 함
   const { data } = useMessages({ code: roomId! });
+  // const productDetail = useProductDetail(productId);
   const client = useRef<Client>();
 
   const { mutate: updateRoom } = useUpdateChatRoom();
@@ -33,7 +39,7 @@ const ChatRoom = () => {
 
   const connect = () => {
     client.current = new Client({
-      brokerURL: `ws://test.yanabada.com/ws-stomp`,
+      brokerURL: `wss://api.yanabada.com/ws-stomp`,
       debug: function (str) {
         console.log(str);
       },
@@ -159,7 +165,7 @@ const ChatRoom = () => {
 
       <ChatInput
         chatRoomCode={roomId!}
-        senderId={JSON.parse(localStorage.getItem("member")!).id}
+        senderId={JSON.parse(Cookies.get("id")!)}
         publish={publish}
       />
 
