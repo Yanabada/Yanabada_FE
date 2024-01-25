@@ -7,7 +7,7 @@ import { MdOutlineTimer } from "react-icons/md";
 import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import Modal from "@components/modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useProducts from "@pages/myPage/hooks/useProducts";
 import { useNavigate } from "react-router-dom";
 import useSaleApprove from "@pages/myPage/hooks/useSaleApprove";
@@ -109,13 +109,18 @@ const ListCard = forwardRef(
       setIsVisible: setIsVisible,
       leftAction: () => {
         saleApproveMutate(tradeId);
-
-        isSaleApproved && setIsVisible(false);
       },
       rightAction: () => setIsVisible(false)
     };
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+      if (isSaleApproved) {
+        setIsVisible(false);
+        location.reload();
+      }
+    }, [isSaleApproved]);
 
     return (
       <S.ListCardContainer width={width} ref={ref as React.RefObject<HTMLDivElement>}>
