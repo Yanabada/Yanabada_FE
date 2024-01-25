@@ -4,9 +4,9 @@ import { getPaymentsLists } from "../apis/charge";
 const fetchPaymentLists = async (tab: string) => {
   switch (tab) {
     case "transactions":
-      return await getPaymentsLists("/products/histories?types=DEPOSIT&types=WITHDRAW");
+      return await getPaymentsLists("/payments/histories?types=DEPOSIT&types=WITHDRAW&size=10");
     case "charges":
-      return await getPaymentsLists("/products/histories?types=DISBURSEMENT&types=CHARGE");
+      return await getPaymentsLists("/payments/histories?types=DISBURSEMENT&types=CHARGE&size=10");
     default:
       return await getPaymentsLists("/payments/histories");
   }
