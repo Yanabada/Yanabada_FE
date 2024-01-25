@@ -1,8 +1,9 @@
 import * as CS from "./styles/success";
 
+import { useNavigate } from "react-router-dom";
+
 import BaseButton from "@components/buttons/BaseButton";
 import UpperNavBar from "@components/navBar/upperNavBar";
-import { useNavigate } from "react-router-dom";
 
 const ChargeIntro = () => {
   const navigate = useNavigate();

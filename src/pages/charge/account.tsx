@@ -26,14 +26,6 @@ const Account = () => {
   const [allCheck, setAllCheck] = useState(false);
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
-
-  const bottomSheetProps = {
-    title: "약관 동의",
-    isVisible: bottomSheetVisible,
-    setIsVisible: setBottomSheetVisible
-  };
-
-  const isFormValid = isSuccess && bankName !== "은행/증권사 선택";
   const numberPattern = /^[0-9]{10,14}$/;
 
   const toggleOption = () => {
@@ -44,6 +36,14 @@ const Account = () => {
     const isValid = numberPattern.test(String(value));
     setIsSuccess(isValid);
   };
+
+  const bottomSheetProps = {
+    title: "약관 동의",
+    isVisible: bottomSheetVisible,
+    setIsVisible: setBottomSheetVisible
+  };
+
+  const isFormValid = isSuccess && bankName !== "은행/증권사 선택";
 
   const registerForPayment = useRegisterForPayment();
 

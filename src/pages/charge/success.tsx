@@ -17,6 +17,7 @@ const ChargeSuccess = () => {
       <S.SuccessWrap>
         <S.SuccessBox>
           <img src="/src/assets/check-ico.png" alt="체크아이콘" />
+          {/* FIXME : 멤버정보 닉네임값 가져올 것 */}
           <p className="tit">
             [닉네임]님
             <br />
