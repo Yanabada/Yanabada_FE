@@ -94,7 +94,7 @@ const ListCard = forwardRef(
 
     const { mutate: productsMutate } = useProducts();
     const { mutate: saleApproveMutate, isSuccess: isSaleApproved } = useSaleApprove();
-    const { mutate: approvalDenyMutate } = useApporvalDeny();
+    const { mutate: approvalDenyMutate, isSuccess: isDenied } = useApporvalDeny();
     const { mutate: purchaseCancelMutate } = usePurchaseCancel();
 
     const [isVisible, setIsVisible] = useState(false);
@@ -121,6 +121,12 @@ const ListCard = forwardRef(
         location.reload();
       }
     }, [isSaleApproved]);
+
+    useEffect(() => {
+      if (isDenied) {
+        location.reload();
+      }
+    }, [isDenied]);
 
     return (
       <S.ListCardContainer width={width} ref={ref as React.RefObject<HTMLDivElement>}>
