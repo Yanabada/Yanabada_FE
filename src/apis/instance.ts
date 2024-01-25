@@ -15,11 +15,28 @@ export const authInstance = axios.create({
   }
 });
 
+authInstance.interceptors.request.use(
+  async (config) => {
+    config.headers["Content-Type"] = "application/json";
+    const accessToken = getAccessToken();
+    // const isLogged = Cookies.get("id");
+    if (!accessToken) {
+      return config;
+    }
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 instance.interceptors.request.use(
   async (config) => {
     config.headers["Content-Type"] = "application/json";
     const accessToken = getAccessToken();
-    const isLogged = localStorage.getItem("member");
+    const isLogged = Cookies.get("id");
     if (!accessToken || !isLogged) {
       return config;
     }
@@ -38,14 +55,16 @@ instance.interceptors.response.use(
   async (error) => {
     if (error.response?.status === 401) {
       const originalRequest = error.config;
-
+      console.log(error.response);
+      if (!("data" in error.response.data)) {
+        console.log("잘못된 접근!");
+        return Promise.reject(error);
+      }
       if (error.response.data.data.isNeededRefresh) {
         const newAccessToken = await refreshAccessToken();
         Cookies.set("accessToken", newAccessToken);
-
         axios.defaults.headers["Authorization"] = `Bearer ${newAccessToken}`;
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-
         return axios(originalRequest);
       }
     }
