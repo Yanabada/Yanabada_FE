@@ -1,9 +1,16 @@
 import { instance } from "@apis/instance";
+import Cookie from "js-cookie";
 
 export const postLogout = async () => {
   const postLogoutURL = "/auth/logout";
 
-  return await instance.post(postLogoutURL);
+  const refreshToken = Cookie.get("refreshToken");
+
+  return await instance.post(postLogoutURL, null, {
+    headers: {
+      Authorization: `Bearer ${refreshToken}`
+    }
+  });
 };
 
 export default postLogout;
