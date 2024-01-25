@@ -29,7 +29,7 @@ const ChargeIntro = () => {
           <BaseButton
             buttonType="default"
             width="100%"
-            onClick={() => navigate("/charge/password?registration=true")}
+            onClick={() => navigate("/signin/3?from=payRegistration")}
           >
             야놀자페이 등록 시작하기
           </BaseButton>

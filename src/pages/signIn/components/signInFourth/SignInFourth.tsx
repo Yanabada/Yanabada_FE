@@ -35,6 +35,17 @@ const SignInFourth = () => {
         mutationFn={mutate}
       />
     );
+  } else if (fromParams === "payRegistration") {
+    return (
+      <Certification
+        width="100%"
+        upperNavBarText="휴대폰 인증"
+        buttonText="확인"
+        customHandleClick={() => {
+          navigate("/charge/password?registration=true");
+        }}
+      />
+    );
   } else {
     return (
       <Certification
