@@ -10,7 +10,7 @@ const useLogin = () => {
   return useMutation({
     mutationFn: (requestBody: LoginApiProps) => loginApi(requestBody),
     onSuccess: (res) => {
-      localStorage.setItem("member", JSON.stringify(res.data.data.member));
+      console.log(res);
       // TODO - 성공시 애니메이션 추가
       // toast.success("로그인 성공");
       navigate("/");
