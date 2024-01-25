@@ -2,7 +2,7 @@ import { Client } from "@stomp/stompjs";
 
 const useSocket = () => {
   const client = new Client({
-    brokerURL: `ws://test.yanabada.com/ws-stomp`,
+    brokerURL: `wss://test.yanabada.com/ws-stomp`,
     debug: function (str) {
       console.log(str);
     },
