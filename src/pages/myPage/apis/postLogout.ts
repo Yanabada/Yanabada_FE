@@ -1,4 +1,4 @@
-import { instance } from "@apis/instance";
+import { authInstance } from "@apis/instance";
 import Cookie from "js-cookie";
 
 export const postLogout = async () => {
@@ -6,7 +6,7 @@ export const postLogout = async () => {
 
   const refreshToken = Cookie.get("refreshToken");
 
-  return await instance.post(postLogoutURL, null, {
+  return await authInstance.post(postLogoutURL, null, {
     headers: {
       Authorization: `Bearer ${refreshToken}`
     }
