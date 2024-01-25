@@ -22,6 +22,8 @@ interface TradeData {
 }
 
 const ReservationComplete = () => {
+  window.scrollTo(0, 0);
+
   const purchaseInfo = JSON.parse(localStorage.getItem("purchaseInfo") as string);
   const { productId } = purchaseInfo;
 

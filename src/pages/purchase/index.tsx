@@ -47,6 +47,8 @@ interface PurchaseProps {
 }
 
 const Purchase = ({ width, divType }: PurchaseProps) => {
+  window.scrollTo(0, 0);
+
   const [searchParams] = useSearchParams();
   const name = searchParams.get("name");
   const phoneNumber = searchParams.get("phonenumber");
