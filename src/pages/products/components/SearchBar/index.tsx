@@ -1,8 +1,7 @@
 import * as S from "./style";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const SearchBar = () => {
-  const { search } = useLocation();
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get("keyword");
   const adult = searchParams.get("adult");
@@ -16,7 +15,7 @@ const SearchBar = () => {
         <S.InputIcon />
         <S.Input
           placeholder={
-            search
+            keyword && adult && child && checkInDate && checkOutDate
               ? `${keyword} | ${checkInDate} ~ ${checkOutDate} | 성인 ${adult}, 아동 ${child}`
               : "원하는 장소/날짜/인원을 검색해보세요"
           }
