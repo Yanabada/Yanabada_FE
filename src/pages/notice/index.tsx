@@ -7,7 +7,7 @@ import Modal from "@components/modal";
 import { useNavigate } from "react-router-dom";
 import { NOTI_TYPE_TO_TEXT } from "./constants";
 import useNotifications from "./queries";
-import { deleteNotifications } from "./api";
+import { Toaster } from "react-hot-toast";
 
 const variants = {
   initial: {
@@ -21,16 +21,19 @@ const variants = {
 const Notice = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [notiIds, setNotiIds] = useState<number[]>([]);
+  const [notis, setNotis] = useState<Array<{ id: number }>>([]);
   const navigate = useNavigate();
-  const { data, isLoading, error } = useNotifications();
+  const { data, isLoading, error, deleteSelectedNotifications, deleteAllNotification } =
+    useNotifications();
 
   const handleChange = (id: number) => {
-    if (notiIds.includes(id)) {
-      const newList = notiIds.filter((notiId) => notiId !== id);
-      setNotiIds(newList);
+    const existingNoti = notis.find((noti) => noti.id === id);
+
+    if (existingNoti) {
+      const newList = notis.filter((noti) => noti.id !== id);
+      setNotis(newList);
     } else {
-      setNotiIds((prev) => [...prev, id]);
+      setNotis((prev) => [...prev, { id: id }]);
     }
   };
 
@@ -41,6 +44,7 @@ const Notice = () => {
 
   return (
     <>
+      <Toaster />
       <UpperNavBar
         type="back"
         title="알림"
@@ -85,12 +89,12 @@ const Notice = () => {
         ))}
       </S.Container>
       <S.BottomWrapper>
-        <button>
+        <button onClick={() => deleteAllNotification.mutate()}>
           <TrashCanIcon />
         </button>
         <button
           onClick={() => setModalVisible(true)}
-          className={`${notiIds.length > 0 ? "active" : "disabled"}`}
+          className={`${notis.length > 0 ? "active" : "disabled"}`}
         >
           선택한 항목 삭제
         </button>
@@ -101,7 +105,7 @@ const Notice = () => {
         leftBtnText="아니오"
         leftAction={() => setModalVisible(false)}
         rightBtnText="삭제하기"
-        rightAction={() => deleteNotifications(notiIds)}
+        rightAction={() => deleteSelectedNotifications.mutate(notis)}
         isVisible={isModalVisible}
         setIsVisible={setModalVisible}
       />
