@@ -35,7 +35,7 @@ const Chat = () => {
       ) : (
         <S.ChatListContainer>
           {data.data.map((chatroom) => (
-            <ChatList room={chatroom} />
+            <ChatList key={chatroom.chatRoomCode} room={chatroom} />
           ))}
         </S.ChatListContainer>
       )}

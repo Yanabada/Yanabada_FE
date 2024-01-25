@@ -15,18 +15,21 @@ import { Client } from "@stomp/stompjs";
 import { MessageSubType } from "./hooks/subscribeApi";
 import { MessagePubType } from "./hooks/publishApi";
 import Cookies from "js-cookie";
-// import useProductDetail from "@pages/productDetail/hooks/useProductDetail";
-// import { useSearchParams } from "react-router-dom";
+import useProductDetail from "@pages/productDetail/hooks/useProductDetail";
+import { useSearchParams } from "react-router-dom";
+import { formatDateTo } from "@utils/formatDateTo";
 
 const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const { roomId } = useParams();
-  // const [searchParams] = useSearchParams();
-  // const productId = parseInt(searchParams.get("productId")!);
+  const [searchParams] = useSearchParams();
+  const productId = parseInt(searchParams.get("productId")!);
   // 챗룸으로 왔을 때, 코드는 무조건 있어야 함
   const { data } = useMessages({ code: roomId! });
-  // const productDetail = useProductDetail(productId);
+  const {
+    getDetailQuery: { data: productData }
+  } = useProductDetail(productId);
   const client = useRef<Client>();
 
   const { mutate: updateRoom } = useUpdateChatRoom();
@@ -43,7 +46,7 @@ const ChatRoom = () => {
       debug: function (str) {
         console.log(str);
       },
-      reconnectDelay: 500000,
+      reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
@@ -56,11 +59,10 @@ const ChatRoom = () => {
     });
 
     client.current.activate();
-    console.log("activated?");
   };
 
   const disconnect = () => {
-    console.log("연결끊겼당");
+    console.log("Disconnect");
     client.current?.deactivate();
   };
 
@@ -88,8 +90,6 @@ const ChatRoom = () => {
     });
   };
 
-  const status = "ON_SALE";
-
   // 채팅 왔을 때 아래로 스크롤 (훅으로 만들어 주쎄용)
   const bottom = useRef<HTMLDivElement>(null);
   const scrollToBottom = () => {
@@ -98,17 +98,7 @@ const ChatRoom = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [data?.data.messages]);
-
-  // TODO : API 호출로 연결 예정
-  const productData = {
-    code: "1",
-    image: "1.jpg",
-    accommodationName: "호텔이름이야",
-    checkInDate: "2024-02-01",
-    checkOutDate: "2024-02-02",
-    policyNumber: "YNBD_1"
-  };
+  }, [chatMessages]);
 
   return (
     <>
@@ -118,7 +108,7 @@ const ChatRoom = () => {
         customBack={() => {
           updateRoom({ code: roomId! });
         }}
-        title="강쥐사랑해진짜로"
+        title={productData?.seller.nickname}
         rightElement={
           <button
             onClick={() => {
@@ -130,23 +120,25 @@ const ChatRoom = () => {
         }
         hasBorder
       />
-      <ChatRoomBanner
-        title="파라스파라 서울 더 그레이트 현대 런던"
-        status="ON_SALE"
-        roomName="Forest Tower Deluxe King"
-        salesPercentage={50}
-        sellingPrice={600000}
-        originalPrice={1200000}
-        saleEndDate="2021-09-30"
-        sellerId={1}
-        purchasePrice={600000}
-        code={productData.code}
-        image={productData.image}
-        accommodationName={productData.accommodationName}
-        checkInDate={productData.checkInDate}
-        checkOutDate={productData.checkOutDate}
-        policyNumber={productData.policyNumber}
-      />
+      {productData && (
+        <ChatRoomBanner
+          title={productData.accommodationInfo.name}
+          status={productData.status}
+          roomName={productData.roomInfo.name}
+          salesPercentage={productData.salesPercentage}
+          sellingPrice={productData.sellingPrice}
+          originalPrice={productData.price}
+          saleEndDate={formatDateTo(productData.saleEndDate, "d일 HH시간 mm분")!}
+          sellerId={productData.seller.id}
+          purchasePrice={productData.purchasePrice}
+          code={productData.orderCode}
+          image={productData.roomInfo.image}
+          accommodationName={productData.accommodationInfo.name}
+          checkInDate={formatDateTo(productData.checkInDate, "yyyy.MM.dd")!}
+          checkOutDate={formatDateTo(productData.checkOutDate, "yyyy.MM.dd")!}
+          policyNumber={productData.roomInfo.cancelPolicy}
+        />
+      )}
       <S.ChatContainer ref={bottom} status={status}>
         {!data || data.data.messages.length === 0 ? (
           <p>메시지가 없습니다.</p>
