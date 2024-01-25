@@ -524,7 +524,9 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             <CS.FormLeftText color="gray">수수료</CS.FormLeftText>
           </CS.FormTextWrapper>
           <CS.FormRightPrice color="darkGray">
-            {paymentMethod === "yanoljaPay" ? "야놀자 페이 사용 무료" : `${fee}원`}
+            {paymentMethod === "yanoljaPay"
+              ? "야놀자 페이 사용 무료"
+              : `${formatNumberWithCommas(productData.sellingPrice * 0.05)}원`}
           </CS.FormRightPrice>
         </CS.SeperationForm>
         <CS.SeperationForm>
