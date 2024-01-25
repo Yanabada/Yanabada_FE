@@ -1,5 +1,5 @@
-const formatTimeUntilSaleEnd = (saleEndDate: string): string => {
-  const saleEndDateTime = new Date(saleEndDate).getTime();
+const formatTimeUntilSaleEnd = (saleEndDate: string | undefined): string => {
+  const saleEndDateTime = new Date(saleEndDate as string).getTime();
   const currentDateTime = new Date().getTime();
 
   const timeDifference = saleEndDateTime - currentDateTime;

@@ -9,7 +9,7 @@ export const BottemSheetWrapper = styled(motion.div)`
   margin: 0 auto;
 
   max-width: 780px;
-  z-index: 998;
+  z-index: 1000;
   background-color: #fff;
   border-radius: 10px 10px 0 0;
 `;
