@@ -9,7 +9,7 @@ export const getNotifications = async () => {
   return response.data as NotificationResponseData;
 };
 
-export const deleteNotifications = async (ids: number[]) => {
+export const deleteNotifications = async (ids: Array<{ id: number }>) => {
   const response = await instance.delete(NOTI_URL, {
     data: ids
   });
