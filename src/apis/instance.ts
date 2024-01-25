@@ -7,6 +7,14 @@ export const instance: AxiosInstance = axios.create({
   timeout: 5000
 });
 
+export const authInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  timeout: 5000,
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
+
 instance.interceptors.request.use(
   async (config) => {
     config.headers["Content-Type"] = "application/json";
