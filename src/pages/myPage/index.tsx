@@ -13,6 +13,7 @@ import useProfileDetail from "./hooks/useProfileDetail";
 import usePutPhoneNumber from "./hooks/useLogout";
 import useBalance from "./hooks/useBalance";
 import Cookies from "js-cookie";
+import useNotifications from "@pages/notice/queries";
 
 interface MyPageProps {
   width?: string;
@@ -36,6 +37,7 @@ const MyPage = ({ width }: MyPageProps) => {
 
   const { data: profileData, error: profileError, refetch: profileRefetch } = useProfileDetail();
   const { data: balanceData, error: balanceError, refetch: balanceRefetch } = useBalance();
+  const { data: notificationData } = useNotifications();
   const { mutate } = usePutPhoneNumber();
   const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
 
@@ -83,7 +85,7 @@ const MyPage = ({ width }: MyPageProps) => {
         rightElement={
           <Link to="/notice">
             <S.BellContainer>
-              <NumberBadge number={6} />
+              <NumberBadge number={notificationData?.data.notifications.length} />
               <FaRegBell className="bell" />
             </S.BellContainer>
           </Link>
