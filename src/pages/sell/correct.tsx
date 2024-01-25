@@ -2,7 +2,7 @@ import * as S from "./styles/register";
 import * as CS from "./styles/detail";
 
 import { useEffect, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { differenceInDays } from "date-fns";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
@@ -17,9 +17,9 @@ import NegoOption from "./components/NegoOption";
 import AutoCancelOption from "./components/AutoCancelOption";
 import DateOption from "./components/DateOption";
 import { formatDate } from "./utils/formatDate";
-import patchSellData from "./apis/patchSellData";
 import getSellResult from "./apis/getSellResult";
 import initialSellData from "./constants/initialSellData";
+import { usePatchSellData } from "./hooks/usePatchSellApi";
 
 interface EndDateInfo {
   endDate: string;
@@ -28,10 +28,10 @@ interface EndDateInfo {
 }
 
 const SellCorrect = () => {
-  const [allCheck, setAllCheck] = useState(false);
-  const [check1, setCheck1] = useState(false);
-  const [check2, setCheck2] = useState(false);
-  const [check3, setCheck3] = useState(false);
+  const [allCheck, setAllCheck] = useState(true);
+  const [check1, setCheck1] = useState(true);
+  const [check2, setCheck2] = useState(true);
+  const [check3, setCheck3] = useState(true);
 
   const [price, setPrice] = useState(0);
   const [isNego, setIsNego] = useState(false);
@@ -40,8 +40,8 @@ const SellCorrect = () => {
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
 
   const [searchParams] = useSearchParams();
+  const redirectParams = searchParams.get("redirect");
   const { id } = useParams();
-  const [, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | undefined>();
   const [endDateInfo, setEndDateInfo] = useState<EndDateInfo>({
     endDate: "",
@@ -50,28 +50,27 @@ const SellCorrect = () => {
   });
 
   const [sellDetailData, setSellDetailData] = useState(initialSellData);
+  const isFormValid = check1 && check2 && check3 && price > 0 && endDate;
 
-  // 시작일과 종료일 쿼리스트링으로 등록
   useEffect(() => {
-    const startParam = searchParams.get("checkInDate");
     const endParam = searchParams.get("checkOutDate");
 
-    setStartDate(String(startParam));
-    setEndDate(String(endParam));
+    // URL에서 받아온 checkOutDate가 현재 endDate 상태와 다르고, 실제로 값이 존재하는 경우에만 상태 업데이트
+    if (endParam && endParam !== endDate) {
+      setEndDate(endParam);
 
-    if (endParam) {
       const currentDate = new Date(endParam);
       const daysBefore = differenceInDays(new Date(sellDetailData.checkInDate), currentDate);
       const feePercentage =
         feePolicy2.find((policy) => policy.daysBefore === daysBefore)?.percentage || 0;
 
       setEndDateInfo({
-        endDate: String(endParam),
+        endDate: endParam,
         daysBefore: daysBefore,
         feePercentage: feePercentage
       });
     }
-  }, [searchParams, sellDetailData.checkInDate]);
+  }, [searchParams, endDate, sellDetailData.checkInDate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,11 +80,13 @@ const SellCorrect = () => {
         }
         const sellDetailData = await getSellResult({ id });
         console.log("성공!", sellDetailData.data);
+
+        setEndDate(sellDetailData.data.saleEndDate);
         setSellDetailData(sellDetailData.data);
         setSellerComment(sellDetailData.data.description);
         setIsAutoCancel(sellDetailData.data.isAutoCancel);
         setIsNego(sellDetailData.data.canNegotiate);
-        setPrice(sellDetailData.price);
+        setPrice(sellDetailData.data.sellingPrice);
       } catch (error) {
         console.error("Error fetching sell list:", error);
       }
@@ -93,6 +94,8 @@ const SellCorrect = () => {
 
     fetchData();
   }, []);
+
+  const patchSellData = usePatchSellData();
 
   const onSubmit = () => {
     const requestData = {
@@ -104,7 +107,7 @@ const SellCorrect = () => {
       description: sellerComment
     };
 
-    patchSellData(requestData);
+    patchSellData(requestData, redirectParams);
   };
 
   return (
@@ -161,7 +164,7 @@ const SellCorrect = () => {
           <AutoCancelOption
             isAutoCancel={isAutoCancel}
             setIsAutoCancel={setIsAutoCancel}
-            originalPrice={sellDetailData.price}
+            purchasePrice={sellDetailData.purchasePrice}
             endDateInfo={endDateInfo}
           />
         )}
@@ -209,14 +212,12 @@ const SellCorrect = () => {
         </S.RegisterInner>
         <S.RegisterInner>
           <S.ConfirmWrap>
-            <p className="des">
-              <Link to="/">이용규칙</Link>에 동의하실 경우 상품 등록하기를 클릭해주세요
-            </p>
+            <p className="des">이용규칙에 동의하실 경우 상품 등록하기를 클릭해주세요</p>
             <BaseButton
-              buttonType={allCheck ? "default" : "disabled-default"}
+              buttonType={isFormValid ? "default" : "disabled-default"}
               width="100%"
               onClick={() => {
-                if (allCheck) {
+                if (isFormValid) {
                   onSubmit();
                 }
               }}

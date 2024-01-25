@@ -2,7 +2,7 @@ import * as S from "./styles/register";
 import * as CS from "./styles/detail";
 
 import { useEffect, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { differenceInDays } from "date-fns";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
@@ -18,8 +18,8 @@ import AutoCancelOption from "./components/AutoCancelOption";
 import DateOption from "./components/DateOption";
 import getSellDetail from "./apis/getSellDetail";
 import { formatDate } from "./utils/formatDate";
-import { callSellApi } from "./apis/callSellApi";
 import initialDetailData from "./constants/initialDetailData";
+import { useCallSellApi } from "./hooks/useSellApi";
 
 interface EndDateInfo {
   endDate: string;
@@ -41,6 +41,7 @@ const SellRegister = () => {
 
   const [searchParams] = useSearchParams();
   const { id } = useParams();
+
   const [, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | undefined>();
   const [endDateInfo, setEndDateInfo] = useState<EndDateInfo>({
@@ -50,6 +51,8 @@ const SellRegister = () => {
   });
 
   const [sellDetailData, setSellDetailData] = useState(initialDetailData);
+  const isFormValid = check1 && check2 && check3 && price > 0 && endDate;
+  const callSellApi = useCallSellApi();
 
   // 시작일과 종료일 쿼리스트링으로 등록
   useEffect(() => {
@@ -90,7 +93,7 @@ const SellRegister = () => {
     fetchData();
   }, []);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const requestData = {
       orderId: parseInt(id!),
       price: price,
@@ -99,8 +102,7 @@ const SellRegister = () => {
       saleEndDate: formatDate(endDate!),
       description: sellerComment
     };
-
-    callSellApi(requestData);
+    await callSellApi(requestData);
   };
 
   return (
@@ -157,7 +159,7 @@ const SellRegister = () => {
           <AutoCancelOption
             isAutoCancel={isAutoCancel}
             setIsAutoCancel={setIsAutoCancel}
-            originalPrice={sellDetailData.price}
+            purchasePrice={sellDetailData.price}
             endDateInfo={endDateInfo}
           />
         )}
@@ -205,15 +207,13 @@ const SellRegister = () => {
         </S.RegisterInner>
         <S.RegisterInner>
           <S.ConfirmWrap>
-            <p className="des">
-              <Link to="/">이용규칙</Link>에 동의하실 경우 상품 등록하기를 클릭해주세요
-            </p>
+            <p className="des">이용규칙에 동의하실 경우 상품 등록하기를 클릭해주세요</p>
             <BaseButton
               type="submit"
-              buttonType={allCheck ? "default" : "disabled-default"}
+              buttonType={isFormValid ? "default" : "disabled-default"}
               width="100%"
               onClick={() => {
-                if (allCheck) {
+                if (isFormValid) {
                   onSubmit();
                 }
               }}

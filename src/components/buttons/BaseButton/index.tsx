@@ -69,12 +69,7 @@ const BaseButton = ({ buttonType, children, ...props }: BaseButtonProps) => {
         </S.NaverButton>
       );
     case "disabled-light":
-      return (
-        <S.DisabledLightColoredButton {...props}>
-          <IoIosSearch size="18px" color="##9C9C9C" />
-          {children}
-        </S.DisabledLightColoredButton>
-      );
+      return <S.DisabledLightColoredButton {...props}>{children}</S.DisabledLightColoredButton>;
     case "disabled-icon":
       return (
         <S.DisabledIconButton {...props}>
