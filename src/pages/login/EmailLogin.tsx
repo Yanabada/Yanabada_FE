@@ -8,8 +8,6 @@ import { useEffect, useState } from "react";
 import SignInBottomSheet from "./components/signInBottomSheet/SignInBottomSheet";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { authInstance } from "@apis/instance";
-import Cookies from "js-cookie";
 import { Toaster } from "react-hot-toast";
 import useLogin from "./hooks/useLogin";
 
@@ -43,7 +41,6 @@ const EmailLogin = () => {
     const requestBody = { email, password };
     await mutate(requestBody);
   };
-  // const res = await authInstance.post("/auth/login", requestBody);
 
   return (
     <>
