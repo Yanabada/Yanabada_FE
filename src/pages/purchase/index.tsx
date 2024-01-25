@@ -115,6 +115,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
   const [isPaymentDone, setIsPaymentDone] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isActive, setIsActive] = useState(false);
   const [isLocal] = useState(true); // FIXME: 나중에 삭제
 
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
@@ -278,6 +279,19 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
       );
     }
   }, [paymentMethod, pointToUse]);
+
+  useEffect(() => {
+    if (
+      isAllChecked &&
+      toggleButtonActive !== 0 &&
+      name &&
+      phoneNumber &&
+      nameState &&
+      phoneNumberState
+    ) {
+      setIsActive(true);
+    }
+  }, [isAllChecked, toggleButtonActive, name, phoneNumber, nameState, phoneNumberState]);
 
   return (
     <>
@@ -833,7 +847,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
               동의하실 경우 결제하기를 클릭해 주세요
             </S.BottomDetailText>
           </S.ButtonFormWrapper>
-          {isAllChecked && toggleButtonActive !== 0 ? (
+          {isActive ? (
             <BaseButton
               width="100%"
               buttonType="default"
