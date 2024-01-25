@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import postLogout from "../apis/postLogout";
 import { toast } from "react-hot-toast";
 
-export const usePutPhoneNumber = () => {
+export const useLogout = () => {
   return useMutation({
     mutationFn: () => postLogout(),
     onSuccess: () => {
@@ -15,4 +15,4 @@ export const usePutPhoneNumber = () => {
   });
 };
 
-export default usePutPhoneNumber;
+export default useLogout;

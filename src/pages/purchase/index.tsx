@@ -47,6 +47,10 @@ interface PurchaseProps {
 }
 
 const Purchase = ({ width, divType }: PurchaseProps) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [searchParams] = useSearchParams();
   const name = searchParams.get("name");
   const phoneNumber = searchParams.get("phonenumber");
@@ -110,12 +114,12 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [toggleButtonActive, setToggleButtonActive] = useState(0);
   const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
   const [isPaymentDone, setIsPaymentDone] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [isLocal] = useState(true); // FIXME: 나중에 삭제
 
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
   const [isYanoljaPaySubscribed] = useState(false);
-
-  // FIXME: 추후 API 호출하여 수수료 계산
-  const [fee] = useState(0);
 
   const navigate = useNavigate();
 
@@ -228,9 +232,9 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         userPersonPhoneNumber: phoneNumber,
         tradeId: productData?.tradeId,
         productPrice: formatNumberWithCommas(productData.price),
-        fee: fee,
+        fee: productData.sellingPrice * 0.05,
         point: pointToUse,
-        totalPrice: formatNumberWithCommas(productData?.sellingPrice + fee - Number(pointToUse)),
+        totalPrice: formatNumberWithCommas(totalPrice),
         paymentType: convertStringToKR(paymentMethod),
         productId: productId
       };
@@ -250,8 +254,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   }, []);
 
   useEffect(() => {
-    console.log("called");
-
     // FIXME: onClickPayment 함수에서 return 값을 받아올 수 없음
     if (isPaymentDone === 1) {
       localStorage.getItem("tossPayment") === "true"
@@ -267,6 +269,29 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         : setIsPaymentSuccess(false);
     }
   }, [isPaymentDone]);
+
+  useEffect(() => {
+    if (paymentMethod === "yanoljaPay")
+      setTotalPrice(productData?.sellingPrice - Number(pointToUse));
+    else {
+      setTotalPrice(
+        productData?.sellingPrice + productData.sellingPrice * 0.05 - Number(pointToUse)
+      );
+    }
+  }, [paymentMethod, pointToUse]);
+
+  useEffect(() => {
+    if (
+      isAllChecked &&
+      toggleButtonActive !== 0 &&
+      name &&
+      phoneNumber &&
+      nameState &&
+      phoneNumberState
+    ) {
+      setIsActive(true);
+    }
+  }, [isAllChecked, toggleButtonActive, name, phoneNumber, nameState, phoneNumberState]);
 
   return (
     <>
@@ -522,7 +547,9 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             <CS.FormLeftText color="gray">수수료</CS.FormLeftText>
           </CS.FormTextWrapper>
           <CS.FormRightPrice color="darkGray">
-            {paymentMethod === "yanoljaPay" ? "야놀자 페이 사용 무료" : `${fee}원`}
+            {paymentMethod === "yanoljaPay"
+              ? "야놀자 페이 사용 무료"
+              : `${formatNumberWithCommas(productData.sellingPrice * 0.05)}원`}
           </CS.FormRightPrice>
         </CS.SeperationForm>
         <CS.SeperationForm>
@@ -533,9 +560,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         </CS.SeperationForm>
         <CS.SeperationForm isBorder={true}>
           <CS.FormLeftTextBold>총 결제 금액</CS.FormLeftTextBold>
-          <CS.FormRightPrice color="blue">
-            {formatNumberWithCommas(productData.sellingPrice + fee - Number(pointToUse))}원
-          </CS.FormRightPrice>
+          <CS.FormRightPrice color="blue">{formatNumberWithCommas(totalPrice)}원</CS.FormRightPrice>
         </CS.SeperationForm>
       </CS.InfoWrapper>
       <S.Spacer width={width} />
@@ -643,47 +668,50 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
               </AnimatePresence>
             </InputWrapper>
 
-            {/* FIXME: 카드 -> 5만원 미만시 할부기간 선택불가 */}
             <InputWrapper>
-              <motion.p className="select" onClick={toggleInstallmentOption}>
-                <span>{installmentMessage}</span>
-                {isInstallmentOptionVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
-              </motion.p>
-              <AnimatePresence>
-                {isInstallmentOptionVisible && (
-                  <motion.div
-                    className="option"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    style={{
-                      position: "relative",
-                      top: "-3px",
-                      left: 0,
-                      zIndex: 1,
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "auto",
-                      alignItems: "flex-start"
-                    }}
-                  >
-                    <motion.div className="inner" onClick={() => handleInstallmentOption(1)}>
-                      <span className="installment">1개월(무이자)</span>
-                    </motion.div>
-                    <motion.div className="inner" onClick={() => handleInstallmentOption(2)}>
-                      <span className="installment">2개월</span>
-                    </motion.div>
-                    <motion.div className="inner" onClick={() => handleInstallmentOption(3)}>
-                      <span className="installment">3개월</span>
-                    </motion.div>
-                    <motion.div className="inner" onClick={() => handleInstallmentOption(4)}>
-                      <span className="installment">4개월</span>
-                    </motion.div>
-                    <motion.div className="inner" onClick={() => handleInstallmentOption(5)}>
-                      <span className="installment">5개월</span>
-                    </motion.div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {totalPrice >= 50000 ? (
+                <>
+                  <motion.p className="select" onClick={toggleInstallmentOption}>
+                    <span>{installmentMessage}</span>
+                    {isInstallmentOptionVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
+                  </motion.p>
+                  <AnimatePresence>
+                    {isInstallmentOptionVisible && (
+                      <motion.div
+                        className="option"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        style={{
+                          position: "relative",
+                          top: "-3px",
+                          left: 0,
+                          zIndex: 1,
+                          display: "flex",
+                          flexDirection: "column",
+                          height: "auto",
+                          alignItems: "flex-start"
+                        }}
+                      >
+                        <motion.div className="inner" onClick={() => handleInstallmentOption(1)}>
+                          <span className="installment">1개월(무이자)</span>
+                        </motion.div>
+                        <motion.div className="inner" onClick={() => handleInstallmentOption(2)}>
+                          <span className="installment">2개월</span>
+                        </motion.div>
+                        <motion.div className="inner" onClick={() => handleInstallmentOption(3)}>
+                          <span className="installment">3개월</span>
+                        </motion.div>
+                        <motion.div className="inner" onClick={() => handleInstallmentOption(4)}>
+                          <span className="installment">4개월</span>
+                        </motion.div>
+                        <motion.div className="inner" onClick={() => handleInstallmentOption(5)}>
+                          <span className="installment">5개월</span>
+                        </motion.div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </>
+              ) : null}
             </InputWrapper>
           </>
         ) : null}
@@ -822,7 +850,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
               동의하실 경우 결제하기를 클릭해 주세요
             </S.BottomDetailText>
           </S.ButtonFormWrapper>
-          {isAllChecked && toggleButtonActive !== 0 ? (
+          {isActive ? (
             <BaseButton
               width="100%"
               buttonType="default"
@@ -832,17 +860,23 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     productData.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
-                    productData.sellingPrice + fee - Number(pointToUse),
-                    setIsPaymentDone
+                    totalPrice,
+                    setIsPaymentDone,
+                    isLocal
+                      ? "http://localhost:5173/purchase/confirm"
+                      : "https://www.yanabada.com/purchase/confirm"
                   );
                 } else if (paymentMethod === "accountTransfer") {
                   onClickPGPayment(
                     productData.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
-                    productData.sellingPrice + fee - Number(pointToUse),
+                    totalPrice,
                     "trans",
-                    setIsPaymentDone
+                    setIsPaymentDone,
+                    isLocal
+                      ? "http://localhost:5173/purchase/confirm"
+                      : "https://www.yanabada.com/purchase/confirm"
                   );
 
                   setIsPaymentDone(2);
@@ -851,26 +885,25 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     productData.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
-                    productData.sellingPrice + fee - Number(pointToUse),
+                    totalPrice,
                     "card",
-                    setIsPaymentDone
+                    setIsPaymentDone,
+                    isLocal
+                      ? "http://localhost:5173/purchase/confirm"
+                      : "https://www.yanabada.com/purchase/confirm"
                   );
 
                   setIsPaymentDone(3);
                 } else {
-                  navigate(
-                    `charge?type=charging&price=${productData.sellingPrice + fee - Number(pointToUse)}&redirect=/purchase/confirm`
-                  );
+                  navigate(`charge?type=charging&price=${totalPrice}&redirect=/purchase/confirm`);
                 }
               }}
             >
-              {formatNumberWithCommas(productData.sellingPrice + fee - Number(pointToUse))}원
-              결제하기
+              {formatNumberWithCommas(totalPrice)}원 결제하기
             </BaseButton>
           ) : (
             <BaseButton width="100%" buttonType="disabled-default">
-              {formatNumberWithCommas(productData.sellingPrice + fee - Number(pointToUse))}원
-              결제하기
+              {formatNumberWithCommas(totalPrice)}원 결제하기
             </BaseButton>
           )}
         </S.ReservationBottomWrapper>

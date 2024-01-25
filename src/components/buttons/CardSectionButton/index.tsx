@@ -7,6 +7,8 @@ import useBalance from "@pages/myPage/hooks/useBalance";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import { useState } from "react";
 import Modal from "@components/modal";
+import WithDrawIcon from "@assets/icons/withdrawIcon.svg?react";
+import ApprovalIcon from "@assets/icons/approvalIcon.svg?react";
 
 interface CardSectionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   buttonType:
@@ -78,7 +80,7 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
               buttonType={buttonType}
               onClick={() => navigate("/charge?type=withdrawal")}
             >
-              <IoIosSearch size="18px" color="#DE2E5F" />
+              <WithDrawIcon />
               <S.BottomLeftButtonText buttonType={buttonType}>잔액인출</S.BottomLeftButtonText>
             </S.BottomLeftButton>
             <S.BottomRightButton
@@ -192,8 +194,7 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
           <S.ListButtonWrapper>
             <S.ListButton>
               <S.ListButtonTextWrapper>
-                {/* FIXME: 아이콘 변경 필요 */}
-                <YanoljaIcon />
+                <ApprovalIcon />
                 <S.ListButtonText>승인요청관리</S.ListButtonText>
               </S.ListButtonTextWrapper>
               <S.RightSectionWrapper>
