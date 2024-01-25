@@ -19,7 +19,7 @@ authInstance.interceptors.request.use(
   async (config) => {
     config.headers["Content-Type"] = "application/json";
     const accessToken = getAccessToken();
-    // const isLogged = Cookies.get("id");
+
     if (!accessToken) {
       return config;
     }
@@ -87,7 +87,7 @@ instance.interceptors.response.use(
       console.log(error.response);
       if (!("data" in error.response.data)) {
         // TODO - 에러페이지
-        // window.location.href = "/login";
+        window.location.href = "/login";
         return Promise.reject(error);
       }
       if (error.response.data.data.isNeededRefresh) {
