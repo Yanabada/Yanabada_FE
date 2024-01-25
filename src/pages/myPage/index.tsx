@@ -12,14 +12,13 @@ import { FaRegBell } from "react-icons/fa";
 import useProfileDetail from "./hooks/useProfileDetail";
 import usePutPhoneNumber from "./hooks/useLogout";
 import useBalance from "./hooks/useBalance";
-import Cookie from "js-cookie";
+import Cookies from "js-cookie";
 
 interface MyPageProps {
   width?: string;
 }
 
 const MyPage = ({ width }: MyPageProps) => {
-  const [isLoginned, setIsLoginned] = useState(false);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
 
@@ -38,6 +37,7 @@ const MyPage = ({ width }: MyPageProps) => {
   const { data: profileData, error: profileError, refetch: profileRefetch } = useProfileDetail();
   const { data: balanceData, error: balanceError, refetch: balanceRefetch } = useBalance();
   const { mutate } = usePutPhoneNumber();
+  const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
 
   if (profileError) {
     console.log(profileError);
@@ -55,35 +55,27 @@ const MyPage = ({ width }: MyPageProps) => {
     setIsVisible: setIsLogoutModalVisible,
     leftAction: () => {
       mutate();
-      Cookie.remove("image");
-      Cookie.remove("email");
-      Cookie.remove("id");
-      Cookie.remove("refreshToken");
-      Cookie.remove("nickName");
-      Cookie.remove("provider");
+      Cookies.remove("image");
+      Cookies.remove("email");
+      Cookies.remove("id");
+      Cookies.remove("refreshToken");
+      Cookies.remove("nickName");
+      Cookies.remove("provider");
+      Cookies.set("isLoggedIn", "no");
 
-      setIsLoginned(false);
       navigate("/mypage");
     },
     rightAction: () => setIsLogoutModalVisible(false)
   };
 
   useEffect(() => {
-    const id = Cookie.get("id");
-    console.log("id", id);
-    if (id) {
-      setIsLoginned(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isLoginned) {
+    if (isLoggedIn) {
       profileRefetch();
       balanceRefetch();
     }
-  }, [isLoginned]);
+  }, [isLoggedIn]);
 
-  return isLoginned ? (
+  return isLoggedIn ? (
     <>
       <UpperNavBar
         title="MY 야나바다"
