@@ -34,6 +34,10 @@ export const CategoryWrapper = styled.div`
       white-space: nowrap;
     }
   }
+
+  @media (min-width: 400px) {
+    justify-content: space-around;
+  }
 `;
 
 export const CategoryIconBox = styled.div`
