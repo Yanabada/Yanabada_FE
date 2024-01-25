@@ -2,6 +2,7 @@ import * as S from "./styles";
 import * as CS from "../chatList/styles";
 import { Message } from "@pages/chat/types/chatRoom";
 import Cookies from "js-cookie";
+import { formatDateTo } from "@utils/formatDateTo";
 interface ChatTextProps {
   message: Message;
   isNotice?: boolean;
@@ -30,7 +31,7 @@ const ChatText = ({ message, isNotice = false }: ChatTextProps) => {
         />
       )}
       <S.Content className={isMe ? "right" : ""}>{message.content}</S.Content>
-      <S.Time>{message.sendTime.toString()}</S.Time>
+      <S.Time>{formatDateTo(message.sendTime, "ahh:mm")}</S.Time>
     </S.Chat>
   );
 };
