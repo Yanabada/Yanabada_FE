@@ -50,7 +50,7 @@ const SignInFourth = () => {
     return (
       <Certification
         width="100%"
-        upperNavBarText={providerParams === "kakao" ? "회원가입(2/2)" : "회원가입(4/4)"}
+        upperNavBarText={providerParams === "KAKAO" ? "회원가입(2/2)" : "회원가입(4/4)"}
         buttonText="회원가입 완료"
         hasBottomSheet
         bottomSheetTitle="⠀"
