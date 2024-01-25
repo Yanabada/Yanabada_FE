@@ -1,11 +1,13 @@
 import instance from "@apis/instance";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
+// TODO : import { DetailType } from "../types/detailType";
 
 const getDetail = async (productId: number) => {
   try {
     const response = await instance.get(`/products/${productId}`);
     return response.data.data;
+    // TODO : 타입지정하기 return response.data.data as DetailType;
   } catch (err) {
     console.error("getProducts: ", err);
   }
