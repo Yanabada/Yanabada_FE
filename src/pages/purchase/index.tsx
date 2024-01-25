@@ -805,7 +805,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
               동의하실 경우 결제하기를 클릭해 주세요
             </S.BottomDetailText>
           </S.ButtonFormWrapper>
-          {isAllChecked ? (
+          {isAllChecked && toggleButtonActive !== 0 ? (
             <BaseButton
               width="100%"
               buttonType="default"
