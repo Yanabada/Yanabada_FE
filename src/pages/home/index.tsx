@@ -9,8 +9,28 @@ import CategoryList from "./components/CategoryList";
 import SubServices from "./components/SubServices";
 import Footer from "./components/Footer";
 import { Suspense } from "react";
+import { useEffect } from "react";
+import useFCMToken from "./hooks/useFCMToken";
+import { requestPermission } from "../../firebase-messaging-sw";
 
 const Home = () => {
+  let FCMToken: string | null = "";
+
+  const { mutate } = useFCMToken();
+
+  useEffect(() => {
+    async () => {
+      await requestPermission();
+      FCMToken = localStorage.getItem("FCMToken");
+    };
+  }, []);
+
+  useEffect(() => {
+    if (FCMToken) {
+      mutate(FCMToken);
+    }
+  }, [FCMToken]);
+
   return (
     <S.Container>
       <Header />

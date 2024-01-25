@@ -32,6 +32,7 @@ export async function requestPermission() {
   if (token) {
     // alert(token);
     console.log("Token: ", token);
+    localStorage.setItem("FCMToken", token);
   } else console.log("Can not get Token");
 
   onMessage(messaging, (payload) => {
@@ -39,5 +40,3 @@ export async function requestPermission() {
     // ...
   });
 }
-
-requestPermission();
