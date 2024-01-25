@@ -25,6 +25,7 @@ const Home = () => {
     if (isLoggedIn) {
       requestPermission();
       setFCMToken(localStorage.getItem("FCMToken"));
+      setTokenFromCookie(Cookie.get("FCMToken"));
     }
   }, [isLoggedIn]);
 
@@ -34,9 +35,8 @@ const Home = () => {
     if (FCMToken && !tokenFromCookie) {
       mutate(FCMToken);
       Cookie.set("FCMToken", FCMToken, { expires: in60Minutes });
-      setTokenFromCookie(Cookie.get("FCMToken"));
     }
-  }, [FCMToken]);
+  }, [FCMToken, tokenFromCookie]);
 
   return (
     <S.Container>
