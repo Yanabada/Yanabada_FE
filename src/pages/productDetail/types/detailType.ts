@@ -3,6 +3,8 @@ export interface DetailType {
   seller: SellerType;
   description: string;
   canNegotiate: boolean;
+  orderCode: string;
+  tradeId: number;
   saleEndDate: Date;
   status: "ON_SALE" | "SOLD_OUT" | "BOOKING" | "CANCELED";
   checkInDate: Date;
