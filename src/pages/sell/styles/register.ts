@@ -22,6 +22,13 @@ export const RegisterTitle = styled.p`
   margin-bottom: 14px;
 `;
 
+export const RegisterGrayTitle = styled.p`
+  ${({ theme }) => theme.text.body2};
+  color: ${({ theme }) => theme.colors.gray[700]};
+
+  margin-top: -10px;
+`;
+
 export const RegisterSubTitle = styled.p`
   ${({ theme }) => theme.text.subtitle5};
 

@@ -213,7 +213,7 @@ const ListCard = forwardRef(
               <BaseButton
                 buttonType="default"
                 width="48%"
-                onClick={() => navigate(`/sell/register/${productId}?registration=true`)}
+                onClick={() => navigate(`/sell/correct/${productId}?redirect=/mypage/salesHistory`)}
               >
                 게시글 수정
               </BaseButton>

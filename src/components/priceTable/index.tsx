@@ -43,13 +43,9 @@ const PriceTable = ({
   };
   const today = new Date();
 
-  // TODO : 오늘기준 수수료계산
-  console.log("테이블 계산하기", policyNumber, checkInDate);
   const cancelFee: React.ReactNode = (
     <span>{numberFormat(calculateFee(policyNumber, checkInDate, today, purchasePrice))} 원</span>
   );
-
-  console.log(calculateFee(policyNumber, checkInDate, today, purchasePrice));
 
   return (
     <>

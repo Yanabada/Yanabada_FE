@@ -148,3 +148,14 @@ export const ConfirmInner = styled.div`
     }
   }
 `;
+
+export const ButtonWrap = styled.div`
+  display: flex;
+  margin-left: -4px;
+  margin-right: -4px;
+
+  > div {
+    flex: 1 0 50%;
+    padding: 0 4px;
+  }
+`;
