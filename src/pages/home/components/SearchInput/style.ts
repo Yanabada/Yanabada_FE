@@ -7,19 +7,20 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 14.5rem;
-  background: linear-gradient(231deg, #5d99f2 35.76%, #5ed8ff 83.56%);
+  background: linear-gradient(231deg, rgb(94, 153, 243), rgb(94, 217, 255));
 `;
 
 export const Text = styled.p`
   padding: 1.3rem 1rem 0 1rem;
   color: #fff;
+  line-height: 1.4;
+  font-size: 1.1rem;
 `;
 
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 1.2rem 1rem 1.7rem 1rem;
 `;
 
 export const InputLabel = styled.label`
@@ -59,9 +60,10 @@ export const AccumulateContainer = styled.div`
   display: flex;
   justify-content: space-between;
   height: 100%;
-  padding: 2rem;
+  padding: 1.5rem 2rem 1rem 2rem;
   border-radius: 19px 19px 0 0;
   background: #fff;
+  margin-bottom: -5px;
 `;
 
 export const AccumulateTextContainer = styled.div`
