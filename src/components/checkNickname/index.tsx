@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
 import compareNicknameApi from "@pages/signIn/apis/compareNicknameApi";
 interface FormData {
@@ -22,7 +22,10 @@ const CheckNickname = ({ title, to }: CheckNicknameProps) => {
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
   const [isMultiple, setIsMultiple] = useState(true);
-  const { setNickname } = SignInDataStore();
+  const { setEmail, setNickname } = SignInDataStore();
+  const [searchParams] = useSearchParams();
+  const providerParam = searchParams.get("provider");
+  const emailParam = searchParams.get("email");
 
   const {
     register,
@@ -39,6 +42,12 @@ const CheckNickname = ({ title, to }: CheckNicknameProps) => {
       setIsValid(true);
     }
   }, [nickname, errors.nickname]);
+
+  useEffect(() => {
+    if (providerParam === "KAKAO") {
+      setEmail(emailParam!);
+    }
+  }, []);
 
   // 닉네임 중복 확인
   const handleCheckMultiple = async (): Promise<void> => {
