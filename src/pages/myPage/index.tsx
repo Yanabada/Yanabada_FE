@@ -3,7 +3,7 @@ import * as S from "./styles/styles";
 import ArrowForwardIcon from "@assets/icons/arrowForwardIcon.svg?react";
 import CardSectionButton from "@components/buttons/CardSectionButton";
 import ListButton from "@components/buttons/ListButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "@components/modal";
 import { useNavigate } from "react-router-dom";
@@ -12,14 +12,14 @@ import { FaRegBell } from "react-icons/fa";
 import useProfileDetail from "./hooks/useProfileDetail";
 import usePutPhoneNumber from "./hooks/useLogout";
 import useBalance from "./hooks/useBalance";
+import Cookie from "js-cookie";
 
 interface MyPageProps {
   width?: string;
 }
 
 const MyPage = ({ width }: MyPageProps) => {
-  // FIXME: 추후 로그인 여부에 따라 상태 변경 예정(localstorage member이용)
-  const [isLoginned, setIsLoginned] = useState(true);
+  const [isLoginned, setIsLoginned] = useState(false);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
 
@@ -35,8 +35,8 @@ const MyPage = ({ width }: MyPageProps) => {
     rightAction: () => setIsLoginModalVisible(false)
   };
 
-  const { data: profileData, error: profileError } = useProfileDetail();
-  const { data: balanceData, error: balanceError } = useBalance();
+  const { data: profileData, error: profileError, refetch: profileRefetch } = useProfileDetail();
+  const { data: balanceData, error: balanceError, refetch: balanceRefetch } = useBalance();
   const { mutate } = usePutPhoneNumber();
 
   if (profileError) {
@@ -54,14 +54,34 @@ const MyPage = ({ width }: MyPageProps) => {
     isVisible: isLogoutModalVisible,
     setIsVisible: setIsLogoutModalVisible,
     leftAction: () => {
-      // FIXME: localStorage에서 member 삭제 로직 추가
       mutate();
-      localStorage.removeItem("member");
+      Cookie.remove("image");
+      Cookie.remove("email");
+      Cookie.remove("id");
+      Cookie.remove("refreshToken");
+      Cookie.remove("nickName");
+      Cookie.remove("provider");
+
       setIsLoginned(false);
       navigate("/mypage");
     },
     rightAction: () => setIsLogoutModalVisible(false)
   };
+
+  useEffect(() => {
+    const id = Cookie.get("id");
+    console.log("id", id);
+    if (id) {
+      setIsLoginned(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isLoginned) {
+      profileRefetch();
+      balanceRefetch();
+    }
+  }, [isLoginned]);
 
   return isLoginned ? (
     <>
@@ -81,13 +101,13 @@ const MyPage = ({ width }: MyPageProps) => {
         <S.LoginButtonWrapper>
           <Link to="/mypage/profile">
             <S.LoginButton>
-              {profileData.id}
+              {profileData?.id}
               <ArrowForwardIcon />
             </S.LoginButton>
           </Link>
         </S.LoginButtonWrapper>
 
-        {balanceData.hasJoinedYanoljaPay ? (
+        {balanceData?.hasJoinedYanoljaPay ? (
           <CardSectionButton buttonType="abledPay" width={width} />
         ) : (
           <CardSectionButton buttonType="abledPay_notRegistered" width={width} />

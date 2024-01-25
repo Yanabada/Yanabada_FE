@@ -19,7 +19,8 @@ instance.interceptors.request.use(
   async (config) => {
     config.headers["Content-Type"] = "application/json";
     const accessToken = getAccessToken();
-    if (!accessToken) {
+    const isLogged = localStorage.getItem("member");
+    if (!accessToken || !isLogged) {
       return config;
     }
     config.headers["Authorization"] = `Bearer ${accessToken}`;

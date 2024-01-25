@@ -64,7 +64,7 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
               yanoljaPurchasePrice={formatNumberWithCommas(sellTransactionHistoryData.price)}
               yanabadaPurchasePrice={formatNumberWithCommas(
                 sellTransactionHistoryData.price - sellTransactionHistoryData.sellingPrice
-              ).toString()}
+              )?.toString()}
               discountRate={calculateDiscountRate(
                 sellTransactionHistoryData.price,
                 sellTransactionHistoryData.sellingPrice
@@ -107,14 +107,14 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
               yanoljaPurchasePrice={formatNumberWithCommas(purchaseTransactionHistoryData.price)}
               yanabadaPurchasePrice={formatNumberWithCommas(
                 purchaseTransactionHistoryData.sellingPrice + purchaseTransactionHistoryData.fee
-              ).toString()}
+              )?.toString()}
               discountRate={calculateDiscountRate(
                 purchaseTransactionHistoryData.price,
                 purchaseTransactionHistoryData.sellingPrice
               )}
               discountPrice={formatNumberWithCommas(
                 purchaseTransactionHistoryData.price - purchaseTransactionHistoryData.sellingPrice
-              ).toString()}
+              )?.toString()}
               from={from}
               payMethod={getPaymentMethodText(purchaseTransactionHistoryData.paymentType)}
               charge={purchaseTransactionHistoryData.fee}
@@ -153,14 +153,14 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
               yanoljaPurchasePrice={formatNumberWithCommas(purchaseTransactionHistoryData.price)}
               yanabadaPurchasePrice={formatNumberWithCommas(
                 purchaseTransactionHistoryData.sellingPrice + purchaseTransactionHistoryData.fee
-              ).toString()}
+              )?.toString()}
               discountRate={calculateDiscountRate(
                 purchaseTransactionHistoryData.price,
                 purchaseTransactionHistoryData.sellingPrice
               )}
               discountPrice={formatNumberWithCommas(
                 purchaseTransactionHistoryData.price - purchaseTransactionHistoryData.sellingPrice
-              ).toString()}
+              )?.toString()}
               from={from}
               payMethod={getPaymentMethodText(purchaseTransactionHistoryData.paymentType)}
               charge={purchaseTransactionHistoryData.fee}

@@ -24,26 +24,63 @@ import Modal from "@components/modal";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
+import useProductDetail from "@pages/productDetail/hooks/useProductDetail";
+import formatTimeUntilSaleEnd from "@pages/myPage/utils/formatTimeUntilSaleEnd";
+import { getDayOfWeek } from "@utils/getDayOfWeek";
+import formatDate from "./utils/formatDate";
+import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
+import calculateDiscountRate from "@pages/myPage/utils/calculateDiscountRate";
+import useProfileDetail from "@pages/myPage/hooks/useProfileDetail";
+import useBuyProduct from "./hooks/useBuyProduct";
+import { convertString, convertStringToKR } from "./utils/convertString";
+import { onClickTossPayment, onClickPGPayment } from "./utils/onClickPayment";
 
 interface PurchaseProps {
   width?: string;
-  timerText: string;
+  timerText?: string; // FIXME: 나중에 삭제
   divType: string;
-  yanoljaPurchasePrice: string;
-  charge: string;
-  yanoljaPoint: string;
-  totalPurchasePrice: string;
+  yanoljaPurchasePrice?: string; // FIXME: 나중에 삭제
+  charge?: string; // FIXME: 나중에 삭제
+  yanoljaPoint?: string; // FIXME: 나중에 삭제
+  totalPurchasePrice?: string; // FIXME: 나중에 삭제
 }
 
-const Purchase = ({
-  width,
-  timerText,
-  divType,
-  yanoljaPurchasePrice,
-  charge,
-  yanoljaPoint,
-  totalPurchasePrice
-}: PurchaseProps) => {
+const Purchase = ({ width, divType }: PurchaseProps) => {
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get("name");
+  const phoneNumber = searchParams.get("phonenumber");
+  const productId = searchParams.get("productId");
+
+  const {
+    getDetailQuery: { data: productData, error: productError }
+  } = useProductDetail(Number(productId));
+  const {
+    data: profileData,
+    error: profileError,
+    refetch: profileRefetch
+  } = useProfileDetail(true);
+  const { mutate: buyProductMutate, isSuccess: buyProductSuccess } = useBuyProduct();
+
+  if (productError) {
+    console.log(productError);
+  }
+
+  if (profileError) {
+    console.log(profileError);
+  }
+
+  // profileData 안불러와지면 살리기
+  profileRefetch();
+
+  const {
+    register,
+    formState: { errors },
+    getValues,
+    trigger
+  } = useForm({
+    mode: "onBlur"
+  });
+
   const PaymentMethod = {
     None: "none",
     YanoljaPay: "yanoljaPay",
@@ -53,7 +90,7 @@ const Purchase = ({
   };
 
   const [isAllChecked, setIsAllChecked] = useState(false);
-  const [isChecked1, setIsChecked1] = useState(true);
+  const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isChecked3, setIsChecked3] = useState(false);
   const [isChecked4, setIsChecked4] = useState(false);
@@ -65,8 +102,18 @@ const Purchase = ({
   const [installmentMessage, setInstallmentMessage] = useState("할부 기간 선택");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isChangeButtonClicked, setIsChangeButtonClicked] = useState(false);
+  const [nameState, setNameState] = useState("");
+  const [phoneNumberState, setPhoneNumberState] = useState("");
+  const [pointToUse, setPointToUse] = useState("0");
+  const [toggleButtonActive, setToggleButtonActive] = useState(0);
+  const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
+  const [isPaymentDone, setIsPaymentDone] = useState(0);
+
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
   const [isYanoljaPaySubscribed] = useState(false);
+
+  // FIXME: 추후 API 호출하여 수수료 계산
+  const [fee] = useState(0);
 
   const navigate = useNavigate();
 
@@ -101,31 +148,11 @@ const Purchase = ({
     e.preventDefault();
 
     if (errors.name1 || errors.phoneNumber1) return;
-    // FIXME: API 연동
-    console.log("submit");
-
-    const name1 = getValues("name1");
-    const phoneNumber1 = getValues("phoneNumber1");
-    console.log("name1", name1);
-    console.log("phoneNumber1", phoneNumber1);
 
     navigate(
-      `/signin/3?from=changeReservationInfo&name=${name1}&phonenumber=${phoneNumber1}&redirect=/purchase`
+      `/signin/3?from=changeReservationInfo&name=${getValues("name1")}&phonenumber=${getValues("phoneNumber1")}&productId=${productId}&redirect=/purchase`
     );
   };
-
-  const {
-    register,
-    formState: { errors },
-    getValues,
-    trigger
-  } = useForm({
-    mode: "onBlur"
-  });
-
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const phoneNumber = searchParams.get("phonenumber");
 
   useEffect(() => {
     if (isChecked3 && isChecked4) {
@@ -133,7 +160,7 @@ const Purchase = ({
     } else {
       setIsAllChecked(false);
     }
-  }, [isChecked1, isChecked2, isChecked3, isChecked4]);
+  }, [isChecked2, isChecked3, isChecked4]);
 
   useEffect(() => {
     trigger("name1");
@@ -141,6 +168,89 @@ const Purchase = ({
     trigger("phoneNumber1");
     trigger("phoneNumber2");
   }, []);
+
+  useEffect(() => {
+    if (isChecked1) {
+      setNameState(name ? name : "");
+      setPhoneNumberState(phoneNumber ? phoneNumber : "");
+    } else {
+      setNameState("");
+      setPhoneNumberState("");
+    }
+  }, [isChecked1]);
+
+  useEffect(() => {
+    if (isPaymentSuccess) {
+      const simplePassword = localStorage.getItem("simplePW");
+      buyProductMutate({
+        productId: Number(productId),
+        reservationPersonName: nameState,
+        reservationPersonPhoneNumber: phoneNumberState,
+        userPersonName: name,
+        userPersonPhoneNumber: phoneNumber,
+        point: Number(pointToUse),
+        paymentType: convertString(paymentMethod),
+        simplePassword: simplePassword
+      });
+    }
+  }, [isPaymentSuccess]);
+
+  useEffect(() => {
+    if (buyProductSuccess) {
+      const purchaseInfo = {
+        accommodationName: productData?.accommodationInfo.name,
+        roomName: productData?.roomInfo.name,
+        checkInDate: productData?.checkInDate,
+        checkOutDate: productData?.checkOutDate,
+        checkInTime: productData?.roomInfo.checkInTime,
+        checkOutTime: productData?.roomInfo.checkOutTime,
+        minHeadCount: productData?.roomInfo.minHeadCount,
+        maxHeadCount: productData?.roomInfo.maxHeadCount,
+        reservationPersonName: nameState,
+        reservationPersonPhoneNumber: phoneNumberState,
+        userPersonName: name,
+        userPersonPhoneNumber: phoneNumber,
+        tradeId: productData?.tradeId,
+        productPrice: formatNumberWithCommas(productData.price),
+        fee: fee,
+        point: pointToUse,
+        totalPrice: formatNumberWithCommas(productData?.sellingPrice + fee - Number(pointToUse)),
+        paymentType: convertStringToKR(paymentMethod),
+        productId: productId
+      };
+
+      localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
+
+      navigate("/purchase/confirm");
+    }
+  }, [buyProductSuccess]);
+
+  useEffect(() => {
+    localStorage.removeItem("tossPayment");
+    localStorage.removeItem("trans");
+    localStorage.removeItem("card");
+    localStorage.removeItem("simplePW");
+    localStorage.removeItem("purchaseInfo");
+  }, []);
+
+  useEffect(() => {
+    console.log("called");
+
+    // FIXME: onClickPayment 함수에서 return 값을 받아올 수 없음
+    if (isPaymentDone === 1) {
+      localStorage.getItem("tossPayment") === "true"
+        ? setIsPaymentSuccess(true)
+        : setIsPaymentSuccess(false);
+    } else if (isPaymentDone === 2) {
+      localStorage.getItem("trans") === "true"
+        ? setIsPaymentSuccess(true)
+        : setIsPaymentSuccess(false);
+    } else if (isPaymentDone === 3) {
+      localStorage.getItem("card") === "true"
+        ? setIsPaymentSuccess(true)
+        : setIsPaymentSuccess(false);
+    }
+  }, [isPaymentDone]);
 
   return (
     <>
@@ -158,13 +268,16 @@ const Purchase = ({
         <S.AccommodationInfoWrapper>
           <Timer>
             <MdOutlineTimer style={{ fill: "#38A3EB" }} />
-            <TimerText cardType="sale">{timerText}</TimerText>
+            <TimerText cardType="sale">{formatTimeUntilSaleEnd(productData.saleEndDate)}</TimerText>
           </Timer>
-          <TopLabel>파라스파라 서울 더 그레이트 현대 런던 </TopLabel>
-          <RoomName>Forest Tower Deluxe King</RoomName>
+          <TopLabel>{productData.accommodationInfo.name}</TopLabel>
+          <RoomName>{productData.roomInfo.name}</RoomName>
           <S.PersonnelInfoWrapper>
             <ProfileIconGray />
-            <S.PersonalInfoText>성인 1, 아동 1 / 최대 2명</S.PersonalInfoText>
+            <S.PersonalInfoText>
+              기준 {productData.roomInfo.minHeadCount}명 / 최대 {productData.roomInfo.maxHeadCount}
+              명
+            </S.PersonalInfoText>
           </S.PersonnelInfoWrapper>
         </S.AccommodationInfoWrapper>
       </S.ReservationContainer>
@@ -172,23 +285,29 @@ const Purchase = ({
         <S.CheckInOutWrapper>
           <S.CheckInOut width={width}>
             <S.CheckInOutText>체크인</S.CheckInOutText>
-            <S.DateText>2023.12.25 (월)</S.DateText>
-            <S.TimeText>14:00</S.TimeText>
+            <S.DateText>
+              {formatDate(productData.checkInDate)} ({getDayOfWeek(productData.checkInDate)})
+            </S.DateText>
+            <S.TimeText>{productData.roomInfo.checkInTime}</S.TimeText>
           </S.CheckInOut>
           <S.CheckInOut width={width}>
             <S.CheckInOutText>체크아웃</S.CheckInOutText>
-            <S.DateText>2023.12.26 (화)</S.DateText>
-            <S.TimeText>11:00</S.TimeText>
+            <S.DateText>
+              {formatDate(productData.checkOutDate)} ({getDayOfWeek(productData.checkOutDate)})
+            </S.DateText>
+            <S.TimeText>{productData.roomInfo.checkOutTime}</S.TimeText>
           </S.CheckInOut>
         </S.CheckInOutWrapper>
         <S.ImageWrapper imageURL="https://s3-alpha-sig.figma.com/img/7a66/7ee4/66508d41dfc3fa07524137416d5ec5b6?Expires=1706486400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=GPktuodFjKnh-LxKRr5ui0f6hu61xJIy09e3tWv6yii31FOYdSCYzdi1ck7qCqSS92Yl9l2LCGCUN91TsyGIEbhgAJSwB5ngZMQk5cktPEeXLLYwauh7CTpHUIczfhPT4FlpHCBR-s4W3osIlTj1844buMWiRIppA1JlW3FlqhmknDNxzPW18mBaXZ4wdU3iwcH~cWxqpfF~CUKYrRbOvd7UMl3e9aSajVwbMi2G~1-xPqlId94GhTXeyAErB3caAknZF8Bz11asHcpTESvPU2-D~aGU9lhd5nWkKcHxLVMfUWXFBf3-gxWzc2JWajqoXLfFM6if~uCGCaRoL2FHaQ__">
-          <DiscountRate borderRadius="5px">67%</DiscountRate>
+          <DiscountRate borderRadius="5px">
+            {calculateDiscountRate(productData.price, productData.sellingPrice)}%
+          </DiscountRate>
         </S.ImageWrapper>
         <S.CompareCardBottomWrapper>
-          <S.CostText>1,200,000원</S.CostText>
+          <S.CostText>{formatNumberWithCommas(productData.price)}</S.CostText>
           <S.PriceWrapper>
             <S.PriceText>판매가</S.PriceText>
-            <S.Price>800,000원</S.Price>
+            <S.Price>{formatNumberWithCommas(productData.sellingPrice)}</S.Price>
           </S.PriceWrapper>
         </S.CompareCardBottomWrapper>
       </S.PriceCompareCard>
@@ -246,7 +365,12 @@ const Purchase = ({
                   {/* FIXME: 휴대폰 인증 페이지(H-2) 라우터 추가 후 이동 로직 추가 */}
                   <ManipulationChip
                     buttonType={
-                      !errors.name1 && !errors.phoneNumber1 ? "abledDefault" : "disabledDefault"
+                      getValues("name1") &&
+                      getValues("phoneNumber1") &&
+                      !errors.name1 &&
+                      !errors.phoneNumber1
+                        ? "abledDefault"
+                        : "disabledDefault"
                     }
                     type="submit"
                   >
@@ -258,7 +382,7 @@ const Purchase = ({
           ) : (
             <S.PersonInfoBottomWrapper>
               {/* FIXME: name과 phoneNumber값이 없으면 api 호출하여 렌더링 */}
-              {name ? name : "김팔자"} / {phoneNumber ? phoneNumber : "010-1234-5678"}
+              {name ? name : ""} / {phoneNumber ? phoneNumber : ""}
             </S.PersonInfoBottomWrapper>
           )}
         </S.PersonInfoWrapper>
@@ -300,6 +424,8 @@ const Purchase = ({
                     }
                   })}
                   errorMessage={errors.name2 && `${errors.name2?.message}`}
+                  value={nameState}
+                  onChange={(e) => setNameState(e.target.value)}
                 />
                 <S.TextInputSpacer />
                 <TextInput
@@ -318,6 +444,8 @@ const Purchase = ({
                     }
                   })}
                   errorMessage={errors.phoneNumber2 && `${errors.phoneNumber2?.message}`}
+                  value={phoneNumberState}
+                  onChange={(e) => setPhoneNumberState(e.target.value)}
                 />
               </S.TextInputWrapper>
             </form>
@@ -329,7 +457,7 @@ const Purchase = ({
           <S.InfoText>포인트</S.InfoText>
           <TextInput
             variant="static"
-            placeholder="P 포인트를 입력해주세요"
+            placeholder="포인트를 입력해주세요"
             rightElement={
               <span
                 style={{
@@ -340,13 +468,26 @@ const Purchase = ({
                   lineHeight: "21px"
                 }}
               >
-                사용가능 : 0P
+                사용가능 : {profileData?.point && profileData.point}P
               </span>
             }
+            value={pointToUse.toString()}
+            onChange={(e) => setPointToUse(e.target.value)}
           />
         </S.PersonInfoWrapper>
         <S.ChipWrapper>
-          <ManipulationChip buttonType="abledDefault">전액 사용</ManipulationChip>
+          {profileData?.point && profileData.point > 0 ? (
+            <ManipulationChip
+              buttonType="abledDefault"
+              onClick={() => {
+                setPointToUse(profileData.point);
+              }}
+            >
+              전액 사용
+            </ManipulationChip>
+          ) : (
+            <ManipulationChip buttonType="disabledDefault">전액 사용</ManipulationChip>
+          )}
         </S.ChipWrapper>
       </S.ReservationContainer>
       <CS.InfoWrapper divType={divType} width={width}>
@@ -355,25 +496,29 @@ const Purchase = ({
         </CS.TopWrapper>
         <CS.SeperationForm>
           <CS.FormLeftText color="gray">상품 금액</CS.FormLeftText>
-          <CS.FormRightPrice color="black">{yanoljaPurchasePrice}원</CS.FormRightPrice>
+          <CS.FormRightPrice color="black">
+            {formatNumberWithCommas(productData.sellingPrice)}원
+          </CS.FormRightPrice>
         </CS.SeperationForm>
         <CS.SeperationForm>
           <CS.FormTextWrapper>
             <CS.FormLeftText color="gray">수수료</CS.FormLeftText>
           </CS.FormTextWrapper>
           <CS.FormRightPrice color="darkGray">
-            {paymentMethod === "yanojaPay" ? "야놀자 페이 사용 무료" : charge}
+            {paymentMethod === "yanoljaPay" ? "야놀자 페이 사용 무료" : `${fee}원`}
           </CS.FormRightPrice>
         </CS.SeperationForm>
         <CS.SeperationForm>
           <CS.FormTextWrapper>
             <CS.FormLeftText color="gray">야놀자 포인트</CS.FormLeftText>
           </CS.FormTextWrapper>
-          <CS.FormRightPrice color="lightGray">-{yanoljaPoint}P</CS.FormRightPrice>
+          <CS.FormRightPrice color="lightGray">-{pointToUse}P</CS.FormRightPrice>
         </CS.SeperationForm>
         <CS.SeperationForm isBorder={true}>
           <CS.FormLeftTextBold>총 결제 금액</CS.FormLeftTextBold>
-          <CS.FormRightPrice color="blue">{totalPurchasePrice}원</CS.FormRightPrice>
+          <CS.FormRightPrice color="blue">
+            {formatNumberWithCommas(productData.sellingPrice + fee - Number(pointToUse))}원
+          </CS.FormRightPrice>
         </CS.SeperationForm>
       </CS.InfoWrapper>
       <S.Spacer width={width} />
@@ -388,14 +533,22 @@ const Purchase = ({
             buttonType="yanolja"
             subText="*40,000원 할인"
             width="48%"
-            onClick={() => handlePaymentMethodChange(PaymentMethod.YanoljaPay)}
+            onClick={() => {
+              handlePaymentMethodChange(PaymentMethod.YanoljaPay);
+              setToggleButtonActive(1);
+            }}
+            toggleButtonActive={toggleButtonActive}
           >
             야놀자 페이
           </ToggleButton>
           <ToggleButton
             buttonType="toss"
             width="48%"
-            onClick={() => handlePaymentMethodChange(PaymentMethod.TossPay)}
+            onClick={() => {
+              handlePaymentMethodChange(PaymentMethod.TossPay);
+              setToggleButtonActive(2);
+            }}
+            toggleButtonActive={toggleButtonActive}
           >
             토스 페이
           </ToggleButton>
@@ -404,14 +557,22 @@ const Purchase = ({
           <ToggleButton
             buttonType="default"
             width="48%"
-            onClick={() => handlePaymentMethodChange(PaymentMethod.AccountTransfer)}
+            onClick={() => {
+              handlePaymentMethodChange(PaymentMethod.AccountTransfer);
+              setToggleButtonActive(3);
+            }}
+            toggleButtonActive={toggleButtonActive}
           >
             무통장 입금
           </ToggleButton>
           <ToggleButton
-            buttonType="default"
+            buttonType="default2"
             width="48%"
-            onClick={() => handlePaymentMethodChange(PaymentMethod.Card)}
+            onClick={() => {
+              handlePaymentMethodChange(PaymentMethod.Card);
+              setToggleButtonActive(4);
+            }}
+            toggleButtonActive={toggleButtonActive}
           >
             카드
           </ToggleButton>
@@ -570,7 +731,11 @@ const Purchase = ({
               shape="fill"
               color="red"
             />
-            <AuthenticationButton buttonType="default" onClick={() => setIsModalVisible(true)}>
+            <AuthenticationButton
+              buttonType="default"
+              width={width}
+              onClick={() => setIsModalVisible(true)}
+            >
               야놀자 페이 가입하러 가기
             </AuthenticationButton>
             <Modal {...modalProps} />
@@ -640,13 +805,55 @@ const Purchase = ({
               동의하실 경우 결제하기를 클릭해 주세요
             </S.BottomDetailText>
           </S.ButtonFormWrapper>
-          {isAllChecked ? (
-            <BaseButton width="100%" buttonType="default">
-              630,000원 결제하기
+          {isAllChecked && toggleButtonActive !== 0 ? (
+            <BaseButton
+              width="100%"
+              buttonType="default"
+              onClick={() => {
+                if (paymentMethod === "tossPay") {
+                  onClickTossPayment(
+                    productData.accommodationInfo.name,
+                    nameState,
+                    phoneNumberState,
+                    productData.sellingPrice + fee - Number(pointToUse),
+                    setIsPaymentDone
+                  );
+                } else if (paymentMethod === "accountTransfer") {
+                  onClickPGPayment(
+                    productData.accommodationInfo.name,
+                    nameState,
+                    phoneNumberState,
+                    productData.sellingPrice + fee - Number(pointToUse),
+                    "trans",
+                    setIsPaymentDone
+                  );
+
+                  setIsPaymentDone(2);
+                } else if (paymentMethod === "card") {
+                  onClickPGPayment(
+                    productData.accommodationInfo.name,
+                    nameState,
+                    phoneNumberState,
+                    productData.sellingPrice + fee - Number(pointToUse),
+                    "card",
+                    setIsPaymentDone
+                  );
+
+                  setIsPaymentDone(3);
+                } else {
+                  navigate(
+                    `charge?type=charging&price=${productData.sellingPrice + fee - Number(pointToUse)}&redirect=/purchase/confirm`
+                  );
+                }
+              }}
+            >
+              {formatNumberWithCommas(productData.sellingPrice + fee - Number(pointToUse))}원
+              결제하기
             </BaseButton>
           ) : (
             <BaseButton width="100%" buttonType="disabled-default">
-              630,000원 결제하기
+              {formatNumberWithCommas(productData.sellingPrice + fee - Number(pointToUse))}원
+              결제하기
             </BaseButton>
           )}
         </S.ReservationBottomWrapper>
@@ -654,5 +861,4 @@ const Purchase = ({
     </>
   );
 };
-
 export default Purchase;

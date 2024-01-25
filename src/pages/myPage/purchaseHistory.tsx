@@ -70,13 +70,15 @@ const PurchaseHistory = ({ width }: PurchaseHistoryProps) => {
         setFilteredData(data);
         break;
       case "approval_wait":
-        setFilteredData(data.filter((product) => product.status === "BOOKING"));
+        setFilteredData(data.filter((product) => product.status === "WAITING"));
         break;
       case "purchased":
-        setFilteredData(data.filter((product) => product.status === "ON_SALE"));
+        setFilteredData(data.filter((product) => product.status === "COMPLETED"));
         break;
       case "purchasedCanceled":
-        setFilteredData(data.filter((product) => product.status === "SOLD_OUT"));
+        setFilteredData(
+          data.filter((product) => product.status === "CANCELED" || product.status === "REJECTED")
+        );
         break;
     }
   }, [data, currentTab]);
@@ -130,7 +132,7 @@ const PurchaseHistory = ({ width }: PurchaseHistoryProps) => {
       </S.PointsMiddleContainer>
       <S.ListCardWrapper width={width}>
         {filteredData?.map((product, index) => (
-          <div key={product.tradeId}>
+          <div key={product.productId}>
             <ListCard
               cardType={determineCardType(product.status)}
               width={width}
@@ -142,6 +144,7 @@ const PurchaseHistory = ({ width }: PurchaseHistoryProps) => {
               roomName={product.roomName}
               price={formatNumberWithCommas(product.price)}
               badgeText={determineBadgeText(determineCardType(product.status))}
+              productId={product.productId}
               tradeId={product.tradeId}
               statusText={
                 product.status === "CANCELED"

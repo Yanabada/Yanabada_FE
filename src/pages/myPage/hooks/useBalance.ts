@@ -1,10 +1,11 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import getBalance from "../apis/getBalance";
 
 const useBalance = () => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ["balance"],
-    queryFn: () => getBalance()
+    queryFn: () => getBalance(),
+    enabled: false
   });
 };
 
