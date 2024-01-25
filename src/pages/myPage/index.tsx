@@ -14,6 +14,12 @@ import usePutPhoneNumber from "./hooks/useLogout";
 import useBalance from "./hooks/useBalance";
 import Cookies from "js-cookie";
 import useNotifications from "@pages/notice/queries";
+import SalesIcon from "@assets/icons/salesIcon.svg?react";
+import PurchaseIcon from "@assets/icons/purchaseIcon.svg?react";
+import InfoCenterIcon from "@assets/icons/infoCenterIcon.svg?react";
+import GuideIcon from "@assets/icons/guideIcon.svg?react";
+import TermIcon from "@assets/icons/termIcon.svg?react";
+import LogoutIcon from "@assets/icons/logoutIcon.svg?react";
 
 interface MyPageProps {
   width?: string;
@@ -109,30 +115,38 @@ const MyPage = ({ width }: MyPageProps) => {
         {/* <Link to="/points/list">
           <CardSectionButton buttonType="abledPoint" width={width} />
         </Link> */}
-        {/* FIXME: 승인요청관리 페이지(G-10)으로 이동 */}
+
         <Link to="/mypage/management">
           <CardSectionButton buttonType="management" width={width} />
         </Link>
 
-        {/* FIXME: 추후 알람 개수에 따라 alert 개수 변경 */}
         <Link to="/mypage/salesHistory">
-          <ListButton width={width}>판매내역</ListButton>
+          <ListButton width={width} icon={<SalesIcon />}>
+            판매내역
+          </ListButton>
         </Link>
 
         <Link to="/mypage/purchaseHistory">
-          <ListButton width={width}>구매내역</ListButton>
+          <ListButton width={width} icon={<PurchaseIcon />}>
+            구매내역
+          </ListButton>
         </Link>
 
-        {/* FIXME: 야나바다 고객센터 페이지(G-7)으로 이동 */}
-        <ListButton width={width}>야나바다 고객센터</ListButton>
+        <ListButton width={width} icon={<InfoCenterIcon />}>
+          야나바다 고객센터
+        </ListButton>
 
-        {/* FIXME: 이용가이드 페이지(G-8)으로 이동 */}
-        <ListButton width={width}>이용가이드</ListButton>
+        <ListButton width={width} icon={<GuideIcon />}>
+          이용가이드
+        </ListButton>
 
-        {/* FIXME: 이용약관 페이지(G-9)으로 이동 */}
-        <ListButton width={width}>이용약관</ListButton>
+        <ListButton width={width} icon={<TermIcon />}>
+          이용약관
+        </ListButton>
+
         <ListButton
           width={width}
+          icon={<LogoutIcon />}
           onClick={() => {
             setIsLogoutModalVisible(true);
           }}
