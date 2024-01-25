@@ -1,7 +1,7 @@
 import TextInput from "@components/input/TextInput";
 import Notice from "@components/notice";
 import * as S from "./styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
@@ -22,6 +22,8 @@ interface CheckPasswordProps {
 
 const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const {
     register,
     formState: { errors },
@@ -99,7 +101,9 @@ const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
           if (!isPassed) {
             return;
           }
-          mutate(password);
+          if (searchParams.get("from") === "changePassword") {
+            mutate(password);
+          }
           setPassword(password); // 회원가입용
           navigate(to);
         }}

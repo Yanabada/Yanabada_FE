@@ -1,4 +1,4 @@
-import { instance } from "@apis/instance";
+import instance from "@apis/instance";
 
 export const putChangePassword = async (password: string) => {
   const putChangePasswordURL = "/member/password";
