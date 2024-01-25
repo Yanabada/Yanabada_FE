@@ -11,19 +11,53 @@ import Footer from "./components/Footer";
 import NegoButton from "./components/NegoButton";
 import useProductDetail from "./hooks/useProductDetail";
 import { useParams } from "react-router-dom";
+import { useMapState } from "@pages/products/stores/mapStore";
+import { CustomOverlayMap, Map } from "react-kakao-maps-sdk";
+import PositionIcon from "@assets/icons/product_position_mark.svg?react";
+// import DetailMapCard from "./components/DetailMap/DetailMapCard";
 
 const ProductDetail = () => {
   const { productId } = useParams();
+  const { isMapOpen, setMapOpen } = useMapState();
 
   const {
-    getDetailQuery: { data: detailData }
+    getDetailQuery: { data: detailData, isLoading }
   } = useProductDetail(Number(productId));
 
+  if (isLoading) return <p>Loading</p>;
+
   return (
-    <S.Container>
-      <UpperNavBar title="상품 상세" type="back" />
-      {detailData && (
+    <>
+      <UpperNavBar
+        title={isMapOpen ? "지도" : "상품 상세"}
+        type={isMapOpen ? "backClose" : "back"}
+        isCustom={isMapOpen}
+        {...(isMapOpen && { customBack: setMapOpen })}
+      />
+      {isMapOpen ? (
         <>
+          <S.MapContainer>
+            <Map
+              style={{ width: "100%", height: "100%" }}
+              center={{
+                lat: detailData.accommodationInfo.latitude,
+                lng: detailData.accommodationInfo.longitude
+              }}
+            >
+              <CustomOverlayMap
+                position={{
+                  lat: detailData.accommodationInfo.latitude,
+                  lng: detailData.accommodationInfo.longitude
+                }}
+              >
+                <PositionIcon />
+              </CustomOverlayMap>
+            </Map>
+          </S.MapContainer>
+          {/* <DetailMapCard /> */}
+        </>
+      ) : (
+        <S.Container>
           <DetailInfo data={detailData} />
           <SellerSay seller={detailData.seller} description={detailData.description} />
           <Location accommodationInfo={detailData.accommodationInfo} />
@@ -36,9 +70,9 @@ const ProductDetail = () => {
           <DetailNotice roomInfo={detailData.roomInfo} />
           <Footer phoneNumber={detailData.accommodationInfo.phoneNumber} />
           <NegoButton data={detailData} />
-        </>
+        </S.Container>
       )}
-    </S.Container>
+    </>
   );
 };
 

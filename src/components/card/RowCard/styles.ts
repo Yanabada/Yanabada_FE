@@ -21,19 +21,17 @@ export const TimeOut = styled.div`
   padding: 0.125rem;
   background-color: ${({ theme }) => theme.colors.orange[200]};
   color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 130%;
+  ${({ theme }) => theme.text.subtitle5}
   position: absolute;
 `;
 
 export const TimerOutText = styled.p`
-  margin-top: 0.125rem;
+  margin-bottom: 0.125rem;
   color: #fff;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  line-height: 1.5rem;
-  letter-spacing: -0.3px;
+  ${({ theme }) => theme.text.button1}
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Image = styled(Card.Image)`
