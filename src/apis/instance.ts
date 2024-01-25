@@ -3,8 +3,16 @@ import { getAccessToken, refreshAccessToken } from "@utils/getCookie";
 import Cookies from "js-cookie";
 
 export const instance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}/v1`,
   timeout: 5000
+});
+
+export const authInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  timeout: 5000,
+  headers: {
+    "Content-Type": "application/json"
+  }
 });
 
 instance.interceptors.request.use(

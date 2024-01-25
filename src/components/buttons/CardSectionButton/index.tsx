@@ -17,6 +17,7 @@ interface CardSectionProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
     | "disabledPoint"
     | "management";
   width?: string;
+  onClick?: React.MouseEventHandler<any>;
 }
 
 const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => {
@@ -59,7 +60,7 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
       return (
         <S.CardSectionWrapper buttonType={buttonType} width={width}>
           <S.ListButtonWrapper>
-            <S.ListButton onClick={() => navigate("/charge/list")}>
+            <S.ListButton onClick={() => navigate("/charge/lists")}>
               <S.ListButtonTextWrapper>
                 <YanoljaIcon />
                 <S.ListButtonText>야놀자 페이</S.ListButtonText>
@@ -73,12 +74,17 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
             </S.ListButton>
           </S.ListButtonWrapper>
           <S.BottomSectionWrapper>
-            {/* FIXME: 잔액인출 페이지 완성되면 이동 url 변경 */}
-            <S.BottomLeftButton buttonType={buttonType} onClick={() => navigate("/charge")}>
+            <S.BottomLeftButton
+              buttonType={buttonType}
+              onClick={() => navigate("/charge?type=withdrawal")}
+            >
               <IoIosSearch size="18px" color="#DE2E5F" />
               <S.BottomLeftButtonText buttonType={buttonType}>잔액인출</S.BottomLeftButtonText>
             </S.BottomLeftButton>
-            <S.BottomRightButton buttonType={buttonType} onClick={() => navigate("/charge")}>
+            <S.BottomRightButton
+              buttonType={buttonType}
+              onClick={() => navigate("/charge?type=charging")}
+            >
               <IoIosSearch size="18px" color="#FFFFFF" />
               <S.BottomRightButtonText>충전</S.BottomRightButtonText>
             </S.BottomRightButton>

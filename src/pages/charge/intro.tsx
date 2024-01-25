@@ -1,12 +1,16 @@
 import * as CS from "./styles/success";
 
+import { useNavigate } from "react-router-dom";
+
 import BaseButton from "@components/buttons/BaseButton";
 import UpperNavBar from "@components/navBar/upperNavBar";
 
 const ChargeIntro = () => {
+  const navigate = useNavigate();
+
   return (
     <>
-      <UpperNavBar title="야놀자 페이" type="close" />
+      <UpperNavBar title="야놀자 페이" type="backClose" />
       <CS.SuccessWrap className="gray-bg">
         <CS.SuccessBox>
           <img src="/src/assets/pay-ico.png" alt="체크아이콘" width="200" />
@@ -21,7 +25,11 @@ const ChargeIntro = () => {
             저렴한 숙박권을 구매하세요.
           </p>
           <CS.SuccessSpace />
-          <BaseButton buttonType="default" width="100%">
+          <BaseButton
+            buttonType="default"
+            width="100%"
+            onClick={() => navigate("/charge/password?registration=true")}
+          >
             야놀자페이 등록 시작하기
           </BaseButton>
         </CS.SuccessBox>

@@ -5,7 +5,7 @@ import { ProductType } from "@pages/products/types/productsType";
 
 interface ProductMarkersProps {
   products: ProductType[];
-  setSelectedProductId: Dispatch<SetStateAction<number>>;
+  setSelectedProductId: Dispatch<SetStateAction<number | null>>;
 }
 
 // FIXME: utils로 이동

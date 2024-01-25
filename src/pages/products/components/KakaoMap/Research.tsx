@@ -8,7 +8,8 @@ const Research = () => {
     smallX: position?.smallX,
     smallY: position?.smallY,
     bigX: position?.bigX,
-    bigY: position?.bigY
+    bigY: position?.bigY,
+    size: 20
   });
 
   const handleResearch = async () => {

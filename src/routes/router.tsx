@@ -25,7 +25,6 @@ import SignInThird from "@pages/signIn/components/signInThird/SignInThird";
 import SellRegister from "@pages/sell/register";
 import SellDetail from "@pages/sell/detail";
 import ChatRoom from "@pages/chat/ChatRoom";
-import SellResult from "@pages/sell/result";
 import SellConfirm from "@pages/sell/confirm";
 import Charge from "@pages/charge";
 import ChargeIntro from "@pages/charge/intro";
@@ -100,10 +99,6 @@ const router = createBrowserRouter([
           {
             path: "detail/:id",
             element: <SellDetail />
-          },
-          {
-            path: "result",
-            element: <SellResult />
           },
           {
             path: "confirm/:id",

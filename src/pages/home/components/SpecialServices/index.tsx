@@ -5,6 +5,7 @@ import * as S from "./styles";
 
 import ArrowRight from "@assets/icons/arrowRight.svg?react";
 import useProducts from "@pages/products/api/queries";
+import Logo from "@assets/icons/hot_place_2024.svg?react";
 
 type Picked =
   | "id"
@@ -14,7 +15,9 @@ type Picked =
   | "checkIn"
   | "checkOut"
   | "price"
-  | "sellingPrice";
+  | "sellingPrice"
+  | "address"
+  | "saleEnd";
 export type OptionCardType = Pick<ProductType, Picked>;
 
 const SpecialServices = () => {
@@ -23,8 +26,11 @@ const SpecialServices = () => {
 
   return (
     <S.Container>
+      <S.Background />
       <S.TitleWrapper>
-        <div className="logo">2024 로고</div>
+        <div className="logo">
+          <Logo />
+        </div>
         <div className="title">
           <div>
             <h2>HAPPY NEW YEAR</h2>
