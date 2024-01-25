@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import BaseButton from "@components/buttons/BaseButton";
 import UpperNavBar from "@components/navBar/upperNavBar";
+import PayIcoLogo from "@assets/pay-ico.png";
 
 const ChargeIntro = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const ChargeIntro = () => {
       <UpperNavBar title="야놀자 페이" type="backClose" />
       <CS.SuccessWrap className="gray-bg">
         <CS.SuccessBox>
-          <img src="/src/assets/pay-ico.png" alt="체크아이콘" width="200" />
+          <img src={PayIcoLogo} alt="체크아이콘" width="200" />
           <p className="tit">
             한번의 클릭으로 결제하는
             <br />

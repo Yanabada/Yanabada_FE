@@ -6,6 +6,7 @@ import BaseButton from "@components/buttons/BaseButton";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import LoadingAnimation from "@components/checkAnimation";
 import ContactIcon from "@assets/icons/contactIcon.svg?react";
+import CheckIcoLogo from "@assets/check-ico.png";
 
 const ChargeSuccess = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const ChargeSuccess = () => {
       <LoadingAnimation />
       <S.SuccessWrap>
         <S.SuccessBox>
-          <img src="/src/assets/check-ico.png" alt="체크아이콘" />
+          <img src={CheckIcoLogo} alt="체크아이콘" />
           {/* FIXME : 멤버정보 닉네임값 가져올 것 */}
           <p className="tit">
             [닉네임]님

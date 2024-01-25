@@ -11,6 +11,7 @@ import BaseButton from "@components/buttons/BaseButton";
 import TextInput from "@components/input/TextInput";
 import BottomSheet from "@components/bottomSheet";
 import Checkbox from "@components/input/Checkbox";
+import BankIcoLogo from "@assets/bankIcon.png";
 
 import PasswordStore from "./stores/passwordStore";
 import useRegisterForPayment from "./hooks/useRegisterPayment";
@@ -96,7 +97,7 @@ const Account = () => {
                 }}
               >
                 <motion.div className="inner">
-                  <motion.img src="/src/assets/bankIcon.png" />
+                  <motion.img src={BankIcoLogo} />
                   <span className="bank">국민은행</span>
                 </motion.div>
                 <motion.div className="inner">
