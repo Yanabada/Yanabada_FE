@@ -116,15 +116,11 @@ const MyPage = ({ width }: MyPageProps) => {
 
         {/* FIXME: 추후 알람 개수에 따라 alert 개수 변경 */}
         <Link to="/mypage/salesHistory">
-          <ListButton width={width} alertCount={1}>
-            판매내역
-          </ListButton>
+          <ListButton width={width}>판매내역</ListButton>
         </Link>
 
         <Link to="/mypage/purchaseHistory">
-          <ListButton width={width} alertCount={1}>
-            구매내역
-          </ListButton>
+          <ListButton width={width}>구매내역</ListButton>
         </Link>
 
         {/* FIXME: 야나바다 고객센터 페이지(G-7)으로 이동 */}

@@ -34,6 +34,7 @@ import useProfileDetail from "@pages/myPage/hooks/useProfileDetail";
 import useBuyProduct from "./hooks/useBuyProduct";
 import { convertString, convertStringToKR } from "./utils/convertString";
 import { onClickTossPayment, onClickPGPayment } from "./utils/onClickPayment";
+import BankIcoLogo from "@assets/bankIcon.png";
 
 interface PurchaseProps {
   width?: string;
@@ -76,6 +77,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     register,
     formState: { errors },
     getValues,
+    setValue,
     trigger
   } = useForm({
     mode: "onBlur"
@@ -152,6 +154,20 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     navigate(
       `/signin/3?from=changeReservationInfo&name=${getValues("name1")}&phonenumber=${getValues("phoneNumber1")}&productId=${productId}&redirect=/purchase`
     );
+  };
+
+  const formatPhoneNumber = (value: string): string => {
+    if (value.length > 13) {
+      return value.slice(0, 13);
+    }
+    value = value.replace(/[^0-9]/g, "").replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+    return value;
+  };
+
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatPhoneNumber(e.target.value);
+
+    setValue("phoneNumber1", formattedValue);
   };
 
   useEffect(() => {
@@ -357,6 +373,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                       }
                     })}
                     errorMessage={errors.phoneNumber1 && `${errors.phoneNumber1?.message}`}
+                    onChange={handlePhoneNumberChange}
                   />
                 </S.TextInputWrapper>
 
@@ -618,7 +635,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     }}
                   >
                     <motion.div className="inner">
-                      <motion.img src="/src/assets/bankIcon.png" />
+                      <motion.img src={BankIcoLogo} />
                       <span className="card">국민카드</span>
                     </motion.div>
                   </motion.div>
@@ -712,7 +729,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     }}
                   >
                     <motion.div className="inner">
-                      <motion.img src="/src/assets/bankIcon.png" />
+                      <motion.img src={BankIcoLogo} />
                       <span className="card">국민은행</span>
                     </motion.div>
                   </motion.div>
