@@ -115,6 +115,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
   const [isPaymentDone, setIsPaymentDone] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isLocal] = useState(true); // FIXME: 나중에 삭제
 
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
   const [isYanoljaPaySubscribed] = useState(false);
@@ -843,7 +844,10 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     nameState,
                     phoneNumberState,
                     totalPrice,
-                    setIsPaymentDone
+                    setIsPaymentDone,
+                    isLocal
+                      ? "http://localhost:5173/purchase/confirm"
+                      : "https://www.yanabada.com/purchase/confirm"
                   );
                 } else if (paymentMethod === "accountTransfer") {
                   onClickPGPayment(
@@ -852,7 +856,10 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     phoneNumberState,
                     totalPrice,
                     "trans",
-                    setIsPaymentDone
+                    setIsPaymentDone,
+                    isLocal
+                      ? "http://localhost:5173/purchase/confirm"
+                      : "https://www.yanabada.com/purchase/confirm"
                   );
 
                   setIsPaymentDone(2);
@@ -863,7 +870,10 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     phoneNumberState,
                     totalPrice,
                     "card",
-                    setIsPaymentDone
+                    setIsPaymentDone,
+                    isLocal
+                      ? "http://localhost:5173/purchase/confirm"
+                      : "https://www.yanabada.com/purchase/confirm"
                   );
 
                   setIsPaymentDone(3);
