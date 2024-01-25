@@ -67,7 +67,7 @@ export const ImageOverlay = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 7.25rem;
+  width: 10rem;
   object-fit: cover;
 `;
 
@@ -114,6 +114,7 @@ export const Location = styled.p`
 export const InformationContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 export const ProductName = styled.p`
@@ -166,7 +167,7 @@ export const UserNumber = styled.p`
 `;
 
 export const RightInnerContainer = styled.div`
-  width: 13rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
