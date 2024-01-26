@@ -6,6 +6,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { GoCheck } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useSearchParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
 import Notice from "@components/notice";
@@ -119,16 +120,7 @@ const Charge = () => {
           balance={paymentData.balance}
         />
         {priceParam ? (
-          <>
-            {/* "예인 토스트로 여기 변경" */}
-            <S.AlertBanner>
-              <p className="text">
-                야놀자페이 잔액이 부족합니다.
-                <br />
-                충전을 진행해주세요!
-              </p>
-            </S.AlertBanner>
-          </>
+          <>{toast.error("야놀자페이 잔액이 부족합니다. 충전을 진행해주세요!")}</>
         ) : null}
         <S.ButtonWrapper>
           {typeParam === "charging" ? (

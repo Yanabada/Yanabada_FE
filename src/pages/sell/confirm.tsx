@@ -26,6 +26,8 @@ const SellConfirm = () => {
 
   const { calcFeeNumber }: any = useCalcFeeStore();
 
+  console.log(calcFeeNumber, "확인");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,10 +44,6 @@ const SellConfirm = () => {
   }, []);
 
   const plusPrice = (confirmData.sellingPrice * 5) / 100;
-
-  console.log("1", confirmData.roomInfo.cancelPolicy);
-  console.log("2", confirmData.checkInDate);
-  console.log("3", confirmData.purchasePrice);
 
   return (
     <>
@@ -122,29 +120,41 @@ const SellConfirm = () => {
             width="100%"
             disabled
           />
-          <S.InnerBlank />
-          <CS.RegisterSubTitle>야놀자 자동 예약 취소</CS.RegisterSubTitle>
-          <S.ConfirmWrapper>
-            <div>
-              <S.SelectButton className={confirmData.isAutoCancel ? "selected" : ""}>
-                {confirmData.isAutoCancel && <FaCheck />}예
-              </S.SelectButton>
-            </div>
-            <div>
-              <S.SelectButton className={confirmData.isAutoCancel ? "" : "selected"}>
-                {!confirmData.isAutoCancel && <FaCheck />}아니오
-              </S.SelectButton>
-            </div>
-          </S.ConfirmWrapper>
-          <CS.RefundText>
-            <p className="text">
-              <YanoljaIcon />
-              야놀자에서 취소 시 환불금
-            </p>
-            <p className="price">
-              <span>{numberFormat(calcFeeNumber)}</span>원
-            </p>
-          </CS.RefundText>
+          {confirmData.roomInfo.cancelPolicy === "YNBD_3" ? null : (
+            <>
+              <S.InnerBlank />
+              <CS.RegisterSubTitle>야놀자 자동 예약 취소</CS.RegisterSubTitle>
+              <S.ConfirmWrapper>
+                <div>
+                  <S.SelectButton className={confirmData.isAutoCancel ? "selected" : ""}>
+                    {confirmData.isAutoCancel && <FaCheck />}예
+                  </S.SelectButton>
+                </div>
+                <div>
+                  <S.SelectButton className={confirmData.isAutoCancel ? "" : "selected"}>
+                    {!confirmData.isAutoCancel && <FaCheck />}아니오
+                  </S.SelectButton>
+                </div>
+              </S.ConfirmWrapper>
+              <CS.RefundText>
+                <p className="text">
+                  <YanoljaIcon />
+                  야놀자에서 취소 시 환불금
+                </p>
+                <p className="price">
+                  {calcFeeNumber == "입실일 취소 불가" ? (
+                    <>
+                      <span>{numberFormat(calcFeeNumber)}</span>원
+                    </>
+                  ) : (
+                    <>
+                      <span>{numberFormat(calcFeeNumber)}</span>원
+                    </>
+                  )}
+                </p>
+              </CS.RefundText>
+            </>
+          )}
         </CS.RegisterInner>
         {/* ⚠️ 보류 ⚠️ */}
         {/* 
