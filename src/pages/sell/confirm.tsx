@@ -142,17 +142,7 @@ const SellConfirm = () => {
               야놀자에서 취소 시 환불금
             </p>
             <p className="price">
-              <span>
-                {numberFormat(calcFeeNumber)}
-                {/* {numberFormat(
-                  calcEndFee(
-                    confirmData.roomInfo.cancelPolicy,
-                    confirmData.checkInDate,
-                    confirmData.purchasePrice
-                  )
-                )} */}
-              </span>
-              원
+              <span>{numberFormat(calcFeeNumber)}</span>원
             </p>
           </CS.RefundText>
         </CS.RegisterInner>
