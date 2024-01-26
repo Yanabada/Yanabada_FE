@@ -27,16 +27,6 @@ const Profile = ({ width }: ProfileProps) => {
   const [isEditIconClicked, setIsEditIconClicked] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (errors.nickName) return;
-    // FIXME: API 연동
-    console.log("submit");
-
-    const nickName = getValues("nickName");
-    console.log("nickName", nickName);
-  };
-
   const {
     register,
     formState: { errors },
@@ -80,10 +70,10 @@ const Profile = ({ width }: ProfileProps) => {
       <UpperNavBar title="내 정보 관리" type="back" />
       <S.ProfileContainer width={width}>
         <S.ProfileWrapper gap="16px">
-          <S.ProfileImage imageURL={data.image} />
+          <S.ProfileImage imageURL={data?.image} />
           {isEditIconClicked ? (
             <S.FormWrapper width={width}>
-              <form onSubmit={onSubmit}>
+              <form>
                 <S.TextInputWrapper width={width}>
                   <TextInput
                     variant="move"
@@ -122,12 +112,12 @@ const Profile = ({ width }: ProfileProps) => {
           ) : (
             <>
               <S.ProfileTextWrapper>
-                <S.ProfileText>{data.nickName}</S.ProfileText>
+                <S.ProfileText>{data?.nickName}</S.ProfileText>
                 <S.EditIconWrapper onClick={() => setIsEditIconClicked(true)}>
                   <EditIcon />
                 </S.EditIconWrapper>
               </S.ProfileTextWrapper>
-              <S.EmailText>{data.email}</S.EmailText>
+              <S.EmailText>{data?.email}</S.EmailText>
             </>
           )}
         </S.ProfileWrapper>
@@ -141,7 +131,7 @@ const Profile = ({ width }: ProfileProps) => {
               <S.LeftText>아이디</S.LeftText>
             </S.LeftTextWrapper>
             <S.RightTextWrapper>
-              <S.RightText>{data.email}</S.RightText>
+              <S.RightText>{data?.email}</S.RightText>
             </S.RightTextWrapper>
           </S.PersonalInfoTextWrapper>
 
@@ -150,7 +140,7 @@ const Profile = ({ width }: ProfileProps) => {
               <S.LeftText>이메일</S.LeftText>
             </S.LeftTextWrapper>
             <S.RightTextWrapper>
-              <S.RightText>{data.email}</S.RightText>
+              <S.RightText>{data?.email}</S.RightText>
             </S.RightTextWrapper>
           </S.PersonalInfoTextWrapper>
 
@@ -176,14 +166,14 @@ const Profile = ({ width }: ProfileProps) => {
             </S.PhoneNumberWrapper>
             <S.RightTextWrapper>
               <S.RightText>
-                {phoneNumber ? phoneNumber : formatPhoneNumber(data.phoneNumber)}
+                {phoneNumber ? phoneNumber : formatPhoneNumber(data?.phoneNumber)}
               </S.RightText>
             </S.RightTextWrapper>
             <S.ButtonWrapper>
               <S.ButtonText
                 onClick={() =>
                   navigate(
-                    `/signin/3?phonenumber=${data.phoneNumber}&from=changePhoneNumber&redirect=/mypage/profile`
+                    `/signin/3?phonenumber=${data?.phoneNumber}&from=changePhoneNumber&redirect=/mypage/profile`
                   )
                 }
               >

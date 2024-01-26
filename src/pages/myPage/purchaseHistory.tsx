@@ -7,11 +7,6 @@ import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
 import usePurchaseHistory from "./hooks/usePurchaseHistory";
 import useIntersect from "@pages/products/hooks/useIntersect";
 
-// FIXME: 모듈화
-interface PurchaseHistoryProps {
-  width?: string;
-}
-
 interface TradeData {
   tradeId: number;
   productId: number;
@@ -25,7 +20,7 @@ interface TradeData {
   status: "WAITING" | "COMPLETED" | "CANCELED" | "REJECTED";
 }
 
-const PurchaseHistory = ({ width }: PurchaseHistoryProps) => {
+const PurchaseHistory = ({ width }: S.HistoryProps) => {
   const determineCardType = (status: string) => {
     switch (status) {
       case "WAITING":
