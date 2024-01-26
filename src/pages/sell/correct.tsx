@@ -54,6 +54,8 @@ const SellCorrect = () => {
   const [sellDetailData, setSellDetailData] = useState(initialSellData);
   const isFormValid = check1 && check2 && check3 && price > 0 && endDate;
 
+  console.log(calcFeeNumber, "확인");
+
   useEffect(() => {
     const endParam = searchParams.get("checkOutDate");
 
