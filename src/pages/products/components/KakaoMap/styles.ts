@@ -61,7 +61,7 @@ export const ResearchButton = styled.button`
   ${({ theme }) => theme.text.subtitle5};
   color: ${({ theme }) => theme.colors.blue[400]};
 
-  z-index: 999;
+  z-index: 1001;
   white-space: nowrap;
 `;
 
