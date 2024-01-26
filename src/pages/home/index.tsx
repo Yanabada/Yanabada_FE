@@ -13,19 +13,24 @@ import { useEffect, useState } from "react";
 import useFCMToken from "./hooks/useFCMToken";
 import { requestPermission } from "../../firebase-messaging-sw";
 import Cookie from "js-cookie";
+import { getStoredToken } from "@utils/indexDB";
 
 const Home = () => {
   const isLoggedIn = Cookie.get("isLoggedIn") === "yes";
   const [FCMToken, setFCMToken] = useState<string | null | undefined>("");
   const [tokenFromCookie, setTokenFromCookie] = useState<string | undefined>("");
 
-  const { mutate } = useFCMToken();
+  const { mutate, isSuccess } = useFCMToken();
 
   useEffect(() => {
+    const initToken = async () => {
+      await requestPermission();
+      const token = await getStoredToken();
+      setFCMToken(token);
+    };
+
     if (isLoggedIn) {
-      requestPermission();
-      setFCMToken(localStorage.getItem("FCMToken"));
-      setTokenFromCookie(Cookie.get("FCMToken"));
+      initToken();
     }
   }, [isLoggedIn]);
 
@@ -37,6 +42,12 @@ const Home = () => {
       Cookie.set("FCMToken", FCMToken, { expires: in60Minutes });
     }
   }, [FCMToken, tokenFromCookie]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTokenFromCookie(Cookie.get("FCMToken"));
+    }
+  }, [isSuccess]);
 
   return (
     <S.Container>
