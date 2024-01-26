@@ -26,9 +26,6 @@ export const ListCardContainer = styled.div<ListCardProps>`
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
   background: #fff;
-
-  /* 은은한쉐도우 */
-  box-shadow: ${({ theme }) => theme.shadows[1]};
 `;
 
 export const TopWrapper = styled.div`
