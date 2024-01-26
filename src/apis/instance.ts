@@ -33,21 +33,29 @@ authInstance.interceptors.request.use(
 );
 
 authInstance.interceptors.response.use(
-  (response) => {
-    if (response.status === 200) {
-      Cookies.set("isLoggedIn", "yes");
-    }
-
-    return response;
-  },
+  (response) => response,
 
   async (error) => {
     if (error.response?.status === 401) {
       const originalRequest = error.config;
       console.log(error.response);
+
       if (!("data" in error.response.data)) {
-        // TODO - 에러페이지
-        // window.location.href = "/login";
+        window.location.href = "/login";
+        return Promise.reject(error);
+      }
+      if (error.response.data.data.isNeededRefresh) {
+        const newAccessToken = await refreshAccessToken();
+        Cookies.set("accessToken", newAccessToken);
+        axios.defaults.headers["Authorization"] = `Bearer ${newAccessToken}`;
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+        return axios(originalRequest);
+      }
+    } else if (error.response?.status === 400) {
+      const originalRequest = error.config;
+
+      if (!("data" in error.response.data)) {
+        window.location.href = "/login";
         return Promise.reject(error);
       }
       if (error.response.data.data.isNeededRefresh) {
@@ -87,7 +95,21 @@ instance.interceptors.response.use(
       console.log(error.response);
       if (!("data" in error.response.data)) {
         // TODO - 에러페이지
-        // window.location.href = "/login";
+        window.location.href = "/login";
+        return Promise.reject(error);
+      }
+      if (error.response.data.data.isNeededRefresh) {
+        const newAccessToken = await refreshAccessToken();
+        Cookies.set("accessToken", newAccessToken);
+        axios.defaults.headers["Authorization"] = `Bearer ${newAccessToken}`;
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+        return axios(originalRequest);
+      }
+    } else if (error.response?.status === 400) {
+      const originalRequest = error.config;
+
+      if (!("data" in error.response.data)) {
+        window.location.href = "/login";
         return Promise.reject(error);
       }
       if (error.response.data.data.isNeededRefresh) {
