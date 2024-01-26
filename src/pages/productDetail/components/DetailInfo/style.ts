@@ -101,11 +101,10 @@ export const GuideText = styled.p`
 `;
 
 export const CheckContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 0.25rem;
-  padding: 1rem 1.5rem;
+  padding: 1rem 1rem;
   margin-top: 0.5rem;
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
@@ -113,8 +112,23 @@ export const CheckContainer = styled.div`
 `;
 
 export const CheckInnerContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
+
+  &:nth-of-type(2) {
+    padding-left: 1rem;
+
+    ::before {
+      position: absolute;
+      content: "";
+      left: 0;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background-color: #e6e6e6;
+    }
+  }
 `;
 
 export const CheckText = styled.p`
