@@ -141,7 +141,7 @@ const Profile = ({ width }: ProfileProps) => {
               <S.LeftText>아이디</S.LeftText>
             </S.LeftTextWrapper>
             <S.RightTextWrapper>
-              <S.RightText>{data.id}</S.RightText>
+              <S.RightText>{data.email}</S.RightText>
             </S.RightTextWrapper>
           </S.PersonalInfoTextWrapper>
 
