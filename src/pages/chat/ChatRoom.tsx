@@ -140,14 +140,20 @@ const ChatRoom = () => {
         />
       )}
       <S.ChatContainer ref={bottom} status={status}>
-        {!data || data.data.messages.length === 0 ? (
+        {(!data || data.data.messages.length === 0) && chatMessages.length === 0 ? (
           <p>메시지가 없습니다.</p>
         ) : (
           <>
-            <ChatText message={data.data.messages[data.data.messages.length - 1]} isNotice />
-            {data.data.messages
-              .map((message) => <ChatText key={message.sendTime.toString()} message={message} />)
-              .reverse()}
+            {!data || data.data.messages.length === 0 ? null : (
+              <>
+                <ChatText message={data.data.messages[data.data.messages.length - 1]} isNotice />
+                {data.data.messages
+                  .map((message) => (
+                    <ChatText key={message.sendTime.toString()} message={message} />
+                  ))
+                  .reverse()}
+              </>
+            )}
             {chatMessages.map((message) => (
               <ChatText key={message.sendTime.toString()} message={message} />
             ))}
