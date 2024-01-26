@@ -2,7 +2,7 @@ import Certification from "@components/certification";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import usePhoneNumber from "@pages/signIn/hooks/usePhoneNumber";
-import SignInImg from "@assets/succ.svg?react";
+import SignInImg from "@assets/successSignIn.svg?react";
 
 const SignInFourth = () => {
   const [searchParams] = useSearchParams();
