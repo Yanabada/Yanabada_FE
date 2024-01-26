@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-// FIXME: 모듈화
+
 interface TransactionStatementProps {
   divType?: string;
   width?: string;
@@ -22,7 +22,6 @@ export const InfoWrapper = styled.div<TransactionStatementProps>`
   background: #fff;
 `;
 
-// FIXME: 모듈화
 export const TopWrapper = styled.div<TransactionStatementProps>`
   display: flex;
   width: ${({ width }) => width || "332px"};
@@ -117,13 +116,11 @@ export const ImageWrapper = styled.div<TransactionStatementProps>`
   height: 64px;
   border-radius: 5px;
 
-  /* FIXME: 레이아웃 모듈화(ListCard) */
   align-self: stretch;
 
   background-color: lightgray;
   background-image: url(${({ imageURL }) => imageURL});
   background-size: cover;
-  /*************************/
 `;
 
 export const MiddleBottomRightWrapper = styled.div`

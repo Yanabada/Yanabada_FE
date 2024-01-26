@@ -7,11 +7,6 @@ import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
 import { useEffect, useState } from "react";
 import useIntersect from "@pages/products/hooks/useIntersect";
 
-// FIXME: 모듈화
-interface SalesHistoryProps {
-  width?: string;
-}
-
 interface SaleProduct {
   accommodationName: string;
   image: string;
@@ -23,7 +18,7 @@ interface SaleProduct {
   tradeId: number;
 }
 
-const SalesHistory = ({ width }: SalesHistoryProps) => {
+const SalesHistory = ({ width }: S.HistoryProps) => {
   const { data, error, refetch, hasNextPage, isFetching, fetchNextPage } = useSalesHistory();
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);

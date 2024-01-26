@@ -35,15 +35,12 @@ import useBuyProduct from "./hooks/useBuyProduct";
 import { convertString, convertStringToKR } from "./utils/convertString";
 import { onClickTossPayment, onClickPGPayment } from "./utils/onClickPayment";
 import BankIcoLogo from "@assets/bankIcon.png";
+import Cookies from "js-cookie";
+import useBalance from "@pages/myPage/hooks/useBalance";
 
 interface PurchaseProps {
   width?: string;
-  timerText?: string; // FIXME: 나중에 삭제
   divType: string;
-  yanoljaPurchasePrice?: string; // FIXME: 나중에 삭제
-  charge?: string; // FIXME: 나중에 삭제
-  yanoljaPoint?: string; // FIXME: 나중에 삭제
-  totalPurchasePrice?: string; // FIXME: 나중에 삭제
 }
 
 const Purchase = ({ width, divType }: PurchaseProps) => {
@@ -55,6 +52,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const name = searchParams.get("name");
   const phoneNumber = searchParams.get("phonenumber");
   const productId = searchParams.get("productId");
+  const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
 
   const {
     getDetailQuery: { data: productData, error: productError }
@@ -63,8 +61,10 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     data: profileData,
     error: profileError,
     refetch: profileRefetch
-  } = useProfileDetail(true);
+  } = useProfileDetail(isLoggedIn);
   const { mutate: buyProductMutate, isSuccess: buyProductSuccess } = useBuyProduct();
+
+  const { data: balanceData, error: balanceError } = useBalance(isLoggedIn);
 
   if (productError) {
     console.log(productError);
@@ -74,7 +74,10 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     console.log(profileError);
   }
 
-  // profileData 안불러와지면 살리기
+  if (balanceError) {
+    console.log(balanceError);
+  }
+
   profileRefetch();
 
   const {
@@ -116,9 +119,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [isPaymentDone, setIsPaymentDone] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isActive, setIsActive] = useState(false);
-
-  // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
-  const [isYanoljaPaySubscribed] = useState(false);
 
   const navigate = useNavigate();
 
@@ -255,7 +255,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   }, []);
 
   useEffect(() => {
-    // FIXME: onClickPayment 함수에서 return 값을 받아올 수 없음
     if (isPaymentDone === 1) {
       localStorage.getItem("tossPayment") === "true"
         ? setIsPaymentSuccess(true)
@@ -404,8 +403,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                 </S.TextInputWrapper>
 
                 <S.ChipWrapper>
-                  {/* FIXME: 유효성 검사 후 input을 모두 채워야지만 abled되게 변경 */}
-                  {/* FIXME: 휴대폰 인증 페이지(H-2) 라우터 추가 후 이동 로직 추가 */}
                   <ManipulationChip
                     buttonType={
                       getValues("name1") &&
@@ -424,7 +421,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             </S.FormWrapper>
           ) : (
             <S.PersonInfoBottomWrapper>
-              {/* FIXME: name과 phoneNumber값이 없으면 api 호출하여 렌더링 */}
               {name ? name : ""} / {phoneNumber ? phoneNumber : ""}
             </S.PersonInfoBottomWrapper>
           )}
@@ -574,7 +570,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         <S.ToggleButtonWrapper>
           <ToggleButton
             buttonType="yanolja"
-            subText="*40,000원 할인"
             width="48%"
             onClick={() => {
               handlePaymentMethodChange(PaymentMethod.YanoljaPay);
@@ -766,7 +761,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
           </>
         ) : null}
 
-        {paymentMethod !== "yanoljaPay" || isYanoljaPaySubscribed ? null : (
+        {paymentMethod !== "yanoljaPay" || balanceData.hasJoinedYanoljaPay ? null : (
           <>
             <Notice
               type="default"

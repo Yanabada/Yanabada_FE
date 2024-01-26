@@ -3,7 +3,7 @@ import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 
 interface PayInfoProps {
-  divType: "payInfo" | "transactionInfo" | "payInfo-tall";
+  divType: string;
   width?: string;
   imageURL?: string;
   yanoljaPurchasePrice?: string | null;

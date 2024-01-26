@@ -4,6 +4,7 @@ import { useState } from "react";
 import NoPointIcon from "@assets/icons/noPointIcon.svg?react";
 import { ToggleMenu, ToggleMenuItem } from "@pages/products/components/Order/ToggleMenu";
 import { menu, item } from "@animations/dropDown";
+import * as CS from "@pages/myPage/styles/history.styles";
 
 interface PointsMiddleTabProps {
   width?: string;
@@ -23,23 +24,23 @@ const PointsMiddleTabDisappear = ({ width }: PointsMiddleTabProps) => {
 
   return (
     <>
-      <S.PointsMiddleContainer width={width}>
-        <S.MiddleWrapper>
+      <CS.PointsMiddleContainer width={width}>
+        <CS.MiddleWrapper>
           <Link to="/mypage/points/list">
             <>
-              <S.MiddleRightText>전체내역</S.MiddleRightText>
+              <CS.MiddleRightText>전체내역</CS.MiddleRightText>
             </>
           </Link>
-        </S.MiddleWrapper>
-        <S.MiddleWrapper>
+        </CS.MiddleWrapper>
+        <CS.MiddleWrapper>
           <Link to="/mypage/points/disappear">
-            <S.MiddleTextWrapper>
-              <S.MiddleLeftText>소멸예정</S.MiddleLeftText>
-              <S.UnderLine />
-            </S.MiddleTextWrapper>
+            <CS.MiddleTextWrapper>
+              <CS.MiddleLeftText>소멸예정</CS.MiddleLeftText>
+              <CS.UnderLine />
+            </CS.MiddleTextWrapper>
           </Link>
-        </S.MiddleWrapper>
-      </S.PointsMiddleContainer>
+        </CS.MiddleWrapper>
+      </CS.PointsMiddleContainer>
 
       <S.SectionDescriptionWrapper width={width}>
         <ToggleMenu
