@@ -10,6 +10,7 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import Cookies from "js-cookie";
 import useUpdatePrice from "@pages/chat/hooks/useUpdatePrice";
+import { useNavigate } from "react-router-dom";
 
 interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -53,6 +54,7 @@ const ChatRoomBanner = ({
   policyNumber,
   productId
 }: ChatRoomBannerProps) => {
+  const navigate = useNavigate();
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [price, setPrice] = useState(0);
   const myId = Number(Cookies.get("id"));
@@ -171,7 +173,9 @@ const ChatRoomBanner = ({
         <BaseButton
           buttonType="icon"
           onClick={() => {
-            setIsBottomSheetVisible(true);
+            sellerId === myId
+              ? setIsBottomSheetVisible(true)
+              : navigate(`/purchase?productId=${productId}`);
           }}
           width="100%"
           style={{ borderRadius: "0px" }}
