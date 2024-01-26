@@ -3,7 +3,6 @@ import { Flex, NoScrollBar } from "@styles/base";
 
 export const OptionWrapper = styled.div`
   display: flex;
-  /* justify-content: space-around; */
   align-items: center;
   gap: 0.5rem;
   padding-inline: 1rem;
@@ -11,6 +10,10 @@ export const OptionWrapper = styled.div`
   overflow-x: scroll;
 
   ${NoScrollBar};
+
+  button {
+    cursor: pointer;
+  }
 
   @media (min-width: 550px) {
     justify-content: space-around;
