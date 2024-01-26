@@ -1,12 +1,14 @@
 import * as S from "./styles/confirm";
 import * as CS from "./styles/password";
 
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+
 import { numberFormat } from "@utils/numberFormat";
 import BaseButton from "@components/buttons/BaseButton";
 import UpperNavBar from "@components/navBar/upperNavBar";
-import usePaymentHistory from "./hooks/usePaymentHistory";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import CheckIcoLogo from "@assets/check-ico.png";
+
+import usePaymentHistory from "./hooks/usePaymentHistory";
 
 const typeMap = new Map([
   ["DISBURSEMENT", "인출"],

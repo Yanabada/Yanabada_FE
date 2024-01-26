@@ -105,7 +105,7 @@ const PriceArea = ({
 
   function priceFormat(n: number): string {
     const formattedNumber = numberFormat(n);
-    return `${formattedNumber} ￦`;
+    return `￦ ${formattedNumber}`;
   }
 
   const renderCalButton = ([amount, text, calc]: [number, string, string]): JSX.Element => (
