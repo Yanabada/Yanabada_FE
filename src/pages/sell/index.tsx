@@ -91,7 +91,7 @@ const Sell = () => {
                 }}
                 transition={{ duration: 0.2, delay: 0.1 }}
               >
-                <label htmlFor="radioButton1">
+                <label htmlFor={"select" + sellItem.id}>
                   <div className="list-card">
                     <p className="list-card__title">
                       {sellItem.accommodationName}
