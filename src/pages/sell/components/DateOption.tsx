@@ -21,6 +21,8 @@ import { getDayOfWeek } from "@utils/getDayOfWeek";
 import { feePolicy1, feePolicy2, feePolicy3 } from "@constants/feePolicys";
 
 import calculateOriginDiscount from "../utils/calcEndFee";
+import useCalcFeeStore from "../stores/endDateStore";
+import { useEffect } from "react";
 
 interface DateOptionProps {
   bottomSheetVisible: boolean;
@@ -160,6 +162,13 @@ const DateOption = ({
     return Math.floor(discountPercentage);
   }
 
+  const { setCalcFeeNumber }: any = useCalcFeeStore();
+  const calcFeeNumber = calculateOriginDiscount(purchasePrice, endDateInfo.feePercentage);
+
+  useEffect(() => {
+    setCalcFeeNumber(calcFeeNumber);
+  }, [calcFeeNumber, setCalcFeeNumber]);
+
   return (
     <CS.RegisterInner>
       <CS.RegisterSubTitle>
@@ -251,12 +260,7 @@ const DateOption = ({
                             {endDateInfo.feePercentage}%
                           </span>
                           &nbsp;
-                          <span className="price">
-                            {numberFormat(
-                              calculateOriginDiscount(purchasePrice, endDateInfo.feePercentage)
-                            )}
-                            원
-                          </span>
+                          <span className="price">{numberFormat(calcFeeNumber)}원</span>
                         </>
                       )}
                     </>
