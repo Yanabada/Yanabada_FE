@@ -202,7 +202,7 @@ const SellConfirm = () => {
                 type="submit"
                 buttonType="default"
                 width="100%"
-                onClick={() => navigate("/mypage/salesHistory")}
+                onClick={() => navigate("/mypage/salesHistory?redirect=/mypage")}
               >
                 판매내역으로 이동
               </BaseButton>
