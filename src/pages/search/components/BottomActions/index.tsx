@@ -47,7 +47,7 @@ const BottomActions = () => {
       child
     };
     setHistory([searchHistory, ...history]);
-    navigate(`/products/${search}`);
+    navigate(`/products${search}`);
   };
 
   return (

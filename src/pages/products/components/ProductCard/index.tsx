@@ -15,16 +15,23 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { isCheck } = CheckStore();
+  const saleEndTime = new Date(product.saleEnd);
+  const timeOut = saleEndTime.getTime() - new Date().getTime();
 
+  const days = Math.floor(timeOut / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeOut % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeOut % (1000 * 60 * 60)) / (1000 * 60));
+
+  if (product.status === "SOLD_OUT" && isCheck) {
+    return null;
+  }
   return (
     <S.Container>
       <Link to={`/products/${product.id}`}>
         <S.ItemContainer>
           <S.ImageContainer>
             <S.Image src={product.image} />
-            {!isCheck && product.status === "SOLD_OUT" && (
-              <S.ImageOverlay>판매 완료</S.ImageOverlay>
-            )}
+            {product.status === "SOLD_OUT" && <S.ImageOverlay>판매 완료</S.ImageOverlay>}
             {product.status === "BOOKING" && <S.ImageOverlay>예약중</S.ImageOverlay>}
             <S.DiscountRate>{product.salesPercentage}%</S.DiscountRate>
             <S.LocationContainer>
@@ -54,7 +61,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
               <S.TimerNegoContainer>
                 <S.TimerContainer>
                   <S.TimerIcon />
-                  <S.TimerText>{product.saleEnd.toString()}</S.TimerText>
+                  <S.TimerText>
+                    {days ? `${days}일 ${hours}시간 ${minutes}분` : `${hours}시간 ${minutes}분`}
+                  </S.TimerText>
                 </S.TimerContainer>
                 {product.canNegotiate ? (
                   <S.NegoContainer>

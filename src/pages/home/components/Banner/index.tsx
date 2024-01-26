@@ -44,19 +44,25 @@ const Banner = () => {
     <S.Carousel>
       <AnimatePresence initial={false} custom={direction}>
         <S.CarouselItem>
-          <S.PrevImage
-            src={images[wrap(0, images.length, imageIndex - 1)].image}
-            key={page - 1}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            custom={direction}
-            transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 }
-            }}
-          />
+          <a
+            href={images[wrap(0, images.length, imageIndex - 1)].link}
+            target="_blank"
+            style={{ width: "10%", height: "104px" }}
+          >
+            <S.PrevImage
+              src={images[wrap(0, images.length, imageIndex - 1)].image}
+              key={page - 1}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              custom={direction}
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 }
+              }}
+            />
+          </a>
           <S.ImageContainer>
             <a target="_blank" href={images[imageIndex].link}>
               <S.Image
@@ -77,19 +83,25 @@ const Banner = () => {
               {imageIndex + 1} / {images.length}
             </S.ImageIndex>
           </S.ImageContainer>
-          <S.NextImage
-            src={images[wrap(0, images.length, imageIndex + 1)].image}
-            key={page + 1}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            custom={direction}
-            transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 }
-            }}
-          />
+          <a
+            href={images[wrap(0, images.length, imageIndex + 1)].link}
+            target="_blank"
+            style={{ width: "10%", height: "104px" }}
+          >
+            <S.NextImage
+              src={images[wrap(0, images.length, imageIndex + 1)].image}
+              key={page + 1}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              custom={direction}
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 }
+              }}
+            />
+          </a>
         </S.CarouselItem>
       </AnimatePresence>
     </S.Carousel>

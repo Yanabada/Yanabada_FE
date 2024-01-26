@@ -11,7 +11,7 @@ const Search = () => {
   const { history } = HistoryStore();
   return (
     <>
-      <UpperNavBar type="back" title="검색" />
+      <UpperNavBar type="close" title="검색" />
       <S.Container>
         {history.length > 0 && (
           <>
