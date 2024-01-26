@@ -147,11 +147,6 @@ const ChatRoomBanner = ({
     setIsBottomSheetVisible(false);
   };
 
-  console.log("status", status);
-  console.log("sellerId", sellerId);
-  console.log("myId", myId);
-  console.log("테스트", sellerContent.get("TIMEOUT"));
-
   return (
     <S.Container>
       <S.TextContainer>
