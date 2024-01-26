@@ -41,11 +41,11 @@ const MyPage = ({ width }: MyPageProps) => {
     rightAction: () => setIsLoginModalVisible(false)
   };
 
-  const { data: profileData, error: profileError, refetch: profileRefetch } = useProfileDetail();
-  const { data: balanceData, error: balanceError, refetch: balanceRefetch } = useBalance();
-  const { data: notificationData } = useNotifications();
-  const { mutate, isSuccess } = useLogout();
   const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
+  const { data: profileData, error: profileError } = useProfileDetail(isLoggedIn);
+  const { data: balanceData, error: balanceError } = useBalance(isLoggedIn);
+  const { data: notificationData } = useNotifications(isLoggedIn);
+  const { mutate, isSuccess } = useLogout();
 
   if (profileError) {
     console.log(profileError);
@@ -68,13 +68,6 @@ const MyPage = ({ width }: MyPageProps) => {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
-      profileRefetch();
-      balanceRefetch();
-    }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
     Cookies.remove("image");
     Cookies.remove("email");
     Cookies.remove("id");
@@ -82,8 +75,9 @@ const MyPage = ({ width }: MyPageProps) => {
     Cookies.remove("refreshToken");
     Cookies.remove("nickName");
     Cookies.remove("provider");
-    Cookies.set("isLoggedIn", "no");
+    // Cookies.set("isLoggedIn", "no");
 
+    console.log(isSuccess);
     navigate("/mypage");
   }, [isSuccess]);
 

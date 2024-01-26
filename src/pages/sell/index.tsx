@@ -37,13 +37,15 @@ const Sell = () => {
     const fetchData = async () => {
       try {
         const sellListData = await getSellList();
-        setSellList(sellListData.data);
+        setSellList(sellListData);
       } catch (error) {
         console.error("Error fetching sell list:", error);
       }
     };
 
-    fetchData();
+    if (isLoggedIn) {
+      fetchData();
+    }
   }, []);
 
   useEffect(() => {

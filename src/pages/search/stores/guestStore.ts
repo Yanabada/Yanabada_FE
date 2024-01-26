@@ -7,6 +7,7 @@ interface GuestState {
   decreaseAdult: () => void;
   increaseChild: () => void;
   decreaseChild: () => void;
+  resetGuestCount: () => void;
 }
 
 export const useGuest = create<GuestState>()((set) => ({
@@ -21,5 +22,6 @@ export const useGuest = create<GuestState>()((set) => ({
       adult: state.adult > 0 ? state.adult - 1 : 0
     })),
   increaseChild: () => set((state) => ({ child: state.child + 1 })),
-  decreaseChild: () => set((state) => ({ child: state.child > 0 ? state.child - 1 : 0 }))
+  decreaseChild: () => set((state) => ({ child: state.child > 0 ? state.child - 1 : 0 })),
+  resetGuestCount: () => set(() => ({ adult: 2, child: 0 }))
 }));
