@@ -1,5 +1,10 @@
 import instance from "@apis/instance";
-import { ChatRoomResponseData, MessageRequestParam, MessageResponseData } from "../types/chatRoom";
+import {
+  ChangePriceData,
+  ChatRoomResponseData,
+  MessageRequestParam,
+  MessageResponseData
+} from "../types/chatRoom";
 
 export const getChatRooms = async () => {
   const response = await instance.get("/chats");
@@ -13,7 +18,7 @@ export const getMessages = async (params: MessageRequestParam) => {
       page: params.page
     }
   });
-
+  console.log(response.data);
   return response.data as MessageResponseData;
 };
 
@@ -29,4 +34,12 @@ export const deleteChatRoom = async (params: MessageRequestParam) => {
       chatRoomCode: params.code
     }
   });
+};
+
+export const changePrice = async ({ productId, price }: ChangePriceData) => {
+  const response = await instance.patch<{ data: { productId: number } }>(`/products/${productId}`, {
+    price
+  });
+
+  return response.data;
 };
