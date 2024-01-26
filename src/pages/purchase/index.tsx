@@ -668,51 +668,49 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
               </AnimatePresence>
             </InputWrapper>
 
-            <InputWrapper>
-              {totalPrice >= 50000 ? (
-                <>
-                  <motion.p className="select" onClick={toggleInstallmentOption}>
-                    <span>{installmentMessage}</span>
-                    {isInstallmentOptionVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
-                  </motion.p>
-                  <AnimatePresence>
-                    {isInstallmentOptionVisible && (
-                      <motion.div
-                        className="option"
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        style={{
-                          position: "relative",
-                          top: "-3px",
-                          left: 0,
-                          zIndex: 1,
-                          display: "flex",
-                          flexDirection: "column",
-                          height: "auto",
-                          alignItems: "flex-start"
-                        }}
-                      >
-                        <motion.div className="inner" onClick={() => handleInstallmentOption(1)}>
-                          <span className="installment">1개월(무이자)</span>
-                        </motion.div>
-                        <motion.div className="inner" onClick={() => handleInstallmentOption(2)}>
-                          <span className="installment">2개월</span>
-                        </motion.div>
-                        <motion.div className="inner" onClick={() => handleInstallmentOption(3)}>
-                          <span className="installment">3개월</span>
-                        </motion.div>
-                        <motion.div className="inner" onClick={() => handleInstallmentOption(4)}>
-                          <span className="installment">4개월</span>
-                        </motion.div>
-                        <motion.div className="inner" onClick={() => handleInstallmentOption(5)}>
-                          <span className="installment">5개월</span>
-                        </motion.div>
+            {totalPrice >= 50000 ? (
+              <InputWrapper>
+                <motion.p className="select" onClick={toggleInstallmentOption}>
+                  <span>{installmentMessage}</span>
+                  {isInstallmentOptionVisible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
+                </motion.p>
+                <AnimatePresence>
+                  {isInstallmentOptionVisible && (
+                    <motion.div
+                      className="option"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      style={{
+                        position: "relative",
+                        top: "-3px",
+                        left: 0,
+                        zIndex: 1,
+                        display: "flex",
+                        flexDirection: "column",
+                        height: "auto",
+                        alignItems: "flex-start"
+                      }}
+                    >
+                      <motion.div className="inner" onClick={() => handleInstallmentOption(1)}>
+                        <span className="installment">1개월(무이자)</span>
                       </motion.div>
-                    )}
-                  </AnimatePresence>
-                </>
-              ) : null}
-            </InputWrapper>
+                      <motion.div className="inner" onClick={() => handleInstallmentOption(2)}>
+                        <span className="installment">2개월</span>
+                      </motion.div>
+                      <motion.div className="inner" onClick={() => handleInstallmentOption(3)}>
+                        <span className="installment">3개월</span>
+                      </motion.div>
+                      <motion.div className="inner" onClick={() => handleInstallmentOption(4)}>
+                        <span className="installment">4개월</span>
+                      </motion.div>
+                      <motion.div className="inner" onClick={() => handleInstallmentOption(5)}>
+                        <span className="installment">5개월</span>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </InputWrapper>
+            ) : null}
           </>
         ) : null}
 
