@@ -6,6 +6,9 @@ interface NumberBadgeProps {
 }
 
 const NumberBadge = ({ number, isChatPage = false }: NumberBadgeProps) => {
+  if (!number) {
+    return;
+  }
   return (
     <S.BadgeCircle
       className={`${(number as number) < 10 ? "small" : "big"}`}
