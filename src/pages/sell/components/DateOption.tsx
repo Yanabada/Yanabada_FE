@@ -21,6 +21,8 @@ import { getDayOfWeek } from "@utils/getDayOfWeek";
 import { feePolicy1, feePolicy2, feePolicy3 } from "@constants/feePolicys";
 
 import calculateOriginDiscount from "../utils/calcEndFee";
+import useCalcFeeStore from "../stores/endDateStore";
+import { useEffect } from "react";
 
 interface DateOptionProps {
   bottomSheetVisible: boolean;
@@ -156,9 +158,16 @@ const DateOption = ({
 
   // 구매가 대비 판매가격의 수수료% 계산
   function calculateDiscount(purchasePrice: number, price: number) {
-    const discountPercentage = ((purchasePrice - price) / purchasePrice) * 100;
+    const discountPercentage = 100 - ((purchasePrice - price) / purchasePrice) * 100;
     return Math.floor(discountPercentage);
   }
+
+  const { setCalcFeeNumber }: any = useCalcFeeStore();
+  const calcFeeNumber = calculateOriginDiscount(purchasePrice, endDateInfo.feePercentage);
+
+  useEffect(() => {
+    setCalcFeeNumber(calcFeeNumber);
+  }, [calcFeeNumber, setCalcFeeNumber]);
 
   return (
     <CS.RegisterInner>
@@ -251,12 +260,7 @@ const DateOption = ({
                             {endDateInfo.feePercentage}%
                           </span>
                           &nbsp;
-                          <span className="price">
-                            {numberFormat(
-                              calculateOriginDiscount(purchasePrice, endDateInfo.feePercentage)
-                            )}
-                            원
-                          </span>
+                          <span className="price">{numberFormat(calcFeeNumber)}원</span>
                         </>
                       )}
                     </>

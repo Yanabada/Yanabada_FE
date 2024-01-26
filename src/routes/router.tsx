@@ -76,7 +76,6 @@ const router = createBrowserRouter([
         element: (
           <>
             <Outlet />
-            <BottomNavBar />
           </>
         ),
         children: [
@@ -85,24 +84,41 @@ const router = createBrowserRouter([
             element: (
               <>
                 <Sell />
+                <BottomNavBar />
               </>
             )
           },
           {
             path: "register/:id",
-            element: <SellRegister />
+            element: (
+              <>
+                <SellRegister />
+              </>
+            )
           },
           {
             path: "correct/:id",
-            element: <SellCorrect />
+            element: (
+              <>
+                <SellCorrect />
+              </>
+            )
           },
           {
             path: "detail/:id",
-            element: <SellDetail />
+            element: (
+              <>
+                <SellDetail />
+              </>
+            )
           },
           {
             path: "confirm/:id",
-            element: <SellConfirm />
+            element: (
+              <>
+                <SellConfirm />
+              </>
+            )
           }
         ]
       },

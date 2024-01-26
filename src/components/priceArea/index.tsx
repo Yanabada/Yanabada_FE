@@ -8,11 +8,9 @@ import calculateFee from "@utils/calcCancelFee";
 interface PriceAreaProps {
   title: string;
   placeholder: string;
-  originalPrice?: number;
   purchasePrice: number;
   resetPrice: number;
   policyNumber: string;
-  isAlert: boolean;
   charge: boolean;
   price: number;
   setPrice: React.Dispatch<React.SetStateAction<number>> | ((price: number) => void);
@@ -22,11 +20,9 @@ interface PriceAreaProps {
 const PriceArea = ({
   title,
   placeholder,
-  originalPrice,
   purchasePrice,
   resetPrice,
   policyNumber,
-  isAlert,
   charge,
   price,
   setPrice,
@@ -47,9 +43,8 @@ const PriceArea = ({
 
   const amountData = charge ? plusAmountData : minusAmountData;
 
-  // TODO : 오늘기준 수수료계산
-  const today = new Date();
-  const cancelFee = calculateFee(policyNumber, checkInDate, today, purchasePrice);
+  // 체크인 날짜를 기준으로 오늘의 수수료
+  const cancelFee = calculateFee(policyNumber, checkInDate, purchasePrice);
 
   const handlePriceChange = (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = parseInt(event.target.value.replace(/[^\d]/g, ""), 10);
@@ -76,20 +71,20 @@ const PriceArea = ({
     return;
   };
 
-  const getSalesMessage = () => {
-    if (originalPrice && purchasePrice && cancelFee) {
-      const discountPercentage = ((originalPrice - price) / originalPrice) * 100;
-      const savingsAmount = originalPrice - price;
+  // const getSalesMessage = () => {
+  //   if (originalPrice && purchasePrice && cancelFee) {
+  //     const discountPercentage = ((originalPrice - price) / originalPrice) * 100;
+  //     const savingsAmount = originalPrice - price;
 
-      if (price >= cancelFee && price < purchasePrice) {
-        return (
-          <S.SalesMessage>
-            원가 대비 {discountPercentage.toFixed(0)}% 할인! ({numberFormat(savingsAmount)}원 절약)
-          </S.SalesMessage>
-        );
-      }
-    }
-  };
+  //     if (price >= cancelFee && price < purchasePrice) {
+  //       return (
+  //         <S.SalesMessage>
+  //           원가 대비 {discountPercentage.toFixed(0)}% 할인! ({numberFormat(savingsAmount)}원 절약)
+  //         </S.SalesMessage>
+  //       );
+  //     }
+  //   }
+  // };
 
   const handleCalculation = (amount: number, calc: string) => {
     let calculatedPrice;
@@ -133,7 +128,7 @@ const PriceArea = ({
             onChange={handlePriceChange}
             placeholder={placeholder}
           />
-          {isAlert && getSalesMessage()}
+          {/* {isAlert && getSalesMessage()} */}
         </S.MessageWrap>
         {charge ? getCommandMessage() : getErrorMessage()}
         <S.ButtonWrap>

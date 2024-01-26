@@ -9,21 +9,22 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import DateChangeButton from "@components/buttons/DateChangeButton";
 import { numberFormat } from "@utils/numberFormat";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
-import calculateFee from "@utils/calcCancelFee";
+// import calculateFee from "@utils/calcCancelFee";
 import SellerSay from "@pages/productDetail/components/SellerSay";
 import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
 
 import initialConfirmData from "./constants/initialConfirmData";
 import InfoBox from "./components/InfoBox";
 import getSellResult from "./apis/getSellResult";
-import { getFivePercentage } from "./utils/getFivePercentage";
 import BaseButton from "@components/buttons/BaseButton";
+import useCalcFeeStore from "./stores/endDateStore";
 
 const SellConfirm = () => {
   const [confirmData, setConfirmData] = useState(initialConfirmData);
   const { id } = useParams();
   const navigate = useNavigate();
-  const today = new Date();
+
+  const { calcFeeNumber }: any = useCalcFeeStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +40,12 @@ const SellConfirm = () => {
     };
     fetchData();
   }, []);
+
+  const plusPrice = (confirmData.sellingPrice * 5) / 100;
+
+  console.log("1", confirmData.roomInfo.cancelPolicy);
+  console.log("2", confirmData.checkInDate);
+  console.log("3", confirmData.purchasePrice);
 
   return (
     <>
@@ -69,20 +76,22 @@ const SellConfirm = () => {
             <div className="inner">
               <p className="name">판매가</p>
               <p className="value">
-                <span className="text-black">{getFivePercentage(confirmData.sellingPrice)}원</span>
+                <span className="text-black">{numberFormat(confirmData.sellingPrice)}원</span>
               </p>
             </div>
             <div className="inner">
               <p className="name">
                 결제 수수료 <span>(구매자 부담)</span>
               </p>
-              <p className="value">{numberFormat((confirmData.sellingPrice * 5) / 100)} 원</p>
+              <p className="value">{numberFormat(plusPrice)} 원</p>
             </div>
             <div className="stripe"></div>
             <div className="inner">
               <p className="name">최종 판매가</p>
               <p className="value">
-                <span className="text-blue">{numberFormat(confirmData.sellingPrice)} 원</span>
+                <span className="text-blue">
+                  {numberFormat(confirmData.sellingPrice + plusPrice)} 원
+                </span>
               </p>
             </div>
           </S.ConfirmBox>
@@ -133,17 +142,7 @@ const SellConfirm = () => {
               야놀자에서 취소 시 환불금
             </p>
             <p className="price">
-              <span>
-                {numberFormat(
-                  calculateFee(
-                    confirmData.roomInfo.cancelPolicy,
-                    confirmData.checkInDate,
-                    today,
-                    confirmData.purchasePrice
-                  )
-                )}
-              </span>
-              원
+              <span>{numberFormat(calcFeeNumber)}</span>원
             </p>
           </CS.RefundText>
         </CS.RegisterInner>
@@ -184,7 +183,6 @@ const SellConfirm = () => {
         </CS.RegisterInner>
          */}
         <CS.RegisterInner className="gray-bg">
-          <CS.RegisterTitle>판매자 한마디</CS.RegisterTitle>
           <SellerSay seller={confirmData.seller} description={confirmData.description} />
         </CS.RegisterInner>
         <CS.ConfirmWrap>

@@ -2,8 +2,8 @@ import * as S from "./styles/register";
 import * as CS from "./styles/detail";
 
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import { differenceInDays } from "date-fns";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { startOfDay } from "date-fns";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
 import PriceArea from "@components/priceArea";
@@ -11,7 +11,6 @@ import PriceTable from "@components/priceTable";
 import Notice from "@components/notice";
 import Checkbox from "@components/input/Checkbox";
 import BaseButton from "@components/buttons/BaseButton";
-import { feePolicy2 } from "@constants/feePolicys";
 
 import NegoOption from "./components/NegoOption";
 import AutoCancelOption from "./components/AutoCancelOption";
@@ -20,6 +19,7 @@ import getSellDetail from "./apis/getSellDetail";
 import { formatDate } from "./utils/formatDate";
 import initialDetailData from "./constants/initialDetailData";
 import { useCallSellApi } from "./hooks/useSellApi";
+import { getFeePolicy } from "./utils/getPercentage";
 
 interface EndDateInfo {
   endDate: string;
@@ -33,6 +33,14 @@ const SellRegister = () => {
   const [check2, setCheck2] = useState(false);
   const [check3, setCheck3] = useState(false);
 
+  useEffect(() => {
+    if (check1 && check2 && check3) {
+      setAllCheck(true);
+    } else {
+      setAllCheck(false);
+    }
+  }, [check1, check2, check3]);
+
   const [price, setPrice] = useState(0);
   const [isNego, setIsNego] = useState(false);
   const [isAutoCancel, setIsAutoCancel] = useState(false);
@@ -41,6 +49,7 @@ const SellRegister = () => {
 
   const [searchParams] = useSearchParams();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | undefined>();
@@ -50,9 +59,13 @@ const SellRegister = () => {
     feePercentage: 0
   });
 
+  console.log("너의 정보", endDateInfo);
+
   const [sellDetailData, setSellDetailData] = useState(initialDetailData);
-  const isFormValid = check1 && check2 && check3 && price > 0 && endDate;
+  const isFormValid = check1 && check2 && check3 && price > 0 && endDate && sellerComment !== "";
   const callSellApi = useCallSellApi();
+
+  const feePolicy = getFeePolicy(sellDetailData.cancelPolicy);
 
   // 시작일과 종료일 쿼리스트링으로 등록
   useEffect(() => {
@@ -63,14 +76,19 @@ const SellRegister = () => {
     setEndDate(String(endParam));
 
     if (endParam) {
-      const currentDate = new Date(endParam);
-      const daysBefore = differenceInDays(new Date(sellDetailData.checkInDate), currentDate);
+      const currentDate = startOfDay(new Date(endParam));
+      const checkInDate = startOfDay(new Date(sellDetailData.checkInDate));
+
+      const daysBeforeCheckIn = Math.floor(
+        (checkInDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24)
+      );
+
       const feePercentage =
-        feePolicy2.find((policy) => policy.daysBefore === daysBefore)?.percentage || 0;
+        feePolicy.find((policy) => policy.daysBefore === daysBeforeCheckIn)?.percentage || 0;
 
       setEndDateInfo({
         endDate: String(endParam),
-        daysBefore: daysBefore,
+        daysBefore: daysBeforeCheckIn,
         feePercentage: feePercentage
       });
     }
@@ -105,9 +123,14 @@ const SellRegister = () => {
     await callSellApi(requestData);
   };
 
+  const goToList = () => {
+    console.log("왜 돌아가지가 않는거지?");
+    navigate("/sell");
+  };
+
   return (
     <>
-      <UpperNavBar title="상품 등록" type="back" />
+      <UpperNavBar title="상품 등록" type="back" customBack={goToList} isCustom={true} />
       <S.RegisterWrap>
         <S.RegisterInner>
           <S.RegisterTitle>판매 정보를 입력하세요</S.RegisterTitle>
@@ -132,11 +155,9 @@ const SellRegister = () => {
           <PriceArea
             title="판매가격"
             placeholder="￦ 판매 가격을 입력해주세요"
-            originalPrice={sellDetailData.price}
             purchasePrice={sellDetailData.totalPayment}
             policyNumber={sellDetailData.cancelPolicy}
             resetPrice={sellDetailData.totalPayment}
-            isAlert
             charge={false}
             price={price}
             setPrice={setPrice}
@@ -165,7 +186,9 @@ const SellRegister = () => {
         )}
         <CS.DetailBlank />
         <S.RegisterInner>
-          <S.RegisterTitle>판매자 한마디</S.RegisterTitle>
+          <S.RegisterTitle>
+            판매자 한마디 <span className="red-text">*</span>
+          </S.RegisterTitle>
           <S.RegisterComment
             value={sellerComment}
             onChange={(e) => setSellerComment(e.target.value)}
