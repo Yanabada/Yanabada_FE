@@ -4,11 +4,12 @@ import Notice from "@components/notice";
 import * as S from "./styles";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import { useForm } from "react-hook-form";
 import useEmailAuth from "@pages/signIn/hooks/useEmailAuth";
-import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
+import useEmailDuplicateCheck from "@pages/signIn/hooks/useEmailDuplicateCheck";
+import useCodeCheck from "@pages/signIn/hooks/useCodeCheck";
 
 interface CheckEmailProps {
   type: "back" | "close" | "backClose";
@@ -23,23 +24,24 @@ interface FormData {
 }
 
 const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
-  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isSuccess, setIsSuccess] = useState(false);
   const [sentCount, setSentCount] = useState(5);
   const [btnText, setBtnText] = useState("인증번호 전송");
   const [openInput, setOpenInput] = useState(false);
   const [isNumCorrect, setIsNumCorrect] = useState(false);
-  const { setEmail } = SignInDataStore();
 
   const {
     register,
     formState: { errors },
     getValues,
-    trigger
+    trigger,
+    setValue
   } = useForm<FormData>({
     mode: "onBlur"
   });
   const email = getValues("email");
+  const code = getValues("code");
 
   // 최초 렌더링 시에도 유효성 검사 적용
   useEffect(() => {
@@ -54,11 +56,16 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
     setIsSuccess(false);
   }, [email, errors.email]);
 
-  const { mutate, isSuccess: isMutateSuccess, data } = useEmailAuth();
+  // 회원가입용 (존재하지 않아야 통과)
+  const { mutate: signInMutate, isSuccess: isMutateSuccess } = useEmailAuth();
+  // 비밀번호 재설정용 (존재해야 통과)
+  const { mutate: changePwMutate, isSuccess: isPwMutateSuccess } = useEmailDuplicateCheck();
+  // 인증번호 검증
+  const { mutate: checkCode, isSuccess: isCodeSuccess } = useCodeCheck(email, to, setValue);
 
-  // 인증번호 유효성검사
+  //인증번호 유효성검사 (6자리)
   const isCodeValid = (value: number) => {
-    if (data && value === data.code.toString()) {
+    if (value.toString().length === 6) {
       setIsNumCorrect(true);
       return true;
     }
@@ -66,15 +73,21 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
     setIsNumCorrect(false);
     return false;
   };
-
+  console.log(isNumCorrect);
   const handleAuthenticationBtnClick = () => {
     // TODO - 인증번호 재전송 5회 소진시 동작 기획에 맞게 수정
+    // 비밀번호 재설정 상황에서의 이메일 인증
+    if (searchParams.get("from") === "changePassword") {
+      setSentCount(sentCount - 1);
+      changePwMutate(email);
+      return;
+    }
+    // 회원가입 상황에서의 이메일 인증
     if (!isSuccess || sentCount <= 0) {
       return;
     }
     setSentCount(sentCount - 1);
-
-    mutate(email);
+    signInMutate(email);
   };
 
   useEffect(() => {
@@ -84,7 +97,8 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
   useEffect(() => {
     // TODO - 인증번호 전송 로직
     isMutateSuccess && setOpenInput(true);
-  }, [isMutateSuccess]);
+    isPwMutateSuccess && setOpenInput(true);
+  }, [isMutateSuccess, isPwMutateSuccess]);
 
   return (
     <>
@@ -133,7 +147,8 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
             {...register("code", {
               required: true,
               validate: {
-                validCode: (value) => isCodeValid(value) || "인증번호가 올바르지 않습니다."
+                validCode: (value) =>
+                  (isCodeValid(value) && !isCodeSuccess) || "인증번호가 올바르지 않습니다."
               }
             })}
             errorMessage={errors.code && `${errors.code?.message}`}
@@ -153,12 +168,11 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
         isBottom={true}
         width="100%"
         isActive={isNumCorrect}
-        onClick={() => {
+        onClick={async () => {
           if (!isSuccess || !isNumCorrect) {
             return;
           }
-          setEmail(email);
-          navigate(to);
+          await checkCode(code);
         }}
       >
         다음
