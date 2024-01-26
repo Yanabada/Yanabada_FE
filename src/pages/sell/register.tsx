@@ -33,6 +33,14 @@ const SellRegister = () => {
   const [check2, setCheck2] = useState(false);
   const [check3, setCheck3] = useState(false);
 
+  useEffect(() => {
+    if (check1 && check2 && check3) {
+      setAllCheck(true);
+    } else {
+      setAllCheck(false);
+    }
+  }, [check1, check2, check3]);
+
   const [price, setPrice] = useState(0);
   const [isNego, setIsNego] = useState(false);
   const [isAutoCancel, setIsAutoCancel] = useState(false);
