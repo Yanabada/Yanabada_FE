@@ -5,13 +5,13 @@ import { Dispatch, SetStateAction } from "react";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
 import { numberFormat } from "@utils/numberFormat";
 
-import calculateOriginDiscount from "../utils/calcEndFee";
 import YanoljaIcon from "assets/icons/yanolja_Icon.svg?react";
 
 interface AutoCancelOptionProps {
   isAutoCancel: boolean;
   setIsAutoCancel: Dispatch<SetStateAction<boolean>>;
   purchasePrice: number;
+  calcFeeNumber: number;
   endDateInfo: {
     feePercentage: number;
   };
@@ -20,7 +20,7 @@ interface AutoCancelOptionProps {
 const AutoCancelOption = ({
   isAutoCancel,
   setIsAutoCancel,
-  purchasePrice,
+  calcFeeNumber,
   endDateInfo
 }: AutoCancelOptionProps) => {
   return (
@@ -57,9 +57,7 @@ const AutoCancelOption = ({
           {endDateInfo.feePercentage == 0 ? (
             <span>입실일 취소 불가</span>
           ) : (
-            <span>
-              {numberFormat(calculateOriginDiscount(purchasePrice, endDateInfo.feePercentage))} 원
-            </span>
+            <span>{numberFormat(calcFeeNumber)} 원</span>
           )}
         </p>
       </CS.RefundText>

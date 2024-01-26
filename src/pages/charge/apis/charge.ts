@@ -40,7 +40,6 @@ const getPaymentHistory = async (historyId: number) => {
 const getPaymentsLists = async (path: string) => {
   try {
     const response = await instance.get(path);
-    console.log("호출을 하나?");
     return response.data.data || [];
   } catch (err) {
     console.error("getPaymentsLists: ", err);

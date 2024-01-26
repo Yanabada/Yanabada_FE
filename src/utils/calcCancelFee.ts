@@ -19,7 +19,5 @@ export default function calculateFee(policy: string, checkInDate: string, purcha
   const feePercentage = applicablePolicy.percentage;
   const calculatedFee = (feePercentage / 100) * purchasePrice;
 
-  console.log("뭐가나와", calculatedFee);
-
   return calculatedFee;
 }
