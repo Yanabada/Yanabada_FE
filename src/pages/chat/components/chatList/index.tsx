@@ -23,7 +23,7 @@ const ChatList = ({ room }: ChatListProps) => {
         </S.LeftContainer>
         <S.RightContainer>
           <S.TimeText>{room.lastSentMessageTime.toString()}</S.TimeText>
-          <NumberBadge number={3} isChatPage={true} />
+          <NumberBadge number={room.unreadMessageCount} isChatPage={true} />
         </S.RightContainer>
       </S.DetailContainer>
     </S.List>

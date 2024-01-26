@@ -12,4 +12,8 @@ export const BottemSheetWrapper = styled(motion.div)`
   z-index: 1000;
   background-color: #fff;
   border-radius: 10px 10px 0 0;
+  > svg {
+    display: block;
+    margin: 0 auto;
+  }
 `;

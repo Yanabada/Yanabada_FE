@@ -98,7 +98,7 @@ const Charge = () => {
         <S.PaySpace />
         <S.PaySpace />
         <PriceArea
-          title="충전 금액을 입력해 주세요"
+          title={`${typeText} 금액을 입력해 주세요`}
           placeholder="￦ 금액을 입력해주세요"
           originalPrice={paymentData.originalPrice}
           purchasePrice={paymentData.purchasePrice}

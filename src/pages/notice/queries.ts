@@ -1,13 +1,14 @@
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteAllNotifications, deleteNotifications, getNotifications } from "./api";
 import toast from "react-hot-toast";
 
-const useNotifications = () => {
-  const queryClient = new QueryClient();
+const useNotifications = (isLoggedIn?: boolean) => {
+  const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["notifications"],
-    queryFn: getNotifications
+    queryFn: getNotifications,
+    enabled: isLoggedIn
   });
 
   const deleteSelectedNotifications = useMutation({

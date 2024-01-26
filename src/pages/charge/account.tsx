@@ -46,7 +46,7 @@ const Account = () => {
 
   const isFormValid = isSuccess && bankName !== "은행/증권사 선택";
 
-  const registerForPayment = useRegisterForPayment();
+  const { mutate } = useRegisterForPayment();
 
   const completeAccount = () => {
     setBottomSheetVisible(true);
@@ -54,7 +54,7 @@ const Account = () => {
       const simplePassword = password.join("");
       const accountNumber = String(bankNumber);
 
-      registerForPayment(simplePassword, bankName, accountNumber);
+      mutate({ simplePassword, bankName, accountNumber });
     }
   };
 
