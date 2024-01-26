@@ -86,7 +86,8 @@ const KakaoMap = () => {
         style={{
           position: "relative",
           width: "100%",
-          height: "100%"
+          height: "100%",
+          zIndex: 1000
         }}
         level={5}
         ref={mapRef}
