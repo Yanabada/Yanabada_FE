@@ -61,10 +61,10 @@ const BottomActions = () => {
       <Modal
         title="검색 필터를 초기화 하시겠어요?"
         content="입력하신 모든 정보가 삭제됩니다."
-        leftBtnText="초기화"
-        leftAction={handleReset}
-        rightBtnText="아니오"
-        rightAction={() => setResetModalOpen(false)}
+        leftBtnText="아니오"
+        leftAction={() => setResetModalOpen(false)}
+        rightBtnText="초기화"
+        rightAction={handleReset}
         isVisible={isResetModalOpen}
         setIsVisible={setResetModalOpen}
       />
