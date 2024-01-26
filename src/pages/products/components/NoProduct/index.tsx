@@ -9,7 +9,7 @@ const NoProduct = () => {
       <S.BannerWrapper
         initial={{ y: "30px", opacity: 0.3 }}
         animate={{
-          y: 0,
+          y: 15,
           opacity: 1,
           transition: {
             duration: 0.3,

@@ -44,7 +44,8 @@ export const ImageIndex = styled.span`
 `;
 
 export const PrevImage = styled(motion.img)`
-  width: 10%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: 100% 100%;
   border-radius: 0px 10px 10px 0px;

@@ -11,6 +11,7 @@ interface DetailProps {
 }
 
 const NegoButton = ({ data }: DetailProps) => {
+  const navigate = useNavigate();
   const memberId = JSON.parse(Cookies.get("id")!);
   const isLoggedIn = Cookies.get("isLoggedIn");
 
@@ -27,11 +28,13 @@ const NegoButton = ({ data }: DetailProps) => {
       return;
     }
     if (type === "purchase") {
+      if (data.status === "BOOKING") {
+        return;
+      }
       navigate(`/purchase?productId=${data.id}`);
     }
   };
 
-  const navigate = useNavigate();
   return (
     <>
       <Toaster />
@@ -71,13 +74,13 @@ const NegoButton = ({ data }: DetailProps) => {
                       width="50%"
                       color={data.canNegotiate ? "#0751C3" : "#9C9C9C"}
                       backgroundColor={data.canNegotiate ? "#E6EEF9" : "#F2F2F2"}
-                      buttonType="default"
+                      buttonType={data.canNegotiate ? "default" : "disabled-default"}
                       children={data.canNegotiate ? "가격제안하기" : "가격제안불가"}
                       onClick={() => handleClick("chat")}
                     />
                     <BaseButton
                       width="50%"
-                      buttonType="default"
+                      buttonType={data.status === "BOOKING" ? "disabled-default" : "default"}
                       children="결제하기"
                       onClick={() => handleClick("purchase")}
                     />

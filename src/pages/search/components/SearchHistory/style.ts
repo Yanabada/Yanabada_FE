@@ -13,7 +13,6 @@ export const RecentSearchContainer = styled.div`
 
 export const RecordContainer = styled.div`
   display: flex;
-  cursor: pointer;
 `;
 
 export const RecordBoxContainer = styled.div`
