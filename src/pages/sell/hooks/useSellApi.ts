@@ -33,6 +33,7 @@ export const useCallSellApi = () => {
 
       const responseData = response.data.data;
       navigate(`/sell/confirm/${responseData.productId}`);
+      window.scrollTo(0, 0);
 
       return responseData;
     } catch (error) {
