@@ -73,12 +73,14 @@ const Profile = ({ width }: ProfileProps) => {
     refetch();
   }, [isSuccess]);
 
+  console.log(data);
+
   return (
     <>
       <UpperNavBar title="내 정보 관리" type="back" />
       <S.ProfileContainer width={width}>
         <S.ProfileWrapper gap="16px">
-          <S.ProfileImage imageURL={data.imageURL} />
+          <S.ProfileImage imageURL={data.image} />
           {isEditIconClicked ? (
             <S.FormWrapper width={width}>
               <form onSubmit={onSubmit}>
