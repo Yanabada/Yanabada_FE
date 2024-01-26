@@ -117,12 +117,12 @@ const SellRegister = () => {
 
   const goToList = () => {
     console.log("왜 돌아가지가 않는거지?");
-    navigate("/sell/");
+    navigate("/sell");
   };
 
   return (
     <>
-      <UpperNavBar title="상품 등록" type="back" customBack={goToList} />
+      <UpperNavBar title="상품 등록" type="back" customBack={goToList} isCustom={true} />
       <S.RegisterWrap>
         <S.RegisterInner>
           <S.RegisterTitle>판매 정보를 입력하세요</S.RegisterTitle>
