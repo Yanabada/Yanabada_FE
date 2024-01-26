@@ -68,7 +68,7 @@ const DetailInfo = ({ data }: DetailProps) => {
             <S.CheckInText>{data.checkInDate.toString()}</S.CheckInText>
             <S.CheckTimeText>{roomInfo.checkInTime}</S.CheckTimeText>
           </S.CheckInnerContainer>
-          <S.Line />
+
           <S.CheckInnerContainer className="checkOut">
             <S.CheckText>체크아웃</S.CheckText>
             <S.CheckInText>{data.checkOutDate.toString()}</S.CheckInText>
