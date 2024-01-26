@@ -36,7 +36,6 @@ export interface GetProductsRequestParams {
 }
 
 const getProducts = async (params: Partial<GetProductsRequestParams> = { size: 20 }) => {
-  // FIXME: 나중에 instance로 연결 필요
   const response = await instance.get<GetProductResponseData>("/products", {
     params,
     paramsSerializer: (params) => {
