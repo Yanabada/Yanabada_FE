@@ -9,6 +9,7 @@ import { useState } from "react";
 import Modal from "@components/modal";
 import WithDrawIcon from "@assets/icons/withdrawIcon.svg?react";
 import ApprovalIcon from "@assets/icons/approvalIcon.svg?react";
+import Cookies from "js-cookie";
 
 interface CardSectionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   buttonType:
@@ -24,8 +25,8 @@ interface CardSectionProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => {
   const navigate = useNavigate();
-
-  const { data: balanceData, error: balanceError } = useBalance();
+  const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
+  const { data: balanceData, error: balanceError } = useBalance(isLoggedIn);
 
   if (balanceError) {
     console.log(balanceError);
