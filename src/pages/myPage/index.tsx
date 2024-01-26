@@ -42,8 +42,16 @@ const MyPage = ({ width }: MyPageProps) => {
   };
 
   const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
-  const { data: profileData, error: profileError } = useProfileDetail(isLoggedIn);
-  const { data: balanceData, error: balanceError } = useBalance(isLoggedIn);
+  const {
+    data: profileData,
+    error: profileError,
+    refetch: profileRefetch
+  } = useProfileDetail(isLoggedIn);
+  const {
+    data: balanceData,
+    error: balanceError,
+    refetch: balanceRefetch
+  } = useBalance(isLoggedIn);
   const { data: notificationData } = useNotifications(isLoggedIn);
   const { mutate, isSuccess } = useLogout();
 
