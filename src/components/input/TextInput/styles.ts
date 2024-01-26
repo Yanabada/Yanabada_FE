@@ -42,6 +42,7 @@ export const Label = styled.label`
 
   white-space: nowrap;
   opacity: 0.5;
+  pointer-events: none;
 
   &.move {
     position: absolute;
