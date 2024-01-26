@@ -866,8 +866,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                       ? "http://localhost:5173/purchase/confirm"
                       : "https://www.yanabada.com/purchase/confirm"
                   );
-
-                  setIsPaymentDone(1);
                 } else if (paymentMethod === "accountTransfer") {
                   onClickPGPayment(
                     productData.accommodationInfo.name,
@@ -880,8 +878,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                       ? "http://localhost:5173/purchase/confirm"
                       : "https://www.yanabada.com/purchase/confirm"
                   );
-
-                  setIsPaymentDone(2);
                 } else if (paymentMethod === "card") {
                   onClickPGPayment(
                     productData.accommodationInfo.name,
@@ -894,8 +890,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                       ? "http://localhost:5173/purchase/confirm"
                       : "https://www.yanabada.com/purchase/confirm"
                   );
-
-                  setIsPaymentDone(3);
                 } else {
                   const purchaseInfo = {
                     accommodationName: productData?.accommodationInfo.name,
@@ -904,24 +898,22 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     checkOutDate: productData?.checkOutDate,
                     checkInTime: productData?.roomInfo.checkInTime,
                     checkOutTime: productData?.roomInfo.checkOutTime,
-                    minHeadCount: productData?.roomInfo.minHeadCount.toString(),
-                    maxHeadCount: productData?.roomInfo.maxHeadCount.toString(),
+                    minHeadCount: productData?.roomInfo.minHeadCount,
+                    maxHeadCount: productData?.roomInfo.maxHeadCount,
                     reservationPersonName: nameState,
                     reservationPersonPhoneNumber: phoneNumberState,
                     userPersonName: name,
                     userPersonPhoneNumber: phoneNumber,
+                    tradeId: productData?.tradeId,
                     productPrice: formatNumberWithCommas(productData.price),
-                    fee: (productData.sellingPrice * 0.05).toString(),
+                    fee: productData.sellingPrice * 0.05,
                     point: pointToUse,
                     totalPrice: formatNumberWithCommas(totalPrice),
                     paymentType: convertStringToKR(paymentMethod),
                     productId: productId
                   };
 
-                  const queryStr = new URLSearchParams(purchaseInfo).toString();
-                  navigate(
-                    `/charge?type=charging&price=${totalPrice}&redirect=/purchase/confirm&${queryStr}`
-                  );
+                  localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
 
                   navigate(`/charge?type=charging&price=${totalPrice}&redirect=/purchase/confirm`);
                 }
