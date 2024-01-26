@@ -9,8 +9,7 @@ export const useEmailAuth = () => {
       toast.success("이메일이 인증되었습니다.");
     },
     onError: (err) => {
-      toast.error("회원정보를 찾을 수 없습니다.");
-      // TODO - 에러 메세지 분리하기
+      toast.error("이메일이 중복됩니다.");
       console.log(err);
     }
   });
