@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { saveTokenToDB } from "./utils/indexDB";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APP_API_KEY,
@@ -32,7 +33,8 @@ export async function requestPermission() {
   if (token) {
     // alert(token);
     console.log("Token: ", token);
-    localStorage.setItem("FCMToken", token);
+    // localStorage.setItem("FCMToken", token);
+    await saveTokenToDB(token);
   } else console.log("Can not get Token");
 
   onMessage(messaging, (payload) => {
