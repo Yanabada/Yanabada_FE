@@ -22,7 +22,6 @@ export interface MapCenter {
 
 const KakaoMap = () => {
   const { data: products } = useProducts();
-  // FIXME: 검색 시 숙소 리스트 없을 때 처리
   const [selectedProductId, setSelectedProductId] = useState<number | null>(
     products.length > 0 ? products[0].id : 0
   );
@@ -37,7 +36,6 @@ const KakaoMap = () => {
     isLoading: true
   });
 
-  // TODO: 숙소 리스트의 위도 경도 배열을 positions에 담고 MapMarkers에 props로 넘겨주기
   const mapRef = useRef<kakao.maps.Map>(null);
 
   const handleMyPositionClick = () => {
@@ -96,7 +94,7 @@ const KakaoMap = () => {
         <MarkerClusterer averageCenter={true} minLevel={10} styles={[S.clustererStyles]}>
           <ProductsMarkers products={products} setSelectedProductId={setSelectedProductId} />
         </MarkerClusterer>
-        <Research />
+        <Research setSelectedProductId={setSelectedProductId} />
       </Map>
       <ProductCardForMap selectedProduct={selectedProduct!} />
       <S.Button onClick={handleMyPositionClick}>
