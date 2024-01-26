@@ -20,6 +20,7 @@ import { formatDate } from "./utils/formatDate";
 import initialDetailData from "./constants/initialDetailData";
 import { useCallSellApi } from "./hooks/useSellApi";
 import { getFeePolicy } from "./utils/getPercentage";
+import useCalcFeeStore from "./stores/endDateStore";
 
 interface EndDateInfo {
   endDate: string;
@@ -52,14 +53,13 @@ const SellRegister = () => {
   const navigate = useNavigate();
 
   const [, setStartDate] = useState<string | null>(null);
+  const { calcFeeNumber }: any = useCalcFeeStore();
   const [endDate, setEndDate] = useState<string | undefined>();
   const [endDateInfo, setEndDateInfo] = useState<EndDateInfo>({
     endDate: "",
     daysBefore: 0,
     feePercentage: 0
   });
-
-  console.log("너의 정보", endDateInfo);
 
   const [sellDetailData, setSellDetailData] = useState(initialDetailData);
   const isFormValid = check1 && check2 && check3 && price > 0 && endDate && sellerComment !== "";
@@ -124,7 +124,6 @@ const SellRegister = () => {
   };
 
   const goToList = () => {
-    console.log("왜 돌아가지가 않는거지?");
     navigate("/sell");
   };
 
@@ -182,6 +181,7 @@ const SellRegister = () => {
             setIsAutoCancel={setIsAutoCancel}
             purchasePrice={sellDetailData.price}
             endDateInfo={endDateInfo}
+            calcFeeNumber={calcFeeNumber}
           />
         )}
         <CS.DetailBlank />
