@@ -8,8 +8,8 @@ import { numberFormat } from "@utils/numberFormat";
 import BottomSheet from "@components/bottomSheet";
 import Notice from "@components/notice";
 import CancellationPolicyTable from "@components/priceModal";
-import { checkDayOfFee } from "@utils/checkDayOfFee";
 import calculateFee from "@utils/calcCancelFee";
+import { checkDayOfFee } from "@utils/checkDayOfFee";
 
 interface PriceTableProps {
   originalPrice: number;
@@ -41,11 +41,8 @@ const PriceTable = ({
     isVisible: bottomSheetVisible,
     setIsVisible: setBottomSheetVisible
   };
-  const today = new Date();
 
-  const cancelFee: React.ReactNode = (
-    <span>{numberFormat(calculateFee(policyNumber, checkInDate, today, purchasePrice))} 원</span>
-  );
+  const cancelFee = checkDayOfFee({ purchasePrice, policyNumber, checkInDate });
 
   return (
     <>
@@ -97,16 +94,16 @@ const PriceTable = ({
                   <AiFillQuestionCircle />
                 </button>
               </p>
-              <p className="price">{cancelFee}</p>
+              <p className="price">
+                <span>
+                  {numberFormat(calculateFee(policyNumber, checkInDate, purchasePrice))}원
+                </span>
+              </p>
               <BottomSheet {...bottomSheetProps}>
                 <S.PolicyInner>
                   <Notice
                     type="default"
-                    title={checkDayOfFee({
-                      purchasePrice,
-                      policyNumber: policyNumber,
-                      checkInDate: checkInDate
-                    })}
+                    title={cancelFee}
                     content="아래는 날짜별로 변화하는 취소 수수료이며 정책은 숙소별로 상이합니다."
                     shape="line"
                   />

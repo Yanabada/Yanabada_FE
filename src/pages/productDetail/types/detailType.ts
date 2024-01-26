@@ -20,7 +20,7 @@ export interface DetailType {
 export interface SellerType {
   id: number;
   nickname: string;
-  imageUrl: string;
+  image: string;
 }
 
 export interface AccommodationInfoType {
