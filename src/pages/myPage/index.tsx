@@ -75,16 +75,18 @@ const MyPage = ({ width }: MyPageProps) => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    Cookies.remove("image");
-    Cookies.remove("email");
-    Cookies.remove("id");
-    Cookies.remove("accessToken");
-    Cookies.remove("refreshToken");
-    Cookies.remove("nickName");
-    Cookies.remove("provider");
-    Cookies.set("isLoggedIn", "no");
+    if (isSuccess) {
+      Cookies.remove("image");
+      Cookies.remove("email");
+      Cookies.remove("id");
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+      Cookies.remove("nickName");
+      Cookies.remove("provider");
+      Cookies.set("isLoggedIn", "no");
 
-    navigate("/mypage");
+      navigate("/");
+    }
   }, [isSuccess]);
 
   return isLoggedIn ? (
