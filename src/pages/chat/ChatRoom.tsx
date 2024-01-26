@@ -18,6 +18,7 @@ import Cookies from "js-cookie";
 import useProductDetail from "@pages/productDetail/hooks/useProductDetail";
 import { useSearchParams } from "react-router-dom";
 import { formatDateTo } from "@utils/formatDateTo";
+import useIntersect from "@pages/products/hooks/useIntersect";
 
 const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,7 +27,6 @@ const ChatRoom = () => {
   const [searchParams] = useSearchParams();
   const productId = parseInt(searchParams.get("productId")!);
   // 챗룸으로 왔을 때, 코드는 무조건 있어야 함
-  const { data } = useMessages({ code: roomId! });
   const {
     getDetailQuery: { data: productData }
   } = useProductDetail(productId);
@@ -36,6 +36,7 @@ const ChatRoom = () => {
   const { mutate: deleteRoom } = useDeleteRoom();
 
   useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
     connect();
     return () => disconnect();
   }, []);
@@ -96,6 +97,14 @@ const ChatRoom = () => {
     bottom.current!.scrollIntoView({ behavior: "smooth", block: "end" });
   };
 
+  const { data: messages, hasNextPage, isFetching, fetchNextPage } = useMessages({ code: roomId });
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching) {
+      fetchNextPage();
+    }
+  });
+
   useEffect(() => {
     scrollToBottom();
   }, [chatMessages]);
@@ -120,6 +129,7 @@ const ChatRoom = () => {
         }
         hasBorder
       />
+      {/* FIXME - prop 수정 */}
       {productData && (
         <ChatRoomBanner
           title={productData.accommodationInfo.name}
@@ -137,19 +147,24 @@ const ChatRoom = () => {
           checkInDate={formatDateTo(productData.checkInDate, "yyyy.MM.dd")!}
           checkOutDate={formatDateTo(productData.checkOutDate, "yyyy.MM.dd")!}
           policyNumber={productData.roomInfo.cancelPolicy}
+          productId={productData.id}
         />
       )}
-      <S.ChatContainer ref={bottom} status={status}>
-        {(!data || data.data.messages.length === 0) && chatMessages.length === 0 ? (
+      <S.ChatContainer ref={bottom} status={productData?.status}>
+        {messages.length === 0 && chatMessages.length === 0 ? (
           <p>메시지가 없습니다.</p>
         ) : (
           <>
-            {!data || data.data.messages.length === 0 ? null : (
+            {messages.length === 0 ? null : (
               <>
-                <ChatText message={data.data.messages[data.data.messages.length - 1]} isNotice />
-                {data.data.messages
-                  .map((message) => (
-                    <ChatText key={message.sendTime.toString()} message={message} />
+                <ChatText message={messages[messages.length - 1]} isNotice />
+                {messages
+                  .map((message, index) => (
+                    <ChatText
+                      ref={(index + 1) % 20 === 0 ? ref : null}
+                      key={message.sendTime.toString()}
+                      message={message}
+                    />
                   ))
                   .reverse()}
               </>
