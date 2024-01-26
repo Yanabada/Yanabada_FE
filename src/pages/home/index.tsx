@@ -53,6 +53,7 @@ const Home = () => {
     <S.Container>
       <Header />
       <SearchInput />
+      {tokenFromCookie}
       <Banner />
       <RecentlyProduct />
       <Suspense fallback={<p>Loading...</p>}>
