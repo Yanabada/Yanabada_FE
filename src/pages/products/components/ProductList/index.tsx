@@ -16,6 +16,8 @@ const ProductList = () => {
   const order = searchParams.get("order");
   const category = searchParams.get("category");
   const keyword = searchParams.get("keyword");
+  const checkInDate = searchParams.get("checkInDate");
+  const checkOutDate = searchParams.get("checkOutDate");
 
   const {
     data: products,
@@ -26,6 +28,8 @@ const ProductList = () => {
     options: options as Option[],
     order: order as OrderState,
     category: category as Category,
+    checkInDate: checkInDate || "",
+    checkOutDate: checkOutDate || "",
     keyword: keyword || "",
     size: 3
   });
