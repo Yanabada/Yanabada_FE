@@ -20,7 +20,8 @@ const CategoryProduct = ({ title, link, rowCardProps }: CategoryProps) => {
 
   const { data: orderProducts } = useProducts({
     size: 10,
-    order: orderType
+    order: orderType,
+    isHidingSoldOut: true
   });
 
   return (

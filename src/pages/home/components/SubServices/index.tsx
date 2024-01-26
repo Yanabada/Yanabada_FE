@@ -25,7 +25,8 @@ const SubServices = () => {
     name: ""
   });
   const { data: products } = useProducts({
-    options: selectedOption.path ? [selectedOption.path as Option] : []
+    options: selectedOption.path ? [selectedOption.path as Option] : [],
+    isHidingSoldOut: true
   });
 
   return (
