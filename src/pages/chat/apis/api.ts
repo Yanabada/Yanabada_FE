@@ -18,7 +18,7 @@ export const getMessages = async (params: MessageRequestParam) => {
       page: params.page
     }
   });
-  console.log(response.data);
+
   return response.data as MessageResponseData;
 };
 

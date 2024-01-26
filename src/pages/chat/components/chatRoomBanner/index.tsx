@@ -9,6 +9,7 @@ import PriceTable from "@components/priceTable";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import Cookies from "js-cookie";
+import useUpdatePrice from "@pages/chat/hooks/useUpdatePrice";
 
 interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -26,6 +27,7 @@ interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   checkInDate: string;
   checkOutDate: string;
   policyNumber: string;
+  productId: number;
 }
 interface CommonContent {
   badgeText: string;
@@ -48,7 +50,8 @@ const ChatRoomBanner = ({
   accommodationName,
   checkInDate,
   checkOutDate,
-  policyNumber
+  policyNumber,
+  productId
 }: ChatRoomBannerProps) => {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [price, setPrice] = useState(0);
@@ -142,9 +145,10 @@ const ChatRoomBanner = ({
     ]
   ]);
 
+  const { mutate } = useUpdatePrice(setIsBottomSheetVisible);
   const handleSubmit = () => {
     // TODO - 가격 변경 API 연동
-    setIsBottomSheetVisible(false);
+    mutate({ productId, price });
   };
 
   return (

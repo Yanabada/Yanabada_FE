@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import instance from "@apis/instance";
 
-interface RequestProp {
+export interface RequestProp {
   productId: number;
   price: number;
   isAutoCancel: boolean;
