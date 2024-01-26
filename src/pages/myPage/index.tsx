@@ -42,8 +42,16 @@ const MyPage = ({ width }: MyPageProps) => {
   };
 
   const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
-  const { data: profileData, error: profileError } = useProfileDetail(isLoggedIn);
-  const { data: balanceData, error: balanceError } = useBalance(isLoggedIn);
+  const {
+    data: profileData,
+    error: profileError,
+    refetch: profileRefetch
+  } = useProfileDetail(isLoggedIn);
+  const {
+    data: balanceData,
+    error: balanceError,
+    refetch: balanceRefetch
+  } = useBalance(isLoggedIn);
   const { data: notificationData } = useNotifications(isLoggedIn);
   const { mutate, isSuccess } = useLogout();
 
@@ -68,17 +76,25 @@ const MyPage = ({ width }: MyPageProps) => {
   };
 
   useEffect(() => {
-    Cookies.remove("image");
-    Cookies.remove("email");
-    Cookies.remove("id");
-    Cookies.remove("accessToken");
-    Cookies.remove("refreshToken");
-    Cookies.remove("nickName");
-    Cookies.remove("provider");
-    // Cookies.set("isLoggedIn", "no");
+    if (isLoggedIn) {
+      profileRefetch();
+      balanceRefetch();
+    }
+  }, [isLoggedIn]);
 
-    console.log(isSuccess);
-    navigate("/mypage");
+  useEffect(() => {
+    if (isSuccess) {
+      Cookies.remove("image", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("email", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("id", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("accessToken", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("refreshToken", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("nickName", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("provider", { path: "/", domain: ".yanabada.com" });
+      Cookies.set("isLoggedIn", "no");
+
+      navigate("/");
+    }
   }, [isSuccess]);
 
   return isLoggedIn ? (
