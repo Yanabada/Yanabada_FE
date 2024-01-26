@@ -7,10 +7,12 @@ import Modal from "@components/modal";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import HistoryStore from "@pages/search/stores/historyStore";
 import { HistoryType } from "@pages/search/types/history";
+import { useGuest } from "@pages/search/stores/guestStore";
 // import { useGuest } from "@pages/search/stores/guestStore";
 
 const BottomActions = () => {
   const [isResetModalOpen, setResetModalOpen] = useState(false);
+  const { resetGuestCount } = useGuest();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { search } = useLocation();
@@ -24,9 +26,9 @@ const BottomActions = () => {
   const isActive = !!keyword && !!checkInDate && !!checkOutDate && !!adult && !!child;
 
   const handleReset = () => {
+    resetGuestCount();
     setResetModalOpen(false);
     navigate(location.pathname);
-    // store 리셋하는거 추가!
   };
 
   const { history, setHistory } = HistoryStore();
@@ -35,7 +37,7 @@ const BottomActions = () => {
     localStorage.setItem("searchHistory", JSON.stringify(history));
   }, [history]);
 
-  const handleLocalStotage = () => {
+  const handleLocalStorage = () => {
     const searchHistory: HistoryType = {
       id: new Date(),
       keyword,
@@ -59,15 +61,15 @@ const BottomActions = () => {
       <Modal
         title="검색 필터를 초기화 하시겠어요?"
         content="입력하신 모든 정보가 삭제됩니다."
-        leftBtnText="아니오"
-        leftAction={() => setResetModalOpen(false)}
-        rightBtnText="초기화"
-        rightAction={handleReset}
+        leftBtnText="초기화"
+        leftAction={handleReset}
+        rightBtnText="아니오"
+        rightAction={() => setResetModalOpen(false)}
         isVisible={isResetModalOpen}
         setIsVisible={setResetModalOpen}
       />
       {isActive ? (
-        <BaseButton buttonType="icon" width="50%" onClick={handleLocalStotage}>
+        <BaseButton buttonType="icon" width="50%" onClick={handleLocalStorage}>
           검색하기
         </BaseButton>
       ) : (
