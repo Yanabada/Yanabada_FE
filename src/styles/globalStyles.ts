@@ -44,7 +44,7 @@ const globalStyles = css`
   }
   body {
     line-height: 1;
-    background: black;
+    background: #e6e6e6;
   }
   ol,
   ul {
