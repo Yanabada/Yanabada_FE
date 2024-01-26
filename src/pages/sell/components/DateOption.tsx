@@ -156,7 +156,7 @@ const DateOption = ({
 
   // 구매가 대비 판매가격의 수수료% 계산
   function calculateDiscount(purchasePrice: number, price: number) {
-    const discountPercentage = ((purchasePrice - price) / purchasePrice) * 100;
+    const discountPercentage = 100 - ((purchasePrice - price) / purchasePrice) * 100;
     return Math.floor(discountPercentage);
   }
 

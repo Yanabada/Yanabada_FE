@@ -26,7 +26,7 @@ export const getPercentage = (
   return matchedPolicy ? matchedPolicy.percentage : "취소 불가";
 };
 
-const getFeePolicy = (policyNumber: string): FeePolicy[] | null => {
+export const getFeePolicy = (policyNumber: string): FeePolicy[] | null => {
   switch (policyNumber) {
     case "YNBD_1":
       return feePolicy1;

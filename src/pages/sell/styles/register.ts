@@ -20,6 +20,9 @@ export const RegisterTitle = styled.p`
   ${({ theme }) => theme.text.subtitle3};
 
   margin-bottom: 14px;
+  .red-text {
+    color: ${(props) => props.theme.colors.pink[200]};
+  }
 `;
 
 export const RegisterGrayTitle = styled.p`

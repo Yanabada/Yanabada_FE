@@ -137,11 +137,9 @@ const SellCorrect = () => {
           <PriceArea
             title="판매가격"
             placeholder="￦ 판매 가격을 입력해주세요"
-            originalPrice={sellDetailData.price}
             purchasePrice={sellDetailData.purchasePrice}
             policyNumber={sellDetailData.roomInfo.cancelPolicy}
             resetPrice={sellDetailData.purchasePrice}
-            isAlert
             charge={false}
             price={price}
             setPrice={setPrice}

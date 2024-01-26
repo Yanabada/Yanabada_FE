@@ -197,12 +197,10 @@ const ChatRoomBanner = ({
           <PriceArea
             title="판매 가격"
             placeholder="￦ 판매 가격을 입력해주세요"
-            originalPrice={originalPrice}
             purchasePrice={purchasePrice}
             policyNumber={policyNumber}
             resetPrice={purchasePrice}
             checkInDate={checkInDate}
-            isAlert
             charge={false}
             price={price}
             setPrice={setPrice}

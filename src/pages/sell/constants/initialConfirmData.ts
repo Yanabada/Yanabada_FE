@@ -3,7 +3,7 @@ const initialConfirmData = {
   seller: {
     id: 0,
     nickname: "",
-    imageUrl: ""
+    image: ""
   },
   description: "",
   canNegotiate: false,
