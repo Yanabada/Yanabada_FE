@@ -1,6 +1,6 @@
 import * as CS from "./styles/styles";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdArrowDropup } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { GoCheck } from "react-icons/go";
@@ -29,6 +29,14 @@ const Account = () => {
   const [check2, setCheck2] = useState(false);
   const numberPattern = /^[0-9]{10,14}$/;
 
+  useEffect(() => {
+    if (check1 && check2) {
+      setAllCheck(true);
+    } else {
+      setAllCheck(false);
+    }
+  }, [check1, check2]);
+
   const toggleOption = () => {
     setIsOptionVisible((prev) => !prev);
   };
@@ -50,7 +58,7 @@ const Account = () => {
 
   const completeAccount = () => {
     setBottomSheetVisible(true);
-    if (allCheck) {
+    if (allCheck && isFormValid) {
       const simplePassword = password.join("");
       const accountNumber = String(bankNumber);
 

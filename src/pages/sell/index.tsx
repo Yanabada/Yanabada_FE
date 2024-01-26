@@ -9,12 +9,12 @@ import Cookies from "js-cookie";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import Notice from "@components/notice";
 import AuthenticationButton from "@components/buttons/AuthenticationButton";
+import Modal from "@components/modal";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
 import NoItemsLogo from "@assets/noitems-logo.png";
 
 import getSellList from "./apis/getSellList";
 import { SellListData } from "./types/sellListData";
-import Modal from "@components/modal";
 
 const Sell = () => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
@@ -91,7 +91,7 @@ const Sell = () => {
                 }}
                 transition={{ duration: 0.2, delay: 0.1 }}
               >
-                <label htmlFor="radioButton1">
+                <label htmlFor={"select" + sellItem.id}>
                   <div className="list-card">
                     <p className="list-card__title">
                       {sellItem.accommodationName}

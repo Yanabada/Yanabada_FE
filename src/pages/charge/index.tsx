@@ -23,6 +23,8 @@ const Charge = () => {
   const [bankMessage, setBankMessage] = useState("계좌선택");
   const { amount, setAmount } = AmountStore();
 
+  const isFormValid = amount && bankMessage !== "계좌선택";
+
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get("type");
   const priceParam = searchParams.get("price");
@@ -119,12 +121,12 @@ const Charge = () => {
         ) : null}
         <S.ButtonWrapper>
           {amount < 10000 || amount > 2000000 ? (
-            <BaseButton buttonType="disabled-default" width="100%">
+            <BaseButton buttonType={isFormValid ? "default" : "disabled-default"} width="100%">
               ₩ {typeText}하기
             </BaseButton>
           ) : (
             <Link to={`/charge/password?registration=false&type=${typeParam}`}>
-              <BaseButton buttonType="default" width="100%">
+              <BaseButton buttonType={isFormValid ? "default" : "disabled-default"} width="100%">
                 ₩ {typeText}하기
               </BaseButton>
             </Link>
