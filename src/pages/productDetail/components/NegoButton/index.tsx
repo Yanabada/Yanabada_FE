@@ -12,17 +12,23 @@ interface DetailProps {
 
 const NegoButton = ({ data }: DetailProps) => {
   const memberId = JSON.parse(Cookies.get("id")!);
+  const isLoggedIn = Cookies.get("isLoggedIn");
 
-  const handleClick = async () => {
-    const isLoggedIn = Cookies.get("isLoggedIn");
+  const handleClick = async (type: string) => {
     if (isLoggedIn !== "yes") {
       navigate("/login");
       alert("로그인이 필요한 서비스입니다.");
       return;
     }
-    const response = await createChatRoom(data.id, memberId);
-    const chatRoomCode = response.data.chatRoomCode;
-    navigate(`/chat/${chatRoomCode}?productId=${data.id}`);
+    if (type === "chat") {
+      const response = await createChatRoom(data.id, memberId);
+      const chatRoomCode = response.data.chatRoomCode;
+      navigate(`/chat/${chatRoomCode}?productId=${data.id}`);
+      return;
+    }
+    if (type === "purchase") {
+      navigate(`/purchase?productId=${data.id}`);
+    }
   };
 
   const navigate = useNavigate();
@@ -50,7 +56,7 @@ const NegoButton = ({ data }: DetailProps) => {
                 <S.TimerText>{data.saleEndDate.toString()}</S.TimerText>
               </S.TimerContainer>
               <S.ButtonContainer>
-                {memberId === data.seller.id ? (
+                {isLoggedIn && memberId === data.seller.id ? (
                   <BaseButton
                     width="100%"
                     color="#fff"
@@ -66,14 +72,14 @@ const NegoButton = ({ data }: DetailProps) => {
                       color={data.canNegotiate ? "#0751C3" : "#9C9C9C"}
                       backgroundColor={data.canNegotiate ? "#E6EEF9" : "#F2F2F2"}
                       buttonType="default"
-                      children={data.canNegotiate ? "가격 제안하기" : "가격제안불가"}
-                      onClick={handleClick}
+                      children={data.canNegotiate ? "가격제안하기" : "가격제안불가"}
+                      onClick={() => handleClick("chat")}
                     />
                     <BaseButton
                       width="50%"
                       buttonType="default"
                       children="결제하기"
-                      onClick={() => navigate(`/purchase?productId=${data.id}`)}
+                      onClick={() => handleClick("purchase")}
                     />
                   </>
                 )}
