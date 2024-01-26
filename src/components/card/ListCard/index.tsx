@@ -55,8 +55,8 @@ const ListCard = forwardRef(
       price,
       badgeText,
       productId,
-      tradeId
-      // refetch
+      tradeId,
+      refetch
     }: ListCardProps,
     ref
   ) => {
@@ -92,10 +92,10 @@ const ListCard = forwardRef(
 
     const badgeType = getBadgeType(cardType);
 
-    const { mutate: productsMutate } = useProducts();
+    const { mutate: productsMutate, isSuccess: productSuccess } = useProducts();
     const { mutate: saleApproveMutate, isSuccess: isSaleApproved } = useSaleApprove();
     const { mutate: approvalDenyMutate, isSuccess: isDenied } = useApporvalDeny();
-    const { mutate: purchaseCancelMutate } = usePurchaseCancel();
+    const { mutate: purchaseCancelMutate, isSuccess: purchaseCancelSuccess } = usePurchaseCancel();
 
     const [isVisible, setIsVisible] = useState(false);
 
@@ -118,15 +118,27 @@ const ListCard = forwardRef(
     useEffect(() => {
       if (isSaleApproved) {
         setIsVisible(false);
-        location.reload();
+        refetch();
       }
     }, [isSaleApproved]);
 
     useEffect(() => {
       if (isDenied) {
-        location.reload();
+        refetch();
       }
     }, [isDenied]);
+
+    useEffect(() => {
+      if (productSuccess) {
+        refetch();
+      }
+    }, [productSuccess]);
+
+    useEffect(() => {
+      if (purchaseCancelSuccess) {
+        refetch();
+      }
+    }, [purchaseCancelSuccess]);
 
     return (
       <S.ListCardContainer width={width} ref={ref as React.RefObject<HTMLDivElement>}>
@@ -199,8 +211,6 @@ const ListCard = forwardRef(
                 width="48%"
                 onClick={() => {
                   purchaseCancelMutate(tradeId);
-                  // FIXME: refetch시 data가 업데이트되지 않음
-                  location.reload();
                 }}
               >
                 구매취소
@@ -223,9 +233,6 @@ const ListCard = forwardRef(
                 width="48%"
                 onClick={() => {
                   productsMutate(productId);
-                  // FIXME: refetch시 data가 업데이트되지 않음
-                  location.reload();
-                  // refetch();
                 }}
               >
                 게시글 삭제
