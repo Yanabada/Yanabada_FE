@@ -60,7 +60,7 @@ export const MiddleRightText = styled.p`
 // FIXME: 모듈화
 export const ListCardWrapper = styled.div<SalesHistoryProps>`
   width: ${({ width }) => width || "360px"};
-  height: 850px;
+  height: auto;
   display: flex;
   padding: 20px 14px;
   gap: 20px;

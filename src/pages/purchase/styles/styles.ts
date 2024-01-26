@@ -50,7 +50,7 @@ export const PersonalInfoText = styled.p`
 
 export const PriceCompareCard = styled.div<PurchaseProps>`
   width: ${({ width }) => width || "360px"};
-  height: 305px;
+  height: auto;
   flex-shrink: 0;
 
   display: flex;
@@ -101,14 +101,17 @@ export const TimeText = styled.p`
 
 export const ImageWrapper = styled.div<PurchaseProps>`
   width: ${({ width }) => `calc(${width} - 7px)` || "353px"};
-  height: 192.6px;
+  height: 30vh;
 
   border-radius: 5px;
   background-color: lightgray;
   background-image: url(${({ imageURL }) => imageURL});
   background-size: cover;
+  background-position: 50%;
 
   margin-top: 16px;
+
+  object-fit: cover;
 `;
 
 export const CompareCardBottomWrapper = styled.div`

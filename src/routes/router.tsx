@@ -135,6 +135,7 @@ const router = createBrowserRouter([
             element: (
               <Suspense>
                 <MyPage width="100%" />
+                <BottomNavBar />
               </Suspense>
             )
           },

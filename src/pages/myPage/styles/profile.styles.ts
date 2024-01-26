@@ -43,6 +43,8 @@ export const ProfileImage = styled.div<ProfileProps>`
   background-color: lightgray;
   background-image: url(${({ imageURL }) => imageURL});
   background-size: cover;
+
+  border-radius: 50%;
 `;
 
 export const ProfileTextWrapper = styled.div`
