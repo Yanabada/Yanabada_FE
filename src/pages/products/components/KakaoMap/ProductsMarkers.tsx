@@ -14,7 +14,7 @@ const getPriceWithComma = (price: number) => {
 };
 
 export const ProductsMarkers = ({ products, setSelectedProductId }: ProductMarkersProps) => {
-  const [selectedId, setSelectedId] = useState<number>(1);
+  const [selectedId, setSelectedId] = useState<number>(products[0].id);
   const map = useMap();
 
   const handleSelect = (product: ProductType) => {
