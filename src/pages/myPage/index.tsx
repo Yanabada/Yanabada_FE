@@ -41,11 +41,18 @@ const MyPage = ({ width }: MyPageProps) => {
     rightAction: () => setIsLoginModalVisible(false)
   };
 
-  const { data: profileData, error: profileError, refetch: profileRefetch } = useProfileDetail();
-  const { data: balanceData, error: balanceError, refetch: balanceRefetch } = useBalance();
-  const { data: notificationData } = useNotifications();
-  const { mutate, isSuccess } = useLogout();
+  const { mutate } = usePutPhoneNumber();
   const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
+  const {
+    data: profileData,
+    error: profileError,
+    refetch: profileRefetch
+  } = useProfileDetail(isLoggedIn);
+  const {
+    data: balanceData,
+    error: balanceError,
+    refetch: balanceRefetch
+  } = useBalance(isLoggedIn);
 
   if (profileError) {
     console.log(profileError);
