@@ -34,7 +34,7 @@ const AllConsentCheckbox = ({
   return (
     <S.Wrapper transparent={transparent}>
       <S.IconWrapper>
-        <S.Input id="agreement" type="checkbox" checked={checked} onChange={handleCheck} />
+        <S.Input type="checkbox" checked={checked} onChange={handleCheck} />
         <S.Icon>
           <CheckIcon />
         </S.Icon>

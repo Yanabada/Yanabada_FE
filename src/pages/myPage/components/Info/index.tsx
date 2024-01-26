@@ -1,5 +1,6 @@
 import * as S from "./styles";
 import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";
+import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 
 interface PayInfoProps {
   divType: "payInfo" | "transactionInfo" | "payInfo-tall";
@@ -61,7 +62,9 @@ const Info = ({ ...props }: PayInfoProps) => {
                 <S.FormLeftText color="gray">수수료</S.FormLeftText>
                 <S.FormLeftText color="red">(야놀자페이 무료)</S.FormLeftText>
               </S.FormTextWrapper>
-              <S.FormRightPrice color="gray">{props.charge}원</S.FormRightPrice>
+              <S.FormRightPrice color="gray">
+                {formatNumberWithCommas(Number(props.charge))}원
+              </S.FormRightPrice>
             </S.SeperationForm>
           ) : null}
 
