@@ -19,8 +19,8 @@ export type Option =
   | "PARTY_ROOM";
 export interface GetProductsRequestParams {
   keyword: string;
-  checkInDate: Date;
-  checkOutDate: Date;
+  checkInDate: Date | string;
+  checkOutDate: Date | string;
   adult: number;
   child: number;
   smallX: number;

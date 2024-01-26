@@ -7,7 +7,7 @@ import { ReactNode, useEffect, useState } from "react";
 import Modal from "@components/modal";
 import ColoredButtonForm from "@components/buttons/ColoredButtonForm";
 import BottomSheet from "@components/bottomSheet";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
 import { signInApi } from "@pages/signIn/apis/signInApi";
 
@@ -42,6 +42,7 @@ const Certification = ({
   mutationFn
 }: CertificationProps) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isSendValid, setIsSendValid] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [openInput, setOpenInput] = useState(false);
@@ -54,8 +55,10 @@ const Certification = ({
     password,
     nickName,
     phoneNumber: phoneNumberSignin,
-    setPhoneNumber
+    setPhoneNumber,
+    provider
   } = SignInDataStore();
+  const providerParam = searchParams.get("provider");
 
   const {
     register,
@@ -126,8 +129,8 @@ const Certification = ({
     if (!isNumCorrect) {
       return;
     }
-    // 회원가입 플로우일 때 동작
-    if (isSignInFlow) {
+    // 일반&소셜 회원가입 플로우일 때 동작
+    if (isSignInFlow || providerParam === "KAKAO") {
       setPhoneNumber(phoneNumber);
       return;
     }
@@ -141,6 +144,8 @@ const Certification = ({
     const performSignIn = async () => {
       if (isSignInFlow && email && password && nickName && phoneNumberSignin) {
         await signInApi({ email, password, nickName, phoneNumberSignin, setIsSheetVisible });
+      } else if (providerParam === "KAKAO" && email && phoneNumberSignin) {
+        await signInApi({ email, nickName, phoneNumberSignin, provider, setIsSheetVisible });
       }
     };
 

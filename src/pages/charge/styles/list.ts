@@ -80,6 +80,10 @@ export const PlusPoint = styled.p`
   ${({ theme }) => theme.text.body1}
   color: ${({ theme }) => theme.colors.pink[100]};
   text-align: center;
+
+  &.minus {
+    color: ${({ theme }) => theme.colors.gray[600]};
+  }
 `;
 
 export const MinusPoint = styled.p`
@@ -130,6 +134,9 @@ export const PointsMiddleContainer = styled.div`
 `;
 
 export const MiddleWrapper = styled.button`
+  position: relative;
+  height: 30px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -145,7 +152,12 @@ export const MiddleTextWrapper = styled.div`
 `;
 
 export const UnderLine = styled.span`
-  width: 30%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 50%;
   height: 3px;
   align-self: stretch;
   margin: 0 auto;
