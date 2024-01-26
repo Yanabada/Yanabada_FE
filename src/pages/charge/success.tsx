@@ -28,7 +28,11 @@ const ChargeSuccess = () => {
           <p className="des">계좌 연결을 시작해볼까요?</p>
         </S.SuccessBox>
         <S.ButtonWrap>
-          <BaseButton buttonType="default" width="100%" onClick={() => navigate("/charge")}>
+          <BaseButton
+            buttonType="default"
+            width="100%"
+            onClick={() => navigate("/charge?type=withdrawal")}
+          >
             <ContactIcon />
             계좌 연결하기
           </BaseButton>

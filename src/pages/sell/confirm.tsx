@@ -9,7 +9,7 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import DateChangeButton from "@components/buttons/DateChangeButton";
 import { numberFormat } from "@utils/numberFormat";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
-import calculateFee from "@utils/calcCancelFee";
+// import calculateFee from "@utils/calcCancelFee";
 import SellerSay from "@pages/productDetail/components/SellerSay";
 import YanoljaIcon from "@assets/icons/yanolja_Icon.svg?react";
 
@@ -17,11 +17,14 @@ import initialConfirmData from "./constants/initialConfirmData";
 import InfoBox from "./components/InfoBox";
 import getSellResult from "./apis/getSellResult";
 import BaseButton from "@components/buttons/BaseButton";
+import useCalcFeeStore from "./stores/endDateStore";
 
 const SellConfirm = () => {
   const [confirmData, setConfirmData] = useState(initialConfirmData);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const { calcFeeNumber }: any = useCalcFeeStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +42,10 @@ const SellConfirm = () => {
   }, []);
 
   const plusPrice = (confirmData.sellingPrice * 5) / 100;
+
+  console.log("1", confirmData.roomInfo.cancelPolicy);
+  console.log("2", confirmData.checkInDate);
+  console.log("3", confirmData.purchasePrice);
 
   return (
     <>
@@ -136,13 +143,14 @@ const SellConfirm = () => {
             </p>
             <p className="price">
               <span>
-                {numberFormat(
-                  calculateFee(
+                {numberFormat(calcFeeNumber)}
+                {/* {numberFormat(
+                  calcEndFee(
                     confirmData.roomInfo.cancelPolicy,
                     confirmData.checkInDate,
                     confirmData.purchasePrice
                   )
-                )}
+                )} */}
               </span>
               원
             </p>
