@@ -9,6 +9,7 @@ const useNotifications = (isLoggedIn?: boolean) => {
     queryKey: ["notifications"],
     queryFn: getNotifications,
     enabled: isLoggedIn
+    // refetchInterval: 30000 // FIXME: polling 간격 조절
   });
 
   const deleteSelectedNotifications = useMutation({

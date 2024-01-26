@@ -116,7 +116,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [isPaymentDone, setIsPaymentDone] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isActive, setIsActive] = useState(false);
-  const [isLocal] = useState(true); // FIXME: 나중에 삭제
 
   // FIXME: 추후 API 호출하여 야놀자페이 가입 여부 판단
   const [isYanoljaPaySubscribed] = useState(false);
@@ -173,6 +172,8 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
 
     setValue("phoneNumber1", formattedValue);
   };
+
+  const REDIRECT_URL = "https://www.yanabada.com/purchase/confirm";
 
   useEffect(() => {
     if (isChecked3 && isChecked4) {
@@ -339,7 +340,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             <S.TimeText>{productData.roomInfo.checkOutTime}</S.TimeText>
           </S.CheckInOut>
         </S.CheckInOutWrapper>
-        <S.ImageWrapper imageURL="https://s3-alpha-sig.figma.com/img/7a66/7ee4/66508d41dfc3fa07524137416d5ec5b6?Expires=1706486400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=GPktuodFjKnh-LxKRr5ui0f6hu61xJIy09e3tWv6yii31FOYdSCYzdi1ck7qCqSS92Yl9l2LCGCUN91TsyGIEbhgAJSwB5ngZMQk5cktPEeXLLYwauh7CTpHUIczfhPT4FlpHCBR-s4W3osIlTj1844buMWiRIppA1JlW3FlqhmknDNxzPW18mBaXZ4wdU3iwcH~cWxqpfF~CUKYrRbOvd7UMl3e9aSajVwbMi2G~1-xPqlId94GhTXeyAErB3caAknZF8Bz11asHcpTESvPU2-D~aGU9lhd5nWkKcHxLVMfUWXFBf3-gxWzc2JWajqoXLfFM6if~uCGCaRoL2FHaQ__">
+        <S.ImageWrapper imageURL={productData.accommodationInfo.image}>
           <DiscountRate borderRadius="5px">
             {calculateDiscountRate(productData.price, productData.sellingPrice)}%
           </DiscountRate>
@@ -860,9 +861,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     phoneNumberState,
                     totalPrice,
                     setIsPaymentDone,
-                    isLocal
-                      ? "http://localhost:5173/purchase/confirm"
-                      : "https://www.yanabada.com/purchase/confirm"
+                    REDIRECT_URL
                   );
                 } else if (paymentMethod === "accountTransfer") {
                   onClickPGPayment(
@@ -872,9 +871,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     totalPrice,
                     "trans",
                     setIsPaymentDone,
-                    isLocal
-                      ? "http://localhost:5173/purchase/confirm"
-                      : "https://www.yanabada.com/purchase/confirm"
+                    REDIRECT_URL
                   );
                 } else if (paymentMethod === "card") {
                   onClickPGPayment(
@@ -884,9 +881,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     totalPrice,
                     "card",
                     setIsPaymentDone,
-                    isLocal
-                      ? "http://localhost:5173/purchase/confirm"
-                      : "https://www.yanabada.com/purchase/confirm"
+                    REDIRECT_URL
                   );
                 } else {
                   const purchaseInfo = {

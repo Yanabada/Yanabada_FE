@@ -265,7 +265,11 @@ const ListCard = forwardRef(
           )}
           {cardType === "saleCanceled" && (
             <>
-              <BaseButton buttonType="gray" width={width}>
+              <BaseButton
+                buttonType="gray"
+                width={width}
+                onClick={() => (location.href = "https://www.yanolja.com/mypage")}
+              >
                 <YanoljaIcon />
                 야놀자에서 예약내역 확인
               </BaseButton>
@@ -280,7 +284,11 @@ const ListCard = forwardRef(
               >
                 거래내역서 확인
               </BaseButton>
-              <BaseButton buttonType="gray" width="48%">
+              <BaseButton
+                buttonType="gray"
+                width="48%"
+                onClick={() => (location.href = "https://www.yanolja.com/mypage")}
+              >
                 <YanoljaIcon />
                 예약내역 확인
               </BaseButton>
