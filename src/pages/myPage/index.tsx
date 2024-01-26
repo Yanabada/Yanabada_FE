@@ -76,13 +76,13 @@ const MyPage = ({ width }: MyPageProps) => {
 
   useEffect(() => {
     if (isSuccess) {
-      Cookies.remove("image");
-      Cookies.remove("email");
-      Cookies.remove("id");
-      Cookies.remove("accessToken");
-      Cookies.remove("refreshToken");
-      Cookies.remove("nickName");
-      Cookies.remove("provider");
+      Cookies.remove("image", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("email", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("id", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("accessToken", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("refreshToken", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("nickName", { path: "/", domain: ".yanabada.com" });
+      Cookies.remove("provider", { path: "/", domain: ".yanabada.com" });
       Cookies.set("isLoggedIn", "no");
 
       navigate("/");
