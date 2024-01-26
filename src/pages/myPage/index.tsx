@@ -92,8 +92,6 @@ const MyPage = ({ width }: MyPageProps) => {
       Cookies.remove("nickName", { path: "/", domain: ".yanabada.com" });
       Cookies.remove("provider", { path: "/", domain: ".yanabada.com" });
       Cookies.remove("isLoggedIn", { path: "/", domain: ".yanabada.com" });
-      Cookies.set("isLoggedIn", "no");
-
       navigate("/");
     }
   }, [isSuccess]);
