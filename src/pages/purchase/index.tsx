@@ -232,8 +232,8 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         userPersonName: name,
         userPersonPhoneNumber: phoneNumber,
         tradeId: productData?.tradeId,
-        productPrice: formatNumberWithCommas(productData.price),
-        fee: productData.sellingPrice * 0.05,
+        productPrice: formatNumberWithCommas(productData?.price),
+        fee: productData?.sellingPrice * 0.05,
         point: pointToUse,
         totalPrice: formatNumberWithCommas(totalPrice),
         paymentType: convertStringToKR(paymentMethod),
@@ -275,7 +275,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
       setTotalPrice(productData?.sellingPrice - Number(pointToUse));
     else {
       setTotalPrice(
-        productData?.sellingPrice + productData.sellingPrice * 0.05 - Number(pointToUse)
+        productData?.sellingPrice + productData?.sellingPrice * 0.05 - Number(pointToUse)
       );
     }
   }, [paymentMethod, pointToUse]);
@@ -309,15 +309,17 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         <S.AccommodationInfoWrapper>
           <Timer>
             <MdOutlineTimer style={{ fill: "#38A3EB" }} />
-            <TimerText cardType="sale">{formatTimeUntilSaleEnd(productData.saleEndDate)}</TimerText>
+            <TimerText cardType="sale">
+              {formatTimeUntilSaleEnd(productData?.saleEndDate)}
+            </TimerText>
           </Timer>
-          <TopLabel>{productData.accommodationInfo.name}</TopLabel>
-          <RoomName>{productData.roomInfo.name}</RoomName>
+          <TopLabel>{productData?.accommodationInfo.name}</TopLabel>
+          <RoomName>{productData?.roomInfo.name}</RoomName>
           <S.PersonnelInfoWrapper>
             <ProfileIconGray />
             <S.PersonalInfoText>
-              기준 {productData.roomInfo.minHeadCount}명 / 최대 {productData.roomInfo.maxHeadCount}
-              명
+              기준 {productData?.roomInfo.minHeadCount}명 / 최대{" "}
+              {productData?.roomInfo.maxHeadCount}명
             </S.PersonalInfoText>
           </S.PersonnelInfoWrapper>
         </S.AccommodationInfoWrapper>
@@ -327,28 +329,28 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
           <S.CheckInOut width={width}>
             <S.CheckInOutText>체크인</S.CheckInOutText>
             <S.DateText>
-              {formatDate(productData.checkInDate)} ({getDayOfWeek(productData.checkInDate)})
+              {formatDate(productData?.checkInDate)} ({getDayOfWeek(productData?.checkInDate)})
             </S.DateText>
-            <S.TimeText>{productData.roomInfo.checkInTime}</S.TimeText>
+            <S.TimeText>{productData?.roomInfo.checkInTime}</S.TimeText>
           </S.CheckInOut>
           <S.CheckInOut width={width}>
             <S.CheckInOutText>체크아웃</S.CheckInOutText>
             <S.DateText>
-              {formatDate(productData.checkOutDate)} ({getDayOfWeek(productData.checkOutDate)})
+              {formatDate(productData?.checkOutDate)} ({getDayOfWeek(productData?.checkOutDate)})
             </S.DateText>
-            <S.TimeText>{productData.roomInfo.checkOutTime}</S.TimeText>
+            <S.TimeText>{productData?.roomInfo.checkOutTime}</S.TimeText>
           </S.CheckInOut>
         </S.CheckInOutWrapper>
-        <S.ImageWrapper imageURL={productData.accommodationInfo.image}>
+        <S.ImageWrapper imageURL={productData?.accommodationInfo.image}>
           <DiscountRate borderRadius="5px">
-            {calculateDiscountRate(productData.price, productData.sellingPrice)}%
+            {calculateDiscountRate(productData?.price, productData?.sellingPrice)}%
           </DiscountRate>
         </S.ImageWrapper>
         <S.CompareCardBottomWrapper>
-          <S.CostText>{formatNumberWithCommas(productData.price)}</S.CostText>
+          <S.CostText>{formatNumberWithCommas(productData?.price)}</S.CostText>
           <S.PriceWrapper>
             <S.PriceText>판매가</S.PriceText>
-            <S.Price>{formatNumberWithCommas(productData.sellingPrice)}</S.Price>
+            <S.Price>{formatNumberWithCommas(productData?.sellingPrice)}</S.Price>
           </S.PriceWrapper>
         </S.CompareCardBottomWrapper>
       </S.PriceCompareCard>
@@ -536,7 +538,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         <CS.SeperationForm>
           <CS.FormLeftText color="gray">상품 금액</CS.FormLeftText>
           <CS.FormRightPrice color="black">
-            {formatNumberWithCommas(productData.sellingPrice)}원
+            {formatNumberWithCommas(productData?.sellingPrice)}원
           </CS.FormRightPrice>
         </CS.SeperationForm>
         <CS.SeperationForm>
@@ -546,7 +548,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
           <CS.FormRightPrice color="darkGray">
             {paymentMethod === "yanoljaPay"
               ? "야놀자 페이 사용 무료"
-              : `${formatNumberWithCommas(productData.sellingPrice * 0.05)}원`}
+              : `${formatNumberWithCommas(productData?.sellingPrice * 0.05)}원`}
           </CS.FormRightPrice>
         </CS.SeperationForm>
         <CS.SeperationForm>
@@ -557,7 +559,10 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         </CS.SeperationForm>
         <CS.SeperationForm isBorder={true}>
           <CS.FormLeftTextBold>총 결제 금액</CS.FormLeftTextBold>
-          <CS.FormRightPrice color="blue">{formatNumberWithCommas(totalPrice)}원</CS.FormRightPrice>
+          <CS.FormRightPrice color="blue">
+            {formatNumberWithCommas(totalPrice) === "NaN" ? 0 : formatNumberWithCommas(totalPrice)}
+            원
+          </CS.FormRightPrice>
         </CS.SeperationForm>
       </CS.InfoWrapper>
       <S.Spacer width={width} />
@@ -851,7 +856,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
               onClick={() => {
                 if (paymentMethod === "tossPay") {
                   onClickTossPayment(
-                    productData.accommodationInfo.name,
+                    productData?.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
                     totalPrice,
@@ -860,7 +865,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                   );
                 } else if (paymentMethod === "accountTransfer") {
                   onClickPGPayment(
-                    productData.accommodationInfo.name,
+                    productData?.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
                     totalPrice,
@@ -870,7 +875,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                   );
                 } else if (paymentMethod === "card") {
                   onClickPGPayment(
-                    productData.accommodationInfo.name,
+                    productData?.accommodationInfo.name,
                     nameState,
                     phoneNumberState,
                     totalPrice,
@@ -893,8 +898,8 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     userPersonName: name,
                     userPersonPhoneNumber: phoneNumber,
                     tradeId: productData?.tradeId,
-                    productPrice: formatNumberWithCommas(productData.price),
-                    fee: productData.sellingPrice * 0.05,
+                    productPrice: formatNumberWithCommas(productData?.price),
+                    fee: productData?.sellingPrice * 0.05,
                     point: pointToUse,
                     totalPrice: formatNumberWithCommas(totalPrice),
                     paymentType: convertStringToKR(paymentMethod),
