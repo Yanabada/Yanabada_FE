@@ -1,7 +1,5 @@
 import * as S from "./styles";
 import Badges from "@components/badges";
-// FIXME: SVG TimerIcon 색상 지정 문제때문에 react-icons로 대체
-// import TimerIcon from "@assets/icons/timerIcon.svg?react";
 import BaseButton from "@components/buttons/BaseButton";
 import { MdOutlineTimer } from "react-icons/md";
 import YanoljaIcon from "@assets/icons/YanoljaIcon.svg?react";

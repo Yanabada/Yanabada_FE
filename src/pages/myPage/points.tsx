@@ -14,7 +14,6 @@ const Points = () => {
             <S.CompareCardText>사용 가능한 포인트</S.CompareCardText>
             <S.PriceWrapper>
               <S.TextWrapper>
-                {/* FIXME: 추후 변수값으로 대체 예정 */}
                 <S.LeftPointText>99,999</S.LeftPointText>
                 <S.PointText>P</S.PointText>
               </S.TextWrapper>
@@ -24,7 +23,6 @@ const Points = () => {
             <S.CompareCardText>15일 내 소멸 예정 포인트</S.CompareCardText>
             <S.PriceWrapper>
               <S.TextWrapper>
-                {/* FIXME: 추후 변수값으로 대체 예정 */}
                 <S.RightPointText>99,999</S.RightPointText>
                 <S.PointText>P</S.PointText>
               </S.TextWrapper>

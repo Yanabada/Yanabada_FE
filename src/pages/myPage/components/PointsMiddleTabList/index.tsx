@@ -1,35 +1,32 @@
 import * as S from "../../styles/pointsMiddleTab.styles";
+import * as CS from "@pages/myPage/styles/history.styles";
 import { useState } from "react";
 import NoPointIcon from "@assets/icons/noPointIcon.svg?react";
 import { Link } from "react-router-dom";
-
-// FIXME: 모듈화
-interface PointsMiddleTabProps {
-  width?: string;
-}
+import PointsMiddleTabProps from "@pages/myPage/types/pointsMiddleTabProps";
 
 const PointsMiddleTabList = ({ width }: PointsMiddleTabProps) => {
   const [isPointExist] = useState(true);
 
   return (
     <>
-      <S.PointsMiddleContainer width={width}>
-        <S.MiddleWrapper>
+      <CS.PointsMiddleContainer width={width}>
+        <CS.MiddleWrapper>
           <Link to="/mypage/points/list">
             <>
-              <S.MiddleLeftText>전체내역</S.MiddleLeftText>
-              <S.UnderLine />
+              <CS.MiddleLeftText>전체내역</CS.MiddleLeftText>
+              <CS.UnderLine />
             </>
           </Link>
-        </S.MiddleWrapper>
-        <S.MiddleWrapper>
+        </CS.MiddleWrapper>
+        <CS.MiddleWrapper>
           <Link to="/mypage/points/disappear">
-            <S.MiddleTextWrapper>
-              <S.MiddleRightText>소멸예정</S.MiddleRightText>
-            </S.MiddleTextWrapper>
+            <CS.MiddleTextWrapper>
+              <CS.MiddleRightText>소멸예정</CS.MiddleRightText>
+            </CS.MiddleTextWrapper>
           </Link>
-        </S.MiddleWrapper>
-      </S.PointsMiddleContainer>
+        </CS.MiddleWrapper>
+      </CS.PointsMiddleContainer>
 
       <S.SectionDescriptionWrapper width={width}>
         <S.ListMessageWrapper>

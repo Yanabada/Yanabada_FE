@@ -6,7 +6,6 @@ import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
 import useManagement from "./hooks/useManagement";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 
-// FIXME: 모듈화
 interface ManagementProps {
   width?: string;
 }

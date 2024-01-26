@@ -1,5 +1,4 @@
 import UpperNavBar from "@components/navBar/upperNavBar";
-import * as S from "./styles/transactionStatement.styles";
 import Info from "./components/Info";
 import BaseButton from "@components/buttons/BaseButton";
 import TransactionStatementNotice from "./components/TransactionStatementNotice";
@@ -10,6 +9,7 @@ import formatDate from "./utils/formatDate";
 import formatNumberWithCommas from "./utils/formatNumberWithCommas";
 import usePurchaseTransactionHistory from "./hooks/usePurchaseTransactionHistory";
 import useTradeHistory from "./hooks/useTradeHistory";
+import * as CS from "@pages/myPage/styles/history.styles";
 
 interface TransactionStatementProps {
   width?: string;
@@ -43,6 +43,37 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
 
   const { mutate } = useTradeHistory();
 
+  const purchasePayInfoProps = {
+    divType: "payInfo-tall",
+    width,
+    yanoljaPurchasePrice: formatNumberWithCommas(purchaseTransactionHistoryData.price),
+    yanabadaPurchasePrice: formatNumberWithCommas(
+      purchaseTransactionHistoryData.sellingPrice + purchaseTransactionHistoryData.fee
+    )?.toString(),
+    discountRate: calculateDiscountRate(
+      purchaseTransactionHistoryData.price,
+      purchaseTransactionHistoryData.sellingPrice
+    ),
+    discountPrice: formatNumberWithCommas(
+      purchaseTransactionHistoryData.price - purchaseTransactionHistoryData.sellingPrice
+    )?.toString(),
+    from,
+    payMethod: getPaymentMethodText(purchaseTransactionHistoryData.paymentType),
+    charge: purchaseTransactionHistoryData.fee
+  };
+
+  const purchaseTransactionInfoProps = {
+    divType: "transactionInfo",
+    width,
+    imageURL: purchaseTransactionHistoryData.product.image,
+    accommodationName: purchaseTransactionHistoryData.product.accommodationName,
+    roomName: purchaseTransactionHistoryData.product.roomName,
+    orderNumber: purchaseTransactionHistoryData.tradeCode,
+    seller: purchaseTransactionHistoryData.sellerName,
+    orderDate: formatDate(purchaseTransactionHistoryData.registeredDate),
+    from
+  };
+
   if (sellTransactionHistoryError) {
     console.log(sellTransactionHistoryError);
   }
@@ -56,7 +87,7 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
       return (
         <>
           <UpperNavBar title="거래내역서" type="back" />
-          <S.ListCardWrapper width={width}>
+          <CS.ListCardWrapper width={width}>
             <TransactionStatementNotice from="sale" />
             <Info
               divType="payInfo"
@@ -91,45 +122,17 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
             >
               거래내역 삭제
             </BaseButton>
-          </S.ListCardWrapper>
+          </CS.ListCardWrapper>
         </>
       );
     case "purchase":
       return (
         <>
           <UpperNavBar title="거래내역서" type="back" />
-          <S.ListCardWrapper width={width}>
+          <CS.ListCardWrapper width={width}>
             <TransactionStatementNotice from="purchase" />
-            {/* FIXME: 모듈화 */}
-            <Info
-              divType="payInfo-tall"
-              width={width}
-              yanoljaPurchasePrice={formatNumberWithCommas(purchaseTransactionHistoryData.price)}
-              yanabadaPurchasePrice={formatNumberWithCommas(
-                purchaseTransactionHistoryData.sellingPrice + purchaseTransactionHistoryData.fee
-              )?.toString()}
-              discountRate={calculateDiscountRate(
-                purchaseTransactionHistoryData.price,
-                purchaseTransactionHistoryData.sellingPrice
-              )}
-              discountPrice={formatNumberWithCommas(
-                purchaseTransactionHistoryData.price - purchaseTransactionHistoryData.sellingPrice
-              )?.toString()}
-              from={from}
-              payMethod={getPaymentMethodText(purchaseTransactionHistoryData.paymentType)}
-              charge={purchaseTransactionHistoryData.fee}
-            />
-            <Info
-              divType="transactionInfo"
-              width={width}
-              imageURL={purchaseTransactionHistoryData.product.image}
-              accommodationName={purchaseTransactionHistoryData.product.accommodationName}
-              roomName={purchaseTransactionHistoryData.product.roomName}
-              orderNumber={purchaseTransactionHistoryData.tradeCode}
-              seller={purchaseTransactionHistoryData.sellerName}
-              orderDate={formatDate(purchaseTransactionHistoryData.registeredDate)}
-              from={from}
-            />
+            <Info {...purchasePayInfoProps} />
+            <Info {...purchaseTransactionInfoProps} />
             <BaseButton
               buttonType="transparent-red"
               width={width}
@@ -137,45 +140,17 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
             >
               거래내역 삭제
             </BaseButton>
-          </S.ListCardWrapper>
+          </CS.ListCardWrapper>
         </>
       );
     case "cancel":
       return (
         <>
           <UpperNavBar title="거래내역서" type="back" />
-          <S.ListCardWrapper width={width}>
+          <CS.ListCardWrapper width={width}>
             <TransactionStatementNotice from="cancel" />
-            {/* FIXME: 모듈화 */}
-            <Info
-              divType="payInfo-tall"
-              width={width}
-              yanoljaPurchasePrice={formatNumberWithCommas(purchaseTransactionHistoryData.price)}
-              yanabadaPurchasePrice={formatNumberWithCommas(
-                purchaseTransactionHistoryData.sellingPrice + purchaseTransactionHistoryData.fee
-              )?.toString()}
-              discountRate={calculateDiscountRate(
-                purchaseTransactionHistoryData.price,
-                purchaseTransactionHistoryData.sellingPrice
-              )}
-              discountPrice={formatNumberWithCommas(
-                purchaseTransactionHistoryData.price - purchaseTransactionHistoryData.sellingPrice
-              )?.toString()}
-              from={from}
-              payMethod={getPaymentMethodText(purchaseTransactionHistoryData.paymentType)}
-              charge={purchaseTransactionHistoryData.fee}
-            />
-            <Info
-              divType="transactionInfo"
-              width={width}
-              imageURL={purchaseTransactionHistoryData.product.image}
-              accommodationName={purchaseTransactionHistoryData.product.accommodationName}
-              roomName={purchaseTransactionHistoryData.product.roomName}
-              orderNumber={purchaseTransactionHistoryData.tradeCode}
-              seller={purchaseTransactionHistoryData.sellerName}
-              orderDate={formatDate(purchaseTransactionHistoryData.registeredDate)}
-              from={from}
-            />
+            <Info {...purchasePayInfoProps} />
+            <Info {...purchaseTransactionInfoProps} />
             <BaseButton
               buttonType="transparent-red"
               width={width}
@@ -183,7 +158,7 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
             >
               거래내역 삭제
             </BaseButton>
-          </S.ListCardWrapper>
+          </CS.ListCardWrapper>
         </>
       );
   }
