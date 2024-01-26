@@ -6,6 +6,7 @@ interface SignInDataStore {
   password: string;
   nickName: string;
   phoneNumber: string;
+  provider: string;
   setEmail: (email: string) => void;
   setPassword: (password: string) => void;
   setNickname: (nickName: string) => void;
@@ -17,6 +18,7 @@ const SignInDataStore = create<SignInDataStore>((set) => ({
   password: "",
   nickName: "",
   phoneNumber: "",
+  provider: "KAKAO",
   setEmail: (email: string) => set({ email: email }),
   setPassword: (password: string) => set({ password: password }),
   setNickname: (nickName: string) => set({ nickName: nickName }),
