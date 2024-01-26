@@ -8,6 +8,7 @@ import PriceArea from "@components/priceArea";
 import PriceTable from "@components/priceTable";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
+import Cookies from "js-cookie";
 
 interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -51,6 +52,7 @@ const ChatRoomBanner = ({
 }: ChatRoomBannerProps) => {
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [price, setPrice] = useState(0);
+  const myId = Number(Cookies.get("id"));
 
   const commonContent: Record<string, CommonContent> = {
     ON_SALE: {
@@ -72,7 +74,8 @@ const ChatRoomBanner = ({
     },
     SOLD_OUT: { badgeText: "판매완료", type: "completed" },
     BOOKING: { badgeText: "예약중", type: "approval" },
-    CANCELED: { badgeText: "취소", type: "canceled" }
+    CANCELED: { badgeText: "취소", type: "canceled" },
+    TIMEOUT: { badgeText: "취소", type: "canceled" }
   };
 
   const sellerContent = new Map([
@@ -93,6 +96,13 @@ const ChatRoomBanner = ({
     ],
     [
       "CANCELED",
+      {
+        ...commonContent.CANCELED,
+        bottomText: <S.NotOnSaLeText>판매가 완료된 상품입니다.</S.NotOnSaLeText>
+      }
+    ],
+    [
+      "TIMEOUT",
       {
         ...commonContent.CANCELED,
         bottomText: <S.NotOnSaLeText>판매가 완료된 상품입니다.</S.NotOnSaLeText>
@@ -122,6 +132,13 @@ const ChatRoomBanner = ({
         ...commonContent.CANCELED,
         bottomText: <S.NotOnSaLeText>구매가 완료된 상품입니다. </S.NotOnSaLeText>
       }
+    ],
+    [
+      "TIMEOUT",
+      {
+        ...commonContent.CANCELED,
+        bottomText: <S.NotOnSaLeText>구매가 완료된 상품입니다. </S.NotOnSaLeText>
+      }
     ]
   ]);
 
@@ -141,8 +158,7 @@ const ChatRoomBanner = ({
         </S.BottomContainer>
         <S.RoomText>{roomName}</S.RoomText>
         <S.BottomContainer>
-          {/* TODO - sellerID === 로그인id로 변경 */}
-          {sellerId === sellerId
+          {sellerId === myId
             ? sellerContent.get(status)?.bottomText
             : buyerContent.get(status)?.bottomText}
         </S.BottomContainer>
@@ -156,8 +172,7 @@ const ChatRoomBanner = ({
           width="100%"
           style={{ borderRadius: "0px" }}
         >
-          {/* TODO - sellerID === 로그인id로 변경 */}
-          {sellerId === sellerId ? "가격 변경" : "결제하기"}
+          {sellerId === myId ? "가격 변경" : "결제하기"}
         </BaseButton>
       )}
       <BottomSheet isVisible={isBottomSheetVisible} setIsVisible={setIsBottomSheetVisible}>

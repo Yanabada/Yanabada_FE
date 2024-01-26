@@ -109,7 +109,10 @@ const Notice = () => {
         leftBtnText="아니오"
         leftAction={() => setModalVisible(false)}
         rightBtnText="삭제하기"
-        rightAction={() => deleteSelectedNotifications.mutate(notis)}
+        rightAction={() => {
+          deleteSelectedNotifications.mutate(notis);
+          setModalVisible(false);
+        }}
         isVisible={isModalVisible}
         setIsVisible={setModalVisible}
       />

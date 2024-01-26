@@ -1,20 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
 import { getPaymentsLists } from "../apis/charge";
 
-const fetchPaymentLists = async (tab: string) => {
+interface PaymentsProps {
+  page: number;
+  tab: string;
+}
+
+export const fetchPaymentLists = async ({ page, tab }: PaymentsProps) => {
   switch (tab) {
     case "transactions":
-      return await getPaymentsLists("/payments/histories?types=DEPOSIT&types=WITHDRAW&size=10");
+      return await getPaymentsLists(
+        `/payments/histories?types=DEPOSIT&types=WITHDRAW&page=${page}`
+      );
     case "charges":
-      return await getPaymentsLists("/payments/histories?types=DISBURSEMENT&types=CHARGE&size=10");
+      return await getPaymentsLists(
+        `/payments/histories?types=DISBURSEMENT&types=CHARGE&page=${page}`
+      );
     default:
-      return await getPaymentsLists("/payments/histories");
+      if (page === 1) {
+        return await getPaymentsLists(`/payments/histories`);
+      } else {
+        return await getPaymentsLists(`/payments/histories?page=${page}`);
+      }
   }
-};
-
-export const usePaymentList = (selectedTab: string) => {
-  return useQuery({
-    queryKey: ["paymentList", selectedTab],
-    queryFn: () => fetchPaymentLists(selectedTab)
-  });
 };

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa6";
 import { motion } from "framer-motion";
+import Cookies from "js-cookie";
 
 import UpperNavBar from "@components/navBar/upperNavBar";
 import Notice from "@components/notice";
@@ -12,35 +13,46 @@ import { getDayOfWeek } from "@utils/getDayOfWeek";
 import NoItemsLogo from "@assets/noitems-logo.png";
 
 import getSellList from "./apis/getSellList";
-interface SellListData {
-  id: number;
-  code: string;
-  image: string;
-  accommodationName: string;
-  roomName: string;
-  checkInDate: string;
-  checkOutDate: string;
-  checkInTime: string;
-  checkOutTime: string;
-}
+import { SellListData } from "./types/sellListData";
+import Modal from "@components/modal";
 
 const Sell = () => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [sellList, setSellList] = useState<SellListData[]>([]);
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+  const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
   const navigate = useNavigate();
+
+  const loginModalProps = {
+    title: "회원가입 또는 로그인 후 사용할 수 있습니다.",
+    leftBtnText: "로그인하기",
+    rightBtnText: "돌아가기",
+    isVisible: isLoginModalVisible,
+    setIsVisible: setIsLoginModalVisible,
+    leftAction: () => navigate("/login"),
+    rightAction: () => navigate(-1)
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const sellListData = await getSellList();
-        setSellList(sellListData.data);
+        setSellList(sellListData);
       } catch (error) {
         console.error("Error fetching sell list:", error);
       }
     };
 
-    fetchData();
+    if (isLoggedIn) {
+      fetchData();
+    }
   }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setIsLoginModalVisible(true);
+    }
+  }, [isLoggedIn]);
 
   const handleRadioChange = (index: number) => {
     setSelectedCard(index);
@@ -154,6 +166,7 @@ const Sell = () => {
             </S.ListButton>
           </motion.div>
         ) : null}
+        <Modal {...loginModalProps} />
       </S.ProductListWrap>
     </>
   );

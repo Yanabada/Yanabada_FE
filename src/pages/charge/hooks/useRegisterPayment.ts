@@ -1,30 +1,24 @@
-import instance from "@apis/instance";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
+import { registerPayment } from "../apis/register";
 
 const useRegisterForPayment = () => {
   const navigate = useNavigate();
 
-  const registerForPayment = async (
-    simplePassword: string,
-    bankName: string,
-    accountNumber: string
-  ) => {
-    const requestData = {
-      simplePassword,
-      bankName,
-      accountNumber
-    };
-
-    try {
-      const response = await instance.post("/payments", requestData);
+  const mutation = useMutation({
+    mutationFn: registerPayment,
+    onSuccess: () => {
+      toast.success("계좌 등록 성공!");
       navigate("/charge/success");
-      return response.data.data;
-    } catch (err) {
-      console.error("registerForPayment: ", err);
+    },
+    onError: (error: Error) => {
+      toast.error("이미 야놀자 페이에 가입되어있습니다");
+      console.error("등록 실패", error);
     }
-  };
+  });
 
-  return registerForPayment;
+  return mutation;
 };
 
 export default useRegisterForPayment;
