@@ -22,23 +22,29 @@ const Charge = () => {
   const [isOptionVisible, setIsOptionVisible] = useState(false);
   const [bankMessage, setBankMessage] = useState("계좌선택");
   const { amount, setAmount } = AmountStore();
-
-  const isFormValid = amount && bankMessage !== "계좌선택";
-
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get("type");
   const priceParam = searchParams.get("price");
+  const { data: paymentData, isLoading, error } = usePaymentDetail();
+
+  if (isLoading || !paymentData) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) return <p>error</p>;
+
+  const isChargeValid =
+    typeParam === "charging" && amount >= 10000 && amount <= 2000000 && bankMessage !== "계좌선택";
+  const isWithdrawalValid =
+    typeParam === "withdrawal" && amount <= paymentData.balance && bankMessage !== "계좌선택";
+
+  const isFormValid = typeParam === "charging" ? isChargeValid : isWithdrawalValid;
 
   const toggleOption = () => {
     setIsOptionVisible((prev) => !prev);
   };
 
-  const { data: paymentData, isLoading, error } = usePaymentDetail();
   const typeText = typeParam == "charging" ? "충전" : "인출";
-
-  if (isLoading) return <p>Loading...</p>;
-
-  if (error) return <p>error</p>;
 
   return (
     <>
@@ -58,7 +64,7 @@ const Charge = () => {
             <YanoljaIcon />
             <span className="text">야놀자 페이 잔액</span>
           </div>
-          <span className="price">{numberFormat(paymentData.balance)}원</span>
+          <span className="price">{numberFormat(paymentData?.balance)}원</span>
         </S.PayBalance>
         <S.PaySpace />
         <S.PayTitle>페이를 {typeText}하실 계좌를 선택해 주세요</S.PayTitle>
@@ -109,18 +115,23 @@ const Charge = () => {
           charge
           price={amount}
           setPrice={setAmount}
+          type={typeParam}
+          balance={paymentData.balance}
         />
         {priceParam ? (
-          <S.AlertBanner>
-            <p className="text">
-              야놀자페이 잔액이 부족합니다.
-              <br />
-              충전을 진행해주세요!
-            </p>
-          </S.AlertBanner>
+          <>
+            {/* "예인 토스트로 여기 변경" */}
+            <S.AlertBanner>
+              <p className="text">
+                야놀자페이 잔액이 부족합니다.
+                <br />
+                충전을 진행해주세요!
+              </p>
+            </S.AlertBanner>
+          </>
         ) : null}
         <S.ButtonWrapper>
-          {amount < 10000 || amount > 2000000 ? (
+          {typeParam === "charging" ? (
             <BaseButton buttonType={isFormValid ? "default" : "disabled-default"} width="100%">
               ₩ {typeText}하기
             </BaseButton>

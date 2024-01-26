@@ -12,6 +12,7 @@ import transContentType from "./utils/transContentType";
 import formatDateTime from "./utils/transDateTime";
 import useIntersect from "@pages/products/hooks/useIntersect";
 import usePaymentQuery from "./hooks/usePaymentQuery";
+import { useNavigate } from "react-router-dom";
 
 interface PaymentItem {
   amount: number;
@@ -24,6 +25,7 @@ interface PaymentItem {
 
 const PointsMiddleTabList = () => {
   const [selectedTab, setSelectedTab] = useState("all");
+  const navigate = useNavigate();
 
   const {
     data: paymentList,
@@ -53,9 +55,13 @@ const PointsMiddleTabList = () => {
     setSelectedTab(tab);
   };
 
+  const customBack = () => {
+    navigate("/mypage");
+  };
+
   return (
     <>
-      <UpperNavBar title={"야놀자 페이 이용내역"} type="back" />
+      <UpperNavBar title={"야놀자 페이 이용내역"} isCustom type={"back"} customBack={customBack} />
       <S.CardWrapper>
         <CardSectionButton buttonType="abledPay" width={"100%"} />
       </S.CardWrapper>
