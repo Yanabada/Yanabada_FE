@@ -59,8 +59,6 @@ const PriceArea = ({
     if (purchasePrice && cancelFee) {
       if (0 < price && price > purchasePrice) {
         return <S.ErrorMessage>실구매가보다 낮은 금액으로만 판매 가능해요.</S.ErrorMessage>;
-      } else if (0 < price && price < cancelFee) {
-        return <S.AlertMessage>취소 수수료보다 낮은 금액을 입력하셨어요!</S.AlertMessage>;
       }
     }
     return;
