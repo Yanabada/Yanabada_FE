@@ -257,7 +257,7 @@ const DateOption = ({
                       ) : (
                         <>
                           <span className="percentage text-orange">
-                            {endDateInfo.feePercentage}%
+                            {100 - endDateInfo.feePercentage}%
                           </span>
                           &nbsp;
                           <span className="price">{numberFormat(calcFeeNumber)}원</span>
