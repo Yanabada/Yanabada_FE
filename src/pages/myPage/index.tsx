@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import NumberBadge from "@components/numberBadge";
 import { FaRegBell } from "react-icons/fa";
 import useProfileDetail from "./hooks/useProfileDetail";
-import usePutPhoneNumber from "./hooks/useLogout";
+import useLogout from "./hooks/useLogout";
 import useBalance from "./hooks/useBalance";
 import Cookies from "js-cookie";
 import useNotifications from "@pages/notice/queries";
@@ -44,7 +44,7 @@ const MyPage = ({ width }: MyPageProps) => {
   const { data: profileData, error: profileError, refetch: profileRefetch } = useProfileDetail();
   const { data: balanceData, error: balanceError, refetch: balanceRefetch } = useBalance();
   const { data: notificationData } = useNotifications();
-  const { mutate } = usePutPhoneNumber();
+  const { mutate, isSuccess } = useLogout();
   const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
 
   if (profileError) {
@@ -63,16 +63,6 @@ const MyPage = ({ width }: MyPageProps) => {
     setIsVisible: setIsLogoutModalVisible,
     leftAction: () => {
       mutate();
-      Cookies.remove("image");
-      Cookies.remove("email");
-      Cookies.remove("id");
-      Cookies.remove("accessToken");
-      Cookies.remove("refreshToken");
-      Cookies.remove("nickName");
-      Cookies.remove("provider");
-      Cookies.set("isLoggedIn", "no");
-
-      navigate("/mypage");
     },
     rightAction: () => setIsLogoutModalVisible(false)
   };
@@ -83,6 +73,19 @@ const MyPage = ({ width }: MyPageProps) => {
       balanceRefetch();
     }
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    Cookies.remove("image");
+    Cookies.remove("email");
+    Cookies.remove("id");
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    Cookies.remove("nickName");
+    Cookies.remove("provider");
+    Cookies.set("isLoggedIn", "no");
+
+    navigate("/mypage");
+  }, [isSuccess]);
 
   return isLoggedIn ? (
     <>
