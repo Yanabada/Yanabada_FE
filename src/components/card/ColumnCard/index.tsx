@@ -2,7 +2,7 @@ import * as S from "./styles";
 import MapIcon from "assets/map.svg?react";
 import { RiTimerLine } from "react-icons/ri";
 import { OptionCardType } from "@pages/home/components/SpecialServices";
-import { formatDateTo } from "@utils/formatDateTo";
+import { formatDateTo, formatRemainingTime } from "@utils/formatDateTo";
 import { Link } from "react-router-dom";
 
 interface ColumnCardProps {
@@ -27,7 +27,7 @@ const ColumnCard = ({ product }: ColumnCardProps) => {
           <S.InformationContainer>
             <S.TimerContainer>
               <RiTimerLine className="TimeIcon" />
-              <S.TimerText>{formatDateTo(product.saleEnd, "d일 HH시간 mm분")}</S.TimerText>
+              <S.TimerText>{formatRemainingTime(product.saleEnd)}</S.TimerText>
             </S.TimerContainer>
             <S.ProductContainer>
               <S.ProductName>{product.accommodationName}</S.ProductName>
