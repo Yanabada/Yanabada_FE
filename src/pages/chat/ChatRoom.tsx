@@ -19,6 +19,7 @@ import useProductDetail from "@pages/productDetail/hooks/useProductDetail";
 import { useSearchParams } from "react-router-dom";
 import { formatDateTo } from "@utils/formatDateTo";
 import useIntersect from "@pages/products/hooks/useIntersect";
+import LoadingCircle from "@components/loading";
 
 const ChatRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -97,7 +98,13 @@ const ChatRoom = () => {
     bottom.current!.scrollIntoView({ behavior: "smooth", block: "end" });
   };
 
-  const { data: messages, hasNextPage, isFetching, fetchNextPage } = useMessages({ code: roomId });
+  const {
+    data: messages,
+    hasNextPage,
+    isFetching,
+    fetchNextPage,
+    isLoading
+  } = useMessages({ code: roomId });
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
     if (hasNextPage && !isFetching) {
@@ -108,6 +115,10 @@ const ChatRoom = () => {
   useEffect(() => {
     scrollToBottom();
   }, [chatMessages]);
+
+  if (isLoading) {
+    return <LoadingCircle />;
+  }
 
   return (
     <>
@@ -152,7 +163,7 @@ const ChatRoom = () => {
       )}
       <S.ChatContainer ref={bottom} status={productData?.status}>
         {messages.length === 0 && chatMessages.length === 0 ? (
-          <p>메시지가 없습니다.</p>
+          ""
         ) : (
           <>
             {messages.length === 0 ? null : (
