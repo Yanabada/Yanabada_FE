@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { useMapState } from "@pages/products/stores/mapStore";
 import { CustomOverlayMap, Map } from "react-kakao-maps-sdk";
 import PositionIcon from "@assets/icons/product_position_mark.svg?react";
+import LoadingCircle from "@components/loading";
 // import DetailMapCard from "./components/DetailMap/DetailMapCard";
 
 const ProductDetail = () => {
@@ -24,7 +25,7 @@ const ProductDetail = () => {
     getDetailQuery: { data: detailData, isLoading }
   } = useProductDetail(Number(productId));
 
-  if (isLoading) return <p>Loading</p>;
+  if (isLoading) return <LoadingCircle></LoadingCircle>;
 
   return (
     <>

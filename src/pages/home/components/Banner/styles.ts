@@ -17,6 +17,15 @@ export const CarouselItem = styled(motion.div)`
   margin: 0 auto;
 `;
 
+export const Href = styled.a`
+  width: 10%;
+  height: 104px;
+
+  @media (min-width: 630px) {
+    width: 25%;
+  }
+`;
+
 export const ImageContainer = styled.div`
   position: relative;
 `;
@@ -50,13 +59,16 @@ export const PrevImage = styled(motion.img)`
   object-position: 100% 100%;
   border-radius: 0px 10px 10px 0px;
   opacity: 0.5;
-
-  @media (min-width: 680px) {
-    width: 25%;
-  }
+  /* @media (min-width: 680px) {
+    width: 200%;
+  } */
 `;
 
 export const NextImage = styled(PrevImage)`
   object-position: 0% 0%;
   border-radius: 10px 0px 0px 10px;
+
+  /* @media (min-width: 680px) {
+    width: 200%;
+  } */
 `;
