@@ -213,7 +213,7 @@ const ChatRoomBanner = ({
             price={price}
             setPrice={setPrice}
           />
-          <BaseButton buttonType="default" onClick={handleSubmit}>
+          <BaseButton width="100%" buttonType="default" onClick={handleSubmit}>
             확인
           </BaseButton>
         </S.PriceInfoBox>
