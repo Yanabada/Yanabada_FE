@@ -237,7 +237,8 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
         point: pointToUse,
         totalPrice: formatNumberWithCommas(totalPrice),
         paymentType: convertStringToKR(paymentMethod),
-        productId: productId
+        productId: productId,
+        image: productData?.accommodationInfo.image
       };
 
       localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
@@ -903,7 +904,8 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     point: pointToUse,
                     totalPrice: formatNumberWithCommas(totalPrice),
                     paymentType: convertStringToKR(paymentMethod),
-                    productId: productId
+                    productId: productId,
+                    image: productData?.accommodationInfo.image
                   };
 
                   localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
