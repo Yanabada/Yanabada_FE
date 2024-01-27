@@ -44,11 +44,7 @@ const Banner = () => {
     <S.Carousel>
       <AnimatePresence initial={false} custom={direction}>
         <S.CarouselItem>
-          <a
-            href={images[wrap(0, images.length, imageIndex - 1)].link}
-            target="_blank"
-            style={{ width: "10%", height: "104px" }}
-          >
+          <S.Href href={images[wrap(0, images.length, imageIndex - 1)].link} target="_blank">
             <S.PrevImage
               src={images[wrap(0, images.length, imageIndex - 1)].image}
               key={page - 1}
@@ -62,7 +58,7 @@ const Banner = () => {
                 opacity: { duration: 0.2 }
               }}
             />
-          </a>
+          </S.Href>
           <S.ImageContainer>
             <a target="_blank" href={images[imageIndex].link}>
               <S.Image
@@ -83,11 +79,7 @@ const Banner = () => {
               {imageIndex + 1} / {images.length}
             </S.ImageIndex>
           </S.ImageContainer>
-          <a
-            href={images[wrap(0, images.length, imageIndex + 1)].link}
-            target="_blank"
-            style={{ width: "10%", height: "104px" }}
-          >
+          <S.Href href={images[wrap(0, images.length, imageIndex + 1)].link} target="_blank">
             <S.NextImage
               src={images[wrap(0, images.length, imageIndex + 1)].image}
               key={page + 1}
@@ -101,7 +93,7 @@ const Banner = () => {
                 opacity: { duration: 0.2 }
               }}
             />
-          </a>
+          </S.Href>
         </S.CarouselItem>
       </AnimatePresence>
     </S.Carousel>

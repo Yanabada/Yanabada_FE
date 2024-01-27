@@ -13,23 +13,24 @@ const SearchHistory = () => {
     });
     setHistory(deleteHistory);
   };
+
   return (
     <S.RecentSearchContainer>
       {history.map((item: HistoryType) => {
         const checkInDate = item.checkInDate && formatDateTo(new Date(item.checkInDate));
         const checkOutDate = item.checkOutDate && formatDateTo(new Date(item.checkOutDate));
+        const checkDate =
+          checkInDate && checkOutDate ? `${checkInDate} ~ ${checkOutDate}` : "전체 기간";
         return (
           <S.RecordContainer key={item.id.toString()}>
             <S.RecordBoxContainer>
               <Link
                 to={`/products?keyword=${item.keyword}&checkInDate=${item.checkInDate}&checkOutDate=${item.checkOutDate}&adult=${item.adult}&child=${item.child}`}
               >
-                <S.Location>{item.keyword}</S.Location>
-                <S.Period>
-                  {checkInDate && checkInDate} ~ {checkOutDate && checkOutDate}
-                </S.Period>
+                <S.Location>{item.keyword ? item.keyword : "전체 지역"}</S.Location>
+                <S.Period>{checkDate}</S.Period>
                 <S.User>
-                  {item.adult} 성인 / {item.child} 아동
+                  {item.adult ? item.adult : 2} 성인 / {item.child ? item.child : 0} 아동
                 </S.User>
               </Link>
               <S.CancelIcon onClick={() => handleDeleteHistory(item.id)} />

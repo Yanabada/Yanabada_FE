@@ -15,9 +15,7 @@ const ColumnCard = ({ product }: ColumnCardProps) => {
       <S.Wrapper>
         <S.Container key={product.id}>
           <S.ImageContainer>
-            <S.DiscountRate>
-              {Math.floor(((product.price - product.sellingPrice) / product.price) * 100)}%
-            </S.DiscountRate>
+            <S.DiscountRate>{product.salesPercentage}%</S.DiscountRate>
             <S.Image src={product.image} alt="숙소 이미지" />
             <S.LocationContainer>
               <MapIcon />
@@ -40,9 +38,7 @@ const ColumnCard = ({ product }: ColumnCardProps) => {
           <S.PriceContainer>
             <S.Price>{new Intl.NumberFormat().format(product.price)}원</S.Price>
             <S.SellingContainer>
-              <S.SellingRate>
-                {Math.floor(((product.price - product.sellingPrice) / product.price) * 100)}%
-              </S.SellingRate>
+              <S.SellingRate>{product.salesPercentage}%</S.SellingRate>
               <S.SellingPrice>
                 {new Intl.NumberFormat().format(product.sellingPrice)}원
               </S.SellingPrice>

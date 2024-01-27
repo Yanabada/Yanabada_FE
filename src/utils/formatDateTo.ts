@@ -1,10 +1,4 @@
-import {
-  differenceInDays,
-  differenceInHours,
-  differenceInMinutes,
-  format,
-  getHours
-} from "date-fns";
+import { format, getHours } from "date-fns";
 import { ko } from "date-fns/locale";
 
 export const formatDateTo = (date: Date | null, formatOfDate: string = "MM/dd") => {
@@ -23,11 +17,13 @@ export const formatDateTo = (date: Date | null, formatOfDate: string = "MM/dd") 
 };
 
 export const formatRemainingTime = (endDate: Date) => {
-  const now = new Date();
+  const saleEndTime = new Date(endDate);
+  saleEndTime.setHours(23, 59, 59);
+  const timeOut = saleEndTime.getTime() - new Date().getTime();
 
-  const days = differenceInDays(endDate, now);
-  const hours = differenceInHours(endDate, now) % 24;
-  const minutes = differenceInMinutes(endDate, now) % 60;
+  const days = Math.floor(timeOut / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeOut % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeOut % (1000 * 60 * 60)) / (1000 * 60));
 
-  return `${days}일 ${hours}시간 ${minutes}분`;
+  return days ? `${days}일 ${hours}시간 ${minutes}분` : `${hours}시간 ${minutes}분`;
 };

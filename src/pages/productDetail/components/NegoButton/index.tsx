@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { createChatRoom } from "@pages/productDetail/api/detail";
 import { Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
+import { formatRemainingTime } from "@utils/formatDateTo";
+
 interface DetailProps {
   data: DetailType;
 }
@@ -56,7 +58,7 @@ const NegoButton = ({ data }: DetailProps) => {
             <>
               <S.TimerContainer>
                 <S.TimerIcon />
-                <S.TimerText>{data.saleEndDate.toString()}</S.TimerText>
+                <S.TimerText>{formatRemainingTime(data.saleEndDate)}</S.TimerText>
               </S.TimerContainer>
               <S.ButtonContainer>
                 {isLoggedIn && id === data.seller.id ? (
