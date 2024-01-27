@@ -899,7 +899,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     userPersonPhoneNumber: phoneNumber,
                     tradeId: productData?.tradeId,
                     productPrice: formatNumberWithCommas(productData?.price),
-                    fee: productData?.sellingPrice * 0.05,
+                    fee: formatNumberWithCommas(productData?.sellingPrice * 0.05),
                     point: pointToUse,
                     totalPrice: formatNumberWithCommas(totalPrice),
                     paymentType: convertStringToKR(paymentMethod),
