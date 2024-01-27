@@ -2,7 +2,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteAllNotifications, deleteNotifications, getNotifications } from "./api";
 import toast from "react-hot-toast";
 
-const useNotifications = (isLoggedIn?: boolean) => {
+const useNotifications = (
+  isLoggedIn?: boolean,
+  setNotis?: (ids: Array<{ id: number }>) => void
+) => {
   const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
@@ -16,6 +19,7 @@ const useNotifications = (isLoggedIn?: boolean) => {
     mutationFn: (ids: Array<{ id: number }>) => deleteNotifications(ids),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      setNotis([]);
     },
     onError: () => {
       toast.error("알림 삭제를 실패했습니다.");

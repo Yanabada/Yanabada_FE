@@ -5,9 +5,16 @@ import NumberBadge from "@components/numberBadge";
 import { useTransform, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useNotifications from "@pages/notice/queries";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const [isHeaderActive, setIsHeaderActive] = useState(false);
+  const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
+  const { data } = useNotifications(isLoggedIn);
+
+  const hasMoreNotifications = !data?.data.isLast;
+  const notificationsCount = hasMoreNotifications ? 10 : data?.data.notifications.length;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +35,7 @@ const Header = () => {
       <S.HeaderContainer style={{ backgroundColor }}>
         <S.BellContainer>
           <Link to="/notice">
-            <NumberBadge number={99} />
+            <NumberBadge number={notificationsCount} hasMore={hasMoreNotifications} />
             <FaRegBell className="bell" />
           </Link>
         </S.BellContainer>

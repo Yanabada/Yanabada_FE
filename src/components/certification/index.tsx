@@ -10,21 +10,6 @@ import BottomSheet from "@components/bottomSheet";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
 import { signInApi } from "@pages/signIn/apis/signInApi";
-import firebase from "firebase/compat/app";
-import "firebase/compat/functions";
-// import { initializeApp } from "firebase/app";
-
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_APP_API_KEY,
-  authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_APP_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_APP_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_APP_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_APP_ID,
-  measurementId: import.meta.env.VITE_APP_MEASUREMENT_ID
-};
-
-firebase.initializeApp(firebaseConfig);
 
 interface CertificationProps {
   width?: string;
@@ -155,34 +140,6 @@ const Certification = ({
     mutationFn && mutationFn(phoneNumber);
   };
 
-  const [phoneNumberState, setPhoneNumberState] = useState("");
-  const [verificationCode, setVerificationCode] = useState("");
-
-  const sendVerificationCode = async () => {
-    const sendVerificationCodeFunction = firebase.functions().httpsCallable("sendVerificationCode");
-    try {
-      const response = await sendVerificationCodeFunction({ phoneNumberState });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const checkVerificationCode = async () => {
-    const checkVerificationCodeFunction = firebase
-      .functions()
-      .httpsCallable("checkVerificationCode");
-    try {
-      const response = await checkVerificationCodeFunction({
-        phoneNumberState,
-        code: verificationCode
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     const performSignIn = async () => {
       if (isSignInFlow && email && password && nickName && phoneNumberSignin) {
@@ -206,23 +163,7 @@ const Certification = ({
   return (
     <>
       <UpperNavBar title={upperNavBarText} type="back" />
-      <div>
-        <input
-          type="text"
-          placeholder="Phone Number"
-          value={phoneNumberState}
-          onChange={(e) => setPhoneNumberState(e.target.value)}
-        />
-        <button onClick={sendVerificationCode}>Send Verification Code</button>
 
-        <input
-          type="text"
-          placeholder="Verification Code"
-          value={verificationCode}
-          onChange={(e) => setVerificationCode(e.target.value)}
-        />
-        <button onClick={checkVerificationCode}>Check Verification Code</button>
-      </div>
       <S.CertificationContainer>
         <S.CertificationWrapper width={width} gap="16px">
           <TextInput
