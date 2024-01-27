@@ -23,7 +23,7 @@ const BottomActions = () => {
   const checkOutDate = searchParams.get("checkOutDate");
   const adult = searchParams.get("adult");
   const child = searchParams.get("child");
-  const isActive = keyword;
+  const isActive = keyword || checkOutDate || adult;
 
   const handleReset = () => {
     resetGuestCount();
