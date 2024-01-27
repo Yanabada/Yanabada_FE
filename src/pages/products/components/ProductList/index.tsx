@@ -8,7 +8,6 @@ import { useSearchParams } from "react-router-dom";
 import { Category, Option, OrderState } from "@pages/products/api/products";
 import { useEffect } from "react";
 import NoProduct from "../NoProduct";
-import usePreviousParams from "@pages/products/hooks/usePreviousParams";
 
 const ProductList = () => {
   const [searchParams] = useSearchParams();
@@ -24,8 +23,7 @@ const ProductList = () => {
     data: products,
     hasNextPage,
     isFetching,
-    fetchNextPage,
-    refetch
+    fetchNextPage
   } = useProducts({
     ...(options && { options: options as Option[] }),
     ...(order && { order: order as OrderState }),
@@ -36,18 +34,10 @@ const ProductList = () => {
     size: 10
   });
   const { isMapOpen, setHasProducts, hasProducts } = useMapState();
-  const previousParams = usePreviousParams(searchParams.toString());
 
   useEffect(() => {
     setHasProducts(products.length);
   }, [products.length, setHasProducts]);
-
-  useEffect(() => {
-    // FIXME: 왜 두 번 요청하냐 처음부터~~
-    if (previousParams !== searchParams.toString()) {
-      refetch();
-    }
-  }, [searchParams, previousParams, refetch]);
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -61,7 +51,7 @@ const ProductList = () => {
     <>
       {isMapOpen ? (
         <S.MapContainer>
-          <KakaoMap />
+          <KakaoMap products={products} />
         </S.MapContainer>
       ) : !hasProducts ? (
         <NoProduct />
