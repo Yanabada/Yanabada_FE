@@ -4,6 +4,7 @@ import { RiTimerLine } from "react-icons/ri";
 import { ProductType } from "@pages/products/types/productsType";
 import { Link } from "react-router-dom";
 import { numberFormat } from "@utils/numberFormat";
+import { formatRemainingTime } from "@utils/formatDateTo";
 
 interface RowCardProps {
   props: string;
@@ -15,6 +16,7 @@ const RowCard = ({ props, data }: RowCardProps) => {
     <S.Wrapper>
       {data.map((product) => {
         const saleEndTime = new Date(product.saleEnd);
+        saleEndTime.setHours(23, 59, 59);
         const timeOut = saleEndTime.getTime() - new Date().getTime();
 
         const days = Math.floor(timeOut / (1000 * 60 * 60 * 24));
@@ -27,9 +29,7 @@ const RowCard = ({ props, data }: RowCardProps) => {
                 {props === "마감임박" ? (
                   <S.TimeOut>
                     <RiTimerLine />
-                    <S.TimerOutText>
-                      {days ? `${days}일 ${hours}시간 ${minutes}분` : `${hours}시간 ${minutes}분`}
-                    </S.TimerOutText>
+                    <S.TimerOutText>{formatRemainingTime(product.saleEnd)}</S.TimerOutText>
                   </S.TimeOut>
                 ) : (
                   <S.DiscountRate>{product.salesPercentage}%</S.DiscountRate>
