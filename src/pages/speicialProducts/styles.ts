@@ -2,9 +2,19 @@ import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
   display: flex;
-  padding: 2rem 1rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1rem;
 
   background-color: #e6eef9;
+
+  .logo {
+    width: 100px;
+
+    img {
+      width: 100%;
+    }
+  }
 
   .desc {
     display: flex;
