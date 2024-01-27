@@ -23,7 +23,11 @@ export type OptionCardType = Pick<ProductType, Picked>;
 
 const SpecialServices = () => {
   // 어떤 옵션을 줘야할지?
-  const { data: products } = useProducts({ size: 10, isHidingSoldOut: true });
+  const { data: products } = useProducts({
+    size: 10,
+    isHidingSoldOut: true,
+    options: ["PARTY_ROOM"]
+  });
 
   return (
     <S.Container>
