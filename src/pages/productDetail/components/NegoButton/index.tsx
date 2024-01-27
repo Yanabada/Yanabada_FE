@@ -12,7 +12,7 @@ interface DetailProps {
 
 const NegoButton = ({ data }: DetailProps) => {
   const navigate = useNavigate();
-  const memberId = JSON.parse(Cookies.get("id")!);
+  const id = JSON.parse(Cookies.get("id")!);
   const isLoggedIn = Cookies.get("isLoggedIn");
 
   const handleClick = async (type: string) => {
@@ -22,7 +22,7 @@ const NegoButton = ({ data }: DetailProps) => {
       return;
     }
     if (type === "chat") {
-      const response = await createChatRoom(data.id, memberId);
+      const response = await createChatRoom(data.id, id);
       const chatRoomCode = response.data.chatRoomCode;
       navigate(`/chat/${chatRoomCode}?productId=${data.id}`);
       return;
@@ -59,14 +59,14 @@ const NegoButton = ({ data }: DetailProps) => {
                 <S.TimerText>{data.saleEndDate.toString()}</S.TimerText>
               </S.TimerContainer>
               <S.ButtonContainer>
-                {isLoggedIn && memberId === data.seller.id ? (
+                {isLoggedIn && id === data.seller.id ? (
                   <BaseButton
                     width="100%"
                     color="#fff"
                     backgroundColor="#38A3EB"
                     buttonType="default"
                     children="상품 정보 수정"
-                    onClick={() => navigate(`/sell/register/correct/${data.id}?redirect=/detail`)}
+                    onClick={() => navigate(`/sell/correct/${data.id}?redirect=/detail`)}
                   />
                 ) : (
                   <>
