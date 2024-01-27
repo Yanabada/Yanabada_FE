@@ -5,7 +5,7 @@ export const Container = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.colors.gray[200]};
 
-  overflow: hidden;
+  overflow-x: hidden;
 `;
 
 export const NoticeContainer = styled(motion.div)`
@@ -84,11 +84,6 @@ export const EditButton = styled.label`
 export const BottomWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 72px;
 
   padding: 1rem;
   gap: 1rem;

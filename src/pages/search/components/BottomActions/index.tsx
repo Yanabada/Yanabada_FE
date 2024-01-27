@@ -8,7 +8,6 @@ import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import HistoryStore from "@pages/search/stores/historyStore";
 import { HistoryType } from "@pages/search/types/history";
 import { useGuest } from "@pages/search/stores/guestStore";
-// import { useGuest } from "@pages/search/stores/guestStore";
 
 const BottomActions = () => {
   const [isResetModalOpen, setResetModalOpen] = useState(false);
@@ -16,14 +15,13 @@ const BottomActions = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { search } = useLocation();
-  // const { adult, child } = useGuest();
 
   const keyword = searchParams.get("keyword");
   const checkInDate = searchParams.get("checkInDate");
   const checkOutDate = searchParams.get("checkOutDate");
   const adult = searchParams.get("adult");
   const child = searchParams.get("child");
-  const isActive = keyword;
+  const isActive = keyword || checkOutDate;
 
   const handleReset = () => {
     resetGuestCount();
