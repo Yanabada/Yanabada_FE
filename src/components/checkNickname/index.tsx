@@ -33,7 +33,7 @@ const CheckNickname = ({ title, to }: CheckNicknameProps) => {
     getValues,
     setError
   } = useForm<FormData>({
-    mode: "onBlur"
+    mode: "onChange"
   });
   const nickname = getValues("nickname");
 
