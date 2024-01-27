@@ -6,7 +6,7 @@ import Notice from "@components/notice";
 import { Link } from "react-router-dom";
 import formatDate from "@pages/purchase/utils/formatDate";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
-import usePurchaseHistory from "@pages/myPage/hooks/usePurchaseHistory";
+import usePurchaseHistory2 from "@pages/myPage/hooks/usePurchaseHistory2";
 import { useEffect } from "react";
 
 interface TradeData {
@@ -30,13 +30,13 @@ const ReservationComplete = () => {
   const purchaseInfo = JSON.parse(localStorage.getItem("purchaseInfo") as string);
   const { productId } = purchaseInfo;
 
-  const { data, error } = usePurchaseHistory();
+  const { data, error } = usePurchaseHistory2();
 
   if (error) {
     console.log(error);
   }
 
-  const filteredTrades: TradeData[] = data.filter(
+  const filteredTrades: TradeData[] = data?.purchaseTrades?.filter(
     (trade: TradeData) => trade.productId === Number(productId)
   );
 
