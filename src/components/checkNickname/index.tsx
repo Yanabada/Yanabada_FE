@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SignInDataStore from "@pages/signIn/stores/SignInDataStore";
 import compareNicknameApi from "@pages/signIn/apis/compareNicknameApi";
+import { Toaster } from "react-hot-toast";
 interface FormData {
   nickname: string;
 }
@@ -68,6 +69,7 @@ const CheckNickname = ({ title, to }: CheckNicknameProps) => {
 
   return (
     <>
+      <Toaster />
       <UpperNavBar type="back" title={title} />
 
       <TextInput
