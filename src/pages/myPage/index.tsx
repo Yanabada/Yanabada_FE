@@ -157,7 +157,7 @@ const MyPage = ({ width }: MyPageProps) => {
         >
           이용가이드
         </ListButton>
-        <ListButton width={width} icon={<TermIcon />} onClick={() => navigate("/terms")}>
+        <ListButton width={width} icon={<TermIcon />} onClick={() => navigate("/mypage/terms")}>
           이용약관
         </ListButton>
         <ListButton
