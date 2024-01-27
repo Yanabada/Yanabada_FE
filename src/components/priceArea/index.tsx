@@ -15,6 +15,8 @@ interface PriceAreaProps {
   price: number;
   setPrice: React.Dispatch<React.SetStateAction<number>> | ((price: number) => void);
   checkInDate: string;
+  type?: string;
+  balance?: number;
 }
 
 const PriceArea = ({
@@ -26,7 +28,9 @@ const PriceArea = ({
   charge,
   price,
   setPrice,
-  checkInDate
+  checkInDate,
+  type,
+  balance
 }: PriceAreaProps) => {
   const plusAmountData: [number, string, string][] = [
     [10000, "1만", "plus"],
@@ -55,8 +59,6 @@ const PriceArea = ({
     if (purchasePrice && cancelFee) {
       if (0 < price && price > purchasePrice) {
         return <S.ErrorMessage>실구매가보다 낮은 금액으로만 판매 가능해요.</S.ErrorMessage>;
-      } else if (0 < price && price < cancelFee) {
-        return <S.AlertMessage>취소 수수료보다 낮은 금액을 입력하셨어요!</S.AlertMessage>;
       }
     }
     return;
@@ -71,20 +73,14 @@ const PriceArea = ({
     return;
   };
 
-  // const getSalesMessage = () => {
-  //   if (originalPrice && purchasePrice && cancelFee) {
-  //     const discountPercentage = ((originalPrice - price) / originalPrice) * 100;
-  //     const savingsAmount = originalPrice - price;
-
-  //     if (price >= cancelFee && price < purchasePrice) {
-  //       return (
-  //         <S.SalesMessage>
-  //           원가 대비 {discountPercentage.toFixed(0)}% 할인! ({numberFormat(savingsAmount)}원 절약)
-  //         </S.SalesMessage>
-  //       );
-  //     }
-  //   }
-  // };
+  const getWithdrawalMessage = () => {
+    if (price < 10000 && price > 0) {
+      return <S.ErrorMessage>1만원 이상부터 인출 가능합니다.</S.ErrorMessage>;
+    } else if (price > balance) {
+      return <S.ErrorMessage>인출금액이 잔액을 초과할 수 없습니다.</S.ErrorMessage>;
+    }
+    return;
+  };
 
   const handleCalculation = (amount: number, calc: string) => {
     let calculatedPrice;
@@ -105,7 +101,7 @@ const PriceArea = ({
 
   function priceFormat(n: number): string {
     const formattedNumber = numberFormat(n);
-    return `${formattedNumber} ￦`;
+    return `￦ ${formattedNumber}`;
   }
 
   const renderCalButton = ([amount, text, calc]: [number, string, string]): JSX.Element => (
@@ -128,9 +124,13 @@ const PriceArea = ({
             onChange={handlePriceChange}
             placeholder={placeholder}
           />
-          {/* {isAlert && getSalesMessage()} */}
         </S.MessageWrap>
-        {charge ? getCommandMessage() : getErrorMessage()}
+        {charge &&
+          (type === "charging"
+            ? getCommandMessage()
+            : type === "withdrawal"
+              ? getWithdrawalMessage()
+              : getErrorMessage())}
         <S.ButtonWrap>
           {amountData.map(renderCalButton)}
           <S.CalcButton onClick={() => handleResetPrice(resetPrice)}>

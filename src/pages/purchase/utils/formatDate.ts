@@ -1,4 +1,8 @@
-function formatDate(input: string): string {
+function formatDate(input: string | null): string {
+  if (!input) {
+    return "";
+  }
+
   const parts = input.split("-");
 
   if (parts.length === 3) {

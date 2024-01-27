@@ -125,10 +125,6 @@ const MyPage = ({ width }: MyPageProps) => {
           <CardSectionButton buttonType="abledPay_notRegistered" width={width} />
         )}
 
-        {/* <Link to="/points/list">
-          <CardSectionButton buttonType="abledPoint" width={width} />
-        </Link> */}
-
         <Link to="/mypage/management">
           <CardSectionButton buttonType="management" width={width} />
         </Link>

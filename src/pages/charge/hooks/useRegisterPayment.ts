@@ -13,7 +13,7 @@ const useRegisterForPayment = () => {
       navigate("/charge/success");
     },
     onError: (error: Error) => {
-      toast.error("이미 야놀자 페이에 가입되어있습니다");
+      toast.error("뭐라하지");
       console.error("등록 실패", error);
     }
   });

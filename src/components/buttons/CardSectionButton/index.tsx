@@ -164,7 +164,6 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
                 <S.ListButtonText>야놀자 포인트</S.ListButtonText>
               </S.ListButtonTextWrapper>
               <S.RightSectionWrapper>
-                {/* FIXME: 추후 변수값으로 대체 예정 */}
                 <S.RightSectionText>0포인트</S.RightSectionText>
                 <IoIosArrowForward size="18px" color="#616161" />
               </S.RightSectionWrapper>
@@ -199,7 +198,6 @@ const CardSectionButton = ({ buttonType, width, onClick }: CardSectionProps) => 
                 <S.ListButtonText>승인요청관리</S.ListButtonText>
               </S.ListButtonTextWrapper>
               <S.RightSectionWrapper>
-                {/* FIXME: 추후 변수값으로 대체 예정 */}
                 <IoIosArrowForward size="18px" color="#616161" />
               </S.RightSectionWrapper>
             </S.ListButton>

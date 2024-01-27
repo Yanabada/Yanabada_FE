@@ -22,8 +22,8 @@ importScripts("https://www.gstatic.com/firebasejs/9.2.0/firebase-messaging-compa
 //   measurementId: import.meta.env.VITE_APP_MEASUREMENT_ID
 // });
 
-// // Retrieve an instance of Firebase Messaging so that it can handle background
-// // messages.
+// Retrieve an instance of Firebase Messaging so that it can handle background
+// messages.
 
 // const messaging = firebase.messaging();
 
