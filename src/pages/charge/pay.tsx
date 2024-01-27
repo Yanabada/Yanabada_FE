@@ -18,7 +18,9 @@ import BankIcoLogo from "@assets/bankIcon.png";
 import usePaymentDetail from "./hooks/usePaymentDetail";
 import AmountStore from "./stores/amountStore";
 
-const Charge = () => {
+// /charge?type=charging&price=10000
+
+const YanoljaPay = () => {
   const [isOptionVisible, setIsOptionVisible] = useState(false);
   const [bankMessage, setBankMessage] = useState("계좌선택");
   const { amount, setAmount } = AmountStore();
@@ -33,31 +35,25 @@ const Charge = () => {
 
   if (error) return <p>error</p>;
 
-  const isChargeValid =
-    typeParam === "charging" && amount >= 10000 && amount <= 2000000 && bankMessage !== "계좌선택";
-  const isWithdrawalValid =
-    typeParam === "withdrawal" && amount <= paymentData.balance && bankMessage !== "계좌선택";
+  const diffPrice = parseInt(priceParam) - paymentData.balance;
 
-  const isFormValid = typeParam === "charging" ? isChargeValid : isWithdrawalValid;
+  const isFormValid =
+    amount >= parseInt(priceParam) - paymentData.balance && bankMessage !== "계좌선택";
 
   const toggleOption = () => {
     setIsOptionVisible((prev) => !prev);
   };
 
-  const typeText = typeParam == "charging" ? "충전" : "인출";
-
   return (
     <>
-      <UpperNavBar title={typeText} type="back" />
+      <UpperNavBar title="충전" type="back" />
       <S.ChargeWrapper>
-        {priceParam ? (
-          <S.PayBalance className="product-balance">
-            <div>
-              <span className="text">₩ 상품가격</span>
-            </div>
-            <span className="price">{numberFormat(parseInt(priceParam))} 원</span>
-          </S.PayBalance>
-        ) : null}
+        <S.PayBalance className="product-balance">
+          <div>
+            <span className="text">₩ 상품가격</span>
+          </div>
+          <span className="price">{numberFormat(parseInt(priceParam))} 원</span>
+        </S.PayBalance>
 
         <S.PayBalance>
           <div>
@@ -67,11 +63,11 @@ const Charge = () => {
           <span className="price">{numberFormat(paymentData?.balance)}원</span>
         </S.PayBalance>
         <S.PaySpace />
-        <S.PayTitle>페이를 {typeText}하실 계좌를 선택해 주세요</S.PayTitle>
+        <S.PayTitle>페이를 충전하실 계좌를 선택해 주세요</S.PayTitle>
         <Notice
           type="info"
           color="blue"
-          content={`잔액 ${typeText}은 야놀자 페이에 등록된 본인 명의 계좌로만 가능합니다.`}
+          content={`잔액 충전은 야놀자 페이에 등록된 본인 명의 계좌로만 가능합니다.`}
           shape="lineFill"
         />
         <S.PaySpace />
@@ -106,8 +102,8 @@ const Charge = () => {
         <S.PaySpace />
         <S.PaySpace />
         <PriceArea
-          title={`${typeText} 금액을 입력해 주세요`}
-          placeholder="￦ 금액을 입력해주세요"
+          title={`충전 금액을 입력해 주세요`}
+          placeholder={`${numberFormat(diffPrice)} 이상 금액을 입력해주세요`}
           purchasePrice={paymentData.purchasePrice}
           policyNumber={paymentData.policyNumber}
           checkInDate={paymentData.checkInDate}
@@ -115,27 +111,20 @@ const Charge = () => {
           charge
           price={amount}
           setPrice={setAmount}
-          type={typeParam}
           balance={paymentData.balance}
         />
         <S.ButtonWrapper>
-          {typeParam === "charging" ? (
-            <Link to={`/charge/password?registration=false&type=${typeParam}`}>
-              <BaseButton buttonType={isFormValid ? "default" : "disabled-default"} width="100%">
-                ₩ {typeText}하기
-              </BaseButton>
-            </Link>
-          ) : (
-            <Link to={`/charge/password?registration=false&type=${typeParam}`}>
-              <BaseButton buttonType={isFormValid ? "default" : "disabled-default"} width="100%">
-                ₩ {typeText}하기
-              </BaseButton>
-            </Link>
-          )}
+          <Link
+            to={`/charge/password?registration=false&type=${typeParam}&redirect=/purchase/confirm`}
+          >
+            <BaseButton buttonType={isFormValid ? "default" : "disabled-default"} width="100%">
+              ₩ 충전하기
+            </BaseButton>
+          </Link>
         </S.ButtonWrapper>
       </S.ChargeWrapper>
     </>
   );
 };
 
-export default Charge;
+export default YanoljaPay;

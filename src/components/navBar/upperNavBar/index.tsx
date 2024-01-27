@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 interface UpperNavProp
   extends Pick<React.HTMLAttributes<HTMLButtonElement>, "className" | "title"> {
   hasBorder?: boolean;
-  type: "back" | "close" | "backClose";
+  type: "back" | "close" | "backClose" | "none";
   rightElement?: ReactNode;
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
   shape?: "fill" | "";
@@ -36,6 +36,9 @@ const UpperNavBar = ({
     case "close":
     case "backClose":
       icon = <IoCloseSharp size="25px" />;
+      break;
+    case "none":
+      icon = null;
       break;
     default:
       break;
