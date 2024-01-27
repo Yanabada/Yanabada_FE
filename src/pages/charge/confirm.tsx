@@ -31,7 +31,7 @@ const ChargeConfirm = () => {
 
   return (
     <>
-      <UpperNavBar title={typeMap.get(historyData.type) + "완료"} type="close" />
+      <UpperNavBar title={typeMap.get(historyData.type) + "완료"} type="none" />
       <CS.ConfirmWrapper>
         <img src={CheckIcoLogo} alt="체크아이콘" />
         <CS.ConfirmTit>야놀자페이 {typeText}이 완료되었습니다!</CS.ConfirmTit>
