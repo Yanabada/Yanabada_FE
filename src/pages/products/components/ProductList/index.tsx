@@ -4,7 +4,7 @@ import KakaoMap from "../KakaoMap";
 import ProductCard from "../ProductCard";
 import useProducts from "@pages/products/api/queries";
 import { useMapState } from "@pages/products/stores/mapStore";
-import { useSearchParams } from "react-router-dom";
+import { ScrollRestoration, useSearchParams } from "react-router-dom";
 import { Category, Option, OrderState } from "@pages/products/api/products";
 import { useEffect } from "react";
 import NoProduct from "../NoProduct";
@@ -56,12 +56,15 @@ const ProductList = () => {
       ) : !hasProducts ? (
         <NoProduct />
       ) : (
-        <S.ProductCardWrapper>
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-          <div className="observer" ref={ref} />
-        </S.ProductCardWrapper>
+        <>
+          <ScrollRestoration />
+          <S.ProductCardWrapper>
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+            <div className="observer" ref={ref} />
+          </S.ProductCardWrapper>
+        </>
       )}
     </>
   );
