@@ -54,7 +54,6 @@ const Home = () => {
       <Header />
       <SearchInput />
       <Banner />
-      <RecentlyProduct />
       <Suspense fallback={<p>Loading...</p>}>
         <CategoryProduct
           title="마감 임박 상품"
