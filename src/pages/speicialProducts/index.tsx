@@ -2,7 +2,7 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import useProducts from "@pages/products/api/queries";
 import Order from "@pages/products/components/Order";
 import ProductCard from "@pages/products/components/ProductCard";
-import Logo from "@assets/icons/hot_place_2024.svg?react";
+import logo from "@assets/2024_dragon.png";
 import { ScrollRestoration } from "react-router-dom";
 import * as S from "./styles";
 
@@ -15,7 +15,7 @@ const SpecialProducts = () => {
       <UpperNavBar title="2024년을 시작하는 신년 파티룸" type="back" />
       <S.Wrapper>
         <div className="logo">
-          <Logo />
+          <img src={logo} alt="로고" />
         </div>
         <div className="desc">
           <p className="bold">HAPPY NEW YEAR</p>
