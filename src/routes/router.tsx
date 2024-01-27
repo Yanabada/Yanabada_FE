@@ -40,6 +40,7 @@ import ChargeLists from "@pages/charge/list";
 import { Suspense } from "react";
 import SellCorrect from "@pages/sell/correct";
 import YanoljaPay from "@pages/charge/pay";
+import Terms from "@pages/myPage/terms";
 
 const router = createBrowserRouter([
   {
@@ -214,6 +215,10 @@ const router = createBrowserRouter([
                 <PurchaseHistory width="100%" />
               </Suspense>
             )
+          },
+          {
+            path: "terms",
+            element: <Terms />
           }
         ]
       },
