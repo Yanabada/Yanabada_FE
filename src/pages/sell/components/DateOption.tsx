@@ -166,7 +166,11 @@ const DateOption = ({
   const calcFeeNumber = calculateOriginDiscount(purchasePrice, endDateInfo.feePercentage);
 
   useEffect(() => {
-    setCalcFeeNumber(calcFeeNumber);
+    if (policyNumber === "YNBD_3") {
+      setCalcFeeNumber("입실일 취소 불가");
+    } else {
+      setCalcFeeNumber(calcFeeNumber);
+    }
   }, [calcFeeNumber, setCalcFeeNumber]);
 
   return (
