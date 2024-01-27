@@ -9,6 +9,7 @@ import ProductList from "./components/ProductList";
 import { useMapState } from "./stores/mapStore";
 import OptionTab from "./components/OptionTap";
 import Order from "./components/Order";
+import LoadingCircle from "@components/loading";
 
 const Products = () => {
   const { isMapOpen, setMapOpen, hasProducts } = useMapState();
@@ -34,7 +35,7 @@ const Products = () => {
           <Order />
         </S.OptionWrapper>
       )}
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={<LoadingCircle width="200px" />}>
         <ProductList />
       </Suspense>
       {!isMapOpen && hasProducts && <GoToMapButton handleClick={setMapOpen} />}

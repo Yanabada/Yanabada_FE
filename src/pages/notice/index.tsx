@@ -24,8 +24,7 @@ const Notice = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [notis, setNotis] = useState<Array<{ id: number }>>([]);
   const navigate = useNavigate();
-  const { data, isLoading, error, deleteSelectedNotifications, deleteAllNotification } =
-    useNotifications();
+  const { data, error, deleteSelectedNotifications, deleteAllNotification } = useNotifications();
 
   const handleChange = (id: number) => {
     const existingNoti = notis.find((noti) => noti.id === id);
@@ -40,7 +39,6 @@ const Notice = () => {
 
   // UI 수정
   if (error) return <p>error {error.message}</p>;
-  if (!data || isLoading) return <p>Loading...</p>;
 
   return (
     <>
@@ -53,10 +51,10 @@ const Notice = () => {
         }
       />
       <S.Container>
-        {data.data.notifications.length === 0 ? (
+        {data?.data.notifications.length === 0 ? (
           <NoNotice />
         ) : (
-          data.data.notifications.map((noti) => (
+          data?.data.notifications.map((noti) => (
             <AnimatePresence key={noti.notificationId} custom={isEditing}>
               <S.NoticeContainer
                 custom={isEditing}

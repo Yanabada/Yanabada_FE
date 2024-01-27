@@ -4,11 +4,11 @@ import KakaoMap from "../KakaoMap";
 import ProductCard from "../ProductCard";
 import useProducts from "@pages/products/api/queries";
 import { useMapState } from "@pages/products/stores/mapStore";
-import { useSearchParams } from "react-router-dom";
+import { ScrollRestoration, useSearchParams } from "react-router-dom";
 import { Category, Option, OrderState } from "@pages/products/api/products";
 import { useEffect } from "react";
 import NoProduct from "../NoProduct";
-import usePreviousParams from "@pages/products/hooks/usePreviousParams";
+import LoadingCircle from "@components/loading";
 
 const ProductList = () => {
   const [searchParams] = useSearchParams();
@@ -23,9 +23,9 @@ const ProductList = () => {
   const {
     data: products,
     hasNextPage,
+    isLoading,
     isFetching,
-    fetchNextPage,
-    refetch
+    fetchNextPage
   } = useProducts({
     ...(options && { options: options as Option[] }),
     ...(order && { order: order as OrderState }),
@@ -36,18 +36,10 @@ const ProductList = () => {
     size: 10
   });
   const { isMapOpen, setHasProducts, hasProducts } = useMapState();
-  const previousParams = usePreviousParams(searchParams.toString());
 
   useEffect(() => {
     setHasProducts(products.length);
   }, [products.length, setHasProducts]);
-
-  useEffect(() => {
-    // FIXME: 왜 두 번 요청하냐 처음부터~~
-    if (previousParams !== searchParams.toString()) {
-      refetch();
-    }
-  }, [searchParams, previousParams, refetch]);
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -57,21 +49,26 @@ const ProductList = () => {
     }
   });
 
+  if (isLoading) return <LoadingCircle />;
+
   return (
     <>
       {isMapOpen ? (
         <S.MapContainer>
-          <KakaoMap />
+          <KakaoMap products={products} />
         </S.MapContainer>
       ) : !hasProducts ? (
         <NoProduct />
       ) : (
-        <S.ProductCardWrapper>
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-          <div className="observer" ref={ref} />
-        </S.ProductCardWrapper>
+        <>
+          <ScrollRestoration />
+          <S.ProductCardWrapper>
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+            <div className="observer" ref={ref} />
+          </S.ProductCardWrapper>
+        </>
       )}
     </>
   );
