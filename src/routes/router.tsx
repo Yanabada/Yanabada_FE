@@ -40,6 +40,7 @@ import ChargeLists from "@pages/charge/list";
 import { Suspense } from "react";
 import SellCorrect from "@pages/sell/correct";
 import YanoljaPay from "@pages/charge/pay";
+import SpecialProducts from "@pages/speicialProducts";
 
 const router = createBrowserRouter([
   {
@@ -276,6 +277,10 @@ const router = createBrowserRouter([
   {
     path: "/products/:productId",
     element: <ProductDetail />
+  },
+  {
+    path: "/products/special",
+    element: <SpecialProducts />
   },
   {
     path: "/chat",
