@@ -173,6 +173,20 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     setValue("phoneNumber1", formattedValue);
   };
 
+  const triggerProductMutate = () => {
+    const simplePassword = localStorage.getItem("simplePW");
+    buyProductMutate({
+      productId: Number(productId),
+      reservationPersonName: nameState,
+      reservationPersonPhoneNumber: phoneNumberState,
+      userPersonName: name,
+      userPersonPhoneNumber: phoneNumber,
+      point: Number(pointToUse),
+      paymentType: convertString(paymentMethod),
+      simplePassword: simplePassword
+    });
+  };
+
   const REDIRECT_URL = "https://www.yanabada.com/purchase/confirm";
 
   useEffect(() => {
@@ -202,44 +216,35 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
 
   useEffect(() => {
     if (isPaymentSuccess) {
-      const simplePassword = localStorage.getItem("simplePW");
-      buyProductMutate({
-        productId: Number(productId),
-        reservationPersonName: nameState,
-        reservationPersonPhoneNumber: phoneNumberState,
-        userPersonName: name,
-        userPersonPhoneNumber: phoneNumber,
-        point: Number(pointToUse),
-        paymentType: convertString(paymentMethod),
-        simplePassword: simplePassword
-      });
+      triggerProductMutate();
     }
   }, [isPaymentSuccess]);
 
+  const purchaseInfo = {
+    accommodationName: productData?.accommodationInfo.name,
+    roomName: productData?.roomInfo.name,
+    checkInDate: productData?.checkInDate,
+    checkOutDate: productData?.checkOutDate,
+    checkInTime: productData?.roomInfo.checkInTime,
+    checkOutTime: productData?.roomInfo.checkOutTime,
+    minHeadCount: productData?.roomInfo.minHeadCount,
+    maxHeadCount: productData?.roomInfo.maxHeadCount,
+    reservationPersonName: nameState,
+    reservationPersonPhoneNumber: phoneNumberState,
+    userPersonName: name,
+    userPersonPhoneNumber: phoneNumber,
+    tradeId: productData?.tradeId,
+    productPrice: formatNumberWithCommas(productData?.price),
+    fee: productData?.sellingPrice * 0.05,
+    point: pointToUse,
+    totalPrice: formatNumberWithCommas(totalPrice),
+    paymentType: convertStringToKR(paymentMethod),
+    productId: productId,
+    image: productData?.accommodationInfo.image
+  };
+
   useEffect(() => {
     if (buyProductSuccess) {
-      const purchaseInfo = {
-        accommodationName: productData?.accommodationInfo.name,
-        roomName: productData?.roomInfo.name,
-        checkInDate: productData?.checkInDate,
-        checkOutDate: productData?.checkOutDate,
-        checkInTime: productData?.roomInfo.checkInTime,
-        checkOutTime: productData?.roomInfo.checkOutTime,
-        minHeadCount: productData?.roomInfo.minHeadCount,
-        maxHeadCount: productData?.roomInfo.maxHeadCount,
-        reservationPersonName: nameState,
-        reservationPersonPhoneNumber: phoneNumberState,
-        userPersonName: name,
-        userPersonPhoneNumber: phoneNumber,
-        tradeId: productData?.tradeId,
-        productPrice: formatNumberWithCommas(productData?.price),
-        fee: productData?.sellingPrice * 0.05,
-        point: pointToUse,
-        totalPrice: formatNumberWithCommas(totalPrice),
-        paymentType: convertStringToKR(paymentMethod),
-        productId: productId
-      };
-
       localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
 
       navigate("/purchase/confirm");
@@ -360,7 +365,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             <S.InfoText>
               예약자 정보<S.UserInfoTextRed>*</S.UserInfoTextRed>
             </S.InfoText>
-            <S.ChangeText onClick={() => setIsChangeButtonClicked(true)}>변경하기</S.ChangeText>
+            <S.ChangeText onClick={() => setIsChangeButtonClicked(true)}>입력하기</S.ChangeText>
           </S.PersonInfoTopWrapper>
           {isChangeButtonClicked ? (
             <S.FormWrapper width={width}>
@@ -884,36 +889,15 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     REDIRECT_URL
                   );
                 } else {
-                  const purchaseInfo = {
-                    accommodationName: productData?.accommodationInfo.name,
-                    roomName: productData?.roomInfo.name,
-                    checkInDate: productData?.checkInDate,
-                    checkOutDate: productData?.checkOutDate,
-                    checkInTime: productData?.roomInfo.checkInTime,
-                    checkOutTime: productData?.roomInfo.checkOutTime,
-                    minHeadCount: productData?.roomInfo.minHeadCount,
-                    maxHeadCount: productData?.roomInfo.maxHeadCount,
-                    reservationPersonName: nameState,
-                    reservationPersonPhoneNumber: phoneNumberState,
-                    userPersonName: name,
-                    userPersonPhoneNumber: phoneNumber,
-                    tradeId: productData?.tradeId,
-                    productPrice: formatNumberWithCommas(productData?.price),
-                    fee: productData?.sellingPrice * 0.05,
-                    point: pointToUse,
-                    totalPrice: formatNumberWithCommas(totalPrice),
-                    paymentType: convertStringToKR(paymentMethod),
-                    productId: productId
-                  };
-
-                  localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
-
+                  // 잔액 부족할 경우
                   if (balanceData.balance < productData?.sellingPrice) {
+                    // TODO: 리다이렉트 경로 고민
                     navigate(
-                      `/charge/pay?type=charging&price=${totalPrice}&redirect=/purchase/confirm`
+                      `/charge/pay?type=charging&price=${totalPrice}&redirect=/purchase?name=${name}&phonenumber=${phoneNumber}&productId=${productId}`
                     );
+                    // 잔액 부족하지 않을 경우
                   } else {
-                    navigate("/purchase/confirm");
+                    triggerProductMutate();
                   }
                 }
               }}
