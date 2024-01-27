@@ -4,9 +4,9 @@ import AirplaneIcon from "@assets/icons/airplane.svg?react";
 import * as S from "./styles";
 import { ProductsMarkers } from "./ProductsMarkers";
 import ProductCardForMap from "../ProductCard/ProductCardForMap";
-import useProducts from "@pages/products/api/queries";
 import { MyPositionMarker } from "./MyPositionMarker";
 import Research from "./Research";
+import { ProductType } from "@pages/products/types/productsType";
 
 export interface UserPositionType {
   lat: number | null;
@@ -20,8 +20,11 @@ export interface MapCenter {
   lng: number;
 }
 
-const KakaoMap = () => {
-  const { data: products } = useProducts();
+interface MapProps {
+  products: ProductType[];
+}
+
+const KakaoMap = ({ products }: MapProps) => {
   const [selectedProductId, setSelectedProductId] = useState<number | null>(
     products.length > 0 ? products[0].id : 0
   );

@@ -3,9 +3,10 @@ import * as S from "./styles";
 interface NumberBadgeProps {
   number?: number;
   isChatPage?: boolean;
+  hasMore?: boolean;
 }
 
-const NumberBadge = ({ number, isChatPage = false }: NumberBadgeProps) => {
+const NumberBadge = ({ number, isChatPage = false, hasMore = false }: NumberBadgeProps) => {
   if (!number) {
     return;
   }
@@ -15,6 +16,7 @@ const NumberBadge = ({ number, isChatPage = false }: NumberBadgeProps) => {
       isChatPage={isChatPage}
     >
       {number}
+      {hasMore && "+"}
     </S.BadgeCircle>
   );
 };

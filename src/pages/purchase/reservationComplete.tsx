@@ -61,21 +61,21 @@ const ReservationComplete = () => {
             />
           </S.ImageWarpper>
           <div className="info">
-            <p className="product">{purchaseInfo.accommodationName}</p>
-            <p className="room">{purchaseInfo.roomName}</p>
+            <p className="product">{purchaseInfo?.accommodationName}</p>
+            <p className="room">{purchaseInfo?.roomName}</p>
             <p className="date">
-              {formatDate(purchaseInfo.checkInDate)} ({getDayOfWeek(purchaseInfo.checkInDate)}) -
-              {formatDate(purchaseInfo.checkOutDate)} ({getDayOfWeek(purchaseInfo.checkOutDate)})
+              {formatDate(purchaseInfo?.checkInDate)} ({getDayOfWeek(purchaseInfo?.checkInDate)}) -
+              {formatDate(purchaseInfo?.checkOutDate)} ({getDayOfWeek(purchaseInfo?.checkOutDate)})
             </p>
             <p className="check">
-              체크인 {purchaseInfo.checkInTime} | 체크아웃 {purchaseInfo.checkOutTime}
+              체크인 {purchaseInfo?.checkInTime} | 체크아웃 {purchaseInfo?.checkOutTime}
             </p>
           </div>
         </div>
         <div className="bottom">
           <ProfileIconGray />
           <p className="guest">
-            기준 {purchaseInfo.minHeadCount}명 / 최대 {purchaseInfo.maxHeadCount}명
+            기준 {purchaseInfo?.minHeadCount}명 / 최대 {purchaseInfo?.maxHeadCount}명
           </p>
         </div>
       </S.CardWrapper>
@@ -84,11 +84,11 @@ const ReservationComplete = () => {
       <S.Title>예약자 정보</S.Title>
       <S.Flex>
         <S.SubTitle>이름</S.SubTitle>
-        <S.Text>{purchaseInfo.reservationPersonName}</S.Text>
+        <S.Text>{purchaseInfo?.reservationPersonName}</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>휴대폰 번호</S.SubTitle>
-        <S.Text>{purchaseInfo.reservationPersonPhoneNumber}</S.Text>
+        <S.Text>{purchaseInfo?.reservationPersonPhoneNumber}</S.Text>
       </S.Flex>
 
       <S.Spacer className="border-bottom" height="1.5rem" />
@@ -96,11 +96,11 @@ const ReservationComplete = () => {
       <S.Title>이용자 정보</S.Title>
       <S.Flex>
         <S.SubTitle>이름</S.SubTitle>
-        <S.Text>{purchaseInfo.userPersonName}</S.Text>
+        <S.Text>{purchaseInfo?.userPersonName}</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>휴대폰 번호</S.SubTitle>
-        <S.Text>{purchaseInfo.userPersonPhoneNumber}</S.Text>
+        <S.Text>{purchaseInfo?.userPersonPhoneNumber}</S.Text>
       </S.Flex>
       <S.Spacer />
 
@@ -115,38 +115,38 @@ const ReservationComplete = () => {
       </S.NoticeWrapper>
       <S.Flex>
         <S.SubTitle>주문번호</S.SubTitle>
-        <S.Text>{filteredTrades[0].tradeId}</S.Text>
+        <S.Text>{filteredTrades[0]?.tradeId}</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>판매자</S.SubTitle>
-        <S.Text>{filteredTrades[0].sellerNickname}</S.Text>
+        <S.Text>{filteredTrades[0]?.sellerNickname}</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>주문일시</S.SubTitle>
-        <S.Text>{filteredTrades[0].tradeRegisteredTime}</S.Text>
+        <S.Text>{filteredTrades[0]?.tradeRegisteredTime}</S.Text>
       </S.Flex>
       <S.Spacer />
 
       <S.Title>결제 정보</S.Title>
       <S.Flex>
         <S.SubTitle>상품금액</S.SubTitle>
-        <S.Text className="bold">{purchaseInfo.productPrice}원</S.Text>
+        <S.Text className="bold">{purchaseInfo?.productPrice}원</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>수수료</S.SubTitle>
-        <S.Text className="bold gray-600">{purchaseInfo.fee}원</S.Text>
+        <S.Text className="bold gray-600">{purchaseInfo?.fee}원</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>야놀자 포인트</S.SubTitle>
-        <S.Text className="bold gray-500">-{purchaseInfo.point}P</S.Text>
+        <S.Text className="bold gray-500">-{purchaseInfo?.point}P</S.Text>
       </S.Flex>
       <S.Flex>
         <S.Title>총 결제 금액</S.Title>
-        <S.Text className="blue bold">{purchaseInfo.totalPrice}원</S.Text>
+        <S.Text className="blue bold">{purchaseInfo?.totalPrice}원</S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>결제 수단</S.SubTitle>
-        <S.Text>{purchaseInfo.paymentType}</S.Text>
+        <S.Text>{purchaseInfo?.paymentType}</S.Text>
       </S.Flex>
 
       <S.Footer>

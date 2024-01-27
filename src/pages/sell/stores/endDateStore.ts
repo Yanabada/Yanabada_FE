@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 
 const useCalcFeeStore = create((set) => ({
   calcFeeNumber: 0, // 초기 상태

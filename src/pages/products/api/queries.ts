@@ -3,7 +3,7 @@ import getProducts, { GetProductsRequestParams } from "./products";
 
 const useProducts = (params: Partial<GetProductsRequestParams> = { size: 10 }) => {
   return useSuspenseInfiniteQuery({
-    queryKey: ["products"],
+    queryKey: ["products", params.category, params.options, params.order],
     queryFn: ({ pageParam }) => getProducts({ ...params, page: pageParam }),
     staleTime: 1000,
     initialPageParam: 1,

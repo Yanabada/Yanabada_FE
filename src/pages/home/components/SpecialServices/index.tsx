@@ -6,6 +6,7 @@ import * as S from "./styles";
 import ArrowRight from "@assets/icons/arrowRight.svg?react";
 import useProducts from "@pages/products/api/queries";
 import Logo from "@assets/icons/hot_place_2024.svg?react";
+import { Link } from "react-router-dom";
 
 type Picked =
   | "id"
@@ -22,23 +23,29 @@ export type OptionCardType = Pick<ProductType, Picked>;
 
 const SpecialServices = () => {
   // 어떤 옵션을 줘야할지?
-  const { data: products } = useProducts({ size: 10, isHidingSoldOut: true });
+  const { data: products } = useProducts({
+    size: 10,
+    isHidingSoldOut: true,
+    options: ["PARTY_ROOM"]
+  });
 
   return (
     <S.Container>
       <S.Background />
-      <S.TitleWrapper>
-        <div className="logo">
-          <Logo />
-        </div>
-        <div className="title">
-          <div>
-            <h2>HAPPY NEW YEAR</h2>
-            <h3>새해 핫플레이스 양도숙박권 모음</h3>
+      <Link to="/products/special">
+        <S.TitleWrapper>
+          <div className="logo">
+            <Logo />
           </div>
-          <ArrowRight />
-        </div>
-      </S.TitleWrapper>
+          <div className="title">
+            <div>
+              <h2>HAPPY NEW YEAR</h2>
+              <h3>새해 핫플레이스 양도숙박권 모음</h3>
+            </div>
+            <ArrowRight />
+          </div>
+        </S.TitleWrapper>
+      </Link>
       <S.CardWrapper>
         {products.map((product) => (
           <ColumnCard key={product.id} product={product} />
