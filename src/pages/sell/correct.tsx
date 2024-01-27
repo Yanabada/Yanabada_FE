@@ -20,6 +20,7 @@ import { formatDate } from "./utils/formatDate";
 import getSellResult from "./apis/getSellResult";
 import initialSellData from "./constants/initialSellData";
 import { usePatchSellData } from "./hooks/usePatchSellApi";
+import useCalcFeeStore from "./stores/endDateStore";
 
 interface EndDateInfo {
   endDate: string;
@@ -42,6 +43,7 @@ const SellCorrect = () => {
   const [searchParams] = useSearchParams();
   const redirectParams = searchParams.get("redirect");
   const { id } = useParams();
+  const { calcFeeNumber }: any = useCalcFeeStore();
   const [endDate, setEndDate] = useState<string | undefined>();
   const [endDateInfo, setEndDateInfo] = useState<EndDateInfo>({
     endDate: "",
@@ -164,6 +166,7 @@ const SellCorrect = () => {
             setIsAutoCancel={setIsAutoCancel}
             purchasePrice={sellDetailData.purchasePrice}
             endDateInfo={endDateInfo}
+            calcFeeNumber={calcFeeNumber}
           />
         )}
         <CS.DetailBlank />

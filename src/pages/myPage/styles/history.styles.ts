@@ -1,13 +1,10 @@
 import styled from "@emotion/styled";
 
-// FIXME: 모듈화
-interface SalesHistoryProps {
+export interface HistoryProps {
   width?: string;
 }
 
-/********** FIXME: 모듈화 **********/
-
-export const PointsMiddleContainer = styled.div<SalesHistoryProps>`
+export const PointsMiddleContainer = styled.div<HistoryProps>`
   display: flex;
   width: ${({ width }) => width || "360px"};
   justify-content: space-between;
@@ -55,10 +52,7 @@ export const MiddleRightText = styled.p`
   ${({ theme }) => theme.text.button2}
 `;
 
-/******************************/
-
-// FIXME: 모듈화
-export const ListCardWrapper = styled.div<SalesHistoryProps>`
+export const ListCardWrapper = styled.div<HistoryProps>`
   width: ${({ width }) => width || "360px"};
   height: auto;
   display: flex;

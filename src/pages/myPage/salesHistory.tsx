@@ -6,11 +6,7 @@ import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
 import { useEffect, useState } from "react";
 import useIntersect from "@pages/products/hooks/useIntersect";
-
-// FIXME: 모듈화
-interface SalesHistoryProps {
-  width?: string;
-}
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 interface SaleProduct {
   accommodationName: string;
@@ -23,7 +19,7 @@ interface SaleProduct {
   tradeId: number;
 }
 
-const SalesHistory = ({ width }: SalesHistoryProps) => {
+const SalesHistory = ({ width }: S.HistoryProps) => {
   const { data, error, refetch, hasNextPage, isFetching, fetchNextPage } = useSalesHistory();
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -85,9 +81,21 @@ const SalesHistory = ({ width }: SalesHistoryProps) => {
     }
   }, [data, currentTab]);
 
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectParam = searchParams.get("redirect");
+
+  const customBack = () => {
+    if (redirectParam) {
+      navigate(redirectParam);
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <>
-      <UpperNavBar title="판매내역" type="back" />
+      <UpperNavBar title="판매내역" type="back" isCustom customBack={customBack} />
       <S.PointsMiddleContainer width={width}>
         <S.MiddleWrapper onClick={() => setCurrentTab("all")}>
           {currentTab === "all" ? (
