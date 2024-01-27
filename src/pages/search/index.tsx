@@ -6,12 +6,20 @@ import GuestCounterTab from "./components/GuestCounterTab";
 import CalendarTab from "./components/CalendarTab";
 import KeywordTab from "./components/KeywordTab";
 import HistoryStore from "./stores/historyStore";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
+  const navigate = useNavigate();
   const { history } = HistoryStore();
+
   return (
     <>
-      <UpperNavBar type="close" title="검색" />
+      <UpperNavBar
+        type="close"
+        title="검색"
+        isCustom={true}
+        customBack={() => navigate("/products")}
+      />
       <S.Container>
         {history.length > 0 && (
           <>

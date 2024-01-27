@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { ProductType } from "@pages/products/types/productsType";
 import { numberFormat } from "@utils/numberFormat";
 import CheckStore from "@pages/products/stores/checkStore";
-import { formatDateTo } from "@utils/formatDateTo";
+import { formatDateTo, formatRemainingTime } from "@utils/formatDateTo";
 
 type Product = Omit<ProductType, "latitude" | "longitude">;
 
@@ -15,12 +15,6 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { isCheck } = CheckStore();
-  const saleEndTime = new Date(product.saleEnd);
-  const timeOut = saleEndTime.getTime() - new Date().getTime();
-
-  const days = Math.floor(timeOut / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeOut % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((timeOut % (1000 * 60 * 60)) / (1000 * 60));
 
   if (product.status === "SOLD_OUT" && isCheck) {
     return null;
@@ -61,9 +55,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               <S.TimerNegoContainer>
                 <S.TimerContainer>
                   <S.TimerIcon />
-                  <S.TimerText>
-                    {days ? `${days}일 ${hours}시간 ${minutes}분` : `${hours}시간 ${minutes}분`}
-                  </S.TimerText>
+                  <S.TimerText>{formatRemainingTime(product.saleEnd)}</S.TimerText>
                 </S.TimerContainer>
                 {product.canNegotiate ? (
                   <S.NegoContainer>
