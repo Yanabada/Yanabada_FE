@@ -908,7 +908,13 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
 
                   localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
 
-                  navigate(`/charge?type=charging&price=${totalPrice}&redirect=/purchase/confirm`);
+                  if (balanceData.balance < productData?.sellingPrice) {
+                    navigate(
+                      `/charge/pay?type=charging&price=${totalPrice}&redirect=/purchase/confirm`
+                    );
+                  } else {
+                    navigate("/purchase/confirm");
+                  }
                 }
               }}
             >
