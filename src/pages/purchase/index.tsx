@@ -365,7 +365,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             <S.InfoText>
               예약자 정보<S.UserInfoTextRed>*</S.UserInfoTextRed>
             </S.InfoText>
-            <S.ChangeText onClick={() => setIsChangeButtonClicked(true)}>변경하기</S.ChangeText>
+            <S.ChangeText onClick={() => setIsChangeButtonClicked(true)}>입력하기</S.ChangeText>
           </S.PersonInfoTopWrapper>
           {isChangeButtonClicked ? (
             <S.FormWrapper width={width}>
@@ -889,11 +889,13 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     REDIRECT_URL
                   );
                 } else {
+                  // 잔액 부족할 경우
                   if (balanceData.balance < productData?.sellingPrice) {
                     // TODO: 리다이렉트 경로 고민
                     navigate(
-                      `/charge/pay?type=charging&price=${totalPrice}&redirect=/purchase/confirm`
+                      `/charge/pay?type=charging&price=${totalPrice}&redirect=/purchase?name=${name}&phonenumber=${phoneNumber}&productId=${productId}`
                     );
+                    // 잔액 부족하지 않을 경우
                   } else {
                     triggerProductMutate();
                   }
