@@ -9,6 +9,8 @@ import PriceTable from "@components/priceTable";
 import UpperNavBar from "@components/navBar/upperNavBar";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import Cookies from "js-cookie";
+import useUpdatePrice from "@pages/chat/hooks/useUpdatePrice";
+import { useNavigate } from "react-router-dom";
 
 interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -26,6 +28,7 @@ interface ChatRoomBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   checkInDate: string;
   checkOutDate: string;
   policyNumber: string;
+  productId: number;
 }
 interface CommonContent {
   badgeText: string;
@@ -48,8 +51,10 @@ const ChatRoomBanner = ({
   accommodationName,
   checkInDate,
   checkOutDate,
-  policyNumber
+  policyNumber,
+  productId
 }: ChatRoomBannerProps) => {
+  const navigate = useNavigate();
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [price, setPrice] = useState(0);
   const myId = Number(Cookies.get("id"));
@@ -142,9 +147,10 @@ const ChatRoomBanner = ({
     ]
   ]);
 
+  const { mutate } = useUpdatePrice(setIsBottomSheetVisible);
   const handleSubmit = () => {
     // TODO - 가격 변경 API 연동
-    setIsBottomSheetVisible(false);
+    mutate({ productId, price });
   };
 
   return (
@@ -167,7 +173,9 @@ const ChatRoomBanner = ({
         <BaseButton
           buttonType="icon"
           onClick={() => {
-            setIsBottomSheetVisible(true);
+            sellerId === myId
+              ? setIsBottomSheetVisible(true)
+              : navigate(`/purchase?productId=${productId}`);
           }}
           width="100%"
           style={{ borderRadius: "0px" }}
@@ -205,7 +213,7 @@ const ChatRoomBanner = ({
             price={price}
             setPrice={setPrice}
           />
-          <BaseButton buttonType="default" onClick={handleSubmit}>
+          <BaseButton width="100%" buttonType="default" onClick={handleSubmit}>
             확인
           </BaseButton>
         </S.PriceInfoBox>

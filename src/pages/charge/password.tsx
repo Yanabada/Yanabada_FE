@@ -121,9 +121,14 @@ const PasswordConfirm = () => {
 
   const successPassword = (response: any) => {
     if (response.yanoljaPayHistoryId) {
-      const newPath = redirectParam
-        ? "/purchase/confirm"
-        : `/charge/confirm/${response.yanoljaPayHistoryId}?type=${typeParam}`;
+      let newPath;
+
+      if (redirectParam === "/purchase/confirm") {
+        newPath = "/purchase/confirm";
+      } else {
+        newPath = `/charge/confirm/${response.yanoljaPayHistoryId}?type=${typeParam}`;
+      }
+
       navigate(newPath);
     }
   };

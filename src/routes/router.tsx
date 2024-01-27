@@ -39,6 +39,7 @@ import Notice from "@pages/notice";
 import ChargeLists from "@pages/charge/list";
 import { Suspense } from "react";
 import SellCorrect from "@pages/sell/correct";
+import YanoljaPay from "@pages/charge/pay";
 
 const router = createBrowserRouter([
   {
@@ -259,6 +260,10 @@ const router = createBrowserRouter([
           {
             path: "success",
             element: <ChargeSuccess />
+          },
+          {
+            path: "pay",
+            element: <YanoljaPay />
           }
         ]
       }
@@ -287,7 +292,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/chat:roomId",
-        element: <ChatRoom />
+        element: (
+          <Suspense>
+            <ChatRoom />
+          </Suspense>
+        )
       }
     ]
   },
