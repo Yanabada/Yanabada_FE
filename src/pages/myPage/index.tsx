@@ -185,7 +185,6 @@ const MyPage = ({ width }: MyPageProps) => {
           }}
         />
         <Modal {...loginModalProps} />
-        <CardSectionButton buttonType="disabledPoint" width={width} />
 
         <ListButton width={width}>야나바다 고객센터</ListButton>
         <ListButton width={width}>이용가이드</ListButton>
