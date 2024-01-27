@@ -95,7 +95,7 @@ instance.interceptors.response.use(
       console.log(error.response);
       if (!("data" in error.response.data)) {
         // TODO - 에러페이지
-        window.location.href = "/login";
+        // window.location.href = "/login";
         return Promise.reject(error);
       }
       if (error.response.data.data.isNeededRefresh) {
@@ -109,7 +109,7 @@ instance.interceptors.response.use(
       const originalRequest = error.config;
 
       if (!("data" in error.response.data)) {
-        window.location.href = "/login";
+        // window.location.href = "/login";
         return Promise.reject(error);
       }
       if (error.response.data.data.isNeededRefresh) {
