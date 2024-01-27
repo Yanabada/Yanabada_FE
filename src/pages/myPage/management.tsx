@@ -45,7 +45,7 @@ const Management = ({ width }: ManagementProps) => {
     }
   };
 
-  const { data, error } = useManagement();
+  const { data, error, refetch } = useManagement();
 
   if (error) {
     console.log(error);
@@ -142,6 +142,7 @@ const Management = ({ width }: ManagementProps) => {
                     ? "구매자가 구매를 취소했어요"
                     : ""
               }
+              refetch={refetch}
             />
           </div>
         ))}
