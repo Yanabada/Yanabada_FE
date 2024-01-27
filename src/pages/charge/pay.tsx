@@ -109,6 +109,7 @@ const YanoljaPay = () => {
           checkInDate={paymentData.checkInDate}
           resetPrice={0}
           charge
+          type={typeParam}
           price={amount}
           setPrice={setAmount}
           balance={paymentData.balance}

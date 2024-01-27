@@ -111,6 +111,22 @@ const PriceArea = ({
     </S.CalcButton>
   );
 
+  let message;
+  if (charge) {
+    switch (type) {
+      case "charging":
+        message = getCommandMessage();
+        break;
+      case "withdrawal":
+        message = getWithdrawalMessage();
+        break;
+      default:
+        break;
+    }
+  } else {
+    message = getErrorMessage();
+  }
+
   return (
     <>
       <S.PriceInner>
@@ -125,12 +141,7 @@ const PriceArea = ({
             placeholder={placeholder}
           />
         </S.MessageWrap>
-        {charge &&
-          (type === "charging"
-            ? getCommandMessage()
-            : type === "withdrawal"
-              ? getWithdrawalMessage()
-              : getErrorMessage())}
+        {message}
         <S.ButtonWrap>
           {amountData.map(renderCalButton)}
           <S.CalcButton onClick={() => handleResetPrice(resetPrice)}>
