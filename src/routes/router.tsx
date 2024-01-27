@@ -350,7 +350,11 @@ const router = createBrowserRouter([
       },
       {
         path: "confirm",
-        element: <ReservationComplete />
+        element: (
+          <Suspense>
+            <ReservationComplete />
+          </Suspense>
+        )
       }
     ]
   }
