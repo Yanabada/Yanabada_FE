@@ -8,6 +8,7 @@ import { ScrollRestoration, useSearchParams } from "react-router-dom";
 import { Category, Option, OrderState } from "@pages/products/api/products";
 import { useEffect } from "react";
 import NoProduct from "../NoProduct";
+import LoadingCircle from "@components/loading";
 
 const ProductList = () => {
   const [searchParams] = useSearchParams();
@@ -22,6 +23,7 @@ const ProductList = () => {
   const {
     data: products,
     hasNextPage,
+    isLoading,
     isFetching,
     fetchNextPage
   } = useProducts({
@@ -46,6 +48,8 @@ const ProductList = () => {
       fetchNextPage();
     }
   });
+
+  if (isLoading) return <LoadingCircle />;
 
   return (
     <>
