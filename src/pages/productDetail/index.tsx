@@ -15,7 +15,6 @@ import { useMapState } from "@pages/products/stores/mapStore";
 import { CustomOverlayMap, Map } from "react-kakao-maps-sdk";
 import PositionIcon from "@assets/icons/product_position_mark.svg?react";
 import LoadingCircle from "@components/loading";
-// import DetailMapCard from "./components/DetailMap/DetailMapCard";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -55,7 +54,6 @@ const ProductDetail = () => {
               </CustomOverlayMap>
             </Map>
           </S.MapContainer>
-          {/* <DetailMapCard /> */}
         </>
       ) : (
         <S.Container>

@@ -29,10 +29,7 @@ const RowCard = ({ props, data }: RowCardProps) => {
                 {props === "마감임박" ? (
                   <S.TimeOut>
                     <RiTimerLine />
-                    <S.TimerOutText>
-                      {/* {days ? `${days}일 ${hours}시간 ${minutes}분` : `${hours}시간 ${minutes}분`} */}
-                      {formatRemainingTime(product.saleEnd)}
-                    </S.TimerOutText>
+                    <S.TimerOutText>{formatRemainingTime(product.saleEnd)}</S.TimerOutText>
                   </S.TimeOut>
                 ) : (
                   <S.DiscountRate>{product.salesPercentage}%</S.DiscountRate>
