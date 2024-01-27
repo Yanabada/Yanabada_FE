@@ -287,7 +287,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/chat:roomId",
-        element: <ChatRoom />
+        element: (
+          <Suspense>
+            <ChatRoom />
+          </Suspense>
+        )
       }
     ]
   },

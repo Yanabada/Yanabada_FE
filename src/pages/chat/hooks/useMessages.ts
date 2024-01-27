@@ -1,14 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { getMessages } from "../apis/api";
 import { MessageRequestParam } from "../types/chatRoom";
 
 const useMessages = (params: MessageRequestParam) => {
-  const { data, isLoading, error } = useQuery({
+  return useSuspenseInfiniteQuery({
     queryKey: ["messages", params.code],
-    queryFn: () => getMessages({ code: params.code })
+    queryFn: ({ pageParam }) => getMessages({ code: params.code, page: pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.data.isLast) return undefined;
+      return allPages.length;
+    },
+    select: (data) => data.pages.flatMap((page) => page.data.messages)
   });
-
-  return { data, isLoading, error };
 };
 
 export default useMessages;

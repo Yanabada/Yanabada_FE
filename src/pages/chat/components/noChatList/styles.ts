@@ -24,6 +24,7 @@ export const HightLight = styled.span`
   color: ${({ theme }) => theme.colors.blue[400]};
   text-decoration: underline;
   ${({ theme }) => theme.text.body2};
+  cursor: pointer;
 `;
 
 export const Content = styled.span`
