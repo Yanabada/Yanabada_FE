@@ -2,7 +2,6 @@ import * as S from "./styles/style";
 import Header from "./components/Header";
 import SearchInput from "./components/SearchInput";
 import Banner from "./components/Banner";
-import RecentlyProduct from "./components/RecentlyProduct";
 import CategoryProduct from "./components/CategoryProduct";
 import SpecialServices from "./components/SpecialServices";
 import CategoryList from "./components/CategoryList";
