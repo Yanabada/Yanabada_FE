@@ -13,7 +13,7 @@ const useRegisterForPayment = () => {
       navigate("/charge/success");
     },
     onError: (error: Error) => {
-      toast.error("뭐라하지");
+      toast.error("등록할 수 없는 계정입니다.");
       console.error("등록 실패", error);
     }
   });
