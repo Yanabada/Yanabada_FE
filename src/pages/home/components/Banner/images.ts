@@ -6,7 +6,7 @@ export default [
   { image: banner1, link: "https://yanabada.softr.app/" },
   {
     image: banner2,
-    link: "https://lemon-deal-8c6.notion.site/yanabada-guide-bf8c0c94d77944e2b42dec66d0fffe5a"
+    link: "https://southern-marscapone-426.notion.site/yanabada-guide-ver-1-1-a6278626554f412684e4b9176fe24fe6"
   },
   { image: banner3, link: "https://www.yanolja.com/" }
 ];

@@ -1,26 +1,18 @@
 import useResearch from "@pages/products/hooks/useResearch";
 import * as S from "./styles";
-import useProducts from "@pages/products/api/queries";
-import { Dispatch, SetStateAction } from "react";
+import { useSearchParams } from "react-router-dom";
 
-interface ResearchProps {
-  setSelectedProductId: Dispatch<SetStateAction<number | null>>;
-}
-
-const Research = ({ setSelectedProductId }: ResearchProps) => {
+const Research = () => {
   const { position, isMapMoved, setMapMoved } = useResearch();
-  const { refetch, data: products } = useProducts({
-    smallX: position?.smallX,
-    smallY: position?.smallY,
-    bigX: position?.bigX,
-    bigY: position?.bigY,
-    size: 20
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleResearch = () => {
-    refetch();
+    searchParams.set("swx", position.smallX.toString());
+    searchParams.set("swy", position.smallY.toString());
+    searchParams.set("nex", position.bigX.toString());
+    searchParams.set("ney", position.bigY.toString());
+    setSearchParams(searchParams);
     setMapMoved(false);
-    setSelectedProductId(products[0].id);
   };
 
   return (

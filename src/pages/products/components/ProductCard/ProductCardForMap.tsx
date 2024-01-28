@@ -5,6 +5,8 @@ import { AnimatePresence, useAnimationControls } from "framer-motion";
 
 import ArrowDown from "@assets/icons/search_arrowDown.svg?react";
 import { useEffect, useState } from "react";
+import { formatDateTo, formatRemainingTime } from "@utils/formatDateTo";
+import { differenceInDays } from "date-fns";
 
 interface ProductCardProps {
   selectedProduct?: ProductType;
@@ -70,17 +72,20 @@ const ProductCardForMap = ({ selectedProduct }: ProductCardProps) => {
           <ArrowDown />
         </button>
         <S.ImageContainer>
-          <S.Image src="https://bit.ly/2Z4KKcF" />
+          <S.Image src={selectedProduct.image} />
           <S.DiscountRate>{selectedProduct.salesPercentage}%</S.DiscountRate>
           <S.LocationContainer>
             <MapIcon />
-            <S.Location>강원도 강릉시</S.Location>
+            <S.Location>{selectedProduct.address.split(" ").slice(0, 2).join(" ")}</S.Location>
           </S.LocationContainer>
         </S.ImageContainer>
         <S.InformationContainer>
           <S.ProductName>{selectedProduct.accommodationName}</S.ProductName>
           <S.RoomName>{selectedProduct.roomName}</S.RoomName>
-          <S.Period>12/25 ~ 12/26 (1박)</S.Period>
+          <S.Period>
+            {formatDateTo(selectedProduct.checkIn)} ~ {formatDateTo(selectedProduct.checkOut)} (
+            {differenceInDays(selectedProduct.checkOut, selectedProduct.checkIn)}박)
+          </S.Period>
           <S.StarUserContainer>
             <S.UserContainer>
               <S.UserIcon />
@@ -93,7 +98,7 @@ const ProductCardForMap = ({ selectedProduct }: ProductCardProps) => {
             <S.TimerNegoContainer>
               <S.TimerContainer>
                 <S.TimerIcon />
-                <S.TimerText>3일 15시간 23분</S.TimerText>
+                <S.TimerText>{formatRemainingTime(selectedProduct.saleEnd)}</S.TimerText>
               </S.TimerContainer>
               <S.NegoText canNegotiate={selectedProduct.canNegotiate}>
                 {selectedProduct.canNegotiate ? "가격제안가능" : "가격제안불가"}
