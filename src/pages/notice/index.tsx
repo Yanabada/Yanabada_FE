@@ -7,9 +7,10 @@ import Modal from "@components/modal";
 import { useNavigate } from "react-router-dom";
 import { NOTI_TYPE_TO_TEXT } from "./constants";
 import useNotifications from "./queries";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import NoNotice from "./components/NoNotice";
 import { formatDateTo } from "@utils/formatDateTo";
+import { AxiosError } from "axios";
 
 const variants = {
   initial: {
@@ -39,7 +40,12 @@ const Notice = () => {
   };
 
   // UI 수정
-  if (error) return <p>error {error.message}</p>;
+  if (error instanceof AxiosError) {
+    if (error.response.status === 400 || error.response.status === 401) {
+      toast("로그인이 필요합니다.");
+      navigate("/login");
+    }
+  }
 
   return (
     <>
