@@ -63,7 +63,7 @@ const ProductList = () => {
     setHasProducts(products.length);
   }, [products.length, setHasProducts]);
 
-  const ref = useIntersect(async (entry, observer) => {
+  const ref = useIntersect<HTMLDivElement>(async (entry, observer) => {
     observer.unobserve(entry.target);
     if (hasNextPage && !isFetching && products.length > 0) {
       console.log("fetch next page");

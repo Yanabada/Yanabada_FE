@@ -45,7 +45,7 @@ const PurchaseHistory = ({ width }: S.HistoryProps) => {
   };
 
   const { data, error, refetch, hasNextPage, isFetching, fetchNextPage } = usePurchaseHistory();
-  const ref = useIntersect(async (entry, observer) => {
+  const ref = useIntersect<HTMLDivElement>(async (entry, observer) => {
     observer.unobserve(entry.target);
     if (hasNextPage && !isFetching && data.length > 0) {
       fetchNextPage();
