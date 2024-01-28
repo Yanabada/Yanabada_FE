@@ -149,7 +149,6 @@ const ChatRoomBanner = ({
 
   const { mutate } = useUpdatePrice(setIsBottomSheetVisible);
   const handleSubmit = () => {
-    // TODO - 가격 변경 API 연동
     mutate({ productId, price });
   };
 
@@ -207,7 +206,7 @@ const ChatRoomBanner = ({
             placeholder="￦ 판매 가격을 입력해주세요"
             purchasePrice={purchasePrice}
             policyNumber={policyNumber}
-            resetPrice={purchasePrice}
+            resetPrice={sellingPrice}
             checkInDate={checkInDate}
             charge={false}
             price={price}
