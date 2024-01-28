@@ -183,10 +183,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     paymentType: convertString(paymentMethod)
   };
 
-  const triggerProductMutate = () => {
-    buyProductMutate(mutateInfo);
-  };
-
   const REDIRECT_URL = "https://www.yanabada.com/purchase/confirm";
 
   useEffect(() => {
@@ -216,7 +212,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
 
   useEffect(() => {
     if (isPaymentSuccess) {
-      triggerProductMutate();
+      buyProductMutate(mutateInfo);
     }
   }, [isPaymentSuccess]);
 
@@ -255,7 +251,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     localStorage.removeItem("tossPayment");
     localStorage.removeItem("trans");
     localStorage.removeItem("card");
-    localStorage.removeItem("simplePW");
     localStorage.removeItem("purchaseInfo");
   }, []);
 
@@ -891,12 +886,12 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                 } else {
                   // 잔액 부족할 경우
                   if (balanceData.balance < productData?.sellingPrice) {
-                    // TODO: 리다이렉트 경로 고민
                     navigate(
                       `/charge/pay?type=charging&price=${totalPrice}&redirect=/purchase?name=${name}&phonenumber=${phoneNumber}&productId=${productId}`
                     );
                     // 잔액 부족하지 않을 경우
                   } else {
+                    localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
                     localStorage.setItem("mutateInfo", JSON.stringify(mutateInfo));
 
                     navigate(
