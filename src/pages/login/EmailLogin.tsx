@@ -67,6 +67,7 @@ const EmailLogin = () => {
             </div>
             <div>
               <TextInput
+                type="password"
                 variant="move"
                 label="비밀번호"
                 isSuccess={!errors.password}
