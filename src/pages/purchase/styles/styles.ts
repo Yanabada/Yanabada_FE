@@ -281,7 +281,6 @@ export const FormWrapper = styled.div<PurchaseProps>`
 export const TextInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 8px;
 `;
 
 export const TextInputSpacer = styled.div`
