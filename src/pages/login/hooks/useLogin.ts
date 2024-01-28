@@ -3,6 +3,7 @@ import loginApi from "../apis/loginApi";
 import { LoginApiProps } from "../types/login";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { AxiosError } from "axios";
 
 const useLogin = () => {
   const navigate = useNavigate();
@@ -15,8 +16,12 @@ const useLogin = () => {
       // toast.success("로그인 성공");
       navigate("/");
     },
-    onError: (error) => {
+    onError: (error: AxiosError) => {
       console.log(error);
+      if (error.response.status === 400) {
+        toast.error("존재하지 않는 아이디입니다.");
+        return;
+      }
       toast.error("로그인 실패");
     }
   });
