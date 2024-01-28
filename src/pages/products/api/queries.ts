@@ -3,9 +3,16 @@ import getProducts, { GetProductsRequestParams } from "./products";
 
 const useProducts = (params: Partial<GetProductsRequestParams> = { size: 10 }) => {
   return useSuspenseInfiniteQuery({
-    queryKey: ["products", params.category, params.options, params.order],
+    queryKey: [
+      "products",
+      params.category,
+      params.options,
+      params.order,
+      params.smallX,
+      params.smallY
+    ],
     queryFn: ({ pageParam }) => getProducts({ ...params, page: pageParam }),
-    staleTime: 1000,
+    gcTime: 1000,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const isLastPage = allPages.length === lastPage.data.totalPages;
