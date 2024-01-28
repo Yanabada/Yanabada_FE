@@ -189,7 +189,7 @@ const ReservationComplete = () => {
       </S.Flex>
       <S.Flex>
         <S.SubTitle>결제 수단</S.SubTitle>
-        <S.Text>{convertStringToKR(purchaseInfo?.paymentType)}</S.Text>
+        <S.Text>{convertStringToKR(purchaseInfo?.paymentType as string)}</S.Text>
       </S.Flex>
 
       <S.Footer>
