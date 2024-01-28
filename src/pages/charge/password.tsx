@@ -11,6 +11,8 @@ import AmountStore from "./stores/amountStore";
 import { postPassword, withdrawAmount } from "./apis/charge";
 import PasswordStore from "./stores/passwordStore";
 import LockIcon from "assets/icons/lockIcon.svg?react";
+import useBuyProduct from "@pages/purchase/hooks/useBuyProduct";
+import { convertString } from "@pages/purchase/utils/convertString";
 
 const PasswordConfirm = () => {
   const [searchParams] = useSearchParams();
@@ -32,6 +34,10 @@ const PasswordConfirm = () => {
   );
 
   const { setPassword } = PasswordStore();
+
+  // typeParam 이 payment 일때 바로 결제로 넘기기
+  const { mutate: buyProductMutate } = useBuyProduct();
+  const purchaseInfo = JSON.parse(localStorage.getItem("mutateInfo") as string);
 
   const shakeOnMismatch = () => {
     keyInputControls.start({
@@ -102,6 +108,17 @@ const PasswordConfirm = () => {
             response = await postPassword(requestData);
           } else if (typeParam === "withdrawal") {
             response = await withdrawAmount(requestData);
+          } else if (typeParam === "payment") {
+            response = buyProductMutate({
+              productId: Number(purchaseInfo.productId),
+              reservationPersonName: purchaseInfo.nameState,
+              reservationPersonPhoneNumber: purchaseInfo.phoneNumberState,
+              userPersonName: purchaseInfo.name,
+              userPersonPhoneNumber: purchaseInfo.phoneNumber,
+              point: Number(purchaseInfo.pointToUse),
+              paymentType: convertString(purchaseInfo.paymentMethod),
+              simplePassword: enteredDigits.join("")
+            });
           }
 
           successPassword(response);
@@ -123,8 +140,8 @@ const PasswordConfirm = () => {
     if (response.yanoljaPayHistoryId) {
       let newPath;
 
-      if (redirectParam === "/purchase/confirm") {
-        newPath = "/purchase/confirm";
+      if (redirectParam.startsWith("/purchase")) {
+        newPath = { redirectParam };
       } else {
         newPath = `/charge/confirm/${response.yanoljaPayHistoryId}?type=${typeParam}`;
       }
@@ -132,6 +149,8 @@ const PasswordConfirm = () => {
       navigate(newPath);
     }
   };
+
+  // /charge/password?registration=false&type=payment&redirect=${redirectParam}
 
   return (
     <>
