@@ -6,6 +6,7 @@ import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import formatTimeUntilSaleEnd from "./utils/formatTimeUntilSaleEnd";
 import usePurchaseHistory from "./hooks/usePurchaseHistory";
 import useIntersect from "@pages/products/hooks/useIntersect";
+import { useNavigate } from "react-router";
 
 interface TradeData {
   tradeId: number;
@@ -78,9 +79,11 @@ const PurchaseHistory = ({ width }: S.HistoryProps) => {
     }
   }, [data, currentTab]);
 
+  const navigate = useNavigate();
+
   return (
     <>
-      <UpperNavBar title="구매내역" type="back" />
+      <UpperNavBar title="구매내역" type="back" isCustom customBack={() => navigate("/mypage")} />
       <S.PointsMiddleContainer width={width}>
         <S.MiddleWrapper onClick={() => setCurrentTab("all")}>
           {currentTab === "all" ? (

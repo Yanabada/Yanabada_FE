@@ -37,7 +37,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["kakao.maps.d.ts", "node", "firebase-functions"]
+    "types": ["kakao.maps.d.ts", "node"]
   },
   "include": [
     "src",
