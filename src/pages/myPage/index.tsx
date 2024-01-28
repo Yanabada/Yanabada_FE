@@ -109,6 +109,8 @@ const MyPage = ({ width }: MyPageProps) => {
             </S.BellContainer>
           </Link>
         }
+        isCustom
+        customBack={() => navigate("/")}
       />
       <S.MyPageContainer>
         <S.LoginButtonWrapper>
