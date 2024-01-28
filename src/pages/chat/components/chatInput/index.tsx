@@ -13,17 +13,17 @@ const ChatInput = ({ chatRoomCode, senderId, publish }: ChatInputProps) => {
   const [value, setValue] = useState("");
 
   const handleSendMessage = () => {
-    // publishApi({
-    //   chatRoomCode,
-    //   senderId,
-    //   content: value
-    // });
     publish({
       chatRoomCode,
       senderId,
       content: value
     });
     setValue("");
+  };
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSendMessage();
+    }
   };
 
   return (
@@ -33,6 +33,7 @@ const ChatInput = ({ chatRoomCode, senderId, publish }: ChatInputProps) => {
         onChange={(e) => {
           setValue(e.target.value);
         }}
+        onKeyPress={handleKeyPress}
         placeholder="메시지를 입력해주세요."
       />
       <button onClick={handleSendMessage}>
