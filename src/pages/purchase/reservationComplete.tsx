@@ -35,6 +35,8 @@ const ReservationComplete = () => {
 
   const { productId, isMobile } = purchaseInfo;
 
+  console.log("purchaseInfo", purchaseInfo);
+
   const { data, error } = usePurchaseHistory2();
 
   const [filteredTrades, setFilteredTrades] = useState<TradeData[]>();
@@ -76,6 +78,8 @@ const ReservationComplete = () => {
       );
     }
   }, [buyProductSuccess]);
+
+  console.log("filteredTrades", filteredTrades);
 
   return (
     <S.Container>
