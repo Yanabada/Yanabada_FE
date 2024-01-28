@@ -8,6 +8,9 @@ import formatDate from "@pages/purchase/utils/formatDate";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
 import usePurchaseHistory2 from "@pages/myPage/hooks/usePurchaseHistory2";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import queryString from "query-string";
+import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 
 interface TradeData {
   tradeId: number;
@@ -27,7 +30,10 @@ const ReservationComplete = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const purchaseInfo = JSON.parse(localStorage.getItem("purchaseInfo") as string);
+  const location = useLocation();
+
+  const purchaseInfo = queryString.parse(location.search);
+
   const { productId } = purchaseInfo;
 
   const { data, error } = usePurchaseHistory2();
@@ -39,8 +45,6 @@ const ReservationComplete = () => {
   const filteredTrades: TradeData[] = data?.purchaseTrades?.filter(
     (trade: TradeData) => trade?.productId === Number(productId)
   );
-
-  console.log(productId);
 
   return (
     <S.Container>
@@ -55,14 +59,16 @@ const ReservationComplete = () => {
       <S.CardWrapper>
         <div className="above">
           <S.ImageWarpper>
-            <img src={purchaseInfo?.image} alt="숙소 이미지" />
+            <img src={purchaseInfo?.image as string} alt="숙소 이미지" />
           </S.ImageWarpper>
           <div className="info">
             <p className="product">{purchaseInfo?.accommodationName}</p>
             <p className="room">{purchaseInfo?.roomName}</p>
             <p className="date">
-              {formatDate(purchaseInfo?.checkInDate)} ({getDayOfWeek(purchaseInfo?.checkInDate)}) -
-              {formatDate(purchaseInfo?.checkOutDate)} ({getDayOfWeek(purchaseInfo?.checkOutDate)})
+              {formatDate(purchaseInfo?.checkInDate as string)} (
+              {getDayOfWeek(purchaseInfo?.checkInDate as string)}) -
+              {formatDate(purchaseInfo?.checkOutDate as string)} (
+              {getDayOfWeek(purchaseInfo?.checkOutDate as string)})
             </p>
             <p className="check">
               체크인 {purchaseInfo?.checkInTime} | 체크아웃 {purchaseInfo?.checkOutTime}
@@ -131,7 +137,9 @@ const ReservationComplete = () => {
       </S.Flex>
       <S.Flex>
         <S.SubTitle>수수료</S.SubTitle>
-        <S.Text className="bold gray-600">{purchaseInfo?.fee}원</S.Text>
+        <S.Text className="bold gray-600">
+          {formatNumberWithCommas(Number(purchaseInfo?.fee))}원
+        </S.Text>
       </S.Flex>
       <S.Flex>
         <S.SubTitle>야놀자 포인트</S.SubTitle>
