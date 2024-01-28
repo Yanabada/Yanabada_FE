@@ -7,11 +7,10 @@ import { Link } from "react-router-dom";
 import formatDate from "@pages/purchase/utils/formatDate";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
 import usePurchaseHistory2 from "@pages/myPage/hooks/usePurchaseHistory2";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
-import useBuyProduct from "@pages/purchase/hooks/useBuyProduct";
 
 interface TradeData {
   tradeId: number;
@@ -27,57 +26,25 @@ interface TradeData {
 }
 
 const ReservationComplete = () => {
-  const { mutate: buyProductMutate, isSuccess: buyProductSuccess } = useBuyProduct();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const location = useLocation();
 
   const purchaseInfo = queryString.parse(location.search);
 
-  const { productId, isMobile } = purchaseInfo;
+  const { productId } = purchaseInfo;
 
   const { data, error, refetch, isSuccess } = usePurchaseHistory2();
-
-  const [filteredTrades, setFilteredTrades] = useState<TradeData[]>([]);
 
   if (error) {
     console.log(error);
   }
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    console.log("isMobile", isMobile);
-
-    if (isMobile === "true") {
-      buyProductMutate({
-        productId: Number(purchaseInfo?.productId),
-        reservationPersonName: purchaseInfo?.reservationPersonName as string,
-        reservationPersonPhoneNumber: purchaseInfo?.reservationPersonPhoneNumber as string,
-        userPersonName: purchaseInfo?.userPersonName as string,
-        userPersonPhoneNumber: purchaseInfo?.userPersonPhoneNumber as string,
-        point: Number(purchaseInfo.point),
-        paymentType: purchaseInfo.paymentType as string
-      });
-    } else {
-      refetch();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (buyProductSuccess) {
-      refetch();
-    }
-  }, [buyProductSuccess]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      setFilteredTrades(
-        data?.purchaseTrades?.filter((trade: TradeData) => trade?.productId === Number(productId))
-      );
-    }
-  }, [isSuccess]);
+  const filteredTrades: TradeData[] = data?.purchaseTrades?.filter(
+    (trade: TradeData) => trade?.productId === Number(productId)
+  );
 
   return (
     <S.Container>
