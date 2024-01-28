@@ -63,6 +63,7 @@ const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
       <UpperNavBar type="back" title={title} />
 
       <TextInput
+        type="password"
         variant="move"
         label="비밀번호"
         {...register("password", {
@@ -82,6 +83,7 @@ const CheckPassword = ({ title, buttonText, to }: CheckPasswordProps) => {
         />
       </S.NoticeContainer>
       <TextInput
+        type="password"
         variant="move"
         label="비밀번호 확인"
         {...register("secondPassword", {

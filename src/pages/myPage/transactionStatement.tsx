@@ -10,6 +10,7 @@ import formatNumberWithCommas from "./utils/formatNumberWithCommas";
 import usePurchaseTransactionHistory from "./hooks/usePurchaseTransactionHistory";
 import useTradeHistory from "./hooks/useTradeHistory";
 import * as CS from "@pages/myPage/styles/history.styles";
+import { useEffect } from "react";
 
 interface TransactionStatementProps {
   width?: string;
@@ -35,42 +36,48 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
   const [searchParams] = useSearchParams();
   const tradeId = searchParams.get("tradeId");
 
-  const { data: sellTransactionHistoryData, error: sellTransactionHistoryError } =
-    useSellTransactionHistory(Number(tradeId));
+  const {
+    data: sellTransactionHistoryData,
+    error: sellTransactionHistoryError,
+    refetch: sellTransactionHistoryRefetch
+  } = useSellTransactionHistory(Number(tradeId));
 
-  const { data: purchaseTransactionHistoryData, error: purchaseTransactionHistoryError } =
-    usePurchaseTransactionHistory(Number(tradeId));
+  const {
+    data: purchaseTransactionHistoryData,
+    error: purchaseTransactionHistoryError,
+    refetch: purchaseTransactionHistoryRefetch
+  } = usePurchaseTransactionHistory(Number(tradeId));
 
   const { mutate } = useTradeHistory();
 
   const purchasePayInfoProps = {
     divType: "payInfo-tall",
     width,
-    yanoljaPurchasePrice: formatNumberWithCommas(purchaseTransactionHistoryData.price),
+    yanoljaPurchasePrice: formatNumberWithCommas(purchaseTransactionHistoryData?.price),
     yanabadaPurchasePrice: formatNumberWithCommas(
-      purchaseTransactionHistoryData.sellingPrice + purchaseTransactionHistoryData.fee
+      purchaseTransactionHistoryData?.sellingPrice + purchaseTransactionHistoryData?.fee
     )?.toString(),
     discountRate: calculateDiscountRate(
-      purchaseTransactionHistoryData.price,
-      purchaseTransactionHistoryData.sellingPrice
+      purchaseTransactionHistoryData?.price,
+      purchaseTransactionHistoryData?.sellingPrice
     ),
     discountPrice: formatNumberWithCommas(
-      purchaseTransactionHistoryData.price - purchaseTransactionHistoryData.sellingPrice
+      purchaseTransactionHistoryData?.price - purchaseTransactionHistoryData?.sellingPrice
     )?.toString(),
     from,
-    payMethod: getPaymentMethodText(purchaseTransactionHistoryData.paymentType),
-    charge: purchaseTransactionHistoryData.fee
+    payMethod: getPaymentMethodText(purchaseTransactionHistoryData?.paymentType),
+    charge: purchaseTransactionHistoryData?.fee
   };
 
   const purchaseTransactionInfoProps = {
     divType: "transactionInfo",
     width,
-    imageURL: purchaseTransactionHistoryData.product.image,
-    accommodationName: purchaseTransactionHistoryData.product.accommodationName,
-    roomName: purchaseTransactionHistoryData.product.roomName,
-    orderNumber: purchaseTransactionHistoryData.tradeCode,
-    seller: purchaseTransactionHistoryData.sellerName,
-    orderDate: formatDate(purchaseTransactionHistoryData.registeredDate),
+    imageURL: purchaseTransactionHistoryData?.product.image,
+    accommodationName: purchaseTransactionHistoryData?.product.accommodationName,
+    roomName: purchaseTransactionHistoryData?.product.roomName,
+    orderNumber: purchaseTransactionHistoryData?.tradeCode,
+    seller: purchaseTransactionHistoryData?.sellerName,
+    orderDate: formatDate(purchaseTransactionHistoryData?.registeredDate),
     from
   };
 
@@ -82,6 +89,13 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
     console.log(purchaseTransactionHistoryError);
   }
 
+  useEffect(() => {
+    if (from === "sale") sellTransactionHistoryRefetch();
+    else {
+      purchaseTransactionHistoryRefetch();
+    }
+  }, []);
+
   switch (from) {
     case "sale":
       return (
@@ -92,27 +106,27 @@ const TransactionStatement = ({ width, from }: TransactionStatementProps) => {
             <Info
               divType="payInfo"
               width={width}
-              yanoljaPurchasePrice={formatNumberWithCommas(sellTransactionHistoryData.price)}
+              yanoljaPurchasePrice={formatNumberWithCommas(sellTransactionHistoryData?.price)}
               yanabadaPurchasePrice={formatNumberWithCommas(
-                sellTransactionHistoryData.price - sellTransactionHistoryData.sellingPrice
+                sellTransactionHistoryData?.price - sellTransactionHistoryData?.sellingPrice
               )?.toString()}
               discountRate={calculateDiscountRate(
-                sellTransactionHistoryData.price,
-                sellTransactionHistoryData.sellingPrice
+                sellTransactionHistoryData?.price,
+                sellTransactionHistoryData?.sellingPrice
               )}
-              discountPrice={formatNumberWithCommas(sellTransactionHistoryData.sellingPrice)}
+              discountPrice={formatNumberWithCommas(sellTransactionHistoryData?.sellingPrice)}
               from={from}
               payMethod="야놀자페이" // FIXME: 결제 수단 받아오기
             />
             <Info
               divType="transactionInfo"
               width={width}
-              imageURL={sellTransactionHistoryData.accommodationImage}
-              accommodationName={sellTransactionHistoryData.accommodationName}
-              roomName={sellTransactionHistoryData.roomName}
-              orderNumber={sellTransactionHistoryData.tradeCode}
-              buyer={sellTransactionHistoryData.buyerName}
-              orderDate={formatDate(sellTransactionHistoryData.registeredDate)}
+              imageURL={sellTransactionHistoryData?.accommodationImage}
+              accommodationName={sellTransactionHistoryData?.accommodationName}
+              roomName={sellTransactionHistoryData?.roomName}
+              orderNumber={sellTransactionHistoryData?.tradeCode}
+              buyer={sellTransactionHistoryData?.buyerName}
+              orderDate={formatDate(sellTransactionHistoryData?.registeredDate)}
               from={from}
             />
             <BaseButton

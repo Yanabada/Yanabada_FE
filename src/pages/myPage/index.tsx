@@ -118,41 +118,48 @@ const MyPage = ({ width }: MyPageProps) => {
             </S.LoginButton>
           </Link>
         </S.LoginButtonWrapper>
-
         {balanceData?.hasJoinedYanoljaPay ? (
           <CardSectionButton buttonType="abledPay" width={width} />
         ) : (
           <CardSectionButton buttonType="abledPay_notRegistered" width={width} />
         )}
-
         <Link to="/mypage/management">
           <CardSectionButton buttonType="management" width={width} />
         </Link>
-
         <Link to="/mypage/salesHistory">
           <ListButton width={width} icon={<SalesIcon />}>
             판매내역
           </ListButton>
         </Link>
-
         <Link to="/mypage/purchaseHistory">
           <ListButton width={width} icon={<PurchaseIcon />}>
             구매내역
           </ListButton>
         </Link>
-
-        <ListButton width={width} icon={<InfoCenterIcon />}>
+        <ListButton
+          width={width}
+          icon={<InfoCenterIcon />}
+          onClick={() => {
+            window.location.href =
+              "https://southern-marscapone-426.notion.site/yanabada-Q-A-5ecb565566db454eabdc03a36bc3b072?pvs=4";
+          }}
+        >
           야나바다 고객센터
         </ListButton>
 
-        <ListButton width={width} icon={<GuideIcon />}>
+        <ListButton
+          width={width}
+          icon={<GuideIcon />}
+          onClick={() => {
+            window.location.href =
+              "https://southern-marscapone-426.notion.site/yanabada-guide-ver-1-1-a6278626554f412684e4b9176fe24fe6?pvs=4";
+          }}
+        >
           이용가이드
         </ListButton>
-
-        <ListButton width={width} icon={<TermIcon />}>
+        <ListButton width={width} icon={<TermIcon />} onClick={() => navigate("/mypage/terms")}>
           이용약관
         </ListButton>
-
         <ListButton
           width={width}
           icon={<LogoutIcon />}
@@ -185,11 +192,31 @@ const MyPage = ({ width }: MyPageProps) => {
           }}
         />
         <Modal {...loginModalProps} />
-        <CardSectionButton buttonType="disabledPoint" width={width} />
 
-        <ListButton width={width}>야나바다 고객센터</ListButton>
-        <ListButton width={width}>이용가이드</ListButton>
-        <ListButton width={width}>이용약관</ListButton>
+        <ListButton
+          width={width}
+          icon={<InfoCenterIcon />}
+          onClick={() => {
+            window.location.href =
+              "https://southern-marscapone-426.notion.site/yanabada-Q-A-5ecb565566db454eabdc03a36bc3b072?pvs=4";
+          }}
+        >
+          야나바다 고객센터
+        </ListButton>
+
+        <ListButton
+          width={width}
+          icon={<GuideIcon />}
+          onClick={() => {
+            window.location.href =
+              "https://southern-marscapone-426.notion.site/yanabada-guide-ver-1-1-a6278626554f412684e4b9176fe24fe6?pvs=4";
+          }}
+        >
+          이용가이드
+        </ListButton>
+        <ListButton width={width} icon={<TermIcon />} onClick={() => navigate("/mypage/terms")}>
+          이용약관
+        </ListButton>
       </S.MyPageContainer>
     </>
   );
