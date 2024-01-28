@@ -47,7 +47,7 @@ const SellConfirm = () => {
 
   return (
     <>
-      <UpperNavBar title="상품 등록 완료" type="back" />
+      <UpperNavBar title="상품 등록 완료" type="none" />
       <CS.RegisterWrap>
         <CS.RegisterInner>
           <CS.RegisterTitle>상품 등록이 정상적으로 완료되었습니다.</CS.RegisterTitle>
