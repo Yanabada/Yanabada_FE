@@ -36,7 +36,7 @@ const PointsMiddleTabList = () => {
     fetchNextPage
   } = usePaymentQuery(selectedTab);
 
-  const ref = useIntersect(async (entry, observer) => {
+  const ref = useIntersect<HTMLDivElement>(async (entry, observer) => {
     observer.unobserve(entry.target);
     if (hasNextPage && !isFetching && paymentList.length > 0) {
       await fetchNextPage();
