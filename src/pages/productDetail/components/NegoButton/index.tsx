@@ -24,6 +24,9 @@ const NegoButton = ({ data }: DetailProps) => {
       return;
     }
     if (type === "chat") {
+      if (data.status === "BOOKING") {
+        return;
+      }
       const response = await createChatRoom(data.id, id);
       const chatRoomCode = response.data.chatRoomCode;
       navigate(`/chat/${chatRoomCode}?productId=${data.id}`);
@@ -37,6 +40,7 @@ const NegoButton = ({ data }: DetailProps) => {
     }
   };
 
+  console.log(data.status);
   return (
     <>
       <Toaster />
@@ -76,8 +80,16 @@ const NegoButton = ({ data }: DetailProps) => {
                       width="50%"
                       color={data.canNegotiate ? "#0751C3" : "#9C9C9C"}
                       backgroundColor={data.canNegotiate ? "#E6EEF9" : "#F2F2F2"}
-                      buttonType={data.canNegotiate ? "default" : "disabled-default"}
-                      children={data.canNegotiate ? "가격제안하기" : "가격제안불가"}
+                      buttonType={
+                        !data.canNegotiate || data.status === "BOOKING"
+                          ? "disabled-default"
+                          : "default"
+                      }
+                      children={
+                        !data.canNegotiate || data.status === "BOOKING"
+                          ? "가격제안불가"
+                          : "가격제안하기"
+                      }
                       onClick={() => handleClick("chat")}
                     />
                     <BaseButton
