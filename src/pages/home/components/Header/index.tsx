@@ -35,7 +35,7 @@ const Header = () => {
       <S.HeaderContainer style={{ backgroundColor }}>
         <S.BellContainer>
           <Link to="/notice">
-            <NumberBadge number={notificationsCount} hasMore={hasMoreNotifications} />
+            {data && <NumberBadge number={notificationsCount} hasMore={hasMoreNotifications} />}
             <FaRegBell className="bell" />
           </Link>
         </S.BellContainer>
