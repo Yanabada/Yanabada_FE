@@ -183,7 +183,32 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     paymentType: convertString(paymentMethod)
   };
 
-  const REDIRECT_URL = "https://www.yanabada.com/purchase/confirm";
+  const purchaseInfo = {
+    accommodationName: productData?.accommodationInfo.name,
+    roomName: productData?.roomInfo.name,
+    checkInDate: productData?.checkInDate,
+    checkOutDate: productData?.checkOutDate,
+    checkInTime: productData?.roomInfo.checkInTime,
+    checkOutTime: productData?.roomInfo.checkOutTime,
+    minHeadCount: productData?.roomInfo.minHeadCount,
+    maxHeadCount: productData?.roomInfo.maxHeadCount,
+    reservationPersonName: nameState,
+    reservationPersonPhoneNumber: phoneNumberState,
+    userPersonName: name,
+    userPersonPhoneNumber: phoneNumber,
+    tradeId: productData?.tradeId,
+    productPrice: formatNumberWithCommas(productData?.price),
+    fee: (productData?.sellingPrice * 0.05).toString(),
+    point: pointToUse,
+    totalPrice: formatNumberWithCommas(totalPrice),
+    paymentType: convertStringToKR(paymentMethod),
+    productId: productId,
+    image: productData?.accommodationInfo.image
+  };
+
+  const purchaseInfoQueryString = new URLSearchParams(purchaseInfo).toString();
+
+  const REDIRECT_URL = `https://www.yanabada.com/purchase/confirm?${purchaseInfoQueryString}`;
 
   useEffect(() => {
     if (isChecked3 && isChecked4) {
@@ -216,34 +241,9 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     }
   }, [isPaymentSuccess]);
 
-  const purchaseInfo = {
-    accommodationName: productData?.accommodationInfo.name,
-    roomName: productData?.roomInfo.name,
-    checkInDate: productData?.checkInDate,
-    checkOutDate: productData?.checkOutDate,
-    checkInTime: productData?.roomInfo.checkInTime,
-    checkOutTime: productData?.roomInfo.checkOutTime,
-    minHeadCount: productData?.roomInfo.minHeadCount,
-    maxHeadCount: productData?.roomInfo.maxHeadCount,
-    reservationPersonName: nameState,
-    reservationPersonPhoneNumber: phoneNumberState,
-    userPersonName: name,
-    userPersonPhoneNumber: phoneNumber,
-    tradeId: productData?.tradeId,
-    productPrice: formatNumberWithCommas(productData?.price),
-    fee: productData?.sellingPrice * 0.05,
-    point: pointToUse,
-    totalPrice: formatNumberWithCommas(totalPrice),
-    paymentType: convertStringToKR(paymentMethod),
-    productId: productId,
-    image: productData?.accommodationInfo.image
-  };
-
   useEffect(() => {
     if (buyProductSuccess) {
-      localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
-
-      navigate("/purchase/confirm");
+      navigate(`/purchase/confirm?${purchaseInfoQueryString}`);
     }
   }, [buyProductSuccess]);
 
@@ -891,11 +891,10 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     );
                     // 잔액 부족하지 않을 경우
                   } else {
-                    localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
                     localStorage.setItem("mutateInfo", JSON.stringify(mutateInfo));
 
                     navigate(
-                      `/charge/password?registration=false&type=payment&redirect=/purchase/confirm`
+                      `/charge/password?registration=false&type=payment&redirect=/purchase/confirm?${purchaseInfoQueryString}`
                     );
                   }
                 }
