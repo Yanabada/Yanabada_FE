@@ -10,8 +10,8 @@ const RecentlyRowCard = () => {
   return (
     <S.Wrapper>
       {recentItem.map((item) => (
-        <Link to={`/products/${item.id}`} key={item.id}>
-          <S.Container>
+        <Link to={`/products/${item.id}`}>
+          <S.Container key={item.id}>
             <S.ImageContainer>
               <S.Image src={item.image} alt="숙소 이미지" />
             </S.ImageContainer>
