@@ -110,7 +110,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [bankMessage, setBankMessage] = useState("은행 선택");
   const [installmentMessage, setInstallmentMessage] = useState("할부 기간 선택");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isChangeButtonClicked, setIsChangeButtonClicked] = useState(false);
   const [nameState, setNameState] = useState("");
   const [phoneNumberState, setPhoneNumberState] = useState("");
   const [pointToUse, setPointToUse] = useState("0");
@@ -360,72 +359,65 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             <S.InfoText>
               예약자 정보<S.UserInfoTextRed>*</S.UserInfoTextRed>
             </S.InfoText>
-            <S.ChangeText onClick={() => setIsChangeButtonClicked(true)}>입력하기</S.ChangeText>
           </S.PersonInfoTopWrapper>
-          {isChangeButtonClicked ? (
-            <S.FormWrapper width={width}>
-              <form onSubmit={onSubmit}>
-                <S.TextInputWrapper>
-                  <TextInput
-                    variant="move"
-                    label={
-                      <>
-                        <span>성명</span>
-                        <span style={{ color: "#E01F3E" }}>*</span>
-                      </>
+          <S.FormWrapper width={width}>
+            <form onSubmit={onSubmit}>
+              <S.TextInputWrapper>
+                <TextInput
+                  variant="move"
+                  label={
+                    <>
+                      <span>성명</span>
+                      <span style={{ color: "#E01F3E" }}>*</span>
+                    </>
+                  }
+                  {...register("name1", {
+                    required: true,
+                    pattern: {
+                      value: /^[가-힣a-zA-Z]*$/,
+                      message: "이용자 이름은 한글과 영문만 가능합니다."
                     }
-                    {...register("name1", {
-                      required: true,
-                      pattern: {
-                        value: /^[가-힣a-zA-Z]*$/,
-                        message: "이용자 이름은 한글과 영문만 가능합니다."
-                      }
-                    })}
-                    errorMessage={errors.name1 && `${errors.name1?.message}`}
-                  />
-                  <S.TextInputSpacer />
-                  <TextInput
-                    variant="move"
-                    label={
-                      <>
-                        <span>휴대폰 번호</span>
-                        <span style={{ color: "#E01F3E" }}>*</span>
-                      </>
+                  })}
+                  errorMessage={errors.name1 && `${errors.name1?.message}`}
+                />
+                <S.TextInputSpacer />
+                <TextInput
+                  variant="move"
+                  label={
+                    <>
+                      <span>휴대폰 번호</span>
+                      <span style={{ color: "#E01F3E" }}>*</span>
+                    </>
+                  }
+                  {...register("phoneNumber1", {
+                    required: true,
+                    pattern: {
+                      value: /^010-\d{4}-\d{4}$/,
+                      message: "010-0000-0000 형태로 입력해주세요."
                     }
-                    {...register("phoneNumber1", {
-                      required: true,
-                      pattern: {
-                        value: /^010-\d{4}-\d{4}$/,
-                        message: "010-0000-0000 형태로 입력해주세요."
-                      }
-                    })}
-                    errorMessage={errors.phoneNumber1 && `${errors.phoneNumber1?.message}`}
-                    onChange={handlePhoneNumberChange}
-                  />
-                </S.TextInputWrapper>
+                  })}
+                  errorMessage={errors.phoneNumber1 && `${errors.phoneNumber1?.message}`}
+                  onChange={handlePhoneNumberChange}
+                />
+              </S.TextInputWrapper>
 
-                <S.ChipWrapper>
-                  <ManipulationChip
-                    buttonType={
-                      getValues("name1") &&
-                      getValues("phoneNumber1") &&
-                      !errors.name1 &&
-                      !errors.phoneNumber1
-                        ? "abledDefault"
-                        : "disabledDefault"
-                    }
-                    type="submit"
-                  >
-                    인증 변경하기
-                  </ManipulationChip>
-                </S.ChipWrapper>
-              </form>
-            </S.FormWrapper>
-          ) : (
-            <S.PersonInfoBottomWrapper>
-              {name ? name : ""} / {phoneNumber ? phoneNumber : ""}
-            </S.PersonInfoBottomWrapper>
-          )}
+              <S.ChipWrapper>
+                <ManipulationChip
+                  buttonType={
+                    getValues("name1") &&
+                    getValues("phoneNumber1") &&
+                    !errors.name1 &&
+                    !errors.phoneNumber1
+                      ? "abledDefault"
+                      : "disabledDefault"
+                  }
+                  type="submit"
+                >
+                  입력하기
+                </ManipulationChip>
+              </S.ChipWrapper>
+            </form>
+          </S.FormWrapper>
         </S.PersonInfoWrapper>
       </S.ReservationContainer>
       <S.Spacer width={width} />
