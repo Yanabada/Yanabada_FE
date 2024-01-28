@@ -1,0 +1,254 @@
+/* 요일 텍스트 색상 커스텀 */
+.react-datepicker__day.red-text {
+  color: #e01f3e;
+}
+
+.react-datepicker__day.blue-text {
+  color: #0751c3;
+}
+
+.react-datepicker__day-name:first-of-type {
+  color: #e01f3e;
+}
+
+.react-datepicker__day-name:last-of-type {
+  color: #0751c3;
+}
+
+.react-datepicker__day--disabled.red-text {
+  color: #ccc;
+}
+
+.react-datepicker__day--disabled.blue-text {
+  color: #ccc;
+}
+
+/* 캘린더 너비 확장 */
+.react-datepicker-popper {
+  position: relative !important;
+  width: 100%;
+  transform: none !important;
+}
+
+.react-datepicker {
+  width: 100%;
+  border: none;
+}
+
+.react-datepicker__month {
+  margin: 5px 0 !important;
+}
+
+.react-datepicker__month-container {
+  float: none;
+}
+
+.react-datepicker__day {
+  display: inline-block;
+  width: 14.28%;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  margin: 0;
+  padding: 0 10px;
+  font-size: 1.1rem;
+  position: relative;
+  margin-bottom: 5px;
+}
+
+/* 오늘 날짜 스타일 커스텀 */
+.react-datepicker__day--today {
+  position: relative;
+  background-color: white !important;
+  color: black;
+  border-radius: 10px;
+  font-weight: 400;
+}
+
+.react-datepicker__day--today:before {
+  content: "";
+  border: 1.5px solid black;
+  width: 90%;
+  height: 70%;
+  border-radius: 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.react-datepicker__day--today.react-datepicker__day--in-selecting-range:before {
+  content: none;
+}
+
+.react-datepicker__day--today.react-datepicker__day--range-start:before {
+  content: none;
+}
+
+.react-datepicker__day--today.react-datepicker__day--range-end:before {
+  content: none;
+}
+
+.react-datepicker__day--today.react-datepicker__day--in-range:before {
+  content: none;
+}
+
+.react-datepicker__day--today.react-datepicker__day--in-range {
+  background-color: #a0d9ff !important;
+  color: black;
+}
+
+.react-datepicker__day--today.react-datepicker__day--in-selecting-range {
+  color: black;
+}
+
+.react-datepicker__day--today.react-datepicker__day--range-end {
+  background-color: #a0d9ff !important;
+}
+
+/* 날짜 선택 범위 스타일 커스텀 */
+.react-datepicker__day--in-range {
+  position: relative;
+  background-color: #a0d9ff;
+  border-radius: 0;
+  color: black;
+}
+
+.react-datepicker__day--in-range:hover {
+  background-color: #a0d9ff;
+  border-radius: 0;
+}
+
+.react-datepicker__day--range-start {
+  border-radius: 30px 0 0 30px;
+}
+
+.react-datepicker__day--range-start.react-datepicker__day--today {
+  background-color: #a0d9ff !important;
+  color: black;
+}
+
+.react-datepicker__day--range-start:hover {
+  border-radius: 30px 0 0 30px;
+}
+
+.react-datepicker__day--range-end {
+  border-radius: 0 30px 30px 0;
+  color: black;
+}
+
+.react-datepicker__day--range-end:hover {
+  border-radius: 0 30px 30px 0;
+}
+
+.react-datepicker__day--in-selecting-range {
+  background-color: #a0d9ff !important;
+  border-radius: 0;
+  color: black;
+}
+
+.react-datepicker__day--selecting-range-end {
+  border-radius: 0 !important;
+}
+
+.react-datepicker__day--selecting-range-start {
+  border-radius: 30px 0 0 30px;
+}
+
+.react-datepicker__day--selected {
+  background-color: #a0d9ff !important;
+  border-radius: 30px 0 0 30px;
+}
+
+.react-datepicker__week {
+  margin-bottom: 5px;
+}
+
+/* 날짜 하단 텍스트 표기 */
+.include-text {
+  text-align: center;
+  position: relative;
+  font-size: 12px;
+  display: block;
+  color: #38a3eb;
+  @media all and (max-width: 500px) {
+    font-size: 10px;
+    margin-left: -2px;
+  }
+}
+
+.exclude-text {
+  text-align: center;
+  position: relative;
+  font-size: 12px;
+  display: block;
+  color: transparent;
+}
+
+.react-datepicker__day-names {
+  background-color: #f2f2f2;
+}
+
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::after {
+  display: none;
+}
+
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before {
+  display: none;
+}
+
+/* 라이브러리 헤더 스타일 커스텀 */
+.react-datepicker__header {
+  background-color: white;
+  border-bottom: 0;
+}
+
+.react-datepicker__navigation {
+  font-size: 1.3rem;
+  color: lightgray;
+}
+
+.react-datepicker__current-month {
+  height: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.react-datepicker__day-name {
+  font-size: 1rem;
+  width: 14%;
+  margin: 0 1px;
+  background-color: #f2f2f2;
+  position: relative;
+  z-index: 1;
+  @media all and (max-width: 500px) {
+    width: 13.7%;
+  }
+}
+
+.react-datepicker__day-names {
+  position: relative;
+  background-color: white;
+}
+
+.react-datepicker__day-names:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 20px;
+  background-color: #f2f2f2;
+}
+
+.react-datepicker__day-names:after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 20px;
+  background-color: #f2f2f2;
+}

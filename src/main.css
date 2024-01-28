@@ -1,0 +1,18 @@
+:root {
+  --max-width: 780px;
+  --min-width: 320px;
+}
+
+#root {
+  position: relative;
+  font-family: "Noto Sans KR", sans-serif;
+  max-width: var(--max-width);
+  min-width: var(--min-width);
+  height: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 56px 0 0 0; /* 헤더 높이 */
+}
