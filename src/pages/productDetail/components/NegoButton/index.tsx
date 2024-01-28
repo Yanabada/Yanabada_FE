@@ -14,7 +14,7 @@ interface DetailProps {
 
 const NegoButton = ({ data }: DetailProps) => {
   const navigate = useNavigate();
-  const id = JSON.parse(Cookies.get("id")!);
+  const id = Cookies.get("id") ? JSON.parse(Cookies.get("id")!) : null;
   const isLoggedIn = Cookies.get("isLoggedIn");
 
   const handleClick = async (type: string) => {
