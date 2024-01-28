@@ -19,8 +19,6 @@ import usePaymentDetail from "./hooks/usePaymentDetail";
 import AmountStore from "./stores/amountStore";
 import LoadingAnimation from "@components/checkAnimation";
 
-// /charge?type=charging&price=10000
-
 const YanoljaPay = () => {
   const [isOptionVisible, setIsOptionVisible] = useState(false);
   const [bankMessage, setBankMessage] = useState("계좌선택");
@@ -28,7 +26,10 @@ const YanoljaPay = () => {
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get("type");
   const priceParam = searchParams.get("price");
-  const redirectParam = searchParams.get("redirect");
+  const nameParam = searchParams.get("name");
+  const phoneParam = searchParams.get("phonenumber");
+  const productParam = searchParams.get("productId");
+
   const { data: paymentData, isLoading, error } = usePaymentDetail();
 
   if (isLoading || !paymentData) {
@@ -118,7 +119,7 @@ const YanoljaPay = () => {
         />
         <S.ButtonWrapper>
           <Link
-            to={`/charge/password?registration=false&type=${typeParam}&redirect=${redirectParam}`}
+            to={`/charge/password?registration=false&payment=true&type=${typeParam}&name=${nameParam}&phonenumber=${phoneParam}&productId=${productParam}`}
           >
             <BaseButton buttonType={isFormValid ? "default" : "disabled-default"} width="100%">
               ₩ 충전하기

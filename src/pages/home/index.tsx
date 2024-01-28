@@ -54,6 +54,7 @@ const Home = () => {
     }
   }, [isSuccess]);
 
+
   const tradeRequest = data?.data.notifications.find((item) => item.type === "TRADE_REQUEST");
   const clickedNotification = localStorage.getItem("notificationId");
   const checkNotification =
@@ -62,6 +63,20 @@ const Home = () => {
   const handleNotificationClick = () => {
     localStorage.setItem("notificationId", tradeRequest?.notificationId.toString() || "");
   };
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      Cookie.remove("image", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("email", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("id", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("accessToken", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("refreshToken", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("nickName", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("provider", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("isLoggedIn", { path: "/", domain: ".yanabada.com" });
+    }
+  }, []);
+
 
   return (
     <>

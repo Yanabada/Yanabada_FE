@@ -363,6 +363,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
           <S.FormWrapper width={width}>
             <form onSubmit={onSubmit}>
               <S.TextInputWrapper>
+                <div style={{ marginTop: "24px" }} />
                 <TextInput
                   variant="move"
                   label={
@@ -379,6 +380,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     }
                   })}
                   errorMessage={errors.name1 && `${errors.name1?.message}`}
+                  value={name}
                 />
                 <S.TextInputSpacer />
                 <TextInput
@@ -398,24 +400,27 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                   })}
                   errorMessage={errors.phoneNumber1 && `${errors.phoneNumber1?.message}`}
                   onChange={handlePhoneNumberChange}
+                  value={phoneNumber}
                 />
               </S.TextInputWrapper>
 
-              <S.ChipWrapper>
-                <ManipulationChip
-                  buttonType={
-                    getValues("name1") &&
-                    getValues("phoneNumber1") &&
-                    !errors.name1 &&
-                    !errors.phoneNumber1
-                      ? "abledDefault"
-                      : "disabledDefault"
-                  }
-                  type="submit"
-                >
-                  입력하기
-                </ManipulationChip>
-              </S.ChipWrapper>
+              {name && phoneNumber ? null : (
+                <S.ChipWrapper>
+                  <ManipulationChip
+                    buttonType={
+                      getValues("name1") &&
+                      getValues("phoneNumber1") &&
+                      !errors.name1 &&
+                      !errors.phoneNumber1
+                        ? "abledDefault"
+                        : "disabledDefault"
+                    }
+                    type="submit"
+                  >
+                    입력하기
+                  </ManipulationChip>
+                </S.ChipWrapper>
+              )}
             </form>
           </S.FormWrapper>
         </S.PersonInfoWrapper>
@@ -879,7 +884,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                   // 잔액 부족할 경우
                   if (balanceData.balance < productData?.sellingPrice) {
                     navigate(
-                      `/charge/pay?type=charging&price=${totalPrice}&redirect=/purchase?name=${name}&phonenumber=${phoneNumber}&productId=${productId}`
+                      `/charge/pay?type=charging&price=${totalPrice}&payment=true&name=${name}&phonenumber=${phoneNumber}&productId=${productId}`
                     );
                     // 잔액 부족하지 않을 경우
                   } else {
