@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import useBuyProduct from "@pages/purchase/hooks/useBuyProduct";
+import { convertStringToKR } from "./utils/convertString";
 
 interface TradeData {
   tradeId: number;
@@ -188,7 +189,7 @@ const ReservationComplete = () => {
       </S.Flex>
       <S.Flex>
         <S.SubTitle>결제 수단</S.SubTitle>
-        <S.Text>{purchaseInfo?.paymentType}</S.Text>
+        <S.Text>{convertStringToKR(purchaseInfo?.paymentType)}</S.Text>
       </S.Flex>
 
       <S.Footer>
