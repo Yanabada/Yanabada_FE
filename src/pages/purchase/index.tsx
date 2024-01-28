@@ -173,18 +173,18 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     setValue("phoneNumber1", formattedValue);
   };
 
+  const mutateInfo = {
+    productId: Number(productId),
+    reservationPersonName: nameState,
+    reservationPersonPhoneNumber: phoneNumberState,
+    userPersonName: name,
+    userPersonPhoneNumber: phoneNumber,
+    point: Number(pointToUse),
+    paymentType: convertString(paymentMethod)
+  };
+
   const triggerProductMutate = () => {
-    const simplePassword = localStorage.getItem("simplePW");
-    buyProductMutate({
-      productId: Number(productId),
-      reservationPersonName: nameState,
-      reservationPersonPhoneNumber: phoneNumberState,
-      userPersonName: name,
-      userPersonPhoneNumber: phoneNumber,
-      point: Number(pointToUse),
-      paymentType: convertString(paymentMethod),
-      simplePassword: simplePassword
-    });
+    buyProductMutate(mutateInfo);
   };
 
   const REDIRECT_URL = "https://www.yanabada.com/purchase/confirm";
@@ -897,7 +897,11 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     );
                     // 잔액 부족하지 않을 경우
                   } else {
-                    triggerProductMutate();
+                    localStorage.setItem("mutateInfo", JSON.stringify(mutateInfo));
+
+                    navigate(
+                      `/charge/password?registration=false&type=payment&redirect=/purchase/confirm`
+                    );
                   }
                 }
               }}
