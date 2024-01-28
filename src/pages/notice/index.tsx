@@ -9,6 +9,7 @@ import { NOTI_TYPE_TO_TEXT } from "./constants";
 import useNotifications from "./queries";
 import { Toaster } from "react-hot-toast";
 import NoNotice from "./components/NoNotice";
+import { formatDateTo } from "@utils/formatDateTo";
 
 const variants = {
   initial: {
@@ -68,7 +69,7 @@ const Notice = () => {
                 <S.ContentWrapper onClick={() => navigate(NOTI_TYPE_TO_TEXT[noti.type].path)}>
                   <div className="description">
                     {NOTI_TYPE_TO_TEXT[noti.type].type}
-                    <span className="date">2023.12.31</span>
+                    <span className="date">{formatDateTo(noti.registeredDate, "yyyy.MM.dd")}</span>
                   </div>
                   <div className="title">
                     {noti.type === "CHAT" && (
