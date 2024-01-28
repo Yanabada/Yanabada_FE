@@ -12,13 +12,21 @@ import { postPassword, withdrawAmount } from "./apis/charge";
 import PasswordStore from "./stores/passwordStore";
 import LockIcon from "assets/icons/lockIcon.svg?react";
 import useBuyProduct from "@pages/purchase/hooks/useBuyProduct";
-import { convertString } from "@pages/purchase/utils/convertString";
 
 const PasswordConfirm = () => {
   const [searchParams] = useSearchParams();
   const isRegistration = searchParams.get("registration") === "true";
   const typeParam = searchParams.get("type");
-  const redirectParam = searchParams.get("redirect");
+  const payParam = searchParams.get("payment") === "true";
+  const nameParam = searchParams.get("name");
+  const phoneParam = searchParams.get("phonenumber");
+  const productParam = searchParams.get("productId");
+  // const redirectParam = searchParams.get("redirect");
+
+  const urlString = window.location.href;
+
+  const redirectStartIndex = urlString.indexOf("redirect=");
+  const redirectParams = urlString.slice(redirectStartIndex + "redirect=".length);
 
   const navigate = useNavigate();
 
@@ -94,7 +102,7 @@ const PasswordConfirm = () => {
 
   // 결제 mutate 성공시
   useEffect(() => {
-    isSuccess && navigate(redirectParam);
+    isSuccess && navigate(redirectParams);
   }, [isSuccess]);
 
   // 등록이 아닌 비밀번호 확인
@@ -106,6 +114,21 @@ const PasswordConfirm = () => {
           simplePassword: enteredDigits.join("")
         };
 
+        if (typeParam === "payment") {
+          buyProductMutate({
+            productId: Number(purchaseInfo.productId),
+            reservationPersonName: purchaseInfo.reservationPersonName,
+            reservationPersonPhoneNumber: purchaseInfo.reservationPersonPhoneNumber,
+            userPersonName: purchaseInfo.userPersonName,
+            userPersonPhoneNumber: purchaseInfo.userPersonPhoneNumber,
+            point: Number(purchaseInfo.point),
+            paymentType: purchaseInfo.paymentType,
+            simplePassword: enteredDigits.join("")
+          });
+
+          return;
+        }
+
         try {
           let response;
 
@@ -113,17 +136,6 @@ const PasswordConfirm = () => {
             response = await postPassword(requestData);
           } else if (typeParam === "withdrawal") {
             response = await withdrawAmount(requestData);
-          } else if (typeParam === "payment") {
-            buyProductMutate({
-              productId: Number(purchaseInfo.productId),
-              reservationPersonName: purchaseInfo.reservationPersonName,
-              reservationPersonPhoneNumber: purchaseInfo.reservationPersonPhoneNumber,
-              userPersonName: purchaseInfo.userPersonName,
-              userPersonPhoneNumber: purchaseInfo.userPersonPhoneNumber,
-              point: Number(purchaseInfo.point),
-              paymentType: convertString(purchaseInfo.paymentType),
-              simplePassword: enteredDigits.join("")
-            });
           }
 
           successPassword(response);
@@ -139,7 +151,10 @@ const PasswordConfirm = () => {
   }, [enteredDigits, isRegistration, typeParam]);
 
   const successPassword = (response: any) => {
-    if (response.yanoljaPayHistoryId) {
+    if (payParam) {
+      navigate(`/purchase?name=${nameParam}&phonenumber=${phoneParam}&productId=${productParam}`);
+      return;
+    } else if (response.yanoljaPayHistoryId) {
       navigate(`/charge/confirm/${response.yanoljaPayHistoryId}?type=${typeParam}`);
     }
   };
