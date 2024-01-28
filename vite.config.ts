@@ -8,5 +8,12 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths(), svgr()],
   define: {
     global: {}
+  },
+  build: {
+    terserOptions: {
+      compress: {
+        drop_console: true
+      }
+    }
   }
 });

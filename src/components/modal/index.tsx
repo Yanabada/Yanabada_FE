@@ -42,12 +42,12 @@ const Modal = ({
 
             <S.ButtonsWrapper>
               {leftBtnText && (
-                <BaseButton buttonType="gray" width="100%" onClick={leftAction}>
+                <BaseButton buttonType="default" width="100%" onClick={leftAction}>
                   {leftBtnText}
                 </BaseButton>
               )}
               {rightBtnText && (
-                <BaseButton buttonType="default" width="100%" onClick={rightAction}>
+                <BaseButton buttonType="gray" width="100%" onClick={rightAction}>
                   {rightBtnText}
                 </BaseButton>
               )}
