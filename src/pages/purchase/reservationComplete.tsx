@@ -36,15 +36,51 @@ const ReservationComplete = () => {
 
   const { productId } = purchaseInfo;
 
-  const { data, error, refetch, isSuccess } = usePurchaseHistory2();
+  console.log("purchaseInfo", purchaseInfo);
+
+  const { data, error } = usePurchaseHistory2();
+
+  const [filteredTrades, setFilteredTrades] = useState<TradeData[]>();
 
   if (error) {
     console.log(error);
   }
 
-  const filteredTrades: TradeData[] = data?.purchaseTrades?.filter(
-    (trade: TradeData) => trade?.productId === Number(productId)
-  );
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setFilteredTrades(
+        data?.purchaseTrades?.filter((trade: TradeData) => trade?.productId === Number(productId))
+      );
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (isMobile) {
+      buyProductMutate({
+        productId: Number(purchaseInfo?.productId),
+        reservationPersonName: purchaseInfo?.reservationPersonName as string,
+        reservationPersonPhoneNumber: purchaseInfo?.reservationPersonPhoneNumber as string,
+        userPersonName: purchaseInfo?.userPersonName as string,
+        userPersonPhoneNumber: purchaseInfo?.userPersonPhoneNumber as string,
+        point: Number(purchaseInfo.point),
+        paymentType: purchaseInfo.paymentType as string
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (buyProductSuccess) {
+      setFilteredTrades(
+        data?.purchaseTrades?.filter((trade: TradeData) => trade?.productId === Number(productId))
+      );
+    }
+  }, [buyProductSuccess]);
+
+  console.log("filteredTrades", filteredTrades);
 
   return (
     <S.Container>
@@ -107,32 +143,28 @@ const ReservationComplete = () => {
       </S.Flex>
       <S.Spacer />
 
-      {filteredTrades && (
-        <>
-          <S.Title>거래 정보</S.Title>
-          <S.NoticeWrapper>
-            <Notice
-              title="구매 취소는 판매자 승인 전까지만 가능합니다."
-              type="default"
-              color="orange"
-              shape="line"
-            />
-          </S.NoticeWrapper>
-          <S.Flex>
-            <S.SubTitle>주문번호</S.SubTitle>
-            <S.Text>{filteredTrades[0]?.tradeId}</S.Text>
-          </S.Flex>
-          <S.Flex>
-            <S.SubTitle>판매자</S.SubTitle>
-            <S.Text>{filteredTrades[0]?.sellerNickname}</S.Text>
-          </S.Flex>
-          <S.Flex>
-            <S.SubTitle>주문일시</S.SubTitle>
-            <S.Text>{filteredTrades[0]?.tradeRegisteredTime}</S.Text>
-          </S.Flex>
-          <S.Spacer />
-        </>
-      )}
+      <S.Title>거래 정보</S.Title>
+      <S.NoticeWrapper>
+        <Notice
+          title="구매 취소는 판매자 승인 전까지만 가능합니다."
+          type="default"
+          color="orange"
+          shape="line"
+        />
+      </S.NoticeWrapper>
+      <S.Flex>
+        <S.SubTitle>주문번호</S.SubTitle>
+        <S.Text>{filteredTrades[0]?.tradeId}</S.Text>
+      </S.Flex>
+      <S.Flex>
+        <S.SubTitle>판매자</S.SubTitle>
+        <S.Text>{filteredTrades[0]?.sellerNickname}</S.Text>
+      </S.Flex>
+      <S.Flex>
+        <S.SubTitle>주문일시</S.SubTitle>
+        <S.Text>{filteredTrades[0]?.tradeRegisteredTime}</S.Text>
+      </S.Flex>
+      <S.Spacer />
 
       <S.Title>결제 정보</S.Title>
       <S.Flex>
