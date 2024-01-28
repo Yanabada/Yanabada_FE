@@ -28,7 +28,7 @@ export const handlers = [
             imageUrl: "https://bit.ly/2Z4KKcF"
           },
           description:
-            "좋은 숙소입니다. 회사 행사 진행자로 필참하게 되어 여행이 취소되었습니다...! 구매의사 확실하시다면 네고도 가능하니 채팅주세요!",
+            "좋은 숙소입니다. 회사 행사 진행자로 필참하게 되어 여행이 취소되었습니다...! 구매의사 확실하시다면 가격제안도 가능하니 채팅주세요!",
           canNegotiate: true,
           saleEndDate: "2024-01-19",
           status: "ON_SALE",

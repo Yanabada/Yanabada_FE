@@ -16,7 +16,7 @@ const ChatText = forwardRef<HTMLDivElement, ChatTextProps>(({ message, isNotice 
     return (
       <S.ChatNotice>
         <S.HightLight>{message.senderNickname}</S.HightLight>
-        님이 네고를 요청하셨습니다.
+        님이 가격제안을 요청하셨습니다.
       </S.ChatNotice>
     );
   }

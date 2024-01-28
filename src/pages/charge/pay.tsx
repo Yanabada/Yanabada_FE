@@ -17,6 +17,7 @@ import BankIcoLogo from "@assets/bankIcon.png";
 
 import usePaymentDetail from "./hooks/usePaymentDetail";
 import AmountStore from "./stores/amountStore";
+import LoadingAnimation from "@components/checkAnimation";
 
 // /charge?type=charging&price=10000
 
@@ -27,10 +28,11 @@ const YanoljaPay = () => {
   const [searchParams] = useSearchParams();
   const typeParam = searchParams.get("type");
   const priceParam = searchParams.get("price");
+  const redirectParam = searchParams.get("redirect");
   const { data: paymentData, isLoading, error } = usePaymentDetail();
 
   if (isLoading || !paymentData) {
-    return <p>Loading...</p>;
+    return <LoadingAnimation />;
   }
 
   if (error) return <p>error</p>;
@@ -116,7 +118,7 @@ const YanoljaPay = () => {
         />
         <S.ButtonWrapper>
           <Link
-            to={`/charge/password?registration=false&type=${typeParam}&redirect=/purchase/confirm`}
+            to={`/charge/password?registration=false&type=${typeParam}&redirect=${redirectParam}`}
           >
             <BaseButton buttonType={isFormValid ? "default" : "disabled-default"} width="100%">
               ₩ 충전하기
