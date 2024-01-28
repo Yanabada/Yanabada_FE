@@ -11,6 +11,8 @@ import AmountStore from "./stores/amountStore";
 import { postPassword, withdrawAmount } from "./apis/charge";
 import PasswordStore from "./stores/passwordStore";
 import LockIcon from "assets/icons/lockIcon.svg?react";
+import useBuyProduct from "@pages/purchase/hooks/useBuyProduct";
+import { convertString } from "@pages/purchase/utils/convertString";
 
 const PasswordConfirm = () => {
   const [searchParams] = useSearchParams();
@@ -32,6 +34,10 @@ const PasswordConfirm = () => {
   );
 
   const { setPassword } = PasswordStore();
+
+  // typeParam 이 payment 일때 바로 결제로 넘기기
+  const { mutate: buyProductMutate, isSuccess } = useBuyProduct();
+  const purchaseInfo = JSON.parse(localStorage.getItem("mutateInfo") as string);
 
   const shakeOnMismatch = () => {
     keyInputControls.start({
@@ -86,6 +92,11 @@ const PasswordConfirm = () => {
     }
   };
 
+  // 결제 mutate 성공시
+  useEffect(() => {
+    isSuccess && navigate(redirectParam);
+  }, [isSuccess]);
+
   // 등록이 아닌 비밀번호 확인
   useEffect(() => {
     const checkPassword = async () => {
@@ -102,12 +113,20 @@ const PasswordConfirm = () => {
             response = await postPassword(requestData);
           } else if (typeParam === "withdrawal") {
             response = await withdrawAmount(requestData);
+          } else if (typeParam === "payment") {
+            buyProductMutate({
+              productId: Number(purchaseInfo.productId),
+              reservationPersonName: purchaseInfo.reservationPersonName,
+              reservationPersonPhoneNumber: purchaseInfo.reservationPersonPhoneNumber,
+              userPersonName: purchaseInfo.userPersonName,
+              userPersonPhoneNumber: purchaseInfo.userPersonPhoneNumber,
+              point: Number(purchaseInfo.point),
+              paymentType: convertString(purchaseInfo.paymentType),
+              simplePassword: enteredDigits.join("")
+            });
           }
 
           successPassword(response);
-          if (response.yanoljaPayHistoryId) {
-            navigate(`/charge/confirm/${response.yanoljaPayHistoryId}?type=${typeParam}`);
-          }
         } catch (error) {
           console.error("비밀번호 불일치: ", error);
           setIsMatched(false);
@@ -121,15 +140,7 @@ const PasswordConfirm = () => {
 
   const successPassword = (response: any) => {
     if (response.yanoljaPayHistoryId) {
-      let newPath;
-
-      if (redirectParam === "/purchase/confirm") {
-        newPath = "/purchase/confirm";
-      } else {
-        newPath = `/charge/confirm/${response.yanoljaPayHistoryId}?type=${typeParam}`;
-      }
-
-      navigate(newPath);
+      navigate(`/charge/confirm/${response.yanoljaPayHistoryId}?type=${typeParam}`);
     }
   };
 
