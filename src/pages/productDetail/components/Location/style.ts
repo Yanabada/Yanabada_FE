@@ -22,7 +22,6 @@ export const AddressContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  white-space: nowrap;
 `;
 
 export const Address = styled.p`

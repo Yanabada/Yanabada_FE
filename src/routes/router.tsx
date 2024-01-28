@@ -3,9 +3,6 @@ import BottomNavBar from "@components/navBar/bottomNavBar";
 import Chat from "@pages/chat";
 import MyPage from "@pages/myPage";
 import Profile from "@pages/myPage/profile";
-import Points from "@pages/myPage/points";
-import PointsMiddleTabList from "@pages/myPage/components/PointsMiddleTabList";
-import PointsMiddleTabDisappear from "@pages/myPage/components/PointsMiddleTabDisappear";
 import SalesHistory from "@pages/myPage/salesHistory";
 import PurchaseHistory from "@pages/myPage/purchaseHistory";
 import Management from "@pages/myPage/management";
@@ -32,7 +29,6 @@ import PasswordConfirm from "@pages/charge/password";
 import Account from "@pages/charge/account";
 import ChargeConfirm from "@pages/charge/confirm";
 import ChargeSuccess from "@pages/charge/success";
-import EditInfo from "@pages/purchase/editInfo";
 import SignInFourth from "@pages/signIn/components/signInFourth/SignInFourth";
 import ReservationComplete from "@pages/purchase/reservationComplete";
 import Notice from "@pages/notice";
@@ -148,24 +144,6 @@ const router = createBrowserRouter([
               <Suspense>
                 <Profile width="100%" />
               </Suspense>
-            )
-          },
-          {
-            path: "points/list",
-            element: (
-              <>
-                <Points />
-                <PointsMiddleTabList width="100%" />
-              </>
-            )
-          },
-          {
-            path: "points/disappear",
-            element: (
-              <>
-                <Points />
-                <PointsMiddleTabDisappear width="100%" />
-              </>
             )
           },
           {
@@ -353,10 +331,6 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Purchase width="100%" divType="payInfo" />
-      },
-      {
-        path: "editinfo",
-        element: <EditInfo />
       },
       {
         path: "confirm",

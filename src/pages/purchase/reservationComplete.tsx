@@ -1,5 +1,5 @@
 import UpperNavBar from "@components/navBar/upperNavBar";
-import * as S from "./reservationComplete.style";
+import * as S from "./styles/reservationComplete.style";
 import PaperIcon from "@assets/icons/payment_confirm.svg?react";
 import ProfileIconGray from "@assets/icons/profileIcon_gray.svg?react";
 import Notice from "@components/notice";
@@ -7,10 +7,11 @@ import { Link } from "react-router-dom";
 import formatDate from "@pages/purchase/utils/formatDate";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
 import usePurchaseHistory2 from "@pages/myPage/hooks/usePurchaseHistory2";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
+import useBuyProduct from "@pages/purchase/hooks/useBuyProduct";
 
 interface TradeData {
   tradeId: number;
@@ -26,25 +27,59 @@ interface TradeData {
 }
 
 const ReservationComplete = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const { mutate: buyProductMutate, isSuccess: buyProductSuccess } = useBuyProduct();
 
   const location = useLocation();
 
   const purchaseInfo = queryString.parse(location.search);
 
-  const { productId } = purchaseInfo;
+  const { productId, isMobile } = purchaseInfo;
+
+  console.log("purchaseInfo", purchaseInfo);
 
   const { data, error } = usePurchaseHistory2();
+
+  const [filteredTrades, setFilteredTrades] = useState<TradeData[]>();
 
   if (error) {
     console.log(error);
   }
 
-  const filteredTrades: TradeData[] = data?.purchaseTrades?.filter(
-    (trade: TradeData) => trade?.productId === Number(productId)
-  );
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setFilteredTrades(
+        data?.purchaseTrades?.filter((trade: TradeData) => trade?.productId === Number(productId))
+      );
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (isMobile) {
+      buyProductMutate({
+        productId: Number(purchaseInfo?.productId),
+        reservationPersonName: purchaseInfo?.reservationPersonName as string,
+        reservationPersonPhoneNumber: purchaseInfo?.reservationPersonPhoneNumber as string,
+        userPersonName: purchaseInfo?.userPersonName as string,
+        userPersonPhoneNumber: purchaseInfo?.userPersonPhoneNumber as string,
+        point: Number(purchaseInfo.point),
+        paymentType: purchaseInfo.paymentType as string
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (buyProductSuccess) {
+      setFilteredTrades(
+        data?.purchaseTrades?.filter((trade: TradeData) => trade?.productId === Number(productId))
+      );
+    }
+  }, [buyProductSuccess]);
+
+  console.log("filteredTrades", filteredTrades);
 
   return (
     <S.Container>

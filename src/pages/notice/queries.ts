@@ -11,8 +11,8 @@ const useNotifications = (
   const { data, isLoading, error } = useQuery({
     queryKey: ["notifications"],
     queryFn: getNotifications,
-    enabled: isLoggedIn
-    // refetchInterval: 30000 // FIXME: polling 간격 조절
+    enabled: isLoggedIn,
+    refetchInterval: 5000 // FIXME: polling 간격 조절
   });
 
   const deleteSelectedNotifications = useMutation({

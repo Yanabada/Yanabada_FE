@@ -7,6 +7,7 @@ interface ContainerProp {
 export const ChatListContainer = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.colors.gray[200]};
+  margin-bottom: 56px;
 `;
 
 export const ChatContainer = styled.div<ContainerProp>`

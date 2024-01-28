@@ -32,7 +32,7 @@ import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import calculateDiscountRate from "@pages/myPage/utils/calculateDiscountRate";
 import useProfileDetail from "@pages/myPage/hooks/useProfileDetail";
 import useBuyProduct from "./hooks/useBuyProduct";
-import { convertString, convertStringToKR } from "./utils/convertString";
+import { convertString } from "./utils/convertString";
 import { onClickTossPayment, onClickPGPayment } from "./utils/onClickPayment";
 import BankIcoLogo from "@assets/bankIcon.png";
 import Cookies from "js-cookie";
@@ -200,7 +200,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     fee: (productData?.sellingPrice * 0.05).toString(),
     point: pointToUse,
     totalPrice: formatNumberWithCommas(totalPrice),
-    paymentType: convertStringToKR(paymentMethod),
+    paymentType: convertString(paymentMethod),
     productId: productId,
     image: productData?.accommodationInfo.image
   };
@@ -363,6 +363,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
           <S.FormWrapper width={width}>
             <form onSubmit={onSubmit}>
               <S.TextInputWrapper>
+                <div style={{ marginTop: "24px" }} />
                 <TextInput
                   variant="move"
                   label={
@@ -379,6 +380,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     }
                   })}
                   errorMessage={errors.name1 && `${errors.name1?.message}`}
+                  value={name}
                 />
                 <S.TextInputSpacer />
                 <TextInput
@@ -398,24 +400,27 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                   })}
                   errorMessage={errors.phoneNumber1 && `${errors.phoneNumber1?.message}`}
                   onChange={handlePhoneNumberChange}
+                  value={phoneNumber}
                 />
               </S.TextInputWrapper>
 
-              <S.ChipWrapper>
-                <ManipulationChip
-                  buttonType={
-                    getValues("name1") &&
-                    getValues("phoneNumber1") &&
-                    !errors.name1 &&
-                    !errors.phoneNumber1
-                      ? "abledDefault"
-                      : "disabledDefault"
-                  }
-                  type="submit"
-                >
-                  입력하기
-                </ManipulationChip>
-              </S.ChipWrapper>
+              {name && phoneNumber ? null : (
+                <S.ChipWrapper>
+                  <ManipulationChip
+                    buttonType={
+                      getValues("name1") &&
+                      getValues("phoneNumber1") &&
+                      !errors.name1 &&
+                      !errors.phoneNumber1
+                        ? "abledDefault"
+                        : "disabledDefault"
+                    }
+                    type="submit"
+                  >
+                    입력하기
+                  </ManipulationChip>
+                </S.ChipWrapper>
+              )}
             </form>
           </S.FormWrapper>
         </S.PersonInfoWrapper>
@@ -879,7 +884,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                   // 잔액 부족할 경우
                   if (balanceData.balance < productData?.sellingPrice) {
                     navigate(
-                      `/charge/pay?type=charging&price=${totalPrice}&redirect=/purchase?name=${name}&phonenumber=${phoneNumber}&productId=${productId}`
+                      `/charge/pay?type=charging&price=${totalPrice}&payment=true&name=${name}&phonenumber=${phoneNumber}&productId=${productId}`
                     );
                     // 잔액 부족하지 않을 경우
                   } else {
