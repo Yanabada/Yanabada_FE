@@ -1,5 +1,5 @@
 import UpperNavBar from "@components/navBar/upperNavBar";
-import * as S from "./reservationComplete.style";
+import * as S from "./styles/reservationComplete.style";
 import PaperIcon from "@assets/icons/payment_confirm.svg?react";
 import ProfileIconGray from "@assets/icons/profileIcon_gray.svg?react";
 import Notice from "@components/notice";
