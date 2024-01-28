@@ -49,6 +49,19 @@ const Home = () => {
     }
   }, [isSuccess]);
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      Cookie.remove("image", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("email", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("id", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("accessToken", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("refreshToken", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("nickName", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("provider", { path: "/", domain: ".yanabada.com" });
+      Cookie.remove("isLoggedIn", { path: "/", domain: ".yanabada.com" });
+    }
+  }, []);
+
   return (
     <S.Container>
       <Header />
