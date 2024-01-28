@@ -6,6 +6,9 @@ import { ProductType } from "@pages/products/types/productsType";
 import { numberFormat } from "@utils/numberFormat";
 import CheckStore from "@pages/products/stores/checkStore";
 import { formatDateTo, formatRemainingTime } from "@utils/formatDateTo";
+import RecentStore from "@pages/home/stores/recentStore";
+import { RecentType } from "@pages/home/types/recent";
+import { useEffect } from "react";
 
 type Product = Omit<ProductType, "latitude" | "longitude">;
 
@@ -19,10 +22,32 @@ const ProductCard = ({ product }: ProductCardProps) => {
   if (product.status === "SOLD_OUT" && isCheck) {
     return null;
   }
+
+  const { recentItem, setRecentItem } = RecentStore();
+
+  useEffect(() => {
+    localStorage.setItem("recentItem", JSON.stringify(recentItem));
+    if (recentItem.length > 5) {
+      recentItem.pop();
+    }
+  }, [recentItem]);
+
+  const handleLocalStorage = () => {
+    const updateRecentItem: RecentType = {
+      id: product.id,
+      accommodationName: product.accommodationName,
+      roomName: product.roomName,
+      checkInDate: product.checkIn,
+      checkOutDate: product.checkOut,
+      saleEnd: product.saleEnd,
+      image: product.image
+    };
+    setRecentItem([updateRecentItem, ...recentItem]);
+  };
   return (
     <S.Container>
       <Link to={`/products/${product.id}`}>
-        <S.ItemContainer>
+        <S.ItemContainer onClick={handleLocalStorage}>
           <S.ImageContainer>
             <S.Image src={product.image} />
             {product.status === "SOLD_OUT" && <S.ImageOverlay>판매 완료</S.ImageOverlay>}
