@@ -12,7 +12,7 @@ const useProducts = (params: Partial<GetProductsRequestParams> = { size: 10 }) =
       params.smallY
     ],
     queryFn: ({ pageParam }) => getProducts({ ...params, page: pageParam }),
-    gcTime: 1000,
+    gcTime: 1000 * 10,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const isLastPage = allPages.length === lastPage.data.totalPages;
