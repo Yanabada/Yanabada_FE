@@ -128,7 +128,11 @@ const ChatRoom = () => {
         customBack={() => {
           updateRoom({ code: roomId! });
         }}
-        title={productData?.seller.nickname}
+        title={
+          productData?.seller.nickname === Cookies.get("nickName")
+            ? messages[messages.length - 1].senderNickname
+            : productData?.seller.nickname
+        }
         rightElement={
           <button
             onClick={() => {
