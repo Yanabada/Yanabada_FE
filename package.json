@@ -8,31 +8,59 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/favicon.png"
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --fix"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.8.2",
+    "@ariakit/react": "^0.3.13",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@lottiefiles/react-lottie-player": "^3.5.3",
+    "@stomp/stompjs": "^7.0.0",
     "@tanstack/react-query": "^5.14.6",
     "@tanstack/react-query-devtools": "^5.14.7",
+    "@types/js-cookie": "^3.0.6",
+    "@types/qs": "^6.9.11",
     "axios": "^1.6.2",
+    "date-fns": "^3.0.6",
+    "firebase": "^10.7.2",
     "framer-motion": "^10.16.16",
+    "js-cookie": "^3.0.5",
+    "lottie-react": "^2.4.0",
+    "popmotion": "^11.0.5",
+    "qs": "^6.11.2",
+    "query-string": "^8.1.0",
     "react": "^18.2.0",
+    "react-datepicker": "^4.25.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.49.3",
     "react-hot-toast": "^2.4.1",
+    "react-icons": "^4.12.0",
+    "react-kakao-maps-sdk": "^1.1.24",
     "react-router-dom": "^6.21.1",
-    "recoil": "^0.7.7"
+    "sockjs-client": "^1.6.1",
+    "styled-components": "^6.1.6",
+    "terser": "^5.27.0",
+    "vite-plugin-pwa": "^0.17.4",
+    "vite-tsconfig-paths": "^4.2.3",
+    "ws": "^8.16.0",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/node": "^20.11.0",
     "@types/react": "^18.2.43",
+    "@types/react-datepicker": "^4.19.5",
     "@types/react-dom": "^18.2.17",
+    "@types/sockjs-client": "^1.5.4",
+    "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
+    "@vite-pwa/assets-generator": "^0.2.2",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
@@ -41,8 +69,15 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "husky": "^8.0.3",
+    "kakao.maps.d.ts": "^0.1.39",
     "lint-staged": "^15.2.0",
+    "msw": "^2.0.13",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.11",
+    "vite-plugin-svgr": "^4.2.0"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.6.1",
+    "esbuild": "^0.19.11"
   }
 }
