@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Map, MarkerClusterer } from "react-kakao-maps-sdk";
 import AirplaneIcon from "@assets/icons/airplane.svg?react";
 import * as S from "./styles";
@@ -25,7 +25,7 @@ interface MapProps {
 }
 
 const KakaoMap = ({ products }: MapProps) => {
-  const [selectedProductId, setSelectedProductId] = useState<number | null>(
+  const [selectedProductId, setSelectedProductId] = useState(
     products.length > 0 ? products[0].id : 0
   );
   const [mapCenter, setMapCenter] = useState<MapCenter>({
@@ -38,6 +38,12 @@ const KakaoMap = ({ products }: MapProps) => {
     errorMessage: "",
     isLoading: true
   });
+
+  useEffect(() => {
+    if (products.length > 0) {
+      setSelectedProductId(products[0].id);
+    }
+  }, [products]);
 
   const mapRef = useRef<kakao.maps.Map>(null);
 
@@ -94,10 +100,16 @@ const KakaoMap = ({ products }: MapProps) => {
         ref={mapRef}
       >
         {userPosition.lat && userPosition.lng ? <MyPositionMarker position={userPosition} /> : null}
-        <MarkerClusterer averageCenter={true} minLevel={10} styles={[S.clustererStyles]}>
-          <ProductsMarkers products={products} setSelectedProductId={setSelectedProductId} />
-        </MarkerClusterer>
-        <Research setSelectedProductId={setSelectedProductId} />
+        {products.length > 0 && (
+          <MarkerClusterer averageCenter={true} minLevel={10} styles={[S.clustererStyles]}>
+            <ProductsMarkers
+              products={products}
+              selectedProductId={selectedProductId}
+              setSelectedProductId={setSelectedProductId}
+            />
+          </MarkerClusterer>
+        )}
+        <Research />
       </Map>
       <ProductCardForMap selectedProduct={selectedProduct!} />
       <S.Button onClick={handleMyPositionClick}>

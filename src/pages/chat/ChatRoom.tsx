@@ -105,7 +105,7 @@ const ChatRoom = () => {
     fetchNextPage,
     isLoading
   } = useMessages({ code: roomId });
-  const ref = useIntersect(async (entry, observer) => {
+  const ref = useIntersect<HTMLDivElement>(async (entry, observer) => {
     observer.unobserve(entry.target);
     if (hasNextPage && !isFetching) {
       fetchNextPage();
@@ -128,7 +128,11 @@ const ChatRoom = () => {
         customBack={() => {
           updateRoom({ code: roomId! });
         }}
-        title={productData?.seller.nickname}
+        title={
+          productData?.seller.nickname === Cookies.get("nickName")
+            ? messages[messages.length - 1].senderNickname
+            : productData?.seller.nickname
+        }
         rightElement={
           <button
             onClick={() => {

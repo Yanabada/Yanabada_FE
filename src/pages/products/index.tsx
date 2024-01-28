@@ -4,7 +4,7 @@ import * as S from "./styles/style";
 import CategoryTab from "./components/CategoryTab";
 import GoToMapButton from "./components/ToMapButton";
 import { Suspense } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ProductList from "./components/ProductList";
 import { useMapState } from "./stores/mapStore";
 import OptionTab from "./components/OptionTap";
@@ -13,6 +13,13 @@ import LoadingCircle from "@components/loading";
 
 const Products = () => {
   const { isMapOpen, setMapOpen, hasProducts } = useMapState();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const customBack = () => {
+    setMapOpen();
+    navigate(location.pathname);
+  };
 
   return (
     <>
@@ -21,7 +28,7 @@ const Products = () => {
         type={isMapOpen ? "backClose" : "back"}
         hasBorder={false}
         isCustom={isMapOpen}
-        {...(isMapOpen && { customBack: setMapOpen })}
+        {...(isMapOpen && { customBack: customBack })}
       />
       <S.Container>
         <Link to="/search">

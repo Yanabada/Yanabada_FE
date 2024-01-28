@@ -37,7 +37,7 @@ const ReservationComplete = () => {
   }
 
   const filteredTrades: TradeData[] = data?.purchaseTrades?.filter(
-    (trade: TradeData) => trade.productId === Number(productId)
+    (trade: TradeData) => trade?.productId === Number(productId)
   );
 
   console.log(productId);
