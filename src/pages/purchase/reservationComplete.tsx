@@ -7,10 +7,12 @@ import { Link } from "react-router-dom";
 import formatDate from "@pages/purchase/utils/formatDate";
 import { getDayOfWeek } from "@utils/getDayOfWeek";
 import usePurchaseHistory2 from "@pages/myPage/hooks/usePurchaseHistory2";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
+import useBuyProduct from "@pages/purchase/hooks/useBuyProduct";
+import { convertStringToKR } from "./utils/convertString";
 
 interface TradeData {
   tradeId: number;
@@ -26,21 +28,17 @@ interface TradeData {
 }
 
 const ReservationComplete = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const { mutate: buyProductMutate, isSuccess: buyProductSuccess } = useBuyProduct();
 
   const location = useLocation();
 
   const purchaseInfo = queryString.parse(location.search);
 
-  const { productId } = purchaseInfo;
+  const { productId, isMobile } = purchaseInfo;
 
-  console.log("purchaseInfo", purchaseInfo);
+  const { data, error, refetch, isSuccess } = usePurchaseHistory2();
 
-  const { data, error } = usePurchaseHistory2();
-
-  const [filteredTrades, setFilteredTrades] = useState<TradeData[]>();
+  const [filteredTrades, setFilteredTrades] = useState<TradeData[]>([]);
 
   if (error) {
     console.log(error);
@@ -51,15 +49,9 @@ const ReservationComplete = () => {
   }, []);
 
   useEffect(() => {
-    if (!isMobile) {
-      setFilteredTrades(
-        data?.purchaseTrades?.filter((trade: TradeData) => trade?.productId === Number(productId))
-      );
-    }
-  }, [data]);
+    console.log("isMobile", isMobile);
 
-  useEffect(() => {
-    if (isMobile) {
+    if (isMobile === "true") {
       buyProductMutate({
         productId: Number(purchaseInfo?.productId),
         reservationPersonName: purchaseInfo?.reservationPersonName as string,
@@ -69,18 +61,24 @@ const ReservationComplete = () => {
         point: Number(purchaseInfo.point),
         paymentType: purchaseInfo.paymentType as string
       });
+    } else {
+      refetch();
     }
   }, []);
 
   useEffect(() => {
     if (buyProductSuccess) {
+      refetch();
+    }
+  }, [buyProductSuccess]);
+
+  useEffect(() => {
+    if (isSuccess) {
       setFilteredTrades(
         data?.purchaseTrades?.filter((trade: TradeData) => trade?.productId === Number(productId))
       );
     }
-  }, [buyProductSuccess]);
-
-  console.log("filteredTrades", filteredTrades);
+  }, [isSuccess]);
 
   return (
     <S.Container>
@@ -143,28 +141,32 @@ const ReservationComplete = () => {
       </S.Flex>
       <S.Spacer />
 
-      <S.Title>거래 정보</S.Title>
-      <S.NoticeWrapper>
-        <Notice
-          title="구매 취소는 판매자 승인 전까지만 가능합니다."
-          type="default"
-          color="orange"
-          shape="line"
-        />
-      </S.NoticeWrapper>
-      <S.Flex>
-        <S.SubTitle>주문번호</S.SubTitle>
-        <S.Text>{filteredTrades[0]?.tradeId}</S.Text>
-      </S.Flex>
-      <S.Flex>
-        <S.SubTitle>판매자</S.SubTitle>
-        <S.Text>{filteredTrades[0]?.sellerNickname}</S.Text>
-      </S.Flex>
-      <S.Flex>
-        <S.SubTitle>주문일시</S.SubTitle>
-        <S.Text>{filteredTrades[0]?.tradeRegisteredTime}</S.Text>
-      </S.Flex>
-      <S.Spacer />
+      {filteredTrades && (
+        <>
+          <S.Title>거래 정보</S.Title>
+          <S.NoticeWrapper>
+            <Notice
+              title="구매 취소는 판매자 승인 전까지만 가능합니다."
+              type="default"
+              color="orange"
+              shape="line"
+            />
+          </S.NoticeWrapper>
+          <S.Flex>
+            <S.SubTitle>주문번호</S.SubTitle>
+            <S.Text>{filteredTrades[0]?.tradeId}</S.Text>
+          </S.Flex>
+          <S.Flex>
+            <S.SubTitle>판매자</S.SubTitle>
+            <S.Text>{filteredTrades[0]?.sellerNickname}</S.Text>
+          </S.Flex>
+          <S.Flex>
+            <S.SubTitle>주문일시</S.SubTitle>
+            <S.Text>{filteredTrades[0]?.tradeRegisteredTime}</S.Text>
+          </S.Flex>
+          <S.Spacer />
+        </>
+      )}
 
       <S.Title>결제 정보</S.Title>
       <S.Flex>
@@ -187,7 +189,7 @@ const ReservationComplete = () => {
       </S.Flex>
       <S.Flex>
         <S.SubTitle>결제 수단</S.SubTitle>
-        <S.Text>{purchaseInfo?.paymentType}</S.Text>
+        <S.Text>{convertStringToKR(purchaseInfo?.paymentType as string)}</S.Text>
       </S.Flex>
 
       <S.Footer>
