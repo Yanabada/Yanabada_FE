@@ -15,12 +15,14 @@ import NoItemsLogo from "@assets/noitems-logo.png";
 
 import getSellList from "./apis/getSellList";
 import { SellListData } from "./types/sellListData";
+import LoadingAnimation from "@components/checkAnimation";
 
 const Sell = () => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [sellList, setSellList] = useState<SellListData[]>([]);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const isLoggedIn = Cookies.get("isLoggedIn") === "yes";
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const loginModalProps = {
@@ -36,21 +38,21 @@ const Sell = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const sellListData = await getSellList();
         setSellList(sellListData);
       } catch (error) {
         console.error("Error fetching sell list:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     if (isLoggedIn) {
       fetchData();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
+    } else {
       setIsLoginModalVisible(true);
+      setIsLoading(false);
     }
   }, [isLoggedIn]);
 
@@ -75,7 +77,9 @@ const Sell = () => {
           shape="lineDark"
         />
         <S.ListWrap>
-          {sellList.length > 0 ? (
+          {isLoading ? (
+            <LoadingAnimation />
+          ) : sellList.length > 0 ? (
             sellList.map((sellItem) => (
               <S.ListCard
                 key={`index-${sellItem}`}

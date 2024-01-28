@@ -27,7 +27,7 @@ export const createChatRoom = async (productId: number, buyerId: number) => {
     if (error instanceof AxiosError) {
       if (
         error.response?.data.errorMessage ===
-        ("네고 불가능한 상품입니다." || "이미 채팅방이 존재합니다.")
+        ("가격제안 불가능한 상품입니다." || "이미 채팅방이 존재합니다.")
       ) {
         toast.error(error.response?.data.errorMessage);
         return;
