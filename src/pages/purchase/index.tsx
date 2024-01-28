@@ -110,7 +110,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
   const [bankMessage, setBankMessage] = useState("은행 선택");
   const [installmentMessage, setInstallmentMessage] = useState("할부 기간 선택");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isChangeButtonClicked, setIsChangeButtonClicked] = useState(false);
   const [nameState, setNameState] = useState("");
   const [phoneNumberState, setPhoneNumberState] = useState("");
   const [pointToUse, setPointToUse] = useState("0");
@@ -183,11 +182,32 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     paymentType: convertString(paymentMethod)
   };
 
-  const triggerProductMutate = () => {
-    buyProductMutate(mutateInfo);
+  const purchaseInfo = {
+    accommodationName: productData?.accommodationInfo.name,
+    roomName: productData?.roomInfo.name,
+    checkInDate: productData?.checkInDate,
+    checkOutDate: productData?.checkOutDate,
+    checkInTime: productData?.roomInfo.checkInTime,
+    checkOutTime: productData?.roomInfo.checkOutTime,
+    minHeadCount: productData?.roomInfo.minHeadCount,
+    maxHeadCount: productData?.roomInfo.maxHeadCount,
+    reservationPersonName: nameState,
+    reservationPersonPhoneNumber: phoneNumberState,
+    userPersonName: name,
+    userPersonPhoneNumber: phoneNumber,
+    tradeId: productData?.tradeId,
+    productPrice: formatNumberWithCommas(productData?.price),
+    fee: (productData?.sellingPrice * 0.05).toString(),
+    point: pointToUse,
+    totalPrice: formatNumberWithCommas(totalPrice),
+    paymentType: convertStringToKR(paymentMethod),
+    productId: productId,
+    image: productData?.accommodationInfo.image
   };
 
-  const REDIRECT_URL = "https://www.yanabada.com/purchase/confirm";
+  const purchaseInfoQueryString = new URLSearchParams(purchaseInfo).toString();
+
+  const REDIRECT_URL = `https://www.yanabada.com/purchase/confirm?${purchaseInfoQueryString}`;
 
   useEffect(() => {
     if (isChecked3 && isChecked4) {
@@ -216,38 +236,13 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
 
   useEffect(() => {
     if (isPaymentSuccess) {
-      triggerProductMutate();
+      buyProductMutate(mutateInfo);
     }
   }, [isPaymentSuccess]);
 
-  const purchaseInfo = {
-    accommodationName: productData?.accommodationInfo.name,
-    roomName: productData?.roomInfo.name,
-    checkInDate: productData?.checkInDate,
-    checkOutDate: productData?.checkOutDate,
-    checkInTime: productData?.roomInfo.checkInTime,
-    checkOutTime: productData?.roomInfo.checkOutTime,
-    minHeadCount: productData?.roomInfo.minHeadCount,
-    maxHeadCount: productData?.roomInfo.maxHeadCount,
-    reservationPersonName: nameState,
-    reservationPersonPhoneNumber: phoneNumberState,
-    userPersonName: name,
-    userPersonPhoneNumber: phoneNumber,
-    tradeId: productData?.tradeId,
-    productPrice: formatNumberWithCommas(productData?.price),
-    fee: productData?.sellingPrice * 0.05,
-    point: pointToUse,
-    totalPrice: formatNumberWithCommas(totalPrice),
-    paymentType: convertStringToKR(paymentMethod),
-    productId: productId,
-    image: productData?.accommodationInfo.image
-  };
-
   useEffect(() => {
     if (buyProductSuccess) {
-      localStorage.setItem("purchaseInfo", JSON.stringify(purchaseInfo));
-
-      navigate("/purchase/confirm");
+      navigate(`/purchase/confirm?${purchaseInfoQueryString}`);
     }
   }, [buyProductSuccess]);
 
@@ -255,7 +250,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     localStorage.removeItem("tossPayment");
     localStorage.removeItem("trans");
     localStorage.removeItem("card");
-    localStorage.removeItem("simplePW");
     localStorage.removeItem("purchaseInfo");
   }, []);
 
@@ -365,72 +359,65 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
             <S.InfoText>
               예약자 정보<S.UserInfoTextRed>*</S.UserInfoTextRed>
             </S.InfoText>
-            <S.ChangeText onClick={() => setIsChangeButtonClicked(true)}>입력하기</S.ChangeText>
           </S.PersonInfoTopWrapper>
-          {isChangeButtonClicked ? (
-            <S.FormWrapper width={width}>
-              <form onSubmit={onSubmit}>
-                <S.TextInputWrapper>
-                  <TextInput
-                    variant="move"
-                    label={
-                      <>
-                        <span>성명</span>
-                        <span style={{ color: "#E01F3E" }}>*</span>
-                      </>
+          <S.FormWrapper width={width}>
+            <form onSubmit={onSubmit}>
+              <S.TextInputWrapper>
+                <TextInput
+                  variant="move"
+                  label={
+                    <>
+                      <span>성명</span>
+                      <span style={{ color: "#E01F3E" }}>*</span>
+                    </>
+                  }
+                  {...register("name1", {
+                    required: true,
+                    pattern: {
+                      value: /^[가-힣a-zA-Z]*$/,
+                      message: "이용자 이름은 한글과 영문만 가능합니다."
                     }
-                    {...register("name1", {
-                      required: true,
-                      pattern: {
-                        value: /^[가-힣a-zA-Z]*$/,
-                        message: "이용자 이름은 한글과 영문만 가능합니다."
-                      }
-                    })}
-                    errorMessage={errors.name1 && `${errors.name1?.message}`}
-                  />
-                  <S.TextInputSpacer />
-                  <TextInput
-                    variant="move"
-                    label={
-                      <>
-                        <span>휴대폰 번호</span>
-                        <span style={{ color: "#E01F3E" }}>*</span>
-                      </>
+                  })}
+                  errorMessage={errors.name1 && `${errors.name1?.message}`}
+                />
+                <S.TextInputSpacer />
+                <TextInput
+                  variant="move"
+                  label={
+                    <>
+                      <span>휴대폰 번호</span>
+                      <span style={{ color: "#E01F3E" }}>*</span>
+                    </>
+                  }
+                  {...register("phoneNumber1", {
+                    required: true,
+                    pattern: {
+                      value: /^010-\d{4}-\d{4}$/,
+                      message: "010-0000-0000 형태로 입력해주세요."
                     }
-                    {...register("phoneNumber1", {
-                      required: true,
-                      pattern: {
-                        value: /^010-\d{4}-\d{4}$/,
-                        message: "010-0000-0000 형태로 입력해주세요."
-                      }
-                    })}
-                    errorMessage={errors.phoneNumber1 && `${errors.phoneNumber1?.message}`}
-                    onChange={handlePhoneNumberChange}
-                  />
-                </S.TextInputWrapper>
+                  })}
+                  errorMessage={errors.phoneNumber1 && `${errors.phoneNumber1?.message}`}
+                  onChange={handlePhoneNumberChange}
+                />
+              </S.TextInputWrapper>
 
-                <S.ChipWrapper>
-                  <ManipulationChip
-                    buttonType={
-                      getValues("name1") &&
-                      getValues("phoneNumber1") &&
-                      !errors.name1 &&
-                      !errors.phoneNumber1
-                        ? "abledDefault"
-                        : "disabledDefault"
-                    }
-                    type="submit"
-                  >
-                    인증 변경하기
-                  </ManipulationChip>
-                </S.ChipWrapper>
-              </form>
-            </S.FormWrapper>
-          ) : (
-            <S.PersonInfoBottomWrapper>
-              {name ? name : ""} / {phoneNumber ? phoneNumber : ""}
-            </S.PersonInfoBottomWrapper>
-          )}
+              <S.ChipWrapper>
+                <ManipulationChip
+                  buttonType={
+                    getValues("name1") &&
+                    getValues("phoneNumber1") &&
+                    !errors.name1 &&
+                    !errors.phoneNumber1
+                      ? "abledDefault"
+                      : "disabledDefault"
+                  }
+                  type="submit"
+                >
+                  입력하기
+                </ManipulationChip>
+              </S.ChipWrapper>
+            </form>
+          </S.FormWrapper>
         </S.PersonInfoWrapper>
       </S.ReservationContainer>
       <S.Spacer width={width} />
@@ -891,7 +878,6 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                 } else {
                   // 잔액 부족할 경우
                   if (balanceData.balance < productData?.sellingPrice) {
-                    // TODO: 리다이렉트 경로 고민
                     navigate(
                       `/charge/pay?type=charging&price=${totalPrice}&redirect=/purchase?name=${name}&phonenumber=${phoneNumber}&productId=${productId}`
                     );
@@ -900,7 +886,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
                     localStorage.setItem("mutateInfo", JSON.stringify(mutateInfo));
 
                     navigate(
-                      `/charge/password?registration=false&type=payment&redirect=/purchase/confirm`
+                      `/charge/password?registration=false&type=payment&redirect=/purchase/confirm?${purchaseInfoQueryString}`
                     );
                   }
                 }
