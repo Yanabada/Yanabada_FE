@@ -23,6 +23,7 @@ export const ItemContainer = styled(motion.div)<CardProps>`
   padding: 0.5rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
   background-color: #fff;
+  cursor: pointer;
 
   &.map {
     left: 50%;

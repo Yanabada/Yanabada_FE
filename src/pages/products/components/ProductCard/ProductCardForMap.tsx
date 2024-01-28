@@ -7,6 +7,8 @@ import ArrowDown from "@assets/icons/search_arrowDown.svg?react";
 import { useEffect, useState } from "react";
 import { formatDateTo, formatRemainingTime } from "@utils/formatDateTo";
 import { differenceInDays } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import { useMapState } from "@pages/products/stores/mapStore";
 
 interface ProductCardProps {
   selectedProduct?: ProductType;
@@ -44,6 +46,8 @@ const variants = {
 const ProductCardForMap = ({ selectedProduct }: ProductCardProps) => {
   const [isOpen, setOpen] = useState(true);
   const cardControls = useAnimationControls();
+  const navigate = useNavigate();
+  const { setMapOpen } = useMapState();
 
   useEffect(() => {
     cardControls.start("animate");
@@ -67,8 +71,19 @@ const ProductCardForMap = ({ selectedProduct }: ProductCardProps) => {
         animate={cardControls}
         exit="exit"
         className="map"
+        onClick={() => {
+          setMapOpen();
+          navigate(`/products/${selectedProduct.id}`);
+        }}
       >
-        <button data-opened={isOpen} className="icon" onClick={() => setOpen((prev) => !prev)}>
+        <button
+          data-opened={isOpen}
+          className="icon"
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpen((prev) => !prev);
+          }}
+        >
           <ArrowDown />
         </button>
         <S.ImageContainer>
