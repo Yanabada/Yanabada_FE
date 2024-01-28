@@ -2,8 +2,11 @@ import { useCallback, useEffect, useRef } from "react";
 
 type IntersectHandler = (entry: IntersectionObserverEntry, observer: IntersectionObserver) => void;
 
-const useIntersect = (onIntersect: IntersectHandler, options?: IntersectionObserverInit) => {
-  const ref = useRef<HTMLDivElement>(null);
+const useIntersect = <T extends HTMLElement>(
+  onIntersect: IntersectHandler,
+  options?: IntersectionObserverInit
+) => {
+  const ref = useRef<T>(null);
   const callback = useCallback(
     (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
       entries.forEach((entry) => {

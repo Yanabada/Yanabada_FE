@@ -105,7 +105,7 @@ const ChatRoom = () => {
     fetchNextPage,
     isLoading
   } = useMessages({ code: roomId });
-  const ref = useIntersect(async (entry, observer) => {
+  const ref = useIntersect<HTMLDivElement>(async (entry, observer) => {
     observer.unobserve(entry.target);
     if (hasNextPage && !isFetching) {
       fetchNextPage();
