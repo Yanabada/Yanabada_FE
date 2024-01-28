@@ -73,6 +73,7 @@ const Account = () => {
         <CS.PayTitle>계좌번호를 입력해 주세요</CS.PayTitle>
         <CS.PaySpace />
         <TextInput
+          type="number"
           variant="move"
           label="계좌번호 입력"
           value={bankNumber}
