@@ -13,9 +13,13 @@ const ChargeSuccess = () => {
   const navigate = useNavigate();
   const nickname = Cookies.get("nickName");
 
+  const goToHome = () => {
+    navigate("/mypage");
+  };
+
   return (
     <>
-      <UpperNavBar title="비밀번호 등록" type="close" />
+      <UpperNavBar title="비밀번호 등록" type="close" customBack={goToHome} isCustom={true} />
       <LoadingAnimation />
       <S.SuccessWrap>
         <S.SuccessBox>
@@ -31,10 +35,10 @@ const ChargeSuccess = () => {
           <BaseButton
             buttonType="default"
             width="100%"
-            onClick={() => navigate("/charge?type=withdrawal")}
+            onClick={() => navigate("/charge?type=charging")}
           >
             <ContactIcon />
-            계좌 연결하기
+            페이 충전하기
           </BaseButton>
         </S.ButtonWrap>
       </S.SuccessWrap>

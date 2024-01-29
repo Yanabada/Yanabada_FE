@@ -12,7 +12,7 @@ import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import useBuyProduct from "@pages/purchase/hooks/useBuyProduct";
-import { convertStringToKR } from "./utils/convertString";
+import { convertString, convertStringToKR } from "./utils/convertString";
 
 interface TradeData {
   tradeId: number;
@@ -59,7 +59,7 @@ const ReservationComplete = () => {
         userPersonName: purchaseInfo?.userPersonName as string,
         userPersonPhoneNumber: purchaseInfo?.userPersonPhoneNumber as string,
         point: Number(purchaseInfo.point),
-        paymentType: purchaseInfo.paymentType as string
+        paymentType: convertString(purchaseInfo.paymentType as string)
       });
     } else {
       refetch();
