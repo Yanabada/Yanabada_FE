@@ -200,7 +200,7 @@ const Purchase = ({ width, divType }: PurchaseProps) => {
     fee: (productData?.sellingPrice * 0.05).toString(),
     point: pointToUse,
     totalPrice: formatNumberWithCommas(totalPrice),
-    paymentType: convertString(paymentMethod),
+    paymentType: paymentMethod,
     productId: productId,
     image: productData?.accommodationInfo.image
   };
