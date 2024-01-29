@@ -32,7 +32,7 @@ import formatNumberWithCommas from "@pages/myPage/utils/formatNumberWithCommas";
 import calculateDiscountRate from "@pages/myPage/utils/calculateDiscountRate";
 import useProfileDetail from "@pages/myPage/hooks/useProfileDetail";
 import useBuyProduct from "./hooks/useBuyProduct";
-import { convertString, convertStringToKR } from "./utils/convertString";
+import { convertString } from "./utils/convertString";
 import { onClickTossPayment, onClickPGPayment } from "./utils/onClickPayment";
 import BankIcoLogo from "@assets/bankIcon.png";
 import Cookies from "js-cookie";
