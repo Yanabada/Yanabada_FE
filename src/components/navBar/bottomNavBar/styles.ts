@@ -15,6 +15,12 @@ export const BottomNavWrapper = styled.div`
   max-width: 780px;
   margin: 0 auto;
 
+  padding-left: constant(safe-area-inset-left);
+  padding-right: constant(safe-area-inset-right);
+
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+
   user-select: none;
   z-index: 999;
 
