@@ -17,9 +17,11 @@ export const BottomNavWrapper = styled.div`
 
   padding-left: constant(safe-area-inset-left);
   padding-right: constant(safe-area-inset-right);
+  padding-bottom: constant(safe-area-inset-bottom);
 
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
 
   user-select: none;
   z-index: 999;
