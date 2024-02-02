@@ -1,6 +1,6 @@
 import * as S from "./styles/styles";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdArrowDropup } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { GoCheck } from "react-icons/go";
@@ -45,6 +45,10 @@ const Charge = () => {
   };
 
   const typeText = typeParam == "charging" ? "충전" : "인출";
+
+  useEffect(() => {
+    setAmount(0);
+  }, [setAmount]);
 
   return (
     <>
