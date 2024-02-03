@@ -56,12 +56,20 @@ const PriceArea = ({
   };
 
   const getErrorMessage = () => {
-    if (purchasePrice && cancelFee) {
-      if (0 < price && price > purchasePrice) {
-        return <S.ErrorMessage>실구매가보다 낮은 금액으로만 판매 가능해요.</S.ErrorMessage>;
+    if (policyNumber === "YNBD_1" || policyNumber === "YNBD_2") {
+      if (0 < price && price <= purchasePrice - cancelFee) {
+        return (
+          <S.ErrorMessage>지금 야놀자에서 취소하는 것보다 손해보는 가격이에요!</S.ErrorMessage>
+        );
+      }
+      return;
+    } else if (policyNumber === "YNBD_3") {
+      if (0 < price && price < purchasePrice) {
+        return (
+          <S.ErrorMessage>지금 야놀자에서 취소하는 것보다 손해보는 가격이에요!</S.ErrorMessage>
+        );
       }
     }
-    return;
   };
 
   const getCommandMessage = () => {
