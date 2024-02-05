@@ -1,8 +1,8 @@
-# 야나바다
+# ✨ Yanabada - 패스트캠퍼스 X 야놀자 프론트엔드 개발 부트캠프 파이널 프로젝트 최우수 프로젝트 ✨
 
 ![1](https://github.com/Yanabada/Yanabada_FE/assets/93538221/db01633c-5200-4964-af6d-cd705a54391d)
 
-✨ 무료 예약 취소 불가한 숙소의 양도/거래 플랫폼 "Yanabada"
+✨ 무료 예약 취소 불가한 숙소의 양도/거래 플랫폼 "Yanabada" ✨  
 
   <a href="https://www.yanabada.com/" target="_blank">
     <img src="https://img.shields.io/badge/Yanabada 배포 링크-4299E1?style=for-the-badge&logoColor=white" alt="example"/>
