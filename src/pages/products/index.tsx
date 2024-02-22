@@ -17,8 +17,12 @@ const Products = () => {
   const navigate = useNavigate();
 
   const customBack = () => {
-    setMapOpen();
-    navigate(location.pathname);
+    if (isMapOpen) {
+      setMapOpen();
+      navigate(location.pathname);
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -27,8 +31,8 @@ const Products = () => {
         title={isMapOpen ? "지도검색" : "상품리스트"}
         type={isMapOpen ? "backClose" : "back"}
         hasBorder={false}
-        isCustom={isMapOpen}
-        {...(isMapOpen && { customBack: customBack })}
+        isCustom={true}
+        {...{ customBack: customBack }}
       />
       <S.Container>
         <Link to="/search">
