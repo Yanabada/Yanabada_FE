@@ -1,67 +1,64 @@
-import useIntersect from "@pages/products/hooks/useIntersect";
 import * as S from "../../styles/style";
-import KakaoMap from "../KakaoMap";
 import ProductCard from "../ProductCard";
 import useProducts from "@pages/products/api/queries";
-import { useMapState } from "@pages/products/stores/mapStore";
 import { ScrollRestoration, useSearchParams } from "react-router-dom";
-import { Category, Option, OrderState } from "@pages/products/api/products";
-import { useEffect, useState } from "react";
+import {
+  Category,
+  GetProductsRequestParams,
+  Option,
+  OrderState
+} from "@pages/products/api/products";
+import { useMemo } from "react";
+import useIntersect from "@pages/products/hooks/useIntersect";
+import KakaoMap from "../KakaoMap";
 import NoProduct from "../NoProduct";
+import { useMapState } from "@pages/products/stores/mapStore";
+import GoToMapButton from "../ToMapButton";
 
 const ProductList = () => {
   const [searchParams] = useSearchParams();
-  const [queryParams, setQueryParams] = useState({
-    options: searchParams.getAll("options"),
-    order: searchParams.get("order"),
-    category: searchParams.get("category"),
-    keyword: searchParams.get("keyword"),
-    checkInDate: searchParams.get("checkInDate"),
-    checkOutDate: searchParams.get("checkOutDate"),
-    swx: Number(searchParams.get("swx")),
-    swy: Number(searchParams.get("swy")),
-    nex: Number(searchParams.get("nex")),
-    ney: Number(searchParams.get("ney"))
-  });
+  const searchParamString = searchParams.toString();
 
-  useEffect(() => {
-    setQueryParams({
-      options: searchParams.getAll("options"),
-      order: searchParams.get("order"),
-      category: searchParams.get("category"),
-      keyword: searchParams.get("keyword"),
-      checkInDate: searchParams.get("checkInDate"),
-      checkOutDate: searchParams.get("checkOutDate"),
-      swx: Number(searchParams.get("swx")),
-      swy: Number(searchParams.get("swy")),
-      nex: Number(searchParams.get("nex")),
-      ney: Number(searchParams.get("ney"))
+  const queryParams = useMemo(() => {
+    const params = new URLSearchParams(searchParamString);
+
+    return {
+      options: params.getAll("options") as Option[],
+      order: params.get("order") as OrderState,
+      category: params.get("category") as Category,
+      keyword: params.get("keyword"),
+      checkInDate: params.get("checkInDate"),
+      checkOutDate: params.get("checkOutDate"),
+      smallX: Number(params.get("smallX")),
+      smallY: Number(params.get("smallY")),
+      bigX: Number(params.get("bigX")),
+      bigY: Number(params.get("bigY"))
+    };
+  }, [searchParamString]);
+
+  const removeFalsy = <T extends object>(
+    obj: T,
+    ...rest: Array<Record<string, any>>
+  ): Partial<T> => {
+    const result = Object.assign({}, ...rest);
+
+    Object.entries(obj).forEach(([key, value]) => {
+      if (value && value !== 0) {
+        result[key] = value;
+      }
     });
-  }, [searchParams]);
+
+    return result;
+  };
 
   const {
     data: products,
     hasNextPage,
     isFetching,
     fetchNextPage
-  } = useProducts({
-    ...(queryParams.options && { options: queryParams.options as Option[] }),
-    ...(queryParams.order && { order: queryParams.order as OrderState }),
-    ...(queryParams.category && { category: queryParams.category as Category }),
-    ...(queryParams.checkInDate && { checkInDate: queryParams.checkInDate }),
-    ...(queryParams.checkOutDate && { checkOutDate: queryParams.checkOutDate }),
-    ...(queryParams.keyword && { keyword: queryParams.keyword }),
-    ...(queryParams.swx && { smallX: queryParams.swx }),
-    ...(queryParams.swy && { smallY: queryParams.swy }),
-    ...(queryParams.nex && { bigX: queryParams.nex }),
-    ...(queryParams.ney && { bigY: queryParams.ney }),
-    size: 10
-  });
-  const { isMapOpen, setHasProducts, hasProducts } = useMapState();
+  } = useProducts(removeFalsy<Partial<GetProductsRequestParams>>(queryParams, { size: 10 }));
 
-  useEffect(() => {
-    setHasProducts(products.length);
-  }, [products.length, setHasProducts]);
+  const { setMapOpen, isMapOpen } = useMapState();
 
   const ref = useIntersect<HTMLDivElement>(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -77,7 +74,7 @@ const ProductList = () => {
         <S.MapContainer>
           <KakaoMap products={products} />
         </S.MapContainer>
-      ) : !hasProducts ? (
+      ) : products.length === 0 ? (
         <NoProduct />
       ) : (
         <>
@@ -87,9 +84,11 @@ const ProductList = () => {
               <ProductCard key={product.id} product={product} />
             ))}
             <div className="observer" ref={ref} />
+            <GoToMapButton handleClick={setMapOpen} />
           </S.ProductCardWrapper>
         </>
       )}
+      ;
     </>
   );
 };

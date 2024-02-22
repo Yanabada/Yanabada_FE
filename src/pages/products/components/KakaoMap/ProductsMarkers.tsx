@@ -22,12 +22,11 @@ export const ProductsMarkers = ({
   const map = useMap();
 
   const handleSelect = (product: ProductType) => {
+    // positions, productId, setProductId
     const { latitude, longitude } = product;
     setSelectedProductId(product.id);
     map.panTo(new kakao.maps.LatLng(latitude, longitude));
-    console.log(selectedProductId, product.id);
   };
-  console.log(selectedProductId);
 
   return products.map((product) => (
     <CustomOverlayMap key={product.id} position={{ lat: product.latitude, lng: product.longitude }}>
@@ -35,7 +34,7 @@ export const ProductsMarkers = ({
         data-selected={selectedProductId === product.id ? "true" : "false"}
         onClick={() => handleSelect(product)}
       >
-        {getPriceWithComma(product.price)}
+        {getPriceWithComma(product.sellingPrice)}
       </S.Pin>
     </CustomOverlayMap>
   ));
