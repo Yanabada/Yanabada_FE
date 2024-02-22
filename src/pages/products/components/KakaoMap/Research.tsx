@@ -7,10 +7,10 @@ const Research = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleResearch = () => {
-    searchParams.set("swx", position.smallX.toString());
-    searchParams.set("swy", position.smallY.toString());
-    searchParams.set("nex", position.bigX.toString());
-    searchParams.set("ney", position.bigY.toString());
+    searchParams.set("smallX", position.smallX.toString());
+    searchParams.set("smallY", position.smallY.toString());
+    searchParams.set("bigX", position.bigX.toString());
+    searchParams.set("bigY", position.bigY.toString());
     setSearchParams(searchParams);
     setMapMoved(false);
   };
