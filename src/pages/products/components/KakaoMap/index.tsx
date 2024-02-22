@@ -7,6 +7,7 @@ import ProductCardForMap from "../ProductCard/ProductCardForMap";
 import { MyPositionMarker } from "./MyPositionMarker";
 import Research from "./Research";
 import { ProductType } from "@pages/products/types/productsType";
+import { useSearchParams } from "react-router-dom";
 
 export interface UserPositionType {
   lat: number | null;
@@ -38,6 +39,7 @@ const KakaoMap = ({ products }: MapProps) => {
     errorMessage: "",
     isLoading: true
   });
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (products.length > 0) {
@@ -96,7 +98,7 @@ const KakaoMap = ({ products }: MapProps) => {
           height: "100%",
           zIndex: 1000
         }}
-        level={5}
+        level={searchParams[0].size === 0 ? 13 : 5}
         ref={mapRef}
       >
         {userPosition.lat && userPosition.lng ? <MyPositionMarker position={userPosition} /> : null}

@@ -33,7 +33,7 @@ export const ImageContainer = styled.div`
 export const Image = styled(motion.img)`
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
   border-radius: 10px;
   cursor: pointer;
 `;
