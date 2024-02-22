@@ -83,7 +83,7 @@ const SignInBottomSheet = ({ sheetVisible, setSheetVisible }: BottomSheetProps) 
             buttonType={isAllChecked || (isChecked1 && isChecked0) ? "default" : "disabled-default"}
             width="100%"
             onClick={() => {
-              if (isAllChecked) {
+              if (isChecked1 && isChecked0) {
                 navigate("/signIn");
               }
             }}

@@ -73,7 +73,7 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
     setIsNumCorrect(false);
     return false;
   };
-  console.log(isNumCorrect);
+
   const handleAuthenticationBtnClick = () => {
     // TODO - 인증번호 재전송 5회 소진시 동작 기획에 맞게 수정
     // 비밀번호 재설정 상황에서의 이메일 인증
@@ -91,6 +91,9 @@ const CheckEmail = ({ type, title, to, noticeTitle }: CheckEmailProps) => {
   };
 
   useEffect(() => {
+    if (sentCount === 5) {
+      return;
+    }
     setBtnText(`인증번호 재전송(남은 횟수 ${sentCount}회)`);
   }, [sentCount]);
 
