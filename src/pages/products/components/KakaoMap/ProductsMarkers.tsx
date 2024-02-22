@@ -34,7 +34,7 @@ export const ProductsMarkers = ({
         data-selected={selectedProductId === product.id ? "true" : "false"}
         onClick={() => handleSelect(product)}
       >
-        {getPriceWithComma(product.price)}
+        {getPriceWithComma(product.sellingPrice)}
       </S.Pin>
     </CustomOverlayMap>
   ));

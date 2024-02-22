@@ -2,17 +2,16 @@ import UpperNavBar from "@components/navBar/upperNavBar";
 import SearchBar from "./components/SearchBar";
 import * as S from "./styles/style";
 import CategoryTab from "./components/CategoryTab";
-import GoToMapButton from "./components/ToMapButton";
-import { Suspense } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ProductList from "./components/ProductList";
 import { useMapState } from "./stores/mapStore";
 import OptionTab from "./components/OptionTap";
 import Order from "./components/Order";
+import { Suspense } from "react";
 import LoadingCircle from "@components/loading";
 
 const Products = () => {
-  const { isMapOpen, setMapOpen, hasProducts } = useMapState();
+  const { isMapOpen, setMapOpen } = useMapState();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -45,7 +44,6 @@ const Products = () => {
       <Suspense fallback={<LoadingCircle width="200px" />}>
         <ProductList />
       </Suspense>
-      {!isMapOpen && hasProducts && <GoToMapButton handleClick={setMapOpen} />}
     </>
   );
 };
