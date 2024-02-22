@@ -17,12 +17,6 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { isCheck } = CheckStore();
-
-  if (product.status === "SOLD_OUT" && isCheck) {
-    return null;
-  }
-
   const { recentItem, setRecentItem } = RecentStore();
 
   useEffect(() => {
@@ -31,6 +25,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
       recentItem.pop();
     }
   }, [recentItem]);
+
+  const { isCheck } = CheckStore();
+
+  if (product.status === "SOLD_OUT" && isCheck) {
+    return null;
+  }
 
   const handleLocalStorage = () => {
     const updateRecentItem: RecentType = {
@@ -77,21 +77,23 @@ const ProductCard = ({ product }: ProductCardProps) => {
               </S.UserContainer>
             </S.StarUserContainer>
             <S.RightInnerContainer>
-              <S.TimerNegoContainer>
-                <S.TimerContainer>
-                  <S.TimerIcon />
-                  <S.TimerText>{formatRemainingTime(product.saleEnd)}</S.TimerText>
-                </S.TimerContainer>
-                {product.canNegotiate ? (
-                  <S.NegoContainer>
-                    <p>가격제안가능</p>
-                  </S.NegoContainer>
-                ) : (
-                  <S.NoNegoContainer>
-                    <p>가격제안불가</p>
-                  </S.NoNegoContainer>
-                )}
-              </S.TimerNegoContainer>
+              {product.status !== "SOLD_OUT" && (
+                <S.TimerNegoContainer>
+                  <S.TimerContainer>
+                    <S.TimerIcon />
+                    <S.TimerText>{formatRemainingTime(product.saleEnd)}</S.TimerText>
+                  </S.TimerContainer>
+                  {product.canNegotiate ? (
+                    <S.NegoContainer>
+                      <p>가격제안가능</p>
+                    </S.NegoContainer>
+                  ) : (
+                    <S.NoNegoContainer>
+                      <p>가격제안불가</p>
+                    </S.NoNegoContainer>
+                  )}
+                </S.TimerNegoContainer>
+              )}
               <S.PriceContainer>
                 <S.PriceText>원가</S.PriceText>
                 <S.Price>{numberFormat(product.price)}원</S.Price>

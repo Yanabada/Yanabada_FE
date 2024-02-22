@@ -1,6 +1,6 @@
 import UpperNavBar from "@components/navBar/upperNavBar";
 import useProducts from "@pages/products/api/queries";
-// import Order from "@pages/products/components/Order";
+import Order from "@pages/products/components/Order";
 import ProductCard from "@pages/products/components/ProductCard";
 import logo from "@assets/2024_dragon.png";
 import { ScrollRestoration } from "react-router-dom";
@@ -22,7 +22,7 @@ const SpecialProducts = () => {
           <p>2024년을 시작하는 신년 파티룸</p>
         </div>
       </S.Wrapper>
-      {/* <Order /> */}
+      <Order />
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
