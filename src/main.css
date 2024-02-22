@@ -10,6 +10,8 @@
   min-width: var(--min-width);
   height: 100%;
   margin: 0 auto;
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
   box-sizing: border-box;
   background-color: #fff;
   display: flex;
