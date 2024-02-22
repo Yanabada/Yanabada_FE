@@ -5,7 +5,7 @@ interface CheckState {
   setIsCheck: (check: boolean) => void;
 }
 
-const CheckStore = create<CheckState>((set) => ({
+const CheckStore = create<CheckState>()((set) => ({
   isCheck: false,
   setIsCheck: (check: boolean) =>
     set({

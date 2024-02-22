@@ -14,16 +14,16 @@ const orderList = [
 ];
 
 const Order = () => {
-  const [open, setOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const orderParams = searchParams.get("order");
+
+  const [open, setOpen] = useState(false);
+  const { isCheck, setIsCheck } = CheckStore(); // useState 호출을 조건부 렌더링 외부로 이동
 
   const handleClick = (orderId: string) => {
     searchParams.set("order", orderId);
     setSearchParams(searchParams);
   };
-
-  const { isCheck, setIsCheck } = CheckStore();
 
   const orderLabel = orderList.find((list) => list.id === orderParams);
 
