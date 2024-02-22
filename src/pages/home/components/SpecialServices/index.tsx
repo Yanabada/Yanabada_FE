@@ -41,7 +41,7 @@ const SpecialServices = () => {
           <div className="title">
             <div>
               <h2>HAPPY NEW YEAR</h2>
-              <h3>새해 핫플레이스 양도숙박권 모음</h3>
+              <h3>2024년을 시작하는 신년 파티룸</h3>
             </div>
             <ArrowRight />
           </div>
