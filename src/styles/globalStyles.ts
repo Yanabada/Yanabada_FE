@@ -1,10 +1,12 @@
 import { css } from "@emotion/react";
+import { fonts } from "./fonts";
 
 const globalStyles = css`
   * {
     margin: 0px;
     box-sizing: border-box;
   }
+  ${fonts}
 
   ::-webkit-scrollbar {
     width: 8px;
@@ -43,7 +45,22 @@ const globalStyles = css`
   textarea,
   label,
   table {
-    font-family: "Pretendard-Regular";
+    font-family:
+      "Pretendard Variable",
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      system-ui,
+      Roboto,
+      "Helvetica Neue",
+      "Segoe UI",
+      "Apple SD Gothic Neo",
+      "Noto Sans KR",
+      "Malgun Gothic",
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Segoe UI Symbol",
+      sans-serif;
     margin: 0;
     padding: 0;
     border: 0;
@@ -63,7 +80,22 @@ const globalStyles = css`
     list-style: none;
   }
   button {
-    font-family: "Pretendard-Regular";
+    font-family:
+      "Pretendard Variable",
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      system-ui,
+      Roboto,
+      "Helvetica Neue",
+      "Segoe UI",
+      "Apple SD Gothic Neo",
+      "Noto Sans KR",
+      "Malgun Gothic",
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Segoe UI Symbol",
+      sans-serif;
     border: 0;
     background: transparent;
     cursor: pointer;
@@ -71,15 +103,22 @@ const globalStyles = css`
     margin: 0;
   }
   input {
-    font-family: "Pretendard-Regular";
-  }
-
-  @font-face {
-    font-family: "Pretendard-Regular";
-    src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-      format("woff");
-    font-weight: 400;
-    font-style: normal;
+    font-family:
+      "Pretendard Variable",
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      system-ui,
+      Roboto,
+      "Helvetica Neue",
+      "Segoe UI",
+      "Apple SD Gothic Neo",
+      "Noto Sans KR",
+      "Malgun Gothic",
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Segoe UI Symbol",
+      sans-serif;
   }
 `;
 

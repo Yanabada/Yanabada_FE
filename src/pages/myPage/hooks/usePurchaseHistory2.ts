@@ -1,11 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import getPurchaseHistory2 from "../apis/getPurchaseHistory2";
 
 const usePurchaseHistory2 = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ["purchaseHistory2"],
-    queryFn: () => getPurchaseHistory2(),
-    enabled: false
+    queryFn: () => getPurchaseHistory2()
   });
 };
 
