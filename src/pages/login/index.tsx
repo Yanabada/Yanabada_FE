@@ -13,7 +13,13 @@ const Login = () => {
 
   return (
     <S.LoginContainer>
-      <UpperNavBar title="로그인" type="back" shape="fill" />
+      <UpperNavBar
+        title="로그인"
+        type="back"
+        shape="fill"
+        isCustom
+        customBack={() => navigate("/")}
+      />
       <S.LogoWrapper>
         <YanabanaIcon />
         <GrClose style={{ color: "#E6E6E6" }} />
@@ -24,9 +30,6 @@ const Login = () => {
         <Link to="https://api.yanabada.com/oauth2/authorization/kakao">
           <BaseButton buttonType="kakao">카카오로 시작하기</BaseButton>
         </Link>
-        <BaseButton buttonType="naver" style={{ color: "#fff" }}>
-          네이버로 시작하기
-        </BaseButton>
       </S.BtnWrapper>
       <S.BtnFlex onClick={() => navigate("/login/email")}>
         이메일로 시작하기
