@@ -5,20 +5,22 @@ import * as S from "./styles";
 const NoProduct = () => {
   return (
     <S.Container>
-      <NoProductIcon />
-      <S.BannerWrapper
-        initial={{ y: "30px", opacity: 0.3 }}
-        animate={{
-          y: 15,
-          opacity: 1,
-          transition: {
-            duration: 0.3,
-            ease: "easeOut"
-          }
-        }}
-      >
-        <NoProductBanner />
-      </S.BannerWrapper>
+      <a href="https://www.yanolja.com/" target="_blank">
+        <NoProductIcon />
+        <S.BannerWrapper
+          initial={{ y: "30px", opacity: 0.3 }}
+          animate={{
+            y: 15,
+            opacity: 1,
+            transition: {
+              duration: 0.3,
+              ease: "easeOut"
+            }
+          }}
+        >
+          <NoProductBanner />
+        </S.BannerWrapper>
+      </a>
     </S.Container>
   );
 };
