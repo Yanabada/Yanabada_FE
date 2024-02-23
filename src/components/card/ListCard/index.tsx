@@ -101,8 +101,8 @@ const ListCard = forwardRef(
       title: "선택한 상품을 승인하시겠습니까?",
       content:
         "승인 즉시 숙소의 명의가 구매자에게로 이전되며 숙소에 대한 권리를 주장하실 수 없습니다.",
-      leftBtnText: "판매 승인",
-      rightBtnText: "취소",
+      leftBtnText: "취소",
+      rightBtnText: "판매 승인",
       isVisible: isVisible,
       opposite: true,
       setIsVisible: setIsVisible,
