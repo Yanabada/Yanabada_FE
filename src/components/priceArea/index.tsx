@@ -61,14 +61,10 @@ const PriceArea = ({
         return (
           <S.ErrorMessage>지금 야놀자에서 취소하는 것보다 손해보는 가격이에요!</S.ErrorMessage>
         );
+      } else if (purchasePrice <= price) {
+        return <S.ErrorMessage>실 구매가보다 낮은 금액으로만 판매 가능해요.</S.ErrorMessage>;
       }
       return;
-    } else if (policyNumber === "YNBD_3") {
-      if (0 < price && price < purchasePrice) {
-        return (
-          <S.ErrorMessage>지금 야놀자에서 취소하는 것보다 손해보는 가격이에요!</S.ErrorMessage>
-        );
-      }
     }
   };
 
