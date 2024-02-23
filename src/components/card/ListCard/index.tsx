@@ -104,6 +104,7 @@ const ListCard = forwardRef(
       leftBtnText: "판매 승인",
       rightBtnText: "취소",
       isVisible: isVisible,
+      opposite: true,
       setIsVisible: setIsVisible,
       leftAction: () => {
         saleApproveMutate(tradeId);

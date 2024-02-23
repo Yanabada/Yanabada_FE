@@ -11,6 +11,7 @@ interface modalProp extends Pick<React.HTMLAttributes<HTMLButtonElement>, "title
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   leftAction?: () => void;
   rightAction?: () => void;
+  opposite?: boolean;
 }
 
 const Modal = ({
@@ -21,7 +22,8 @@ const Modal = ({
   isVisible,
   setIsVisible,
   leftAction,
-  rightAction
+  rightAction,
+  opposite
 }: modalProp) => {
   return (
     <AnimatePresence>
@@ -42,12 +44,20 @@ const Modal = ({
 
             <S.ButtonsWrapper>
               {leftBtnText && (
-                <BaseButton buttonType="gray" width="100%" onClick={leftAction}>
+                <BaseButton
+                  buttonType={opposite ? "default" : "gray"}
+                  width="100%"
+                  onClick={leftAction}
+                >
                   {leftBtnText}
                 </BaseButton>
               )}
               {rightBtnText && (
-                <BaseButton buttonType="default" width="100%" onClick={rightAction}>
+                <BaseButton
+                  buttonType={opposite ? "gray" : "default"}
+                  width="100%"
+                  onClick={rightAction}
+                >
                   {rightBtnText}
                 </BaseButton>
               )}
